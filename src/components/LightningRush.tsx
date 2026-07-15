@@ -11,7 +11,7 @@ export default function LightningRush() {
       <Reveal>
         <h2
           id="game-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight md:text-6xl"
+          className="max-w-4xl mt-2 font-display text-4xl font-semibold leading-tight md:text-6xl"
         >
           Spot the <span className="text-gradient">Blaze.</span>
         </h2>
@@ -37,7 +37,10 @@ export default function LightningRush() {
           </div>
         </div>
 
-        <div className="relative h-[340px] w-full max-w-lg overflow-hidden rounded-2xl border border-border">
+        <div
+          data-lenis-prevent
+          className="relative h-[340px] w-full max-w-lg overflow-hidden rounded-2xl border border-border"
+        >
           <div className="grid h-full grid-cols-3 grid-rows-3 gap-3 p-4">
             {Array.from({ length: gridSize }).map((_, index) => {
               const isActive = activeCell === index

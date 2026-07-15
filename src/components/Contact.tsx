@@ -14,7 +14,7 @@ export default function Contact() {
       <Reveal>
         <h2
           id="contact-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
+          className="max-w-4xl mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
         >
           Let&apos;s <span className="text-gradient">Connect.</span>
         </h2>
@@ -22,9 +22,8 @@ export default function Contact() {
 
       <Reveal delay={0.1}>
         <p className="mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
-          I&apos;m open to full-time and contract roles <span className="text-foreground">worldwide</span>{' '}
-          — remote, hybrid or onsite, visa-ready. Hiring a Salesforce UI dev who ships fast,
-          accessible product? Let&apos;s talk.
+          I&apos;m open to full-time and contract opportunities{' '}
+          <span className="text-foreground">worldwide</span> — remote, hybrid or onsite. Open to visa-sponsored roles. Looking for a Salesforce UI Engineer specializing in Lightning Web Components, Experience Cloud, and modern frontend engineering with a focus on performance, accessibility, and reusable UI architecture? Let&apos;s connect.
         </p>
       </Reveal>
 
@@ -32,7 +31,7 @@ export default function Contact() {
         <div className="mt-12">
           <a
             href={mailtoHref}
-            className="group inline-flex items-baseline gap-3 border-b-2 border-accent font-display text-3xl font-semibold transition hover:text-accent md:text-5xl"
+            className="group inline-flex items-baseline gap-3 border-b-2 border-accent font-display text-2xl font-semibold transition hover:text-accent md:text-4xl"
           >
             {profile.email}
             <span className="text-2xl transition group-hover:translate-x-1 md:text-4xl" aria-hidden="true">
