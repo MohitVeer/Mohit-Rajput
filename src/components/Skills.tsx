@@ -4,13 +4,13 @@ import Reveal from './cinematic/Reveal'
 
 export default function Skills() {
   return (
-    <Scene id="skills" index="04" label="Gear Cache">
+    <Scene id="skills" index="04" label="Skills">
       <Reveal>
         <h2
           id="skills-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight md:text-6xl"
+          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
         >
-          The stack I ship <span className="text-gradient">in production.</span>
+          Skills &amp; <span className="text-gradient">Expertise.</span>
         </h2>
       </Reveal>
 

@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import About from './components/About'
 import Articles from './components/Articles'
 import Certifications from './components/Certifications'
+import ClickConstellation from './components/ClickConstellation'
 import Contact from './components/Contact'
 import CustomCursor from './components/CustomCursor'
 import Experience from './components/Experience'
@@ -29,6 +30,7 @@ export default function App() {
       </a>
 
       <Preloader />
+      <ClickConstellation />
       <CustomCursor />
       <MinimalBar ref={menuTriggerRef} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((v) => !v)} />
       <OverlayMenu open={menuOpen} onClose={() => setMenuOpen(false)} triggerRef={menuTriggerRef} />

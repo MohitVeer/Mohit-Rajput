@@ -24,7 +24,7 @@ export default function Scene({
       data-index={index}
       data-label={label}
       aria-labelledby={`${id}-heading`}
-      className={`relative flex flex-col justify-center border-t border-border px-6 py-28 md:px-16 lg:px-24 ${
+      className={`relative flex flex-col justify-start border-t border-border px-5 py-24 sm:px-8 md:px-16 md:py-28 lg:px-24 ${
         minHeight ? 'min-h-screen' : ''
       } ${className}`}
     >

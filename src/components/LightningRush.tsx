@@ -7,7 +7,7 @@ export default function LightningRush() {
     useLightningRush()
 
   return (
-    <Scene id="game" index="08" label="Trailside Break">
+    <Scene id="game" index="08" label="Break">
       <Reveal>
         <h2
           id="game-heading"
@@ -15,7 +15,7 @@ export default function LightningRush() {
         >
           Spot the <span className="text-gradient">Blaze.</span>
         </h2>
-        <p className="mt-4 max-w-xl text-muted-foreground">
+        <p className="mt-4 max-w-xl text-base text-muted-foreground md:text-lg">
           A tiny reflex game — because portfolios shouldn&apos;t be homework. Fully keyboard playable:
           tab to a cell and press Enter or Space when it lights up.
         </p>

@@ -4,14 +4,17 @@ import Reveal from './cinematic/Reveal'
 
 export default function Articles() {
   return (
-    <Scene id="articles" index="07" label="Field Notes">
+    <Scene id="articles" index="07" label="Articles">
       <Reveal>
         <h2
           id="articles-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight md:text-6xl"
+          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
         >
-          Sharing what I learn <span className="text-gradient">in the Salesforce ecosystem.</span>
+          Articles &amp; <span className="text-gradient">Insights.</span>
         </h2>
+        <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
+          Sharing what I learn in the Salesforce ecosystem — LWC, OmniStudio, and Marketing Cloud.
+        </p>
       </Reveal>
 
       <ul className="mt-14 divide-y divide-border border-t border-border">
@@ -32,7 +35,7 @@ export default function Articles() {
                   {article.publishedOn} · {article.readTime}
                 </span>
               </a>
-              <p className="max-w-2xl pb-6 text-sm text-muted-foreground">{article.summary}</p>
+              <p className="max-w-2xl pb-6 text-base text-muted-foreground">{article.summary}</p>
             </Reveal>
           </li>
         ))}

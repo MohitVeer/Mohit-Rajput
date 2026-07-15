@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
-import { sceneList } from '../../data/profile'
+import { profile, sceneList } from '../../data/profile'
 
 interface OverlayMenuProps {
   open: boolean
@@ -61,22 +61,46 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
           role="dialog"
           aria-modal="true"
           aria-label="Site navigation"
-          className="fixed inset-0 z-50 flex flex-col justify-center bg-background px-6 md:px-16 lg:px-24"
+          className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background"
           initial={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.25 }}
         >
-          <nav aria-label="Scenes">
-            <ul className="space-y-2">
+          <div className="flex items-center justify-between px-5 py-5 sm:px-8 md:px-16 lg:px-24">
+            <span className="scene-index" aria-hidden="true">
+              Menu
+            </span>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close menu"
+              className="grid h-11 w-11 place-items-center rounded-full border border-border text-foreground transition hover:border-accent hover:text-accent"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <nav
+            aria-label="Scenes"
+            className="flex flex-1 flex-col justify-center px-5 py-8 sm:px-8 md:px-16 lg:px-24"
+          >
+            <ul className="space-y-1">
               {sceneList.map((scene) => (
-                <li key={scene.href}>
+                <li key={scene.href} className="border-b border-border">
                   <a
                     href={scene.href}
                     onClick={onClose}
-                    className="group flex items-baseline gap-4 py-2 font-display text-4xl font-semibold text-muted-foreground transition-colors hover:text-foreground md:text-6xl"
+                    className="group flex items-baseline gap-4 py-3.5 font-display text-3xl font-semibold text-muted-foreground transition-colors hover:text-foreground sm:text-4xl md:py-4 md:text-5xl"
                   >
-                    <span className="font-mono text-sm text-accent">{scene.index}</span>
+                    <span className="font-mono text-xs text-accent sm:text-sm">{scene.index}</span>
                     {scene.label}
                   </a>
                 </li>
@@ -84,7 +108,20 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
             </ul>
           </nav>
 
-          <p className="mt-10 font-mono text-xs text-muted-foreground">Press Esc to close</p>
+          <div className="flex flex-wrap gap-x-8 gap-y-3 px-5 py-6 font-mono text-sm text-muted-foreground sm:px-8 md:px-16 lg:px-24">
+            <a href={`mailto:${profile.email}`} className="hover:text-foreground">
+              {profile.email}
+            </a>
+            <a
+              href={profile.linkedinUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-foreground"
+            >
+              /{profile.linkedinHandle}
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

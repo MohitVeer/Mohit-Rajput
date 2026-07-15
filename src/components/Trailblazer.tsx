@@ -4,14 +4,18 @@ import Reveal from './cinematic/Reveal'
 
 export default function Trailblazer() {
   return (
-    <Scene id="trailblazer" index="03" label="Summit Log">
+    <Scene id="trailblazer" index="03" label="Trailblazer">
       <Reveal>
         <h2
           id="trailblazer-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight md:text-6xl"
+          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
         >
-          Double Star Ranger. <span className="text-gradient">Agentblazer Champion 2026.</span>
+          Salesforce <span className="text-gradient">Trailblazer.</span>
         </h2>
+        <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
+          Double Star Ranger and Agentblazer Champion 2026 — verified rank, badges, and points from
+          my Salesforce Trailblazer profile.
+        </p>
       </Reveal>
 
       <div className="mt-14 grid gap-10 md:grid-cols-2 md:gap-16">
@@ -46,7 +50,7 @@ export default function Trailblazer() {
           />
           <div>
             <span className="scene-index">Agentforce status</span>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-2 text-base leading-relaxed text-muted-foreground">
               Earned the Agentblazer Champion 2026 recognition through Salesforce Trailhead by
               completing all required learning paths. Currently building hands-on Agentforce
               experience while continuing to deepen my expertise in Salesforce AI.
@@ -55,7 +59,7 @@ export default function Trailblazer() {
               href={profile.trailblazerUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-4 inline-flex items-center gap-1 border-b border-accent text-sm font-semibold text-accent"
+              className="mt-4 inline-flex items-center gap-1 border-b border-accent text-base font-semibold text-accent"
             >
               Verify on Trailblazer →<span className="sr-only"> (opens in a new tab)</span>
             </a>
