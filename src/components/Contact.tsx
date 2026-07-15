@@ -10,21 +10,21 @@ const mailtoHref = `mailto:${profile.email}?subject=${emailSubject}&body=${email
 
 export default function Contact() {
   return (
-    <Scene id="contact" index="09" label="Basecamp Radio" minHeight={false} className="pb-32">
+    <Scene id="contact" index="09" label="Contact" minHeight={false} className="pb-32">
       <Reveal>
         <h2
           id="contact-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight md:text-6xl"
+          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
         >
-          Hiring a Salesforce UI dev who{' '}
-          <span className="text-gradient">ships fast, accessible product</span>?
+          Let&apos;s <span className="text-gradient">Connect.</span>
         </h2>
       </Reveal>
 
       <Reveal delay={0.1}>
-        <p className="mt-6 max-w-xl text-lg text-muted-foreground">
+        <p className="mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
           I&apos;m open to full-time and contract roles <span className="text-foreground">worldwide</span>{' '}
-          — remote, hybrid or onsite, visa-ready.
+          — remote, hybrid or onsite, visa-ready. Hiring a Salesforce UI dev who ships fast,
+          accessible product? Let&apos;s talk.
         </p>
       </Reveal>
 
@@ -40,7 +40,7 @@ export default function Contact() {
             </span>
           </a>
 
-          <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4 font-mono text-sm">
+          <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4 font-mono text-base">
             <a href={profile.phoneHref} className="text-muted-foreground hover:text-foreground">
               {profile.phone}
             </a>

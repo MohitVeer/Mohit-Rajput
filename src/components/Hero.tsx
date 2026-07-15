@@ -4,7 +4,7 @@ import Reveal from './cinematic/Reveal'
 
 export default function Hero() {
   return (
-    <Scene id="top" index="00" label="Basecamp">
+    <Scene id="top" index="00" label="Home">
       <Reveal>
         <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
           Available worldwide · Remote · Hybrid · Onsite
@@ -14,7 +14,7 @@ export default function Hero() {
       <Reveal delay={0.08}>
         <h1
           id="top-heading"
-          className="mt-6 max-w-5xl font-display text-[13vw] font-semibold leading-[0.95] tracking-tight md:text-[7.5vw]"
+          className="mt-6 max-w-5xl text-balance font-display text-[clamp(2.75rem,9vw,6.5rem)] font-semibold leading-[1.02] tracking-tight"
         >
           Salesforce UI,
           <br />
@@ -35,7 +35,7 @@ export default function Hero() {
 
       <Reveal delay={0.24}>
         <ul
-          className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-accent"
+          className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm text-accent"
           aria-label="Core focus areas"
         >
           {heroTags.map((tag) => (
@@ -48,7 +48,7 @@ export default function Hero() {
         <div className="mt-10 flex flex-wrap gap-4">
           <a
             href={`mailto:${profile.email}?subject=Interview%20request%20—%20Mohit%20Rajput`}
-            className="rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-foreground shadow-glow transition hover:opacity-90"
+            className="rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-accent-foreground shadow-glow transition hover:opacity-90"
           >
             Let&apos;s talk →
           </a>
@@ -56,7 +56,7 @@ export default function Hero() {
             href={profile.trailblazerUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full border border-border px-7 py-3.5 text-sm font-semibold text-foreground transition hover:border-accent"
+            className="rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground transition hover:border-accent"
           >
             {trailhead.rank}
             <span className="sr-only"> — view Trailblazer profile (opens in a new tab)</span>

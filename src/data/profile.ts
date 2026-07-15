@@ -10,16 +10,16 @@ export const profile = {
 }
 
 export const sceneList = [
-  { href: '#top', index: '00', label: 'Basecamp' },
+  { href: '#top', index: '00', label: 'Home' },
   { href: '#metrics', index: '01', label: 'Impact' },
-  { href: '#about', index: '02', label: 'Register' },
-  { href: '#trailblazer', index: '03', label: 'Summit Log' },
-  { href: '#skills', index: '04', label: 'Gear Cache' },
-  { href: '#experience', index: '05', label: 'Route History' },
-  { href: '#certs', index: '06', label: 'Waypoints' },
-  { href: '#articles', index: '07', label: 'Field Notes' },
-  { href: '#game', index: '08', label: 'Trailside Break' },
-  { href: '#contact', index: '09', label: 'Basecamp Radio' },
+  { href: '#about', index: '02', label: 'About' },
+  { href: '#trailblazer', index: '03', label: 'Trailblazer' },
+  { href: '#skills', index: '04', label: 'Skills' },
+  { href: '#experience', index: '05', label: 'Experience' },
+  { href: '#certs', index: '06', label: 'Certifications' },
+  { href: '#articles', index: '07', label: 'Articles' },
+  { href: '#game', index: '08', label: 'Break' },
+  { href: '#contact', index: '09', label: 'Contact' },
 ]
 
 export const heroTags = [

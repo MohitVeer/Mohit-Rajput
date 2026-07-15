@@ -6,12 +6,12 @@ export interface ActiveScene {
   label: string
 }
 
-const FALLBACK: ActiveScene = { id: 'top', index: '00', label: 'Basecamp' }
+const FALLBACK: ActiveScene = { id: 'top', index: '00', label: 'Home' }
 
 /**
  * Watches every element tagged `data-scene` and reports whichever one
  * currently occupies the most viewport space — powers the corner index
- * nav ("03 — Route History") without needing per-scene scroll math.
+ * nav ("05 — Experience") without needing per-scene scroll math.
  */
 export function useActiveScene(): ActiveScene {
   const [active, setActive] = useState<ActiveScene>(FALLBACK)

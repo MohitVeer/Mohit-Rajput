@@ -4,14 +4,17 @@ import Reveal from './cinematic/Reveal'
 
 export default function Certifications() {
   return (
-    <Scene id="certs" index="06" label="Waypoints">
+    <Scene id="certs" index="06" label="Certifications">
       <Reveal>
         <h2
           id="certs-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight md:text-6xl"
+          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
         >
-          8 Salesforce certifications &amp; <span className="text-gradient">5 Superbadges.</span>
+          Certifications &amp; <span className="text-gradient">Badges.</span>
         </h2>
+        <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
+          8 Salesforce certifications and 5 Trailhead superbadges, grouped by product cloud.
+        </p>
       </Reveal>
 
       <div className="mt-14 grid gap-x-16 gap-y-12 md:grid-cols-2">
@@ -38,7 +41,7 @@ export default function Certifications() {
                     width={32}
                     height={32}
                   />
-                  <span className="text-sm">{cert.name}</span>
+                  <span className="text-base">{cert.name}</span>
                 </li>
               ))}
             </ul>
@@ -66,11 +69,11 @@ export default function Certifications() {
                     height={56}
                   />
                   <div>
-                    <p className="text-sm font-semibold leading-snug group-hover:text-accent">
+                    <p className="text-base font-semibold leading-snug group-hover:text-accent">
                       {badge.title}
                       <span className="sr-only"> (opens in a new tab)</span>
                     </p>
-                    <p className="mt-1 text-xs text-muted-foreground">{badge.description}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{badge.description}</p>
                   </div>
                 </a>
               </Reveal>
