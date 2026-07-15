@@ -87,24 +87,6 @@
   }
 }
 
-.text-gradient {
-  position: relative;
-  display: inline-block;
-  color: hsl(var(--foreground));
-  overflow: hidden;
-}
-
-.text-gradient::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  color: hsl(var(--accent));
-  overflow: hidden;
-  width: 0%;
-  white-space: nowrap;
-  animation: textFill 4s ease-in-out infinite;
-}
-
 @layer utilities {
   .text-gradient {
     background-image: linear-gradient(90deg, hsl(var(--foreground)), hsl(var(--accent)));
