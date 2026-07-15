@@ -61,7 +61,11 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
           role="dialog"
           aria-modal="true"
           aria-label="Site navigation"
-          className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background"
+          // data-lenis-prevent: tells the Lenis smooth-scroll library (which
+          // otherwise hijacks wheel input on the whole window) to leave this
+          // element alone so normal wheel/touch scrolling works inside it.
+          data-lenis-prevent
+          className="fixed inset-0 z-50 flex flex-col overflow-y-auto overscroll-contain bg-background"
           initial={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
@@ -75,7 +79,7 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
               type="button"
               onClick={onClose}
               aria-label="Close menu"
-              className="grid h-11 w-11 place-items-center rounded-full border border-border text-foreground transition hover:border-accent hover:text-accent"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-border text-foreground transition hover:border-accent hover:text-accent"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path
@@ -92,16 +96,18 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
             aria-label="Scenes"
             className="flex flex-1 flex-col justify-center px-5 py-8 sm:px-8 md:px-16 lg:px-24"
           >
-            <ul className="space-y-1">
+            <ul className="w-full space-y-1">
               {sceneList.map((scene) => (
-                <li key={scene.href} className="border-b border-border">
+                <li key={scene.href} className="w-full border-b border-border">
                   <a
                     href={scene.href}
                     onClick={onClose}
-                    className="group flex items-baseline gap-4 py-3.5 font-display text-3xl font-semibold text-muted-foreground transition-colors hover:text-foreground sm:text-4xl md:py-4 md:text-5xl"
+                    className="flex w-full min-w-0 items-baseline gap-3 py-3.5 font-display text-2xl font-semibold text-muted-foreground transition-colors hover:text-foreground sm:gap-4 sm:text-4xl md:py-4 md:text-5xl"
                   >
-                    <span className="font-mono text-xs text-accent sm:text-sm">{scene.index}</span>
-                    {scene.label}
+                    <span className="shrink-0 font-mono text-xs text-accent sm:text-sm">
+                      {scene.index}
+                    </span>
+                    <span className="min-w-0 break-words">{scene.label}</span>
                   </a>
                 </li>
               ))}

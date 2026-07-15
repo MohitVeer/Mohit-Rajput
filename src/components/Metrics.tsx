@@ -8,7 +8,7 @@ export default function Metrics() {
       <Reveal>
         <h2
           id="metrics-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
+          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl mt-2"
         >
           Impact &amp; <span className="text-gradient">Results.</span>
         </h2>

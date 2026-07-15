@@ -8,7 +8,7 @@ export default function Experience() {
       <Reveal>
         <h2
           id="experience-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
+          className="max-w-4xl mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
         >
           Professional <span className="text-gradient">Experience.</span>
         </h2>

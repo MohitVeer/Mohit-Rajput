@@ -2,14 +2,20 @@ import { useEffect } from 'react'
 import Lenis from 'lenis'
 
 /**
- * Wires up Lenis smooth scrolling for the whole page. Skipped entirely when
- * the person has requested reduced motion — native instant scroll is the
- * correct, accessible default in that case, not a smoothed version of it.
+ * Wires up Lenis smooth scrolling for the whole page — desktop/mouse only.
+ * Skipped when:
+ * - The person has requested reduced motion (native instant scroll is the
+ *   correct, accessible default there).
+ * - The device is touch/coarse-pointer. Native mobile scroll and tap
+ *   handling is already correct on phones/tablets; Lenis's touch handling
+ *   was intercepting taps on interactive elements (e.g. the game grid),
+ *   making them unresponsive.
  */
 export function useSmoothScroll() {
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) return
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches
+    if (prefersReducedMotion || isTouchDevice) return
 
     const lenis = new Lenis({
       duration: 1.1,
