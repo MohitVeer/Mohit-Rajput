@@ -39,8 +39,8 @@ export const trailhead = {
  agentblazerImage: 'https://trailhead.salesforce.com/assets/agentblazer/agentblazer-level-2-7dcee062f7cbc07086875c87de6163855f43972a4391d85336dd013338a7712e.png ',
   agentblazerChampionImage:
     'https://trailhead.salesforce.com/assets/agentblazer/agentblazer-level-1-a564a869686f7b888fabd8c82dafaf25928fa006be2388ab57e6f232876c2bf0.png',
-  badges: 313,
-  points: '149,275',
+  badges: 319,
+  points: '150,000',
   trails: 52,
   status: 'Agentblazer Innovator 2026',
   // agentforceLevel: 'Champion',
@@ -51,11 +51,11 @@ export const trailhead = {
 export const stats = [
   { value: '8', label: 'Salesforce Certifications' },
   { value: '5', label: 'Salesforce Superbadges' },
-  { value: '313', label: 'Trailhead Badges' },
-  { value: '149K+', label: 'Trailhead Points' },
+  { value: '319', label: 'Trailhead Badges' },
+  { value: '150K+', label: 'Trailhead Points' },
   { value: '~50%', label: 'Faster LWC portal load time' },
   { value: '~35%', label: 'Shorter delivery cycles' },
-  { value: '4.5/5', label: 'Client CSAT sustained' },
+  { value: '4.5+/5', label: 'Client CSAT sustained' },
 ]
 
 export const aboutFacts = [
@@ -197,7 +197,7 @@ export const experience = [
       'Reduced LWC portal load time from ~3.2s to 1.5s (~50%) via cached Apex, reactive-property tuning and fewer DOM re-renders.',
       'Accelerated delivery cycles from 10 → 6–7 days (~35%) with a reusable SLDS component library.',
       'Enforced WCAG 2.1 AA across LWC UI — keyboard nav, semantic HTML, screen-reader parity.',
-      'Resolved 300+ production defects within SLA, sustaining 4.5/5 CSAT.',
+      'Resolved 300+ production defects within SLA, sustaining 4.5+/5 CSAT.',
       'Awarded Circle of Excellence for independently resolving high-impact production defects.',
     ],
     clients: ['American Honda', "St. James's Place"],
