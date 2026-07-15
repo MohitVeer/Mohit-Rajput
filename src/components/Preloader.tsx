@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const BOOT_LINES = [
   'mounting trail...',
-  'loading badges (302)...',
-  'checking rank: Double Star Ranger...',
+  'loading badges (313)...',
+  'checking rank: Triple Star Ranger...',
+  'checking superbadges: 5x Superbadge...',
+  'checking agentblazer rank: Agentblazer Innovator 2026...',
   'ready.',
 ]
 

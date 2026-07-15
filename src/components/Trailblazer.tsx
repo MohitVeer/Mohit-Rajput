@@ -8,7 +8,7 @@ export default function Trailblazer() {
       <Reveal>
         <h2
           id="trailblazer-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
+          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl mt-2"
         >
           Salesforce <span className="text-gradient">Trailblazer.</span>
         </h2>
@@ -40,18 +40,31 @@ export default function Trailblazer() {
           </dl>
         </Reveal>
 
-        <Reveal delay={0.2} className="flex items-start gap-5">
-          <img
-            src={trailhead.agentblazerImage}
-            alt=""
-            className="h-20 w-20 shrink-0"
-            width={80}
-            height={80}
-          />
+        <Reveal delay={0.2} className="flex items-start gap-6">
+          {/* Overlapping badge stack: Champion badge sits behind/left,
+              Innovator badge sits in front/right — same layered look as
+              the Trailhead profile page. Swap the two image URLs in
+              profile.ts once you have the real Champion badge asset. */}
+          <div className="relative h-24 w-28 shrink-0">
+            <img
+              src={trailhead.agentblazerChampionImage}
+              alt=""
+              className="absolute left-0 top-2 h-22 w-22 opacity-70"
+              width={80}
+              height={80}
+            />
+            <img
+              src={trailhead.agentblazerImage}
+              alt="Agentblazer Innovator badge"
+              className="absolute left-8 top-0 h-24 w-24 drop-shadow-md"
+              width={96}
+              height={96}
+            />
+          </div>
           <div>
             <span className="scene-index">Agentforce status</span>
             <p className="mt-2 text-base leading-relaxed text-muted-foreground">
-              Earned the Agentblazer Champion 2026 recognition through Salesforce Trailhead by
+              Earned the Agentblazer Innovator 2026 recognition through Salesforce Trailhead by
               completing all required learning paths. Currently building hands-on Agentforce
               experience while continuing to deepen my expertise in Salesforce AI.
             </p>

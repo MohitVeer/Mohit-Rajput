@@ -8,12 +8,12 @@ export default function Certifications() {
       <Reveal>
         <h2
           id="certs-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
+          className="max-w-4xl mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
         >
           Certifications &amp; <span className="text-gradient">Badges.</span>
         </h2>
         <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
-          8 Salesforce certifications and 5 Trailhead superbadges, grouped by product cloud.
+          9 Salesforce certifications and 5 Trailhead superbadges, grouped by product cloud.
         </p>
       </Reveal>
 

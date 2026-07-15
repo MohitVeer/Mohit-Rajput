@@ -6,8 +6,8 @@ export default function Hero() {
   return (
     <Scene id="top" index="00" label="Home">
       <Reveal>
-        <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-          Available worldwide · Remote · Hybrid · Onsite
+        <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mt-2">
+          Available to hire worldwide · Remote · Hybrid · Onsite
         </p>
       </Reveal>
 
@@ -25,7 +25,7 @@ export default function Hero() {
       <Reveal delay={0.16}>
         <p className="mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
           I&apos;m <span className="font-medium text-foreground">{profile.name}</span> — Salesforce
-          Consultant at Wipro, Double Star Ranger, and Agentblazer Champion 2026. 5+ years shipping{' '}
+          Consultant at Wipro, Triple Star Ranger, and Agentblazer Innovator 2026. 5+ years shipping{' '}
           <span className="text-foreground">
             LWC, OmniStudio, Experience Cloud, Marketing Cloud and Agentforce
           </span>
@@ -39,7 +39,7 @@ export default function Hero() {
           aria-label="Core focus areas"
         >
           {heroTags.map((tag) => (
-            <li key={tag}>／ {tag}</li>
+            <li key={tag}> / {tag}</li>
           ))}
         </ul>
       </Reveal>

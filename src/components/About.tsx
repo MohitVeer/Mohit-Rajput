@@ -8,7 +8,7 @@ export default function About() {
       <Reveal>
         <h2
           id="about-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
+          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl mt-2"
         >
           About <span className="text-gradient">Me.</span>
         </h2>

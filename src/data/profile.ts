@@ -33,23 +33,26 @@ export const heroTags = [
 ]
 
 export const trailhead = {
-  rank: 'Double Star Ranger',
+  rank: 'Triple Star Ranger',
   rankImage:
-    'https://res.cloudinary.com/trailhead/image/upload/public-trailhead/assets/images/ranks/double-star-ranger.png',
-  agentblazerImage: 'https://trailhead.salesforce.com/assets/agentblazer/agentblazer-level-1-a564a869686f7b888fabd8c82dafaf25928fa006be2388ab57e6f232876c2bf0.png',
-  badges: 302,
-  points: '144,625',
-  trails: 47,
-  status: 'Agentblazer Champion 2026',
+    'https://res.cloudinary.com/trailhead/image/upload/public-trailhead/assets/images/ranks/triple-star-ranger.png',
+ agentblazerImage: 'https://trailhead.salesforce.com/assets/agentblazer/agentblazer-level-2-7dcee062f7cbc07086875c87de6163855f43972a4391d85336dd013338a7712e.png ',
+  agentblazerChampionImage:
+    'https://trailhead.salesforce.com/assets/agentblazer/agentblazer-level-1-a564a869686f7b888fabd8c82dafaf25928fa006be2388ab57e6f232876c2bf0.png',
+  badges: 313,
+  points: '149,275',
+  trails: 52,
+  status: 'Agentblazer Innovator 2026',
   // agentforceLevel: 'Champion',
   // agentforceNote:
   //   'Innovator level completing today — putting me among a small cohort of production-ready Agentforce builders worldwide.',
 }
 
 export const stats = [
-  { value: '8', label: 'Salesforce certifications' },
-  { value: '302', label: 'Trailhead badges' },
-  { value: '144K+', label: 'Trailhead points' },
+  { value: '8', label: 'Salesforce Certifications' },
+  { value: '5', label: 'Salesforce Superbadges' },
+  { value: '313', label: 'Trailhead Badges' },
+  { value: '149K+', label: 'Trailhead Points' },
   { value: '~50%', label: 'Faster LWC portal load time' },
   { value: '~35%', label: 'Shorter delivery cycles' },
   { value: '4.5/5', label: 'Client CSAT sustained' },
