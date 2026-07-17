@@ -4,7 +4,7 @@ import Reveal from './cinematic/Reveal'
 
 export default function Metrics() {
   return (
-    <Scene id="metrics" index="01" label="Impact">
+    <Scene id="metrics" index="01" label="Impact" center>
       <Reveal>
         <h2
           id="metrics-heading"

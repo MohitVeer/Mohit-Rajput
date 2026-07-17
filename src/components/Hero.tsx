@@ -1,10 +1,11 @@
 import { profile, heroTags, trailhead } from '../data/profile'
 import Scene from './cinematic/Scene'
+import { openResume } from '../lib/resumeEvents'
 import Reveal from './cinematic/Reveal'
 
 export default function Hero() {
   return (
-    <Scene id="top" index="00" label="Home">
+    <Scene id="top" index="00" label="Home" center>
       <Reveal>
         <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mt-2">
           Available to hire worldwide · Remote · Hybrid · Onsite
@@ -61,6 +62,13 @@ export default function Hero() {
             {trailhead.rank}
             <span className="sr-only"> — view Trailblazer profile (opens in a new tab)</span>
           </a>
+          <button
+            type="button"
+            onClick={openResume}
+            className="rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground transition hover:border-accent"
+          >
+            View Resume
+          </button>
         </div>
       </Reveal>
     </Scene>

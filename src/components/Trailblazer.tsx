@@ -4,7 +4,7 @@ import Reveal from './cinematic/Reveal'
 
 export default function Trailblazer() {
   return (
-    <Scene id="trailblazer" index="03" label="Trailblazer">
+    <Scene id="trailblazer" index="03" label="Trailblazer" center>
       <Reveal>
         <h2
           id="trailblazer-heading"

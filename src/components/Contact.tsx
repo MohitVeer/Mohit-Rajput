@@ -1,6 +1,7 @@
 import { profile } from '../data/profile'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
+import { openResume } from '../lib/resumeEvents'
 
 const emailSubject = encodeURIComponent('Interview / Role — Mohit Rajput')
 const emailBody = encodeURIComponent(
@@ -53,6 +54,13 @@ export default function Contact() {
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
+           <button
+            type="button"
+            onClick={openResume}
+            className="mt-8 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:border-accent"
+          >
+            View Resume
+          </button>
         </div>
       </Reveal>
     </Scene>

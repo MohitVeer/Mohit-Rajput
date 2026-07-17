@@ -4,7 +4,7 @@ import Reveal from './cinematic/Reveal'
 
 export default function About() {
   return (
-    <Scene id="about" index="02" label="About">
+    <Scene id="about" index="02" label="About" center>
       <Reveal>
         <h2
           id="about-heading"
