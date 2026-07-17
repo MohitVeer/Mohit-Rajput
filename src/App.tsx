@@ -10,6 +10,7 @@ import Footer from './components/Footer'
 import Hero from './components/Hero'
 import LightningRush from './components/LightningRush'
 import Metrics from './components/Metrics'
+import ResumeReveal from './components/ResumeReveal'
 import Preloader from './components/Preloader'
 import Skills from './components/Skills'
 import Trailblazer from './components/Trailblazer'
@@ -34,6 +35,7 @@ export default function App() {
       <CustomCursor />
       <MinimalBar ref={menuTriggerRef} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((v) => !v)} />
       <OverlayMenu open={menuOpen} onClose={() => setMenuOpen(false)} triggerRef={menuTriggerRef} />
+      <ResumeReveal />
 
       <div ref={contentRef}>
         <main id="main-content">

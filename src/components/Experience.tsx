@@ -4,7 +4,7 @@ import Reveal from './cinematic/Reveal'
 
 export default function Experience() {
   return (
-    <Scene id="experience" index="05" label="Experience">
+    <Scene id="experience" index="05" label="Experience" center>
       <Reveal>
         <h2
           id="experience-heading"
