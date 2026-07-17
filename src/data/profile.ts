@@ -7,6 +7,10 @@ export const profile = {
   linkedinHandle: 'mohit-veer',
   linkedinUrl: 'https://www.linkedin.com/in/mohit-veer',
   trailblazerUrl: 'https://www.salesforce.com/trailblazer/mrajputsl',
+  // Drop your actual PDF at public/resume.pdf — anything in public/ is
+  // served from the site root, so this path will resolve correctly once
+  // the file exists. Update the filename here if yours is named differently.
+  resumeUrl: '/resume.pdf',
 }
 
 export const sceneList = [
@@ -39,8 +43,8 @@ export const trailhead = {
  agentblazerImage: 'https://trailhead.salesforce.com/assets/agentblazer/agentblazer-level-2-7dcee062f7cbc07086875c87de6163855f43972a4391d85336dd013338a7712e.png ',
   agentblazerChampionImage:
     'https://trailhead.salesforce.com/assets/agentblazer/agentblazer-level-1-a564a869686f7b888fabd8c82dafaf25928fa006be2388ab57e6f232876c2bf0.png',
-  badges: 319,
-  points: '150,000',
+  badges: 320,
+  points: '150,100',
   trails: 52,
   status: 'Agentblazer Innovator 2026',
   // agentforceLevel: 'Champion',
@@ -51,8 +55,8 @@ export const trailhead = {
 export const stats = [
   { value: '8', label: 'Salesforce Certifications' },
   { value: '5', label: 'Salesforce Superbadges' },
-  { value: '319', label: 'Trailhead Badges' },
-  { value: '150K+', label: 'Trailhead Points' },
+  { value: '320', label: 'Trailhead Badges' },
+  { value: '150,100', label: 'Trailhead Points' },
   { value: '~50%', label: 'Faster LWC portal load time' },
   { value: '~35%', label: 'Shorter delivery cycles' },
   { value: '4.5+/5', label: 'Client CSAT sustained' },

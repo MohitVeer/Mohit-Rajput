@@ -4,7 +4,7 @@ import Reveal from './cinematic/Reveal'
 
 export default function Skills() {
   return (
-    <Scene id="skills" index="04" label="Skills">
+    <Scene id="skills" index="04" label="Skills" center>
       <Reveal>
         <h2
           id="skills-heading"
