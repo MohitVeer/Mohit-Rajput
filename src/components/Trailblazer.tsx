@@ -23,7 +23,14 @@ export default function Trailblazer() {
           delay={0.1}
           className="flex items-center gap-6 border-b border-border pb-8 md:border-b-0 md:border-r md:pb-0 md:pr-16"
         >
-          <img src={trailhead.rankImage} alt="" className="h-20 w-20 shrink-0" width={80} height={80} />
+          <img
+            loading="lazy"
+            src={trailhead.rankImage}
+            alt=""
+            className="h-20 w-20 shrink-0"
+            width={80}
+            height={80}
+          />
           <dl className="grid grid-cols-3 gap-6 font-mono">
             <div>
               <dd className="text-2xl font-semibold text-accent">{trailhead.badges}</dd>
@@ -49,6 +56,7 @@ export default function Trailblazer() {
             <img
               src={trailhead.agentblazerChampionImage}
               alt=""
+              loading="lazy"
               className="absolute left-0 top-2 h-22 w-22 opacity-70"
               width={80}
               height={80}
@@ -56,6 +64,7 @@ export default function Trailblazer() {
             <img
               src={trailhead.agentblazerImage}
               alt="Agentblazer Innovator badge"
+              loading="lazy"
               className="absolute left-8 top-0 h-24 w-24 drop-shadow-md"
               width={96}
               height={96}
@@ -71,7 +80,7 @@ export default function Trailblazer() {
             <a
               href={profile.trailblazerUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="mt-4 inline-flex items-center gap-1 border-b border-accent text-base font-semibold text-accent"
             >
               Verify on Trailblazer →<span className="sr-only"> (opens in a new tab)</span>
