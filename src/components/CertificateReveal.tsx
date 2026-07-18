@@ -1,35 +1,39 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { profile } from '../data/profile'
-import { OPEN_RESUME_EVENT } from '../lib/resumeEvents'
 
-const BOOT_LINES = ['opening dossier...', 'verifying credentials...', 'ready.']
-const LINE_INTERVAL_MS = 320
+export interface CertificateData {
+  name: string
+  image: string
+  fileUrl?: string
+}
 
-export default function ResumeReveal() {
-  const [open, setOpen] = useState(false)
+interface CertificateRevealProps {
+  cert: CertificateData | null
+  onClose: () => void
+  returnFocusRef: React.RefObject<HTMLElement>
+}
+
+const BOOT_LINES = ['loading credential...', 'checking Trailhead record...', 'ready.']
+const LINE_INTERVAL_MS = 260
+
+export default function CertificateReveal({ cert, onClose, returnFocusRef }: CertificateRevealProps) {
   const [phase, setPhase] = useState<'boot' | 'reveal'>('boot')
   const [lineIndex, setLineIndex] = useState(0)
   const reduceMotion = useReducedMotion()
-
   const panelRef = useRef<HTMLDivElement>(null)
-  const returnFocusRef = useRef<HTMLElement | null>(null)
 
-  // Any "View Résumé" button anywhere in the app calls openResume(), which
-  // dispatches this event — keeps a single overlay/instance instead of one
-  // per trigger button (avoiding duplicate ids/focus-trap conflicts).
+  const open = cert !== null
+
+  // Reset to the start of the boot sequence every time a different
+  // certificate is opened (skip straight to reveal under reduced motion).
   useEffect(() => {
-    const handleOpen = () => {
-      returnFocusRef.current = document.activeElement as HTMLElement
+    if (open) {
       setPhase(reduceMotion ? 'reveal' : 'boot')
       setLineIndex(0)
-      setOpen(true)
     }
-    window.addEventListener(OPEN_RESUME_EVENT, handleOpen)
-    return () => window.removeEventListener(OPEN_RESUME_EVENT, handleOpen)
-  }, [reduceMotion])
+  }, [open, cert?.name, reduceMotion])
 
-  // Advance the boot-sequence lines, then flip to the reveal phase.
   useEffect(() => {
     if (!open || phase !== 'boot') return
     if (lineIndex >= BOOT_LINES.length - 1) {
@@ -40,10 +44,8 @@ export default function ResumeReveal() {
     return () => clearTimeout(advance)
   }, [open, phase, lineIndex])
 
-  const close = () => setOpen(false)
-
-  // Focus management + focus trap + Escape-to-close, same pattern as the
-  // scene menu overlay.
+  // Focus trap + Escape-to-close + focus return, same pattern as the other
+  // overlays in this app.
   useEffect(() => {
     if (!open) {
       returnFocusRef.current?.focus()
@@ -58,7 +60,7 @@ export default function ResumeReveal() {
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        close()
+        onClose()
         return
       }
       if (e.key === 'Tab') {
@@ -82,16 +84,16 @@ export default function ResumeReveal() {
       document.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = ''
     }
-  }, [open])
+  }, [open, onClose, returnFocusRef])
 
   return (
     <AnimatePresence>
-      {open && (
+      {open && cert && (
         <motion.div
           ref={panelRef}
           role="dialog"
           aria-modal="true"
-          aria-label="Résumé"
+          aria-label={cert.name}
           data-lenis-prevent
           initial={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -110,13 +112,13 @@ export default function ResumeReveal() {
               transition={{ duration: 0.35 }}
               className="w-full max-w-sm"
             >
-              <div className="flex items-center justify-between">
-                <span className="scene-index">Resume</span>
+              <div className="flex items-center justify-between gap-4">
+                <span className="scene-index truncate">{cert.name}</span>
                 <button
                   type="button"
-                  onClick={close}
+                  onClick={onClose}
                   aria-label="Close"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-border text-foreground transition hover:border-accent hover:text-accent"
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border text-foreground transition hover:border-accent hover:text-accent"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path
@@ -129,40 +131,38 @@ export default function ResumeReveal() {
                 </button>
               </div>
 
-              <div className="mt-6 overflow-hidden rounded-xl border border-border bg-card">
-                <iframe
-                  src={`${profile.resumeUrl}#toolbar=0`}
-                  title="Resume preview"
-                  // Defense-in-depth even though this is a same-origin,
-                  // trusted static file: no scripts, no same-origin
-                  // privileges, no popups/top-navigation from the embedded
-                  // document, and no referrer sent to it.
-                  sandbox=""
-                  referrerPolicy="no-referrer"
-                  className="h-72 w-full sm:h-80"
+              <div className="mt-6 flex flex-col items-center gap-4 rounded-xl border border-border bg-card px-6 py-10">
+                <img
+                  src={cert.image}
+                  alt={`${cert.name} badge`}
+                  className="h-24 w-24"
+                  width={96}
+                  height={96}
                 />
-                <p className="border-t border-border px-4 py-2 text-center text-xs text-muted-foreground">
-                  Preview not loading? Use the buttons below.
-                </p>
+                <p className="text-center text-sm text-muted-foreground">{cert.name}</p>
               </div>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <a
-                  href={profile.resumeUrl}
-                  download
-                  className="flex-1 rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold text-accent-foreground shadow-glow transition hover:opacity-90"
-                >
-                  Download PDF
-                </a>
-                <a
-                  href={profile.resumeUrl}
+                  href={profile.trailblazerUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 rounded-full border border-border px-6 py-3 text-center text-sm font-semibold text-foreground transition hover:border-accent"
+                  className="flex-1 rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold text-accent-foreground shadow-glow transition hover:opacity-90"
                 >
-                  Open in new tab
+                  Verify on Trailhead
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
+                {cert.fileUrl ? (
+                  <a
+                    href={cert.fileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 rounded-full border border-border px-6 py-3 text-center text-sm font-semibold text-foreground transition hover:border-accent"
+                  >
+                    Open in new tab
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                ) : null}
               </div>
             </motion.div>
           )}

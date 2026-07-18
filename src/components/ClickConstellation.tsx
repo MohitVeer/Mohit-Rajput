@@ -12,6 +12,10 @@ const PARTICLES_PER_BURST = 16
 const LINK_DISTANCE = 90
 const PARTICLE_SPEED = 1.6
 const FADE_RATE = 0.012
+// Bounds the worst case for the O(n²) per-burst distance check: even if
+// someone clicks rapidly, only this many bursts animate concurrently — the
+// oldest is dropped immediately (not faded) once the cap is hit.
+const MAX_CONCURRENT_BURSTS = 6
 
 /**
  * On click anywhere in the app, spawns a small burst of points at the click
@@ -19,11 +23,15 @@ const FADE_RATE = 0.012
  * — like a tiny constellation — then fade out. Purely decorative: it never
  * intercepts the click itself (canvas is pointer-events-none), and is
  * skipped entirely under prefers-reduced-motion.
+ *
+ * The animation loop only runs while at least one burst is alive — it does
+ * not spin a requestAnimationFrame loop indefinitely in the background.
  */
 export default function ClickConstellation() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const burstsRef = useRef<Particle[][]>([])
   const rafRef = useRef<number>()
+  const loopRunningRef = useRef(false)
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -44,26 +52,6 @@ export default function ClickConstellation() {
     const accentColor = getComputedStyle(document.documentElement)
       .getPropertyValue('--accent')
       .trim()
-
-    const spawnBurst = (x: number, y: number) => {
-      const particles: Particle[] = Array.from({ length: PARTICLES_PER_BURST }, () => {
-        const angle = Math.random() * Math.PI * 2
-        const speed = PARTICLE_SPEED * (0.4 + Math.random() * 0.8)
-        return {
-          x,
-          y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          alpha: 1,
-        }
-      })
-      burstsRef.current.push(particles)
-    }
-
-    const onClick = (e: MouseEvent) => {
-      spawnBurst(e.clientX, e.clientY)
-    }
-    window.addEventListener('click', onClick)
 
     const tick = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -108,14 +96,49 @@ export default function ClickConstellation() {
         return particles.length > 0
       })
 
+      // Only keep the loop alive while something is actually animating.
+      if (burstsRef.current.length > 0) {
+        rafRef.current = requestAnimationFrame(tick)
+      } else {
+        loopRunningRef.current = false
+      }
+    }
+
+    const ensureLoopRunning = () => {
+      if (loopRunningRef.current) return
+      loopRunningRef.current = true
       rafRef.current = requestAnimationFrame(tick)
     }
-    rafRef.current = requestAnimationFrame(tick)
+
+    const spawnBurst = (x: number, y: number) => {
+      const particles: Particle[] = Array.from({ length: PARTICLES_PER_BURST }, () => {
+        const angle = Math.random() * Math.PI * 2
+        const speed = PARTICLE_SPEED * (0.4 + Math.random() * 0.8)
+        return {
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          alpha: 1,
+        }
+      })
+      burstsRef.current.push(particles)
+      if (burstsRef.current.length > MAX_CONCURRENT_BURSTS) {
+        burstsRef.current.shift()
+      }
+      ensureLoopRunning()
+    }
+
+    const onClick = (e: MouseEvent) => {
+      spawnBurst(e.clientX, e.clientY)
+    }
+    window.addEventListener('click', onClick)
 
     return () => {
       window.removeEventListener('resize', resize)
       window.removeEventListener('click', onClick)
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      loopRunningRef.current = false
     }
   }, [])
 

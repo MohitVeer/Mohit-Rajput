@@ -1,22 +1,27 @@
-import { useRef, useState } from 'react'
+import { lazy, Suspense, useRef, useState } from 'react'
 import About from './components/About'
-import Articles from './components/Articles'
-import Certifications from './components/Certifications'
 import ClickConstellation from './components/ClickConstellation'
-import Contact from './components/Contact'
 import CustomCursor from './components/CustomCursor'
-import Experience from './components/Experience'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
-import LightningRush from './components/LightningRush'
 import Metrics from './components/Metrics'
-import ResumeReveal from './components/ResumeReveal'
 import Preloader from './components/Preloader'
-import Skills from './components/Skills'
-import Trailblazer from './components/Trailblazer'
+import ResumeReveal from './components/ResumeReveal'
 import MinimalBar from './components/cinematic/MinimalBar'
 import OverlayMenu from './components/cinematic/OverlayMenu'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
+
+// Below-the-fold sections: code-split so their JS (and, for Experience/
+// LightningRush, their heavier animation/game logic) isn't parsed until the
+// browser actually needs it, instead of shipping it all in the initial
+// bundle up front.
+const Trailblazer = lazy(() => import('./components/Trailblazer'))
+const Skills = lazy(() => import('./components/Skills'))
+const Experience = lazy(() => import('./components/Experience'))
+const Certifications = lazy(() => import('./components/Certifications'))
+const Articles = lazy(() => import('./components/Articles'))
+const LightningRush = lazy(() => import('./components/LightningRush'))
+const Contact = lazy(() => import('./components/Contact'))
 
 export default function App() {
   useSmoothScroll()
@@ -42,13 +47,19 @@ export default function App() {
           <Hero />
           <Metrics />
           <About />
-          <Trailblazer />
-          <Skills />
-          <Experience />
-          <Certifications />
-          <Articles />
-          <LightningRush />
-          <Contact />
+          {/* A null fallback is intentional: these chunks are small and load
+              quickly, so a loading spinner would just flash distractingly.
+              Nothing here is above the fold, so a brief blank gap while a
+              chunk fetches is preferable to layout-shifting content in. */}
+          <Suspense fallback={null}>
+            <Trailblazer />
+            <Skills />
+            <Experience />
+            <Certifications />
+            <Articles />
+            <LightningRush />
+            <Contact />
+          </Suspense>
         </main>
 
         <Footer />

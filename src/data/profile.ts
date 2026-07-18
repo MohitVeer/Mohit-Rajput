@@ -7,10 +7,7 @@ export const profile = {
   linkedinHandle: 'mohit-veer',
   linkedinUrl: 'https://www.linkedin.com/in/mohit-veer',
   trailblazerUrl: 'https://www.salesforce.com/trailblazer/mrajputsl',
-  // Drop your actual PDF at public/resume.pdf — anything in public/ is
-  // served from the site root, so this path will resolve correctly once
-  // the file exists. Update the filename here if yours is named differently.
-  resumeUrl: '/resume.pdf',
+  resumeUrl: '/public/resume.pdf',
 }
 
 export const sceneList = [
@@ -40,20 +37,20 @@ export const trailhead = {
   rank: 'Triple Star Ranger',
   rankImage:
     'https://res.cloudinary.com/trailhead/image/upload/public-trailhead/assets/images/ranks/triple-star-ranger.png',
- agentblazerImage: 'https://trailhead.salesforce.com/assets/agentblazer/agentblazer-level-2-7dcee062f7cbc07086875c87de6163855f43972a4391d85336dd013338a7712e.png ',
+ agentblazerImage: '/public/Agentblazer/agentblazer-Innovator.png',
   agentblazerChampionImage:
-    'https://trailhead.salesforce.com/assets/agentblazer/agentblazer-level-1-a564a869686f7b888fabd8c82dafaf25928fa006be2388ab57e6f232876c2bf0.png',
+    '/public/Agentblazer/agentblazer-champion.png',
   badges: 320,
   points: '150,100',
   trails: 52,
   status: 'Agentblazer Innovator 2026',
-  // agentforceLevel: 'Champion',
+  // agentforceLevel: 'Legend',
   // agentforceNote:
-  //   'Innovator level completing today — putting me among a small cohort of production-ready Agentforce builders worldwide.',
+  //   'On the journey of becoming a Salesforce Agentblazer Legend.',
 }
 
 export const stats = [
-  { value: '8', label: 'Salesforce Certifications' },
+  { value: '9', label: 'Salesforce Certifications' },
   { value: '5', label: 'Salesforce Superbadges' },
   { value: '320', label: 'Trailhead Badges' },
   { value: '150,100', label: 'Trailhead Points' },
@@ -63,7 +60,8 @@ export const stats = [
 ]
 
 export const aboutFacts = [
-  '5+ yrs Salesforce UI · 8 certs',
+  '5+ yrs Salesforce Front-End Development',
+  '9X Salesforce Certified & 5X Superbadges',
   'WCAG 2.1 AA by default',
   'CI/CD with Gearset & SFDX',
   'Circle of Excellence · Wipro & Mphasis',
@@ -265,59 +263,74 @@ export const experience = [
 export const certGroups = [
   {
     title: 'Agentforce',
-    logo: 'https://thc-public-files-nonproduction.s3.amazonaws.com/th-profile/prd-brands/agentforce-logo.png',
+    logo: '/public/Salesforce Product Icons/agentforce-logo.png',
     certs: {
         name: 'Salesforce Certified AI Associate',
-        image: 'https://drm.my.salesforce.com/servlet/servlet.ImageServer?id=015Rf00000YMdGt&oid=00DF0000000gZsu&lastMod=1770009252000',
+        image: '/public/Salesforce Icons/sf-cert-AI-Associate-rtd/High Res/2026-01_Badge_SF-Certified_AI-Associate_High-Res_RETIRED.png',
         alt: 'Salesforce Certified AI Associate',
+      fileUrl: '/public/Certifications/AI_Associate.pdf',
       },
   },
   {
     title: 'Industry Solutions',
-    logo: 'https://thc-public-files-nonproduction.s3.amazonaws.com/th-profile/prd-brands/industry-solutions-logo.png',
+    logo: '/public/Salesforce Product Icons/industry-solutions-logo.png',
     certs: [{
       name: 'Salesforce Certified OmniStudio Consultant',
-      image: 'https://drm.my.salesforce.com/servlet/servlet.ImageServer?id=015Rf00000MABgg&oid=00DF0000000gZsu&lastMod=1746780478000',
+      image: '/public/Salesforce Icons/sf-cert-OmniStudio-Consultant/High Res/2025-04_Badge_SF-Certified_Omnistudio-Con_High-Res.png',
       alt: 'Salesforce Certified OmniStudio Consultant',
+      fileUrl: '/public/Certifications/Omnistudio_Consultant.pdf',
     },
     {
       name: 'Salesforce Certified OmniStudio Developer',
-      image: 'https://drm.my.salesforce.com/servlet/servlet.ImageServer?id=015Rf00000MAGgL&oid=00DF0000000gZsu&lastMod=17467805850000',
+      image: '/public/Salesforce Icons/sf-cert-OmniStudio-Developer/High Res/2025-04_Badge_SF-Certified_Omnistudio-Dev_High-Res.png',
       alt: 'Salesforce Certified OmniStudio Developer',
+      fileUrl: '/public/Certifications/Omnistudio_Developer.pdf',
     }],
   },
   {
     title: 'Marketing Cloud',
-    logo: 'https://thc-public-files-nonproduction.s3.amazonaws.com/th-profile/prd-brands/marketing-cloud-logo.png',
+    logo: '/public/Salesforce Product Icons/marketing-cloud-logo.png',
     certs: [{
       name: 'Salesforce Certified Marketing Cloud Email Specialist',
-      image: 'https://drm.my.salesforce.com/servlet/servlet.ImageServer?id=015Rf00000MAIgf&oid=00DF0000000gZsu&lastMod=1746787093000',
+      image: '/public/Salesforce Icons/sf-cert-Marketing-Cloud-Email-Specialist/High Res/2021-03_Badge_SF-Certified_Marketing-Cloud-Email-Specialist_High-Res.png',
       alt: 'Salesforce Certified Marketing Cloud Email Specialist',
+      fileUrl: '/public/Certifications/Marketing_Cloud_Email_Specialist.pdf',
     },
     {
       name: 'Salesforce Certified Marketing Cloud Engagement Developer',
-      image: 'https://drm.my.salesforce.com/servlet/servlet.ImageServer?id=015Rf00000MA6nT&oid=00DF0000000gZsu&lastMod=1746778963000',
+      image: '/public/Salesforce Icons/sf-cert-Marketing-Cloud-Engagement-Developer/High Res/2025-04_Badge_SF-Certified_MC-Eng-Dev_High-Res.png',
       alt: 'Salesforce Certified Marketing Cloud Engagement Developer',
+      fileUrl: '/public/Certifications/Marketing_Cloud_Engagement_Developer.pdf',
     },
     {
       name: 'Marketing Cloud Personalization Accredited Professional',
-      image: 'https://drm.my.salesforce.com/servlet/servlet.ImageServer?id=015Rf00000MACck&oid=00DF0000000gZsu&lastMod=1746779293000',
+      image: '/public/Salesforce Icons/plc-marketing-cloud-personalization/High Res/2021-04_PLC-AP-Badge_MC-Personalization_High-Res.png',
       alt: 'Marketing Cloud Personalization Accredited Professional',
+      fileUrl: '/public/Certifications/Marketing_Cloud_Personalization.pdf',
     }],
 
   },
   {
     title: 'Salesforce Platform',
-    logo: 'https://thc-public-files-nonproduction.s3.amazonaws.com/th-profile/prd-brands/salesforce-platform-logo.png',
-    certs: [{
+    logo: '/public/Salesforce Product Icons/salesforce-platform-logo.png',
+    certs: [
+      {
       name: 'Salesforce Certified Platform Foundations',
-      image: 'https://drm.my.salesforce.com/servlet/servlet.ImageServer?id=015Rf00000MA6fO&oid=00DF0000000gZsu&lastMod=1746782543000',
+      image: '/public/Salesforce Icons/sf-cert-associate-platform-foundations/High Res/2025-03_Badge_SF-Certified_Platform-Foundations_High-Res.png',
       alt: 'Salesforce Certified Platform Foundations',
+      fileUrl: '/public/Certifications/Platform_Foundations.pdf',
+    },
+    {
+      name: 'Salesforce Certified Platform Developer I',
+      image: '/public/Salesforce Icons/sf-cert-platform-developer-I/High Res/2025-04_Badge_SF-Certified_Plat-Dev_High-Res.png',
+      alt: 'Salesforce Certified Platform Developer I',
+      fileUrl: '/public/Certifications/Platform_Developer.pdf',
     },
     {
       name: 'Salesforce Certified Platform User Experience Designer',
-      image: 'https://drm.my.salesforce.com/servlet/servlet.ImageServer?id=015Rf00000MA970&oid=00DF0000000gZsu&lastMod=1746781558000',
+      image: '/public/Salesforce Icons/sf-cert-platform-ux-designer/High Res/2025-03_Badge_SF-Certified_Plat-UX-Dsgn_High-Res.png',
       alt: 'Salesforce Certified Platform User Experience Designer',
+      fileUrl: '/public/Certifications/Platform_User_Experience_Designer.pdf',
     }],
   },
 ]
@@ -326,36 +339,35 @@ export const superbadges = [
   {
     title: 'Superbadge: Agentforce Service',
     description: 'Customize an Agentforce Service Agent for customer inquiries and bookings.',
-    image:
-      'https://res.cloudinary.com/hy4kyit2a/f_auto/fl_lossy/q_70/learn/superbadges/superbadge-agentforce-service-sbu/8b15afebd3bc004b830549d6becc8e46_badge.png',
+    image: '/public/Superbadges/Agentforce Service.webp',
     url: 'https://www.salesforce.com/trailblazer/mrajputsl',
   },
   {
     title: 'Superbadge: Prompt Builder Templates',
     description: 'Build Prompt Builder templates for AI-powered engagement.',
     image:
-      'https://res.cloudinary.com/hy4kyit2a/f_auto/fl_lossy/q_70/learn/superbadges/superbadge_prompt_builder_templates_sbu/32581be298e7d845c165a8831e821afc_badge.png',
+      '/public/Superbadges/Prompt Builder Templates.webp',
     url: 'https://www.salesforce.com/trailblazer/mrajputsl',
   },
   {
     title: 'Superbadge: Record-Triggered Flow',
     description: 'Automate processes for efficient, insightful record management.',
     image:
-      'https://res.cloudinary.com/hy4kyit2a/f_auto/fl_lossy/q_70/learn/superbadges/superbadge_record_triggered_flows_sbu/3a82d839acd6d2ddc08ac9420bc3d340_badge.png',
+      '/public/Superbadges/Record-Triggered Flow.webp',
     url: 'https://www.salesforce.com/trailblazer/mrajputsl',
   },
   {
     title: 'Superbadge: User Experience Superbadge Unit',
     description: 'Design intuitive Salesforce user experiences with Lightning tools.',
     image:
-      'https://res.cloudinary.com/hy4kyit2a/f_auto/fl_lossy/q_70/learn/superbadges/superbadge-user-experience-sbu/923740afc25850c35ffbd44a85079d53_badge.png',
+      '/public/Superbadges/User Experience Superbadge.webp',
     url: 'https://www.salesforce.com/trailblazer/mrajputsl',
   },
   {
     title: 'Superbadge: Lightning Web Components Specialist',
     description: 'Build scalable Lightning Web Components for modern Salesforce apps.',
     image:
-      'https://res.cloudinary.com/hy4kyit2a/f_auto/fl_lossy/q_70/learn/superbadges/superbadge_lwc_specialist/0b422a78e019b08aa699dc76b48cc7e8_badge.png',
+      '/public/Superbadges/Lightning Web Components Specialist.webp',
     url: 'https://www.salesforce.com/trailblazer/mrajputsl',
   },
 ]
