@@ -36,7 +36,7 @@ export const heroTags = [
 export const trailhead = {
   rank: 'Triple Star Ranger',
   rankImage:
-    'https://res.cloudinary.com/trailhead/image/upload-trailhead/assets/images/ranks/triple-star-ranger.png',
+    '/Salesforce Product Icons/triple-star-ranger.png',
  agentblazerImage: '/Agentblazer/agentblazer-Innovator.png',
   agentblazerChampionImage:
     '/Agentblazer/agentblazer-champion.png',
