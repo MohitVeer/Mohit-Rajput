@@ -131,15 +131,16 @@ export default function ResumeReveal() {
 
               <div className="mt-6 overflow-hidden rounded-xl border border-border bg-card">
                 <iframe
-                  src={`${profile.resumeUrl}#toolbar=0`}
-                  title="Resume preview"
-                  // Defense-in-depth even though this is a same-origin,
-                  // trusted static file: no scripts, no same-origin
-                  // privileges, no popups/top-navigation from the embedded
-                  // document, and no referrer sent to it.
-                  sandbox=""
-                  referrerPolicy="no-referrer"
-                  className="h-72 w-full sm:h-80"
+                src={`${profile.resumeUrl}#toolbar=0`}
+                title="Resume preview"
+  // No sandbox attribute here: this is a same-origin,
+  // trusted static PDF, and Chrome's built-in PDF viewer
+  // needs same-origin + script permissions to render at
+  // all — a sandboxed iframe just shows a blank/broken
+  // preview instead. referrerPolicy still applies since it
+  // doesn't affect rendering.
+                referrerPolicy="no-referrer"
+                className="h-72 w-full sm:h-80"
                 />
                 <p className="border-t border-border px-4 py-2 text-center text-xs text-muted-foreground">
                   Preview not loading? Use the buttons below.
