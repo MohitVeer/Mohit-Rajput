@@ -7,7 +7,7 @@ export const profile = {
   linkedinHandle: 'mohit-veer',
   linkedinUrl: 'https://www.linkedin.com/in/mohit-veer',
   trailblazerUrl: 'https://www.salesforce.com/trailblazer/mrajputsl',
-  resumeUrl: '/resume.pdf',
+  resumeUrl: '/Mohit_Rajput_Resume.pdf',
 }
 
 export const sceneList = [
@@ -202,6 +202,9 @@ export const experience = [
       'Resolved 300+ production defects within SLA, sustaining 4.5+/5 CSAT.',
       'Awarded Circle of Excellence for independently resolving high-impact production defects.',
     ],
+    achievements: [
+      'Circle of Excellence Award — resolving high-impact production defects and improving platform stability.'
+    ],
     clients: ['American Honda', "St. James's Place"],
   },
   {
@@ -210,10 +213,16 @@ export const experience = [
     period: 'Aug 2022 — Sep 2024',
     location: 'Bengaluru, India',
     bullets: [
-      'Shipped LWC, FlexCards and OmniScripts across Financial Services & Health Cloud.',
-      'Built accelerator (Foundry) cutting implementation timelines ~35% and enabling pre-sales demos.',
-      'Developed responsive AMPscript emails validated across Outlook / Gmail / Apple Mail with Litmus.',
+      'Delivered Apex, LWC, FlexCard, and OmniScript solutions across 5+ Financial Services and Health Cloud implementations for 8+ enterprise clients (Republic Finance, Arvest Bank, Wealth Enhancement Group, Peoples Bank, Teledoc, Five Star Bank, Beatport), improving user journey completion rates 20%.',
+      'Contributed to Foundry, a reusable component/OmniStudio accelerator, reducing implementation timelines 35% across 3 engagements and enabling pre-sales demos.',
+      'Designed reusable LWC/OmniStudio frameworks for 4 client-facing Experience Cloud portals using SLDS patterns, reducing per-portal development time approximately 30%.',
+      'Developed responsive AMPscript emails validated across Outlook, Gmail, and Apple Mail using Litmus, ensuring consistent rendering for Marketing Cloud campaigns.',
+      'Collaborated with solution architects and domain consultants to translate design intent into precise, accessible component implementations aligned with Financial Services and Health Cloud data models.',
+      'Maintained consistent SLDS styling and responsive design standards across 6+ concurrent client projects, ensuring cross-cloud UI consistency.',
       'Received Measure of Excellence, Circle of Excellence and You Rock awards.',
+    ],
+    achievements: [
+      'Measure of Excellence', 'Circle of Excellence', 'You Rock Awards'
     ],
     clients: [
       'Republic Finance',
@@ -237,6 +246,9 @@ export const experience = [
       'Implemented SEO best practices and performance optimizations to improve page speed and user experience.',
       'Contributed to the development of brands including House of Believe, Deerika, Mall Fifty One, Pharma Aviorion, and Smart Cart.',
       'Built and enhanced the House of Believe e-commerce platform, helping generate over ₹5 lakh in monthly revenue.'
+    ],
+    achievements: [
+      'Formal appreciation from MD and stakeholders for delivery on the House of Believe and DJT brand websites.'
     ],
     clients: [
       'Deerika',
