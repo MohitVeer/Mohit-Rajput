@@ -40,6 +40,19 @@ export default function Experience() {
                 ))}
               </ul>
 
+              {job.achievements && job.achievements.length > 0 && (
+                <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">
+                  <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                    Achievements
+                  </span>
+                  {job.achievements.map((achievement) => (
+                    <span key={achievement} className="font-mono text-sm text-foreground">
+                      {achievement}
+                    </span>
+                  ))}
+                </div>
+              )}
+
               {job.clients.length > 0 && (
                 <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">
                   <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
