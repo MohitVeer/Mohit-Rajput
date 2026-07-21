@@ -18,14 +18,6 @@ A modern, responsive portfolio showcasing my expertise as a Salesforce UI Engine
 - Tailwind CSS
 - Framer Motion
 
-### Salesforce
-
-- Lightning Web Components (LWC)
-- OmniStudio
-- Experience Cloud
-- Marketing Cloud
-- Agentforce
-- Salesforce Lightning Design System (SLDS)
 
 ### Design
 
