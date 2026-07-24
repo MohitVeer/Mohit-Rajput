@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { profile } from '../data/profile'
 import { OPEN_RESUME_EVENT } from '../lib/resumeEvents'
+import { trackResumeDownload, trackResumeView } from '../lib/analytics'
 
 const BOOT_LINES = ['opening dossier...', 'verifying credentials...', 'ready.']
 const LINE_INTERVAL_MS = 320
@@ -24,6 +25,7 @@ export default function ResumeReveal() {
       setPhase(reduceMotion ? 'reveal' : 'boot')
       setLineIndex(0)
       setOpen(true)
+      trackResumeView()
     }
     window.addEventListener(OPEN_RESUME_EVENT, handleOpen)
     return () => window.removeEventListener(OPEN_RESUME_EVENT, handleOpen)
@@ -151,6 +153,7 @@ export default function ResumeReveal() {
                 <a
                   href={profile.resumeUrl}
                   download
+                  onClick={() => trackResumeDownload()}
                   className="flex-1 rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold text-accent-foreground shadow-glow transition hover:opacity-90"
                 >
                   Download PDF

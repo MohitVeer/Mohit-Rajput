@@ -3,6 +3,7 @@ import { certGroups, superbadges } from '../data/profile'
 import CertificateReveal, { CertificateData } from './CertificateReveal'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
+import { trackEvent, trackExternalLink } from '../lib/analytics'
 
 export default function Certifications() {
   const [activeCert, setActiveCert] = useState<CertificateData | null>(null)
@@ -11,6 +12,7 @@ export default function Certifications() {
   const openCert = (cert: CertificateData, trigger: HTMLButtonElement) => {
     lastTriggerRef.current = trigger
     setActiveCert(cert)
+    trackEvent('Certification', 'cert_view', cert.name)
   }
 
   return (
@@ -80,6 +82,7 @@ export default function Certifications() {
                   href={badge.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackExternalLink(badge.url, `superbadge:${badge.title}`)}
                   className="group flex gap-4 border-b border-border pb-6 transition hover:border-accent"
                 >
                   <img
