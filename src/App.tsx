@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import About from './components/About'
 import ClickConstellation from './components/ClickConstellation'
 import CustomCursor from './components/CustomCursor'
@@ -10,6 +10,7 @@ import ResumeReveal from './components/ResumeReveal'
 import MinimalBar from './components/cinematic/MinimalBar'
 import OverlayMenu from './components/cinematic/OverlayMenu'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
+import { initAnalytics } from './lib/analytics'
 
 // Below-the-fold sections: code-split so their JS (and, for Experience/
 // LightningRush, their heavier animation/game logic) isn't parsed until the
@@ -25,6 +26,11 @@ const Contact = lazy(() => import('./components/Contact'))
 
 export default function App() {
   useSmoothScroll()
+
+  useEffect(() => {
+    initAnalytics()
+  }, [])
+
   const [menuOpen, setMenuOpen] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
   const menuTriggerRef = useRef<HTMLButtonElement>(null)
