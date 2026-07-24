@@ -114,9 +114,9 @@ Designed using a mobile-first approach with Tailwind CSS breakpoints.
 
 ## 🏆 Highlights
 
-- 7× Salesforce Certified
-- Trailhead Double Star Ranger
-- Agentblazer Champion 2026
+- 9× Salesforce Certified
+- Trailhead Triple Star Ranger
+- Agentblazer Innovator 2026
 - Multiple Salesforce Superbadges
 - 5+ years of Salesforce UI & Front-End Development
 - Experience across LWC, OmniStudio, Experience Cloud, Marketing Cloud, and Agentforce
