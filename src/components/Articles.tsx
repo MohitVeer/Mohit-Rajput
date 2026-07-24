@@ -1,6 +1,7 @@
 import { articles } from '../data/profile'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
+import { trackEvent } from '../lib/analytics'
 
 export default function Articles() {
   return (
@@ -25,6 +26,7 @@ export default function Articles() {
                 href={article.url}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackEvent('Article', 'article_click', article.title, { destination: article.url })}
                 className="group flex flex-col justify-between gap-2 py-6 md:flex-row md:items-baseline"
               >
                 <h3 className="font-display text-xl font-semibold leading-snug transition group-hover:text-accent md:text-2xl">

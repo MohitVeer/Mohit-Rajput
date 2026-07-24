@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+# Single-page app: let React Router (client-side) handle unknown paths.
+# This must come after the function's own /api/track route registration,
+# which Netlify resolves first regardless of order here.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
