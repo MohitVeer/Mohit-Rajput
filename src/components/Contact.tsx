@@ -2,6 +2,7 @@ import { profile } from '../data/profile'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
 import { openResume } from '../lib/resumeEvents'
+import { trackExternalLink } from '../lib/analytics'
 
 const emailSubject = encodeURIComponent('Interview / Role — Mohit Rajput')
 const emailBody = encodeURIComponent(
@@ -32,6 +33,7 @@ export default function Contact() {
         <div className="mt-12">
           <a
             href={mailtoHref}
+            onClick={() => trackExternalLink(mailtoHref, 'email')}
             className="group inline-flex items-baseline gap-3 border-b-2 border-accent font-display text-2xl font-semibold transition hover:text-accent md:text-4xl"
           >
             {profile.email}
@@ -41,13 +43,18 @@ export default function Contact() {
           </a>
 
           <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4 font-mono text-base">
-            <a href={profile.phoneHref} className="text-muted-foreground hover:text-foreground">
+            <a
+              href={profile.phoneHref}
+              onClick={() => trackExternalLink(profile.phoneHref, 'phone')}
+              className="text-muted-foreground hover:text-foreground"
+            >
               {profile.phone}
             </a>
             <a
               href={profile.linkedinUrl}
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackExternalLink(profile.linkedinUrl, 'linkedin')}
               className="text-muted-foreground hover:text-foreground"
             >
               /{profile.linkedinHandle}

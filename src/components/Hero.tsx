@@ -2,6 +2,7 @@ import { profile, heroTags, trailhead } from '../data/profile'
 import Scene from './cinematic/Scene'
 import { openResume } from '../lib/resumeEvents'
 import Reveal from './cinematic/Reveal'
+import { trackExternalLink } from '../lib/analytics'
 
 export default function Hero() {
   return (
@@ -49,6 +50,9 @@ export default function Hero() {
         <div className="mt-10 flex flex-wrap gap-4">
           <a
             href={`mailto:${profile.email}?subject=Interview%20request%20—%20Mohit%20Rajput`}
+            onClick={() =>
+              trackExternalLink(`mailto:${profile.email}`, 'email_hero_cta')
+            }
             className="rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-accent-foreground shadow-glow transition hover:opacity-90"
           >
             Let&apos;s talk →
@@ -57,6 +61,7 @@ export default function Hero() {
             href={profile.trailblazerUrl}
             target="_blank"
             rel="noreferrer"
+            onClick={() => trackExternalLink(profile.trailblazerUrl, 'trailblazer_hero')}
             className="rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground transition hover:border-accent"
           >
             {trailhead.rank}

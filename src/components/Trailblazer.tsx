@@ -1,6 +1,7 @@
 import { profile, trailhead } from '../data/profile'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
+import { trackExternalLink } from '../lib/analytics'
 
 export default function Trailblazer() {
   return (
@@ -81,6 +82,7 @@ export default function Trailblazer() {
               href={profile.trailblazerUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackExternalLink(profile.trailblazerUrl, 'trailblazer_verify')}
               className="mt-4 inline-flex items-center gap-1 border-b border-accent text-base font-semibold text-accent"
             >
               Verify on Trailblazer →<span className="sr-only"> (opens in a new tab)</span>
