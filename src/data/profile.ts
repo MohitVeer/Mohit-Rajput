@@ -7,6 +7,8 @@ export const profile = {
   linkedinHandle: 'mohit-veer',
   linkedinUrl: 'https://www.linkedin.com/in/mohit-veer',
   trailblazerUrl: 'https://www.salesforce.com/trailblazer/mrajputsl',
+  githubHandle: 'mohit-veer',
+  githubUrl: 'https://github.com/MohitVeer',
   resumeUrl: '/Mohit_Rajput_Resume.pdf',
 }
 
@@ -40,8 +42,8 @@ export const trailhead = {
  agentblazerImage: '/Agentblazer/agentblazer-Innovator.png',
   agentblazerChampionImage:
     '/Agentblazer/agentblazer-champion.png',
-  badges: 320,
-  points: '150,100',
+  badges: 329,
+  points: '154,250',
   trails: 52,
   status: 'Agentblazer Innovator 2026',
   // agentforceLevel: 'Legend',
@@ -52,8 +54,8 @@ export const trailhead = {
 export const stats = [
   { value: '9', label: 'Salesforce Certifications' },
   { value: '5', label: 'Salesforce Superbadges' },
-  { value: '320', label: 'Trailhead Badges' },
-  { value: '150,100', label: 'Trailhead Points' },
+  { value: '329', label: 'Trailhead Badges' },
+  { value: '154,250', label: 'Trailhead Points' },
   { value: '~50%', label: 'Faster LWC portal load time' },
   { value: '~35%', label: 'Shorter delivery cycles' },
   { value: '4.5+/5', label: 'Client CSAT sustained' },
