@@ -67,6 +67,16 @@ export default function Hero() {
             {trailhead.rank}
             <span className="sr-only"> — view Trailblazer profile (opens in a new tab)</span>
           </a>
+          <a
+            href={profile.githubUrl}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => trackExternalLink(profile.githubUrl, 'github_hero')}
+            className="rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground transition hover:border-accent"
+          >
+            GitHub
+            <span className="sr-only"> — view GitHub profile (opens in a new tab)</span>
+          </a>
           <button
             type="button"
             onClick={openResume}
