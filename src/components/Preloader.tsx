@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const BOOT_LINES = [
-  'mounting trail...',
-  'loading badges (319)...',
-  'checking rank: Triple Star Ranger...',
-  'checking superbadges: 5x Superbadge...',
-  'checking agentblazer rank: Agentblazer Innovator 2026...',
-  'ready.',
+  'initializing profile...',
+  'loading Salesforce credentials...',
+  'checking Trailhead rank: Triple Star Ranger...',
+  'validating 9x Salesforce certifications...',
+  'checking 5x Superbadges...',
+  'loading Agentforce expertise...',
+  'compiling front-end stack...',
+  'ready.'
 ]
 
 export default function Preloader() {
@@ -31,13 +33,6 @@ export default function Preloader() {
     return () => clearTimeout(advance)
   }, [lineIndex, skip])
 
-  // Body stays scrollable/interactive the whole time — this is a purely
-  // decorative overlay, not a modal, so it never traps focus or blocks the
-  // real content underneath from being reached (e.g. by screen readers or
-  // by someone tabbing before the animation finishes). It does hold one
-  // real control (Skip), so the overlay itself is NOT aria-hidden — hiding
-  // a focusable control from assistive tech would be a worse problem than
-  // the loading animation being announced.
   return (
     <AnimatePresence>
       {visible && (
