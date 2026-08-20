@@ -1,6 +1,6 @@
 export const profile = {
   name: 'Mohit Rajput',
-  role: 'Salesforce UI Developer',
+  role: 'Salesforce Front-End Developer',
   email: 'rajput.mohit.veer@gmail.com',
   phone: '+91-9997444338',
   phoneHref: 'tel:+919997444338',
@@ -9,7 +9,7 @@ export const profile = {
   trailblazerUrl: 'https://www.salesforce.com/trailblazer/mrajputsl',
   githubHandle: 'mohit-veer',
   githubUrl: 'https://github.com/MohitVeer',
-  resumeUrl: '/Mohit_Rajput_Resume.pdf',
+  resumeUrl: '/Mohit_Rajput_Frontend_Engineer.pdf',
 }
 
 export const sceneList = [
@@ -26,13 +26,15 @@ export const sceneList = [
 ]
 
 export const heroTags = [
-  'Front-End',
-  'Multi-cloud',
-  'LWC + OmniStudio',
+  'Front-End Engineering',
+  'React.js',
+  'LWC + Experience Cloud',
+  'OmniStudio',
   'Marketing Cloud',
+  'WCAG 2.1/2.2 AA',
+  'Multi-cloud',
   'Certified UX Designer',
   'Agentforce Champion',
-  'WCAG 2.1 AA',
 ]
 
 export const trailhead = {
@@ -62,12 +64,14 @@ export const stats = [
 ]
 
 export const aboutFacts = [
-  '5+ yrs Salesforce Front-End Development',
-  '9X Salesforce Certified & 5X Superbadges',
-  'WCAG 2.1 AA by default',
-  'CI/CD with Gearset & SFDX',
-  'Circle of Excellence · Wipro & Mphasis',
-  'Measure of Excellence & You Rock · Mphasis',
+  '5+ yrs Front-End & Salesforce Engineering',
+  'Accessibility & Responsive Design',
+  'LWC · React.js · Experience Cloud',
+  '9x Salesforce Certified · Triple Star Ranger',
+  'Agentforce · OmniStudio · Marketing Cloud',
+  'Apex · SOQL · Modern Front-End Engineering',
+  'WCAG 2.1/2.2 AA by default',
+  'CI/CD with Gearset & SFDX'
 ]
 
 export const skillGroups = [
@@ -93,17 +97,7 @@ export const skillGroups = [
   {
     title: 'Frontend',
     skills: [
-      'HTML5',
-      'CSS3 / SCSS', 
-      'JavaScript (ES6+)', 
-      'Bootstrap', 
-      'jQuery', 
-      'Ajax', 
-      'React JS',
-      'Responsive Design', 
-      'WCAG 2.1 AA',
-      'Cross-Browser Testing',
-      'Performance Optimization',
+      'React.js', 'Vue.js', 'Next.js', 'TypeScript', 'JavaScript (ES6+)', 'Node.js', 'HTML5', 'CSS3 / SCSS', 'Advanced CSS', 'Responsive Design', 'Complex Layouts', 'Animations', 'DOM Optimization', 'REST API Integration', 'Cross-Browser Compatibility'
     ]
   },
   {
@@ -241,13 +235,14 @@ export const experience = [
     period: 'Nov 2021 — May 2022',
     location: 'Noida, India',
     bullets: [
-      'Designed and developed responsive web applications and e-commerce experiences using HTML, CSS, JavaScript, Bootstrap 4, and Shopify.',
-      'Built pixel-perfect user interfaces by converting Figma and PSD designs into responsive, production-ready applications.',
-      'Designed and developed the Smart Cart web application, enabling customers to scan products in-store and complete seamless digital payments.',
-      'Collaborated with clients and stakeholders to gather requirements and deliver tailored digital solutions.',
-      'Implemented SEO best practices and performance optimizations to improve page speed and user experience.',
-      'Contributed to the development of brands including House of Believe, Deerika, Mall Fifty One, Pharma Aviorion, and Smart Cart.',
-      'Built and enhanced the House of Believe e-commerce platform, helping generate over ₹5 lakh in monthly revenue.'
+      'Developed production web applications and full-page user experiences using React.js and Vue.js, building reusable frontend components with JavaScript, HTML5, CSS3, and Bootstrap 4.',
+      'Translated design concepts and UI requirements into responsive, interactive frontend interfaces, focusing on component reusability, cross-browser compatibility, usability, and consistent visual implementation.',
+      'Built frontend features for multiple client-facing web and e-commerce projects, working across different business requirements and adapting reusable UI patterns to individual product experiences.',
+      'Developed the Smart Cart web application using React.js, implementing frontend functionality supporting in-store product scanning and digital checkout workflows.',
+      'Worked on the House of Believe e-commerce storefront using Shopify, implementing and customizing the frontend experience to match brand requirements and responsive design expectations.',
+      'Integrated frontend applications with backend/API services where required, consuming application data and connecting UI components with business workflows.',
+      'Debugged frontend issues, performed usability testing, and resolved UI defects across browsers and devices to improve stability and overall user experience.',
+      'Collaborated with designers and other developers throughout the development lifecycle, translating requirements and visual designs into production-ready web interfaces.',
     ],
     achievements: [
       'Formal appreciation from MD and stakeholders for delivery on the House of Believe and DJT brand websites.'
@@ -267,8 +262,13 @@ export const experience = [
     period: 'Jan 2021 — Oct 2021',
     location: 'Aligarh, India',
     bullets: [
-      'Built responsive mobile-first interfaces in HTML5, CSS3 and JavaScript.',
-      'Ran usability testing to harden UX flows.',
+      'Developed production frontend features and complete responsive pages using React.js, JavaScript, HTML5, and CSS3, translating design mockups into functional and reusable user interfaces.',
+      'Built reusable React components and interactive UI elements while maintaining consistent layouts, responsive behavior, and cross-browser compatibility across multiple client projects.',
+      'Worked closely with design and development teams to translate visual requirements into production-ready frontend implementations while maintaining usability and visual consistency.',
+      'Implemented frontend interactions and application workflows using JavaScript and React.js, integrating UI components with application data and backend/API services where required.',
+      'Performed usability testing and frontend debugging to identify layout, interaction, and functional issues across development cycles.',
+      'Resolved UI defects and refined frontend implementations based on testing and stakeholder feedback, contributing to an approximately 30% reduction in reported UI issues.',
+
     ],
     clients: [],
   },
