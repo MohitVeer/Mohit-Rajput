@@ -17,22 +17,31 @@ export default function Hero() {
         <h1
           id="top-heading"
           className="mt-6 max-w-5xl text-balance font-display text-[clamp(2.75rem,9vw,6.5rem)] font-semibold leading-[1.02] tracking-tight"
-        >
-          Salesforce UI,
+        >Salesforce Front-End Engineering,
           <br />
           <span className="text-gradient">built to move.</span>
         </h1>
       </Reveal>
 
       <Reveal delay={0.16}>
-        <p className="mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
+        {/* <p className="mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
           I&apos;m <span className="font-medium text-foreground">{profile.name}</span> — Salesforce
           Consultant at Wipro, Triple Star Ranger, and Agentblazer Innovator 2026. 5+ years shipping{' '}
           <span className="text-foreground">
             LWC, OmniStudio, Experience Cloud, Marketing Cloud and Agentforce
           </span>
           .
-        </p>
+        </p> */}
+        <p className="mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
+  I&apos;m <span className="font-medium text-foreground">{profile.name}</span> — a Salesforce
+  Front-End Engineer with 5+ years of experience building scalable, user-focused digital
+  experiences. I work across{' '}
+  <span className="text-foreground">
+    LWC, Experience Cloud, Agentforce, OmniStudio, Marketing Cloud, and modern front-end
+    technologies
+  </span>{' '}
+  to turn complex requirements into intuitive, production-ready solutions.
+</p>
       </Reveal>
 
       <Reveal delay={0.24}>

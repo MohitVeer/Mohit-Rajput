@@ -15,13 +15,15 @@ export default function About() {
       </Reveal>
 
       <Reveal delay={0.1}>
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-          I specialize in Lightning Web Components, OmniStudio, Experience Cloud, Marketing Cloud,
-          and Agentforce, delivering scalable, accessible, and high-performance Salesforce solutions{' '}
-          <span className="text-foreground">across multi-cloud environments</span>. Passionate about
-          design-to-code development, I transform Figma designs into pixel-perfect, production-ready
-          user experiences while following Salesforce best practices.
-        </p>
+      <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+  I build scalable, user-focused digital experiences across the Salesforce ecosystem and modern
+  front-end technologies. With 5+ years of experience, I work with{' '}
+  <span className="text-foreground">
+    Lightning Web Components, Experience Cloud, Agentforce, OmniStudio, Marketing Cloud, and modern
+    JavaScript frameworks
+  </span>{' '}
+  to turn complex requirements into intuitive, production-ready solutions.
+</p>
       </Reveal>
 
       <Reveal delay={0.2}>

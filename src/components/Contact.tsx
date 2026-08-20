@@ -23,10 +23,16 @@ export default function Contact() {
       </Reveal>
 
       <Reveal delay={0.1}>
-        <p className="mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
-          I&apos;m open to full-time and contract opportunities{' '}
-          <span className="text-foreground">worldwide</span> — remote, hybrid or onsite. Open to visa-sponsored roles. Looking for a Salesforce UI Engineer specializing in Lightning Web Components, Experience Cloud, and modern frontend engineering with a focus on performance, accessibility, and reusable UI architecture? Let&apos;s connect.
-        </p>
+       <p className="mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
+  I&apos;m open to full-time and contract opportunities{' '}
+  <span className="text-foreground">worldwide</span> — remote, hybrid, or onsite, including
+  visa-sponsored roles. Looking for a Salesforce Front-End Engineer who can build scalable,
+  accessible, and high-performance experiences with{' '}
+  <span className="text-foreground">
+    LWC, Experience Cloud, OmniStudio, Agentforce, Apex, and modern front-end technologies
+  </span>
+  ? Let&apos;s connect.
+</p>
       </Reveal>
 
       <Reveal delay={0.2}>
