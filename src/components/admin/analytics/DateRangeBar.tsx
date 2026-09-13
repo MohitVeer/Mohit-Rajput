@@ -10,6 +10,8 @@ interface DateRangeBarProps {
   onCustomStartChange: (v: string) => void
   onCustomEndChange: (v: string) => void
   presetLabels: Record<DatePreset, string>
+  isDefault: boolean
+  onReset: () => void
 }
 
 export default function DateRangeBar({
@@ -20,6 +22,8 @@ export default function DateRangeBar({
   onCustomStartChange,
   onCustomEndChange,
   presetLabels,
+  isDefault,
+  onReset,
 }: DateRangeBarProps) {
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -61,6 +65,16 @@ export default function DateRangeBar({
           aria-label="Custom range end"
         />
       </div>
+
+      {!isDefault && (
+        <button
+          type="button"
+          onClick={onReset}
+          className="rounded-full border border-border px-3.5 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
+        >
+          Reset
+        </button>
+      )}
     </div>
   )
 }
