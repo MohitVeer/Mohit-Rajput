@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { profile } from '../data/profile'
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 
 export interface CertificateData {
   name: string
@@ -24,6 +25,8 @@ export default function CertificateReveal({ cert, onClose, returnFocusRef }: Cer
   const panelRef = useRef<HTMLDivElement>(null)
 
   const open = cert !== null
+
+  useBodyScrollLock(open)
 
   // Reset to the start of the boot sequence every time a different
   // certificate is opened (skip straight to reveal under reduced motion).
@@ -52,7 +55,6 @@ export default function CertificateReveal({ cert, onClose, returnFocusRef }: Cer
       return
     }
 
-    document.body.style.overflow = 'hidden'
     const focusTimer = setTimeout(() => {
       const focusable = panelRef.current?.querySelectorAll<HTMLElement>('a, button')
       focusable?.[0]?.focus()
@@ -82,7 +84,6 @@ export default function CertificateReveal({ cert, onClose, returnFocusRef }: Cer
     return () => {
       clearTimeout(focusTimer)
       document.removeEventListener('keydown', onKeyDown)
-      document.body.style.overflow = ''
     }
   }, [open, onClose, returnFocusRef])
 

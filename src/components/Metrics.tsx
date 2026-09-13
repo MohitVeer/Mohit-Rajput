@@ -1,6 +1,36 @@
 import { stats } from '../data/profile'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
+import { useCountUp } from '../hooks/useCountUp'
+
+// One continuous formula instead of a two-tier "big size / small size"
+// split — "9" and "154,250" both scale down smoothly from the same curve
+// as they get longer, so every card in the row reads as one consistent
+// type system rather than jumping between two unrelated sizes. The `vw`
+// term is what makes it responsive: it shrinks toward `min` on narrow
+// viewports and grows toward the length-based `max` on wide ones, the
+// same way on every card.
+function statFontSize(value: string) {
+  const max = Math.min(4.75, Math.max(2.5, 4.75 - (value.length - 1) * 0.3))
+  return `clamp(1.85rem, 1.1rem + 3.4vw, ${max}rem)`
+}
+
+function Stat({ value, label }: { value: string; label: string }) {
+  const { ref, display } = useCountUp(value)
+
+  return (
+    <div className="glass-card group h-full min-w-0 p-6 transition-colors hover:border-accent/50 hover:shadow-glow">
+      <dd
+        ref={ref}
+        style={{ fontSize: statFontSize(value) }}
+        className="font-display font-semibold leading-none tabular-nums text-accent"
+      >
+        {display}
+      </dd>
+      <dt className="mt-3 text-base text-muted-foreground">{label}</dt>
+    </div>
+  )
+}
 
 export default function Metrics() {
   return (
@@ -14,13 +44,10 @@ export default function Metrics() {
         </h2>
       </Reveal>
 
-      <dl className="mt-14 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
+      <dl className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
         {stats.map((stat, i) => (
-          <Reveal key={stat.label} delay={i * 0.06} className="border-b border-border pb-6">
-            <dd className="font-display text-5xl font-semibold text-accent sm:text-6xl md:text-7xl">
-              {stat.value}
-            </dd>
-            <dt className="mt-2 text-base text-muted-foreground">{stat.label}</dt>
+          <Reveal key={stat.label} delay={i * 0.06}>
+            <Stat value={stat.value} label={stat.label} />
           </Reveal>
         ))}
       </dl>

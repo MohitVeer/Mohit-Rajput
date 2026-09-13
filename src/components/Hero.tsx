@@ -2,6 +2,7 @@ import { profile, heroTags, trailhead } from '../data/profile'
 import Scene from './cinematic/Scene'
 import { openResume } from '../lib/resumeEvents'
 import Reveal from './cinematic/Reveal'
+import MagneticButton from './MagneticButton'
 import { trackExternalLink } from '../lib/analytics'
 
 export default function Hero() {
@@ -24,75 +25,75 @@ export default function Hero() {
       </Reveal>
 
       <Reveal delay={0.16}>
-        {/* <p className="mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
-          I&apos;m <span className="font-medium text-foreground">{profile.name}</span> — Salesforce
-          Consultant at Wipro, Triple Star Ranger, and Agentblazer Innovator 2026. 5+ years shipping{' '}
-          <span className="text-foreground">
-            LWC, OmniStudio, Experience Cloud, Marketing Cloud and Agentforce
-          </span>
-          .
-        </p> */}
         <p className="mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
-  I&apos;m <span className="font-medium text-foreground">{profile.name}</span> — a Salesforce
-  Front-End Engineer with 5+ years of experience building scalable, user-focused digital
-  experiences. I work across{' '}
-  <span className="text-foreground">
-    LWC, Experience Cloud, Agentforce, OmniStudio, Marketing Cloud, and modern front-end
-    technologies
-  </span>{' '}
-  to turn complex requirements into intuitive, production-ready solutions.
-</p>
+          I&apos;m <span className="font-medium text-foreground">{profile.name}</span> — a Salesforce
+          Front-End Engineer with 5+ years of experience building scalable, user-focused digital
+          experiences. I work across{' '}
+          <span className="text-foreground">
+            LWC, Experience Cloud, Agentforce, OmniStudio, Marketing Cloud, and modern front-end
+            technologies
+          </span>{' '}
+          to turn complex requirements into intuitive, production-ready solutions.
+        </p>
       </Reveal>
 
       <Reveal delay={0.24}>
-        <ul
-          className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm text-accent"
-          aria-label="Core focus areas"
-        >
+        {/* A slow, pausable marquee instead of a static wrapped list — the
+            screen-reader list below carries the real content; this strip is
+            aria-hidden and purely decorative. */}
+        <ul className="sr-only" aria-label="Core focus areas">
           {heroTags.map((tag) => (
-            <li key={tag}> / {tag}</li>
+            <li key={tag}>{tag}</li>
           ))}
         </ul>
+        <div className="marquee-mask mt-8 overflow-hidden" aria-hidden="true">
+          <div className="marquee-track gap-x-10 font-mono text-sm text-accent">
+            {[...heroTags, ...heroTags].map((tag, i) => (
+              <span key={`${tag}-${i}`} className="shrink-0">
+                / {tag}
+              </span>
+            ))}
+          </div>
+        </div>
       </Reveal>
 
       <Reveal delay={0.32}>
         <div className="mt-10 flex flex-wrap gap-4">
-          <a
+          <MagneticButton
             href={`mailto:${profile.email}?subject=Interview%20request%20—%20Mohit%20Rajput`}
-            onClick={() =>
-              trackExternalLink(`mailto:${profile.email}`, 'email_hero_cta')
-            }
-            className="rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-accent-foreground shadow-glow transition hover:opacity-90"
+            onClick={() => trackExternalLink(`mailto:${profile.email}`, 'email_hero_cta')}
+            className="inline-block rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-accent-foreground shadow-glow hover:opacity-90"
           >
             Let&apos;s talk →
-          </a>
-          <a
+          </MagneticButton>
+          <MagneticButton
             href={profile.trailblazerUrl}
             target="_blank"
             rel="noreferrer"
             onClick={() => trackExternalLink(profile.trailblazerUrl, 'trailblazer_hero')}
-            className="rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground transition hover:border-accent"
+            className="inline-block rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground hover:border-accent"
           >
             {trailhead.rank}
             <span className="sr-only"> — view Trailblazer profile (opens in a new tab)</span>
-          </a>
-          <a
+          </MagneticButton>
+          <MagneticButton
             href={profile.githubUrl}
             target="_blank"
             rel="noreferrer"
             onClick={() => trackExternalLink(profile.githubUrl, 'github_hero')}
-            className="rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground transition hover:border-accent"
+            className="inline-block rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground hover:border-accent"
           >
             GitHub
             <span className="sr-only"> — view GitHub profile (opens in a new tab)</span>
-          </a>
-          <button
+          </MagneticButton>
+          <MagneticButton
+            as="button"
             type="button"
             onClick={openResume}
-            className="rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground transition hover:border-accent"
+            className="inline-block rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground hover:border-accent"
           >
             View Resume
-          </button>
+          </MagneticButton>
         </div>
       </Reveal>
     </Scene>
