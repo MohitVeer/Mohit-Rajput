@@ -4,6 +4,7 @@ import Reveal from './cinematic/Reveal'
 import MagneticButton from './MagneticButton'
 import { openResume } from '../lib/resumeEvents'
 import { trackExternalLink } from '../lib/analytics'
+import { useSectionView } from '../hooks/useSectionView'
 
 const emailSubject = encodeURIComponent('Interview / Role — Mohit Rajput')
 const emailBody = encodeURIComponent(
@@ -12,6 +13,8 @@ const emailBody = encodeURIComponent(
 const mailtoHref = `mailto:${profile.email}?subject=${emailSubject}&body=${emailBody}`
 
 export default function Contact() {
+  useSectionView('contact', 'Contact', 'contact_section_view')
+
   return (
     <Scene id="contact" index="09" label="Contact" minHeight={false} className="pb-32">
       <Reveal>

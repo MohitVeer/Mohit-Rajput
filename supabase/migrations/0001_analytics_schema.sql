@@ -77,12 +77,21 @@ alter table sessions enable row level security;
 alter table page_views enable row level security;
 alter table events enable row level security;
 
+-- Postgres has no `create policy if not exists` — drop-then-create makes
+-- this migration safe to re-run against a database that already has it
+-- applied (e.g. a Supabase preview branch re-run, or a branch cloned from
+-- a database where this migration already ran), instead of failing with
+-- "policy already exists" on the very first statement.
+drop policy if exists "admin read visitors" on visitors;
 create policy "admin read visitors" on visitors
   for select using (auth.role() = 'authenticated');
+drop policy if exists "admin read sessions" on sessions;
 create policy "admin read sessions" on sessions
   for select using (auth.role() = 'authenticated');
+drop policy if exists "admin read page_views" on page_views;
 create policy "admin read page_views" on page_views
   for select using (auth.role() = 'authenticated');
+drop policy if exists "admin read events" on events;
 create policy "admin read events" on events
   for select using (auth.role() = 'authenticated');
 

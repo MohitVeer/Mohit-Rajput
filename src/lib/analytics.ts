@@ -90,6 +90,10 @@ let sessionStartedAt = 0
 let currentPath = ''
 let pageEnteredAt = 0
 let maxScrollPct = 0
+const firedMilestones = new Set<number>()
+let heartbeatTimer: ReturnType<typeof setInterval> | undefined
+const HEARTBEAT_INTERVAL_MS = 20_000
+const SCROLL_MILESTONES = [25, 50, 75, 90, 100]
 
 /** Call once, near app mount. Starts the session and wires page-lifecycle tracking. */
 export function initAnalytics() {
@@ -109,19 +113,48 @@ export function initAnalytics() {
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     language: navigator.language,
     colorScheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+    screen: { width: window.screen.width, height: window.screen.height },
   })
 
   send({ type: 'page_view', sessionId: getSessionId(), path: currentPath })
 
+  // Passive scroll listener just tracks the running max % (cheap, no
+  // network call). A milestone event only goes out the first time each
+  // threshold (25/50/75/90/100) is crossed — never on every scroll tick.
   const onScroll = () => {
     const doc = document.documentElement
     const scrolled = doc.scrollTop
     const total = doc.scrollHeight - doc.clientHeight
-    if (total > 0) {
-      maxScrollPct = Math.max(maxScrollPct, Math.min(100, Math.round((scrolled / total) * 100)))
+    if (total <= 0) return
+    const pct = Math.min(100, Math.round((scrolled / total) * 100))
+    maxScrollPct = Math.max(maxScrollPct, pct)
+    for (const milestone of SCROLL_MILESTONES) {
+      if (pct >= milestone && !firedMilestones.has(milestone)) {
+        firedMilestones.add(milestone)
+        trackEvent('Scroll', 'scroll_depth', undefined, { milestone })
+      }
     }
   }
   window.addEventListener('scroll', onScroll, { passive: true })
+
+  // Lets the admin "Live visitors" view know a tab is still open between
+  // page views — paused while the tab is hidden so a backgrounded tab
+  // doesn't keep pinging (and doesn't count as "active").
+  const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(), path: currentPath })
+  const startHeartbeat = () => {
+    if (heartbeatTimer) return
+    sendHeartbeat()
+    heartbeatTimer = setInterval(sendHeartbeat, HEARTBEAT_INTERVAL_MS)
+  }
+  const stopHeartbeat = () => {
+    clearInterval(heartbeatTimer)
+    heartbeatTimer = undefined
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') startHeartbeat()
+    else stopHeartbeat()
+  })
+  startHeartbeat()
 
   const flushPageEnd = () => {
     send(
@@ -137,6 +170,7 @@ export function initAnalytics() {
   }
 
   const endSession = () => {
+    stopHeartbeat()
     flushPageEnd()
     send(
       {
