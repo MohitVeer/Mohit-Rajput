@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { profile } from '../data/profile'
 import { OPEN_RESUME_EVENT } from '../lib/resumeEvents'
 import { trackResumeDownload, trackResumeView } from '../lib/analytics'
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 
 const BOOT_LINES = ['opening dossier...', 'verifying credentials...', 'ready.']
 const LINE_INTERVAL_MS = 320
@@ -44,6 +45,8 @@ export default function ResumeReveal() {
 
   const close = () => setOpen(false)
 
+  useBodyScrollLock(open)
+
   // Focus management + focus trap + Escape-to-close, same pattern as the
   // scene menu overlay.
   useEffect(() => {
@@ -52,7 +55,6 @@ export default function ResumeReveal() {
       return
     }
 
-    document.body.style.overflow = 'hidden'
     const focusTimer = setTimeout(() => {
       const focusable = panelRef.current?.querySelectorAll<HTMLElement>('a, button')
       focusable?.[0]?.focus()
@@ -82,7 +84,6 @@ export default function ResumeReveal() {
     return () => {
       clearTimeout(focusTimer)
       document.removeEventListener('keydown', onKeyDown)
-      document.body.style.overflow = ''
     }
   }, [open])
 

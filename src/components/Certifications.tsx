@@ -30,9 +30,9 @@ export default function Certifications() {
         </p>
       </Reveal>
 
-      <div className="mt-14 grid gap-x-16 gap-y-12 md:grid-cols-2">
+      <div className="mt-14 grid gap-6 md:grid-cols-2">
         {certGroups.map((group, i) => (
-          <Reveal key={group.title} delay={i * 0.08}>
+          <Reveal key={group.title} delay={i * 0.08} className="glass-card p-6 transition-colors hover:border-accent/40 sm:p-8">
             <div className="flex items-center gap-3 border-b border-border pb-4">
               <img
                 src={group.logo}
@@ -45,24 +45,30 @@ export default function Certifications() {
               <h3 className="scene-index">{group.title}</h3>
             </div>
 
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-4 space-y-1">
               {(Array.isArray(group.certs) ? group.certs : [group.certs]).map((cert) => (
                 <li key={cert.name}>
                   <button
                     type="button"
                     onClick={(e) => openCert(cert, e.currentTarget)}
-                    className="group flex w-full items-center gap-3 rounded-lg text-left transition hover:text-accent"
+                    className="group flex w-full items-center gap-3 rounded-lg p-2 text-left transition-colors hover:bg-accent/10"
                   >
                     <img
                       src={cert.image}
                       alt={cert.alt || cert.name}
                       loading="lazy"
-                      className="h-8 w-8 shrink-0"
-                      width={32}
-                      height={32}
+                      className="h-9 w-9 shrink-0 transition-transform group-hover:scale-110"
+                      width={36}
+                      height={36}
                     />
-                    <span className="text-base underline decoration-border decoration-1 underline-offset-4 transition group-hover:decoration-accent">
+                    <span className="text-base underline decoration-border decoration-1 underline-offset-4 transition group-hover:text-accent group-hover:decoration-accent">
                       {cert.name}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="ml-auto text-accent opacity-0 transition-opacity group-hover:opacity-100"
+                    >
+                      →
                     </span>
                   </button>
                 </li>
@@ -74,16 +80,16 @@ export default function Certifications() {
 
       <div className="mt-16 border-t border-border pt-10">
         <span className="scene-index">Trailhead superbadges</span>
-        <ul className="mt-6 grid gap-x-10 gap-y-6 md:grid-cols-3">
+        <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {superbadges.map((badge, i) => (
             <li key={badge.title}>
-              <Reveal delay={i * 0.08}>
+              <Reveal delay={i * 0.08} className="h-full">
                 <a
                   href={badge.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackExternalLink(badge.url, `superbadge:${badge.title}`)}
-                  className="group flex gap-4 border-b border-border pb-6 transition hover:border-accent"
+                  className="group glass-card flex h-full gap-4 p-5 transition-all hover:-translate-y-1 hover:border-accent-2/50 hover:shadow-glow-2"
                 >
                   <img
                     src={badge.image}
@@ -94,7 +100,7 @@ export default function Certifications() {
                     height={56}
                   />
                   <div>
-                    <p className="text-base font-semibold leading-snug group-hover:text-accent">
+                    <p className="text-base font-semibold leading-snug group-hover:text-accent-2">
                       {badge.title}
                       <span className="sr-only"> (opens in a new tab)</span>
                     </p>

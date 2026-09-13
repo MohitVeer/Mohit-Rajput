@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { CSSProperties, ReactNode } from 'react'
 
 interface SceneProps {
   id: string
@@ -10,7 +10,19 @@ interface SceneProps {
   center?: boolean   // ← new
 }
 
+// One accent/warm-accent pairing per section, picked so adjacent sections
+// never repeat the same dominant hue — gives each scene its own quiet
+// atmosphere instead of every section reading as identical flat black.
+const AURORA_PAIRS: Array<[string, string]> = [
+  ['226 100% 65%', '38 96% 62%'], // accent / accent-2
+  ['262 83% 68%', '226 100% 65%'], // violet / accent
+  ['38 96% 62%', '262 83% 68%'], // accent-2 / violet
+]
+
 export default function Scene({ id, index, label, children, className = '', minHeight = true, center = false }: SceneProps) {
+  const [a, b] = AURORA_PAIRS[Number.parseInt(index, 10) % AURORA_PAIRS.length]
+  const auroraVars = { '--aurora-a': a, '--aurora-b': b } as CSSProperties
+
   return (
     <section
       id={id}
@@ -18,11 +30,13 @@ export default function Scene({ id, index, label, children, className = '', minH
       data-index={index}
       data-label={label}
       aria-labelledby={`${id}-heading`}
+      style={auroraVars}
       className={`relative flex flex-col ${center ? 'justify-center' : 'justify-start'} border-t border-border px-5 py-24 sm:px-8 md:px-16 md:py-28 lg:px-24 ${
         minHeight ? 'min-h-screen' : ''
       } ${className}`}
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="aurora-field" />
+      <div className="relative z-10 mx-auto w-full max-w-6xl">
         <span className="scene-index" aria-hidden="true">
           {index} — {label}
         </span>

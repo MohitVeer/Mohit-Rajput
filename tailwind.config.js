@@ -19,6 +19,7 @@ export default {
           DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
           foreground: 'hsl(var(--accent-foreground) / <alpha-value>)',
         },
+        'accent-2': 'hsl(var(--accent-2) / <alpha-value>)',
       },
       fontFamily: {
         display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
@@ -27,7 +28,32 @@ export default {
       },
       boxShadow: {
         glow: '0 0 40px hsl(var(--accent) / 0.25)',
+        'glow-lg': '0 0 80px hsl(var(--accent) / 0.35)',
+        'glow-2': '0 0 40px hsl(var(--accent-2) / 0.25)',
         card: '0 1px 0 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -20px rgba(0, 0, 0, 0.6)',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translate3d(0, 0, 0)' },
+          '50%': { transform: 'translate3d(0, -18px, 0)' },
+        },
+        drift: {
+          '0%, 100%': { transform: 'translate3d(0, 0, 0) scale(1)' },
+          '50%': { transform: 'translate3d(3%, -4%, 0) scale(1.06)' },
+        },
+        marquee: {
+          '0%': { transform: 'translate3d(0, 0, 0)' },
+          '100%': { transform: 'translate3d(-50%, 0, 0)' },
+        },
+        'spin-slow': {
+          to: { transform: 'rotate(360deg)' },
+        },
+      },
+      animation: {
+        float: 'float 6s ease-in-out infinite',
+        drift: 'drift 16s ease-in-out infinite',
+        marquee: 'marquee 28s linear infinite',
+        'spin-slow': 'spin-slow 14s linear infinite',
       },
     },
   },

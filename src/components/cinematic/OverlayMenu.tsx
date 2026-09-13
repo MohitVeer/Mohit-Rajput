@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 import { profile, sceneList } from '../../data/profile'
+import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
 
 interface OverlayMenuProps {
   open: boolean
@@ -12,6 +13,8 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
   const panelRef = useRef<HTMLDivElement>(null)
   const reduceMotion = useReducedMotion()
   const wasOpenRef = useRef(false)
+
+  useBodyScrollLock(open)
 
   // Focus the panel when it opens, trap Tab within it, close on Escape,
   // and return focus to the trigger button when it closes.
@@ -41,10 +44,8 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
       }
 
       document.addEventListener('keydown', onKeyDown)
-      document.body.style.overflow = 'hidden'
       return () => {
         document.removeEventListener('keydown', onKeyDown)
-        document.body.style.overflow = ''
       }
     } else if (wasOpenRef.current) {
       wasOpenRef.current = false
