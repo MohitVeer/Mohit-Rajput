@@ -194,7 +194,7 @@ a:focus-visible,
   }
 
 .scene-index {
-    @apply font-mono text-xs uppercase tracking-[0.25em] text-accent;
+    @apply font-sans text-xs font-semibold uppercase tracking-[0.25em] text-accent;
   }
 
   .skip-link {

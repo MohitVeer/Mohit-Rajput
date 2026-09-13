@@ -105,7 +105,7 @@ data-lenis-prevent
                     }}
                     className="flex w-full min-w-0 items-baseline gap-3 py-3.5 font-display text-2xl font-semibold text-muted-foreground transition-colors hover:text-foreground sm:gap-4 sm:text-4xl md:py-4 md:text-5xl"
                   >
-                    <span className="shrink-0 font-mono text-xs text-accent sm:text-sm">
+                    <span className="shrink-0 font-sans text-xs font-semibold tabular-nums text-accent sm:text-sm">
                       {scene.index}
                     </span>
                     <span className="min-w-0 break-words">{scene.label}</span>
@@ -115,7 +115,7 @@ data-lenis-prevent
             </ul>
           </nav>
 
-          <div className="flex flex-wrap gap-x-8 gap-y-3 px-5 py-6 font-mono text-sm text-muted-foreground sm:px-8 md:px-16 lg:px-24">
+          <div className="flex flex-wrap gap-x-8 gap-y-3 px-5 py-6 font-sans text-sm text-muted-foreground sm:px-8 md:px-16 lg:px-24">
             <a href={`mailto:${profile.email}`} className="hover:text-foreground">
               {profile.email}
             </a>

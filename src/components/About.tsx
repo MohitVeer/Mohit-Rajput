@@ -27,7 +27,7 @@ export default function About() {
       </Reveal>
 
       <Reveal delay={0.2}>
-        <ul className="mt-12 grid gap-x-10 gap-y-4 font-mono text-base text-foreground sm:grid-cols-2">
+        <ul className="mt-12 grid gap-x-10 gap-y-4 font-sans text-base text-foreground sm:grid-cols-2">
           {aboutFacts.map((fact) => (
             <li key={fact} className="flex items-baseline gap-3 border-b border-border pb-4">
               <span className="text-accent" aria-hidden="true">

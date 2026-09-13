@@ -270,6 +270,37 @@ export function AgentforceIcon(props: IconProps) {
   )
 }
 
+// Litmus's real mark is a multi-color pinwheel; approximated here as five
+// wedges in the same palette (olive, orange, red, navy, green) since a
+// pixel-exact curved petal shape isn't worth the path complexity at 15px.
+export function LitmusIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 12 L12 2 A10 10 0 0 1 21.51 8.91 Z" fill="#B4A83D" />
+      <path d="M12 12 L21.51 8.91 A10 10 0 0 1 17.88 20.09 Z" fill="#C0703C" />
+      <path d="M12 12 L17.88 20.09 A10 10 0 0 1 6.12 20.09 Z" fill="#B04A3F" />
+      <path d="M12 12 L6.12 20.09 A10 10 0 0 1 2.49 8.91 Z" fill="#173A4D" />
+      <path d="M12 12 L2.49 8.91 A10 10 0 0 1 12 2 Z" fill="#4C9A6A" />
+    </svg>
+  )
+}
+
+// Gearset's mark is an orange cog with a navy center — redrawn as a simple
+// geometric gear rather than an imported asset.
+export function GearsetIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <g fill="#F2A93B">
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
+          <rect key={angle} x="10.5" y="1.2" width="3" height="4.2" rx="1" transform={`rotate(${angle} 12 12)`} />
+        ))}
+        <circle cx="12" cy="12" r="7" />
+      </g>
+      <circle cx="12" cy="12" r="3.1" fill="#17284A" />
+    </svg>
+  )
+}
+
 export function ScssIcon(props: IconProps) {
   return (
     <svg {...base(props)}>
@@ -302,6 +333,8 @@ export const skillIcons: Record<string, (props: IconProps) => JSX.Element> = {
   'NPM': NpmIcon,
   'SFDX CLI': SfdxCliIcon,
   'Agentforce': AgentforceIcon,
+  'Litmus': LitmusIcon,
+  'Gearset': GearsetIcon,
 }
 
 // Group-level marks (shown next to the section heading, e.g. "SALESFORCE")

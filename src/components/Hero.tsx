@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <Scene id="top" index="00" label="Home" center>
       <Reveal>
-        <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mt-2">
+        <p className="font-sans text-xs font-semibold uppercase tracking-widest text-muted-foreground mt-2">
           Available to hire worldwide · Remote · Hybrid · Onsite
         </p>
       </Reveal>
@@ -45,7 +45,7 @@ export default function Hero() {
           ))}
         </ul>
         <div className="marquee-mask mt-8 overflow-hidden" aria-hidden="true">
-          <div className="marquee-track gap-x-10 font-mono text-sm text-accent">
+          <div className="marquee-track gap-x-10 font-sans text-sm font-medium text-accent">
             {[...heroTags, ...heroTags].map((tag, i) => (
               <span key={`${tag}-${i}`} className="shrink-0">
                 / {tag}

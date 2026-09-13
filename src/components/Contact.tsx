@@ -53,7 +53,7 @@ export default function Contact() {
             </span>
           </MagneticButton>
 
-          <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4 font-mono text-base">
+          <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4 font-sans text-base">
             <a
               href={profile.phoneHref}
               onClick={() => trackExternalLink(profile.phoneHref, 'phone')}

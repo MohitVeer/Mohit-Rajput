@@ -53,7 +53,7 @@ export default function Skills() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => selectCategory(category)}
-                className={`rounded-full border px-4 py-2 font-mono text-xs uppercase tracking-widest transition-colors ${
+                className={`rounded-full border px-4 py-2 font-sans text-xs font-semibold uppercase tracking-widest transition-colors ${
                   isActive
                     ? 'border-accent bg-accent text-accent-foreground'
                     : 'border-border text-muted-foreground hover:border-accent/60 hover:text-foreground'
