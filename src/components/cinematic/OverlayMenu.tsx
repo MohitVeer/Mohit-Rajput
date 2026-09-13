@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 import { profile, sceneList } from '../../data/profile'
 import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
+import { trackEvent } from '../../lib/analytics'
 
 interface OverlayMenuProps {
   open: boolean
@@ -102,7 +103,10 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
                 <li key={scene.href} className="w-full border-b border-border">
                   <a
                     href={scene.href}
-                    onClick={onClose}
+                    onClick={() => {
+                      trackEvent('Navigation', 'nav_click', scene.label)
+                      onClose()
+                    }}
                     className="flex w-full min-w-0 items-baseline gap-3 py-3.5 font-display text-2xl font-semibold text-muted-foreground transition-colors hover:text-foreground sm:gap-4 sm:text-4xl md:py-4 md:text-5xl"
                   >
                     <span className="shrink-0 font-mono text-xs text-accent sm:text-sm">
