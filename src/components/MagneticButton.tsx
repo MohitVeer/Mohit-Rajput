@@ -20,7 +20,7 @@ export default function MagneticButton({
 }: MagneticButtonProps) {
   const ref = useRef<HTMLElement | null>(null)
   const reduceMotion = useReducedMotion()
-  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Component = motion(as as any)
 
   const handleMove = (e: MouseEvent<HTMLElement>) => {
@@ -39,7 +39,7 @@ export default function MagneticButton({
 
   return (
     <Component
-      
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ref={ref as any}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}

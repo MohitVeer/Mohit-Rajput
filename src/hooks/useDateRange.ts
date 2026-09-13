@@ -42,7 +42,7 @@ function rangeForPreset(preset: DatePreset, custom: { start: string; end: string
     }
     case 'custom': {
       const start = custom.start ? new Date(custom.start) : today
-      
+      // Inclusive end-of-day for a picked custom end date.
       const end = custom.end ? new Date(new Date(custom.end).getTime() + 24 * 60 * 60 * 1000) : new Date()
       return { start, end, label: PRESET_LABELS.custom }
     }
@@ -65,5 +65,23 @@ export function useDateRange(initial: DatePreset = '30d') {
     [preset, customStart, customEnd],
   )
 
-  return { preset, setPreset, customStart, setCustomStart, customEnd, setCustomEnd, range, presetLabels: PRESET_LABELS }
+  const isDefault = preset === initial && !customStart && !customEnd
+  const reset = () => {
+    setPreset(initial)
+    setCustomStart('')
+    setCustomEnd('')
+  }
+
+  return {
+    preset,
+    setPreset,
+    customStart,
+    setCustomStart,
+    customEnd,
+    setCustomEnd,
+    range,
+    presetLabels: PRESET_LABELS,
+    isDefault,
+    reset,
+  }
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { CityRow } from '../../../lib/adminApi'
+import { WORLD_LAND_PATH } from './worldLandPath'
 
 const WIDTH = 720
 const HEIGHT = 340
@@ -10,6 +11,13 @@ function project(lat: number, lon: number) {
   return { x, y }
 }
 
+/**
+ * Lightweight visitor-density map: a real (if simplified) world landmass
+ * silhouette — baked-in path data, no mapping-library dependency — with
+ * one dot per city sized by session count. Kept intentionally simple so
+ * it stays fast and never pulls in a mapping package just for an
+ * admin-only chart.
+ */
 export default function WorldDotMap({ cities }: { cities: CityRow[] }) {
   const [hovered, setHovered] = useState<CityRow | null>(null)
   const plotted = cities.filter((c) => c.latitude !== null && c.longitude !== null)
@@ -25,16 +33,9 @@ export default function WorldDotMap({ cities }: { cities: CityRow[] }) {
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
         className="w-full rounded-lg border border-border bg-secondary/40"
         role="img"
-        aria-label="Visitor locations by approximate city"
+        aria-label="Visitor locations by approximate city, plotted on a world map"
       >
-        {}
-        {Array.from({ length: 7 }, (_, i) => (i * WIDTH) / 6).map((x) => (
-          <line key={`v${x}`} x1={x} y1={0} x2={x} y2={HEIGHT} stroke="hsl(var(--border))" strokeWidth={1} />
-        ))}
-        {Array.from({ length: 5 }, (_, i) => (i * HEIGHT) / 4).map((y) => (
-          <line key={`h${y}`} x1={0} y1={y} x2={WIDTH} y2={y} stroke="hsl(var(--border))" strokeWidth={1} />
-        ))}
-        <line x1={0} y1={HEIGHT / 2} x2={WIDTH} y2={HEIGHT / 2} stroke="hsl(var(--border))" strokeWidth={1.5} />
+        <path d={WORLD_LAND_PATH} fill="hsl(var(--border))" stroke="none" />
 
         {plotted.map((c) => {
           const { x, y } = project(Number(c.latitude), Number(c.longitude))
@@ -45,7 +46,7 @@ export default function WorldDotMap({ cities }: { cities: CityRow[] }) {
               cx={x}
               cy={y}
               r={r}
-              fill="hsl(var(--accent) / 0.35)"
+              fill="hsl(var(--accent) / 0.4)"
               stroke="hsl(var(--accent))"
               strokeWidth={1}
               className="cursor-pointer transition-opacity hover:opacity-80"

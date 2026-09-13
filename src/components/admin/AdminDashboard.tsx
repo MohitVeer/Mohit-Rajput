@@ -172,6 +172,8 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
             onCustomStartChange={dateRange.setCustomStart}
             onCustomEndChange={dateRange.setCustomEnd}
             presetLabels={dateRange.presetLabels}
+            isDefault={dateRange.isDefault}
+            onReset={dateRange.reset}
           />
         </div>
 
