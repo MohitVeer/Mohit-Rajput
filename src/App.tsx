@@ -7,6 +7,8 @@ import Hero from './components/Hero'
 import Metrics from './components/Metrics'
 import Preloader from './components/Preloader'
 import ResumeReveal from './components/ResumeReveal'
+import ScrollProgress from './components/ScrollProgress'
+import Spotlight from './components/Spotlight'
 import MinimalBar from './components/cinematic/MinimalBar'
 import OverlayMenu from './components/cinematic/OverlayMenu'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
@@ -42,8 +44,11 @@ export default function App() {
       </a>
 
       <Preloader />
+      <div className="grain-overlay" aria-hidden="true" />
+      <Spotlight />
       <ClickConstellation />
       <CustomCursor />
+      <ScrollProgress />
       <MinimalBar ref={menuTriggerRef} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((v) => !v)} />
       <OverlayMenu open={menuOpen} onClose={() => setMenuOpen(false)} triggerRef={menuTriggerRef} />
       <ResumeReveal />
