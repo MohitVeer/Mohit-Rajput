@@ -9,18 +9,18 @@ function statFontSize(value: string) {
 }
 
 function Stat({ value, label }: { value: string; label: string }) {
-  const { ref, display } = useCountUp(value)
+  const { ref, display } = useCountUp<HTMLDivElement>(value)
 
   return (
     <div className="glass-card group h-full min-w-0 p-6 transition-colors hover:border-accent/50 hover:shadow-glow">
-      <dd
+      <div
         ref={ref}
         style={{ fontSize: statFontSize(value) }}
         className="font-display font-semibold leading-none tabular-nums text-accent"
       >
         {display}
-      </dd>
-      <dt className="mt-3 text-base text-muted-foreground">{label}</dt>
+      </div>
+      <p className="mt-3 text-base text-muted-foreground">{label}</p>
     </div>
   )
 }
@@ -37,13 +37,18 @@ export default function Metrics() {
         </h2>
       </Reveal>
 
-      <dl className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+      {/* Plain divs, not dl/dt/dd — these are stat tiles, not true
+          term/definition pairs, and the Reveal + glass-card wrappers each
+          nest of one own div between dl and its dt/dd, which HTML5 only
+          allows a single such wrapper for — real markup issue Lighthouse
+          flagged, not just a style choice. */}
+      <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
         {stats.map((stat, i) => (
           <Reveal key={stat.label} delay={i * 0.06}>
             <Stat value={stat.value} label={stat.label} />
           </Reveal>
         ))}
-      </dl>
+      </div>
     </Scene>
   )
 }

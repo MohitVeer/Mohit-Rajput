@@ -12,9 +12,6 @@ function JobCard({ job, index }: { job: (typeof experience)[number]; index: numb
 
   return (
     <li className="relative pl-10 sm:pl-14">
-      {
-
-}
       <span
         aria-hidden="true"
         className="absolute left-[5px] top-2 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-accent bg-background shadow-glow sm:left-[9px]"

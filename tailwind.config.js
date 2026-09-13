@@ -22,8 +22,31 @@ export default {
         'accent-2': 'hsl(var(--accent-2) / <alpha-value>)',
       },
       fontFamily: {
-        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        // Apple's own site font-family stack — no font files are shipped or
+        // self-hosted here (SF Pro / Myriad Set Pro are Apple-licensed and
+        // not redistributable): this stack simply *requests* those faces,
+        // so macOS/iOS visitors render true SF Pro at zero download cost,
+        // and everyone else falls through to Helvetica/Arial/system-ui.
+        display: [
+          '"SF Pro Text"',
+          '"Myriad Set Pro"',
+          '"SF Pro Icons"',
+          '"Apple Legacy Chevron"',
+          '"Helvetica Neue"',
+          'Helvetica',
+          'Arial',
+          'sans-serif',
+        ],
+        sans: [
+          '"SF Pro Text"',
+          '"Myriad Set Pro"',
+          '"SF Pro Icons"',
+          '"Apple Legacy Chevron"',
+          '"Helvetica Neue"',
+          'Helvetica',
+          'Arial',
+          'sans-serif',
+        ],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
