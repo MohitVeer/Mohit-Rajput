@@ -35,13 +35,7 @@ export default function WorldDotMap({ cities }: { cities: CityRow[] }) {
         role="img"
         aria-label="Visitor locations by approximate city, plotted on a world map"
       >
-        {Array.from({ length: 7 }, (_, i) => (i * WIDTH) / 6).map((x) => (
-          <line key={`v${x}`} x1={x} y1={0} x2={x} y2={HEIGHT} stroke="hsl(var(--border))" strokeWidth={1} />
-        ))}
-        {Array.from({ length: 5 }, (_, i) => (i * HEIGHT) / 4).map((y) => (
-          <line key={`h${y}`} x1={0} y1={y} x2={WIDTH} y2={y} stroke="hsl(var(--border))" strokeWidth={1} />
-        ))}
-        <line x1={0} y1={HEIGHT / 2} x2={WIDTH} y2={HEIGHT / 2} stroke="hsl(var(--border))" strokeWidth={1.5} />
+        <path d={WORLD_LAND_PATH} fill="hsl(var(--border))" stroke="none" />
 
         {plotted.map((c) => {
           const { x, y } = project(Number(c.latitude), Number(c.longitude))
