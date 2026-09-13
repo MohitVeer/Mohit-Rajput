@@ -4,6 +4,7 @@ import { openResume } from '../lib/resumeEvents'
 import Reveal from './cinematic/Reveal'
 import MagneticButton from './MagneticButton'
 import { trackExternalLink } from '../lib/analytics'
+import { GitHubIcon } from './icons/TechIcons'
 
 export default function Hero() {
   return (
@@ -38,9 +39,6 @@ export default function Hero() {
       </Reveal>
 
       <Reveal delay={0.24}>
-        {
-
-}
         <ul className="sr-only" aria-label="Core focus areas">
           {heroTags.map((tag) => (
             <li key={tag}>{tag}</li>
@@ -81,8 +79,9 @@ export default function Hero() {
             target="_blank"
             rel="noreferrer"
             onClick={() => trackExternalLink(profile.githubUrl, 'github_hero')}
-            className="inline-block rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground hover:border-accent"
+            className="group inline-flex items-center gap-2 rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground hover:border-accent"
           >
+            <GitHubIcon className="shrink-0 transition-transform duration-200 group-hover:scale-125" />
             GitHub
             <span className="sr-only"> — view GitHub profile (opens in a new tab)</span>
           </MagneticButton>

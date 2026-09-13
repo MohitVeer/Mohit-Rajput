@@ -27,7 +27,6 @@ export default function WorldDotMap({ cities }: { cities: CityRow[] }) {
         role="img"
         aria-label="Visitor locations by approximate city"
       >
-        {}
         {Array.from({ length: 7 }, (_, i) => (i * WIDTH) / 6).map((x) => (
           <line key={`v${x}`} x1={x} y1={0} x2={x} y2={HEIGHT} stroke="hsl(var(--border))" strokeWidth={1} />
         ))}

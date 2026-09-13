@@ -55,7 +55,7 @@ export default function Certifications() {
                   >
                     <img
                       src={cert.image}
-                      alt={cert.alt || cert.name}
+                      alt=""
                       loading="lazy"
                       className="h-9 w-9 shrink-0 transition-transform group-hover:scale-110"
                       width={36}

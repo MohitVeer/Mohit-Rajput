@@ -21,7 +21,7 @@ export function setTrackingDisabled(disabled: boolean) {
   try {
     localStorage.setItem(DNT_KEY, disabled ? '1' : '0')
   } catch {
-    
+    /* ignore */
   }
 }
 
@@ -63,7 +63,7 @@ function send(body: unknown, useBeacon = false) {
       body: payload,
       keepalive: true,
     }).catch(() => {
-      
+      /* analytics must never break the UI */
     })
   }
 }

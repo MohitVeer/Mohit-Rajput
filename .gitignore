@@ -8,3 +8,6 @@ dist-ssr
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
+
+# Local Claude Code tooling config (skills, launch configs) — not part of the project
+.claude/
