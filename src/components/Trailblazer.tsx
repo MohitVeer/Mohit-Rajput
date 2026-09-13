@@ -42,9 +42,6 @@ export default function Trailblazer() {
             width={80}
             height={80}
           />
-          {
-
-}
           <dl className="flex flex-wrap gap-x-8 gap-y-4 font-mono">
             <TrailStat value={String(trailhead.badges)} label="Badges" />
             <TrailStat value={trailhead.points} label="Points" />
@@ -53,15 +50,12 @@ export default function Trailblazer() {
         </Reveal>
 
         <Reveal delay={0.2} className="glass-card flex items-start gap-6 p-8">
-          {
-
-}
           <div className="relative h-24 w-28 shrink-0">
             <img
               src={trailhead.agentblazerChampionImage}
               alt=""
               loading="lazy"
-              className="absolute left-0 top-2 h-22 w-22 opacity-70"
+              className="absolute left-0 top-2 h-20 w-20 opacity-70"
               width={80}
               height={80}
             />

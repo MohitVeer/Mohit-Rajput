@@ -3,12 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- SVG favicon is the primary icon in every modern browser; the PNG/ICO
+         links are fallbacks for browsers/contexts that don't support SVG
+         favicons (older Safari, some crawlers, Windows tile pinning). -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Only the mono face is web-fetched now — display/body typography uses
+         the Apple system-font stack (see tailwind.config.js), which resolves
+         to the real SF Pro on Apple devices with zero font download, and
+         falls back to Segoe UI/Roboto/system-ui elsewhere. -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
     />
 
     <title>Mohit Rajput — Salesforce UI Developer | LWC, OmniStudio, Marketing Cloud</title>

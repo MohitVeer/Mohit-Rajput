@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#111214"/>
+  <text x="11" y="42" font-family="-apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="28" letter-spacing="-1" fill="#F3F3F1">MR</text>
+  <circle cx="53" cy="46" r="4" fill="#4C76FF"/>
+</svg>

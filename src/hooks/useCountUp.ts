@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useInView, useReducedMotion } from 'framer-motion'
 
-export function useCountUp(value: string, duration = 1.2) {
-  const ref = useRef<HTMLElement>(null)
+export function useCountUp<T extends HTMLElement = HTMLElement>(value: string, duration = 1.2) {
+  const ref = useRef<T>(null)
   const inView = useInView(ref, { once: true, margin: '-10% 0px -10% 0px' })
   const reduceMotion = useReducedMotion()
   const [display, setDisplay] = useState(reduceMotion ? value : zeroed(value))

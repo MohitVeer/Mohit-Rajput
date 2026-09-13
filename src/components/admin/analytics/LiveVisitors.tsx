@@ -28,7 +28,7 @@ export default function LiveVisitors() {
           if (!cancelled) setVisitors(rows)
         })
         .catch(() => {
-          
+          /* transient — next poll or realtime event will retry */
         })
     }
 

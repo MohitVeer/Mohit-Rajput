@@ -5,6 +5,7 @@ import MagneticButton from './MagneticButton'
 import { openResume } from '../lib/resumeEvents'
 import { trackExternalLink } from '../lib/analytics'
 import { useSectionView } from '../hooks/useSectionView'
+import { LinkedInIcon } from './icons/TechIcons'
 
 const emailSubject = encodeURIComponent('Interview / Role — Mohit Rajput')
 const emailBody = encodeURIComponent(
@@ -65,8 +66,9 @@ export default function Contact() {
               target="_blank"
               rel="noreferrer"
               onClick={() => trackExternalLink(profile.linkedinUrl, 'linkedin')}
-              className="text-muted-foreground hover:text-foreground"
+              className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground"
             >
+              <LinkedInIcon className="shrink-0 transition-transform duration-200 group-hover:scale-125" />
               /{profile.linkedinHandle}
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
