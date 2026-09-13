@@ -33,7 +33,7 @@ const MinimalBar = forwardRef<HTMLButtonElement, MinimalBarProps>(function Minim
         aria-expanded={menuOpen}
         aria-controls="site-menu"
         aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        className="group flex items-center gap-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-foreground"
+        className="group -my-3 flex items-center gap-3 py-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-foreground"
       >
         <span>{menuOpen ? 'Close' : 'Menu'}</span>
         <span className="relative flex h-4 w-6 flex-col justify-between" aria-hidden="true">
