@@ -89,7 +89,7 @@ export default function Certifications() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackExternalLink(badge.url, `superbadge:${badge.title}`)}
-                  className="group glass-card flex h-full gap-4 p-5 transition-all hover:-translate-y-1 hover:border-accent-2/50 hover:shadow-glow-2"
+                  className="group glass-card flex h-full gap-4 p-5 transition-all hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow"
                 >
                   <img
                     src={badge.image}
@@ -100,7 +100,7 @@ export default function Certifications() {
                     height={56}
                   />
                   <div>
-                    <p className="text-base font-semibold leading-snug group-hover:text-accent-2">
+                    <p className="text-base font-semibold leading-snug group-hover:text-accent">
                       {badge.title}
                       <span className="sr-only"> (opens in a new tab)</span>
                     </p>
