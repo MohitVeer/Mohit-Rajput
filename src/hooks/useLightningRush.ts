@@ -81,8 +81,7 @@ export function useLightningRush() {
     scheduleNextBolt()
   }, [clearAllTimers, scheduleNextBolt])
 
-  // End the game the moment the clock hits zero
-  useEffect(() => {
+useEffect(() => {
     if (isPlaying && timeLeft === 0) {
       endGame()
     }

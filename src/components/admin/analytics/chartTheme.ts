@@ -1,5 +1,3 @@
-// Shared Recharts theming — same tokens AdminDashboard.tsx already used,
-// centralized so every new analytics widget matches without repeating it.
 export const ACCENT = 'hsl(var(--accent))'
 export const MUTED = 'hsl(var(--muted-foreground))'
 export const BORDER = 'hsl(var(--border))'

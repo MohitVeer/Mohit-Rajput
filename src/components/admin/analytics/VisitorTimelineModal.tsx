@@ -21,12 +21,6 @@ function fmtTime(iso: string) {
   return new Date(iso).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' })
 }
 
-/**
- * A single anonymous session's timeline — entry → pages → events → exit —
- * for the "what did this visitor actually do" view. No personally
- * identifying information is shown; the only identifier is the session's
- * own short id, same as the live-visitors list.
- */
 export default function VisitorTimelineModal({
   sessionId,
   onClose,
@@ -38,11 +32,7 @@ export default function VisitorTimelineModal({
   const [rows, setRows] = useState<TimelineRow[]>([])
   const [loading, setLoading] = useState(false)
 
-  // Escape-to-close, same convention as the other overlays in this app
-  // (CertificateReveal, ResumeReveal) — no click-outside-to-close, so
-  // there's no backdrop click handler to reconcile with a11y rules about
-  // non-interactive elements carrying click handlers.
-  useEffect(() => {
+useEffect(() => {
     if (!sessionId) return
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()

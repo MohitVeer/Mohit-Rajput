@@ -12,9 +12,9 @@ function JobCard({ job, index }: { job: (typeof experience)[number]; index: numb
 
   return (
     <li className="relative pl-10 sm:pl-14">
-      {/* Timeline rail + node — the connecting vertical line lives on the
-          <ol>'s ::before via the wrapper below; each item just draws its
-          own dot at the top of its card. */}
+      {
+
+}
       <span
         aria-hidden="true"
         className="absolute left-[5px] top-2 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-accent bg-background shadow-glow sm:left-[9px]"

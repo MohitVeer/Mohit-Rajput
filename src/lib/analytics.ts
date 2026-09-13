@@ -1,13 +1,4 @@
-// First-party, privacy-scoped analytics client.
-//
-// - visitor_uid: random id in localStorage, purely so "returning visitor"
-//   can be counted. Disclosed in /privacy. No device fingerprinting.
-// - session_id: random id in sessionStorage, one per tab session.
-// - Fully opt-outable via setTrackingDisabled(true) — the toggle exposed
-//   on the /privacy page.
-// - Never sends IP, coordinates, or anything used to identify a specific
-//   employer/organization. Geo is derived server-side from Netlify's
-//   edge context, not from anything the client reports.
+
 
 const VISITOR_KEY = 'mr_visitor_uid'
 const SESSION_KEY = 'mr_session_id'
@@ -30,7 +21,7 @@ export function setTrackingDisabled(disabled: boolean) {
   try {
     localStorage.setItem(DNT_KEY, disabled ? '1' : '0')
   } catch {
-    /* ignore */
+    
   }
 }
 
@@ -72,7 +63,7 @@ function send(body: unknown, useBeacon = false) {
       body: payload,
       keepalive: true,
     }).catch(() => {
-      /* analytics must never break the UI */
+      
     })
   }
 }
@@ -95,7 +86,6 @@ let heartbeatTimer: ReturnType<typeof setInterval> | undefined
 const HEARTBEAT_INTERVAL_MS = 20_000
 const SCROLL_MILESTONES = [25, 50, 75, 90, 100]
 
-/** Call once, near app mount. Starts the session and wires page-lifecycle tracking. */
 export function initAnalytics() {
   if (isTrackingDisabled()) return
 
@@ -118,10 +108,7 @@ export function initAnalytics() {
 
   send({ type: 'page_view', sessionId: getSessionId(), path: currentPath })
 
-  // Passive scroll listener just tracks the running max % (cheap, no
-  // network call). A milestone event only goes out the first time each
-  // threshold (25/50/75/90/100) is crossed — never on every scroll tick.
-  const onScroll = () => {
+const onScroll = () => {
     const doc = document.documentElement
     const scrolled = doc.scrollTop
     const total = doc.scrollHeight - doc.clientHeight
@@ -137,10 +124,7 @@ export function initAnalytics() {
   }
   window.addEventListener('scroll', onScroll, { passive: true })
 
-  // Lets the admin "Live visitors" view know a tab is still open between
-  // page views — paused while the tab is hidden so a backgrounded tab
-  // doesn't keep pinging (and doesn't count as "active").
-  const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(), path: currentPath })
+const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(), path: currentPath })
   const startHeartbeat = () => {
     if (heartbeatTimer) return
     sendHeartbeat()
@@ -189,7 +173,6 @@ export function initAnalytics() {
   window.addEventListener('pagehide', endSession)
 }
 
-/** Track a UI interaction, e.g. trackEvent('ProjectCard', 'project_click', 'CRM Dashboard'). */
 export function trackEvent(component: string, action: string, label?: string, meta?: Record<string, unknown>) {
   send({ type: 'event', sessionId: getSessionId(), path: currentPath, component, action, label, meta })
 }

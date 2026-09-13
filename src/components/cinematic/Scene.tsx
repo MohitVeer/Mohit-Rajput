@@ -7,16 +7,13 @@ interface SceneProps {
   children: ReactNode
   className?: string
   minHeight?: boolean
-  center?: boolean   // ← new
+  center?: boolean   
 }
 
-// One accent/warm-accent pairing per section, picked so adjacent sections
-// never repeat the same dominant hue — gives each scene its own quiet
-// atmosphere instead of every section reading as identical flat black.
 const AURORA_PAIRS: Array<[string, string]> = [
-  ['226 100% 65%', '38 96% 62%'], // accent / accent-2
-  ['262 83% 68%', '226 100% 65%'], // violet / accent
-  ['38 96% 62%', '262 83% 68%'], // accent-2 / violet
+  ['226 100% 65%', '38 96% 62%'], 
+  ['262 83% 68%', '226 100% 65%'], 
+  ['38 96% 62%', '262 83% 68%'], 
 ]
 
 export default function Scene({ id, index, label, children, className = '', minHeight = true, center = false }: SceneProps) {

@@ -4,22 +4,12 @@ import type { CityRow } from '../../../lib/adminApi'
 const WIDTH = 720
 const HEIGHT = 340
 
-// Equirectangular projection — good enough for a dot-density overview, no
-// map-tile/geometry library needed. Latitude/longitude here are already
-// the approximate, city-centroid values Netlify's edge geolocation
-// returns (never precise GPS).
 function project(lat: number, lon: number) {
   const x = ((lon + 180) / 360) * WIDTH
   const y = ((90 - lat) / 180) * HEIGHT
   return { x, y }
 }
 
-/**
- * Lightweight visitor-density map: a lat/long graticule (no map-library
- * dependency, no embedded coastline geometry) with one dot per city sized
- * by session count. Kept intentionally simple so it stays fast and never
- * pulls in a mapping package just for an admin-only chart.
- */
 export default function WorldDotMap({ cities }: { cities: CityRow[] }) {
   const [hovered, setHovered] = useState<CityRow | null>(null)
   const plotted = cities.filter((c) => c.latitude !== null && c.longitude !== null)
@@ -37,7 +27,7 @@ export default function WorldDotMap({ cities }: { cities: CityRow[] }) {
         role="img"
         aria-label="Visitor locations by approximate city"
       >
-        {/* Graticule */}
+        {}
         {Array.from({ length: 7 }, (_, i) => (i * WIDTH) / 6).map((x) => (
           <line key={`v${x}`} x1={x} y1={0} x2={x} y2={HEIGHT} stroke="hsl(var(--border))" strokeWidth={1} />
         ))}

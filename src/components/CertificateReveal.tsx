@@ -28,9 +28,7 @@ export default function CertificateReveal({ cert, onClose, returnFocusRef }: Cer
 
   useBodyScrollLock(open)
 
-  // Reset to the start of the boot sequence every time a different
-  // certificate is opened (skip straight to reveal under reduced motion).
-  useEffect(() => {
+useEffect(() => {
     if (open) {
       setPhase(reduceMotion ? 'reveal' : 'boot')
       setLineIndex(0)
@@ -47,9 +45,7 @@ export default function CertificateReveal({ cert, onClose, returnFocusRef }: Cer
     return () => clearTimeout(advance)
   }, [open, phase, lineIndex])
 
-  // Focus trap + Escape-to-close + focus return, same pattern as the other
-  // overlays in this app.
-  useEffect(() => {
+useEffect(() => {
     if (!open) {
       returnFocusRef.current?.focus()
       return

@@ -42,7 +42,7 @@ function rangeForPreset(preset: DatePreset, custom: { start: string; end: string
     }
     case 'custom': {
       const start = custom.start ? new Date(custom.start) : today
-      // Inclusive end-of-day for a picked custom end date.
+      
       const end = custom.end ? new Date(new Date(custom.end).getTime() + 24 * 60 * 60 * 1000) : new Date()
       return { start, end, label: PRESET_LABELS.custom }
     }
@@ -55,7 +55,6 @@ function rangeForPreset(preset: DatePreset, custom: { start: string; end: string
   }
 }
 
-/** Drives the dashboard's global date-range control (Today/7d/30d/90d/custom). */
 export function useDateRange(initial: DatePreset = '30d') {
   const [preset, setPreset] = useState<DatePreset>(initial)
   const [customStart, setCustomStart] = useState('')

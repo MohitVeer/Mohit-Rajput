@@ -1,13 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useInView, useReducedMotion } from 'framer-motion'
 
-/**
- * Animates a numeric string ("154,250", "~50%", "4.5+/5") from 0 up to its
- * real value once it scrolls into view. Non-numeric characters (%, +, /,
- * commas, the "~" prefix) are preserved verbatim; only the digit runs count
- * up, so "~50%" animates as "~0%" → "~50%" and "4.5+/5" ticks its "4.5" up
- * while "+/5" stays put.
- */
 export function useCountUp(value: string, duration = 1.2) {
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-10% 0px -10% 0px' })
@@ -39,12 +32,10 @@ export function useCountUp(value: string, duration = 1.2) {
   return { ref, display }
 }
 
-/** Replaces every digit run in `value` with the same-length run of zeros. */
 function zeroed(value: string) {
   return value.replace(/\d[\d,.]*\d|\d/g, (run) => run.replace(/\d/g, '0'))
 }
 
-/** Scales every digit run in `value` to `progress` of its final number. */
 function interpolate(value: string, progress: number) {
   return value.replace(/\d[\d,.]*\d|\d/g, (run) => {
     const numeric = Number(run.replace(/,/g, ''))

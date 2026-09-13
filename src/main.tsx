@@ -3,10 +3,6 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App'
 
-// /admin pulls in recharts + the whole analytics dashboard, and /privacy
-// is off the happy path too — neither should ship in the bundle every
-// public portfolio visitor downloads. Only the route someone actually
-// requested loads its JS.
 const PrivacyNotice = lazy(() => import('./components/PrivacyNotice'))
 const Admin = lazy(() => import('./components/Admin'))
 

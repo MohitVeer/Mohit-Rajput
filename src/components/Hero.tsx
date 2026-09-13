@@ -38,9 +38,9 @@ export default function Hero() {
       </Reveal>
 
       <Reveal delay={0.24}>
-        {/* A slow, pausable marquee instead of a static wrapped list — the
-            screen-reader list below carries the real content; this strip is
-            aria-hidden and purely decorative. */}
+        {
+
+}
         <ul className="sr-only" aria-label="Core focus areas">
           {heroTags.map((tag) => (
             <li key={tag}>{tag}</li>

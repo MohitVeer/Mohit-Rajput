@@ -1,11 +1,5 @@
 import { motion, useScroll, useSpring } from 'framer-motion'
 
-/**
- * Thin gradient bar under the top nav that fills as you scroll the page —
- * a quick "how much is left" cue for a page with 10 full-height sections.
- * `useSpring` smooths the raw scroll fraction so it doesn't feel like a
- * literal 1:1 scrollbar clone.
- */
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {

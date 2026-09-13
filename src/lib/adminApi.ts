@@ -1,10 +1,5 @@
 import { supabase } from './supabaseClient'
 
-// Thin typed wrappers around the fn_* RPC functions from
-// supabase/migrations/0002_visitor_intelligence.sql. Every function here
-// takes the same {start, end} window so the whole dashboard can share one
-// date-range control.
-
 export interface DateRange {
   start: Date
   end: Date
@@ -219,10 +214,6 @@ export const fetchLiveVisitors = (minutes = 5) => rpc<LiveVisitorRow>('fn_live_v
 
 export const fetchSessionTimeline = (sessionId: string) =>
   rpc<TimelineRow>('fn_session_timeline', { p_session_id: sessionId })
-
-// ── Export helpers ────────────────────────────────────────────────────────
-// Downloads whatever aggregate rows are currently loaded in the dashboard
-// — CSV or JSON, client-side, no extra request.
 
 export function exportAsJson(filename: string, rows: unknown[]) {
   downloadBlob(filename, JSON.stringify(rows, null, 2), 'application/json')

@@ -12,21 +12,9 @@ const PARTICLES_PER_BURST = 16
 const LINK_DISTANCE = 90
 const PARTICLE_SPEED = 1.6
 const FADE_RATE = 0.012
-// Bounds the worst case for the O(n²) per-burst distance check: even if
-// someone clicks rapidly, only this many bursts animate concurrently — the
-// oldest is dropped immediately (not faded) once the cap is hit.
+
 const MAX_CONCURRENT_BURSTS = 6
 
-/**
- * On click anywhere in the app, spawns a small burst of points at the click
- * position that drift apart and draw connecting lines between nearby points
- * — like a tiny constellation — then fade out. Purely decorative: it never
- * intercepts the click itself (canvas is pointer-events-none), and is
- * skipped entirely under prefers-reduced-motion.
- *
- * The animation loop only runs while at least one burst is alive — it does
- * not spin a requestAnimationFrame loop indefinitely in the background.
- */
 export default function ClickConstellation() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const burstsRef = useRef<Particle[][]>([])
@@ -65,8 +53,7 @@ export default function ClickConstellation() {
 
         const alive = particles.filter((p) => p.alpha > 0)
 
-        // Connecting lines between nearby particles in this burst
-        for (let i = 0; i < alive.length; i++) {
+for (let i = 0; i < alive.length; i++) {
           for (let j = i + 1; j < alive.length; j++) {
             const a = alive[i]
             const b = alive[j]
@@ -83,8 +70,7 @@ export default function ClickConstellation() {
           }
         }
 
-        // Particle dots
-        for (const p of alive) {
+for (const p of alive) {
           ctx.fillStyle = `hsl(${accentColor} / ${p.alpha})`
           ctx.beginPath()
           ctx.arc(p.x, p.y, 1.75, 0, Math.PI * 2)
@@ -96,8 +82,7 @@ export default function ClickConstellation() {
         return particles.length > 0
       })
 
-      // Only keep the loop alive while something is actually animating.
-      if (burstsRef.current.length > 0) {
+if (burstsRef.current.length > 0) {
         rafRef.current = requestAnimationFrame(tick)
       } else {
         loopRunningRef.current = false

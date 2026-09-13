@@ -4,16 +4,6 @@
 
 @layer base {
   :root {
-    /* Cinematic dark palette: warm-charcoal background (not pure black),
-       warm off-white text, one cobalt-blue signal accent used sparingly.
-       Deliberately not the near-black + acid-green/vermilion combo that's
-       become an AI-generated cliché — cobalt reads as "terminal signal",
-       not "neon."
-       Contrast checked:
-       - foreground vs background        ≈ 19.6:1 (AAA)
-       - muted-foreground vs background  ≈ 5.7:1  (AA)
-       - accent text vs background       ≈ 5.2:1  (AA)
-       - ink vs accent (outline/CTA use) ≈ 5.2:1  (AA) */
     --background: 220 4% 4%;
     --foreground: 60 9% 95%;
     --card: 220 4% 7%;
@@ -24,10 +14,6 @@
     --primary-foreground: 220 4% 4%;
     --accent: 226 100% 65%;
     --accent-foreground: 220 4% 4%;
-
-    /* Second signal color — warm amber, used sparingly as a counterpoint to
-       the cobalt accent (gradient pairs, hover glows, the odd highlight).
-       ≈ 11.8:1 against background, so it's also safe as body-size text. */
     --accent-2: 38 96% 62%;
   }
 
@@ -36,10 +22,6 @@
   }
 
   html {
-    /* Not "smooth" here: Lenis (see useSmoothScroll) drives smooth
-       scrolling on desktop and fights the browser's own scroll-behavior
-       animation if both are active at once. useSmoothScroll turns this on
-       via inline style only on touch devices, where Lenis is skipped. */
     scroll-behavior: auto;
     overflow-x: hidden;
     width: 100%;
@@ -64,8 +46,7 @@
     @apply font-display;
   }
 
-  /* Visible, high-contrast focus ring for keyboard users on every interactive element */
-  a:focus-visible,
+a:focus-visible,
   button:focus-visible,
   [tabindex]:focus-visible,
   input:focus-visible,
@@ -96,13 +77,6 @@
   }
 }
 
-/* Not inside @layer utilities: Tailwind only emits a keyframes block from
-   its config when the matching `animate-*` utility class shows up in a
-   scanned file. `.aurora-field` and `.marquee-track` below reference these
-   by name from hand-written CSS instead of that utility class, so without
-   this Tailwind would silently drop both keyframes — the animation
-   properties look normal to devtools ("running", right duration) but
-   nothing ever moves because there's no @keyframes to interpolate. */
 @keyframes drift {
   0%,
   100% {
@@ -143,15 +117,10 @@
       0 20px 40px -20px rgba(0, 0, 0, 0.6);
   }
 
-  /* Frosted card used for skill pills, timeline nodes, cert tiles etc. —
-     one consistent "elevated glass" surface across the redesigned sections. */
   .glass-card {
     @apply rounded-2xl border border-border/80 bg-card/60 backdrop-blur-sm shadow-card;
   }
 
-  /* Soft blurred color field dropped behind a Scene's content to give each
-     section its own atmosphere instead of flat black. Color is set per-scene
-     via the --aurora-a / --aurora-b custom properties (see Scene.tsx). */
   .aurora-field {
     position: absolute;
     inset: 0;
@@ -185,9 +154,7 @@
     animation: drift 22s ease-in-out infinite reverse;
   }
 
-  /* Subtle film-grain overlay so large flat-black areas read as designed
-     rather than a plain CSS background. Fixed + very low opacity. */
-  .grain-overlay {
+.grain-overlay {
     position: fixed;
     inset: 0;
     z-index: 2;
@@ -197,9 +164,7 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Radial glow that follows the pointer, painted from CSS vars a global
-     mousemove listener keeps updated (see Spotlight.tsx). Fine-pointer only. */
-  .cursor-spotlight {
+.cursor-spotlight {
     position: fixed;
     inset: 0;
     z-index: 1;
@@ -223,16 +188,12 @@
     animation-play-state: paused;
   }
 
-  /* Fades the edges of a full-bleed marquee row so items scroll into/out of
-     view instead of hard-clipping. */
-  .marquee-mask {
+.marquee-mask {
     mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
     -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
   }
 
-  /* Console-style index label, used by the corner nav and scene markers
-     instead of a generic uppercase eyebrow pill. */
-  .scene-index {
+.scene-index {
     @apply font-mono text-xs uppercase tracking-[0.25em] text-accent;
   }
 

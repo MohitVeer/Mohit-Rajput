@@ -1,15 +1,5 @@
 import { useEffect } from 'react'
 
-/**
- * A soft radial glow that tracks the pointer across the whole page —
- * pure atmosphere, no interaction target. Writes straight to CSS custom
- * properties (read by `.cursor-spotlight` in index.css) via rAF-throttled
- * mousemove, the same pattern CustomCursor uses, so this adds one more
- * cheap listener rather than a second render loop.
- *
- * Fine-pointer, motion-OK devices only: touch has no hover, and reduced-
- * motion users get a static page instead of a light chasing their finger.
- */
 export default function Spotlight() {
   useEffect(() => {
     const canShow =

@@ -15,14 +15,6 @@ function timeSince(iso: string, now: number): string {
   return `${m}m ${s}s`
 }
 
-/**
- * Combines both mechanisms discussed: a Supabase Realtime subscription on
- * `sessions` gives near-instant updates when a heartbeat/new session comes
- * in, while a plain poll every 15s is the source of truth that refetches
- * regardless — so the view stays correct even if the realtime channel
- * drops, reconnects, or a session simply ages out of the active window
- * with no new row event to react to.
- */
 export default function LiveVisitors() {
   const [visitors, setVisitors] = useState<LiveVisitorRow[]>([])
   const [now, setNow] = useState(() => Date.now())
@@ -36,7 +28,7 @@ export default function LiveVisitors() {
           if (!cancelled) setVisitors(rows)
         })
         .catch(() => {
-          /* transient — next poll or realtime event will retry */
+          
         })
     }
 

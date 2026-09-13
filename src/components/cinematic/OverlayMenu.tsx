@@ -17,9 +17,7 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
 
   useBodyScrollLock(open)
 
-  // Focus the panel when it opens, trap Tab within it, close on Escape,
-  // and return focus to the trigger button when it closes.
-  useEffect(() => {
+useEffect(() => {
     if (open) {
       wasOpenRef.current = true
       const panel = panelRef.current
@@ -63,10 +61,8 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
           role="dialog"
           aria-modal="true"
           aria-label="Site navigation"
-          // data-lenis-prevent: tells the Lenis smooth-scroll library (which
-          // otherwise hijacks wheel input on the whole window) to leave this
-          // element alone so normal wheel/touch scrolling works inside it.
-          data-lenis-prevent
+
+data-lenis-prevent
           className="fixed inset-0 z-50 flex flex-col overflow-y-auto overscroll-contain bg-background"
           initial={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}

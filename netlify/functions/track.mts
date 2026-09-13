@@ -1,8 +1,6 @@
 import type { Context } from '@netlify/functions'
 import { createClient } from '@supabase/supabase-js'
 
-// Server-only client — SUPABASE_SERVICE_ROLE_KEY is set as a Netlify
-// environment variable and is never sent to, or readable by, the browser.
 const supabase = createClient(
   process.env.SUPABASE_URL as string,
   process.env.SUPABASE_SERVICE_ROLE_KEY as string,
@@ -28,8 +26,6 @@ type TrackBody =
   | { type: 'heartbeat'; sessionId: string; path: string }
   | { type: 'session_end'; sessionId: string; exitPath: string; durationSeconds: number }
 
-// Minimal, dependency-free UA parse — just enough for device/os/browser
-// breakdown charts. Not used for fingerprinting or re-identification.
 function parseUA(ua: string) {
   const device_type = /Mobi|Android(?!.*Tablet)/i.test(ua)
     ? 'mobile'
@@ -67,11 +63,6 @@ function parseUA(ua: string) {
   return { device_type, os, browser, browser_version }
 }
 
-// Buckets a referrer + UTM pair into the handful of categories the
-// dashboard's "Traffic sources" section reports on. UTM wins when present
-// (an explicit campaign), otherwise the referrer's hostname is matched
-// against known search/social domains, falling back to "Referral" for any
-// other site and "Direct" for none at all.
 function categorizeTrafficSource(referrer: string, utmSource?: string): string {
   if (utmSource) return `Campaign: ${utmSource}`
   if (!referrer) return 'Direct'
@@ -102,11 +93,6 @@ function categorizeTrafficSource(referrer: string, utmSource?: string): string {
   return `Referral: ${host}`
 }
 
-// Best-effort ISP/organization lookup via ipinfo.io. Only runs when
-// IPINFO_TOKEN is configured, has a hard timeout, and never throws — a
-// slow or failed lookup must never block or break session tracking. The
-// IP used for the lookup lives only in this function's memory for the
-// single outbound request; it is never written to the database.
 async function lookupIspOrg(ip: string | undefined): Promise<string | null> {
   const token = process.env.IPINFO_TOKEN
   if (!token || !ip || ip === '127.0.0.1' || ip === '::1') return null
@@ -120,9 +106,8 @@ async function lookupIspOrg(ip: string | undefined): Promise<string | null> {
     clearTimeout(timeout)
     if (!res.ok) return null
     const data = (await res.json()) as { org?: string }
-    // ipinfo's `org` field is typically "AS15169 Google LLC" — drop the ASN
-    // prefix, keep the human-readable org/ISP name.
-    return data.org ? data.org.replace(/^AS\d+\s+/, '') : null
+
+return data.org ? data.org.replace(/^AS\d+\s+/, '') : null
   } catch {
     return null
   }
@@ -142,11 +127,8 @@ export default async (req: Request, context: Context) => {
 
   const ua = req.headers.get('user-agent') || ''
   const { device_type, os, browser, browser_version } = parseUA(ua)
-  // City-level, IP-derived geo supplied by Netlify's edge network.
-  // The raw IP address itself is never read or stored — except
-  // momentarily below, held only long enough to make the optional ISP
-  // lookup call, then discarded.
-  const geo = context.geo
+
+const geo = context.geo
 
   try {
     switch (body.type) {
@@ -210,14 +192,12 @@ export default async (req: Request, context: Context) => {
         })
         if (error) throw error
 
-        // Best-effort — a page_view for a session_start race is harmless
-        // to miss, the row still exists from the initial insert.
-        await supabase.rpc('increment_page_view_count', { p_session_id: body.sessionId, p_path: body.path })
+await supabase.rpc('increment_page_view_count', { p_session_id: body.sessionId, p_path: body.path })
         break
       }
 
       case 'page_view_end': {
-        // Best-effort: update the most recent matching page_view row.
+        
         const { data: row } = await supabase
           .from('page_views')
           .select('id')
@@ -249,11 +229,8 @@ export default async (req: Request, context: Context) => {
       }
 
       case 'heartbeat': {
-        // Keeps "live visitors" accurate without waiting for session_end
-        // (which only fires on tab close/hide) — cheap, no-op if the
-        // session row doesn't exist (e.g. arrived after session_end raced
-        // a stale beacon on unload).
-        await supabase
+
+await supabase
           .from('sessions')
           .update({ last_activity_at: new Date().toISOString(), current_path: body.path })
           .eq('id', body.sessionId)
@@ -280,7 +257,7 @@ export default async (req: Request, context: Context) => {
     return new Response(null, { status: 204 })
   } catch (err) {
     console.error('track function error', err)
-    // Never let analytics failures surface to the visitor or break the UI.
+    
     return new Response(null, { status: 204 })
   }
 }

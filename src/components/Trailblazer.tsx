@@ -42,9 +42,9 @@ export default function Trailblazer() {
             width={80}
             height={80}
           />
-          {/* dl as a wrapping flex row, not a fixed 3-col grid — a wide
-              number like "154,250" now wraps to its own line instead of
-              overflowing its column and overlapping the next stat. */}
+          {
+
+}
           <dl className="flex flex-wrap gap-x-8 gap-y-4 font-mono">
             <TrailStat value={String(trailhead.badges)} label="Badges" />
             <TrailStat value={trailhead.points} label="Points" />
@@ -53,10 +53,9 @@ export default function Trailblazer() {
         </Reveal>
 
         <Reveal delay={0.2} className="glass-card flex items-start gap-6 p-8">
-          {/* Overlapping badge stack: Champion badge sits behind/left,
-              Innovator badge sits in front/right — same layered look as
-              the Trailhead profile page. Swap the two image URLs in
-              profile.ts once you have the real Champion badge asset. */}
+          {
+
+}
           <div className="relative h-24 w-28 shrink-0">
             <img
               src={trailhead.agentblazerChampionImage}

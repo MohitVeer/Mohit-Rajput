@@ -48,9 +48,7 @@ export const trailhead = {
   points: '154,250',
   trails: 52,
   status: 'Agentblazer Innovator 2026',
-  // agentforceLevel: 'Legend',
-  // agentforceNote:
-  //   'On the journey of becoming a Salesforce Agentblazer Legend.',
+
 }
 
 export const stats = [

@@ -13,15 +13,7 @@ export default function Skills() {
   const visibleGroups =
     activeGroup === 'All' ? skillGroups : skillGroups.filter((g) => g.title === activeGroup)
 
-  // Filtering to one category can shrink this section's height a lot (six
-  // pill groups down to one) — that shrink happens while the section may
-  // still be under the viewport's scroll position, and Lenis recalculates
-  // its scroll limit against the page's new (shorter) height as part of
-  // handling the resize. Depending on timing, that recalculation can clamp
-  // — or the browser's own scroll-anchoring can yank — scrollY back toward
-  // 0 right as the DOM updates. Re-asserting the pre-click position for a
-  // few frames after the state change rides out whichever one fires.
-  const selectCategory = (category: string) => {
+const selectCategory = (category: string) => {
     const y = window.scrollY
     setActiveGroup(category)
     let framesLeft = 4

@@ -3,13 +3,6 @@ import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
 import { useCountUp } from '../hooks/useCountUp'
 
-// One continuous formula instead of a two-tier "big size / small size"
-// split — "9" and "154,250" both scale down smoothly from the same curve
-// as they get longer, so every card in the row reads as one consistent
-// type system rather than jumping between two unrelated sizes. The `vw`
-// term is what makes it responsive: it shrinks toward `min` on narrow
-// viewports and grows toward the length-based `max` on wide ones, the
-// same way on every card.
 function statFontSize(value: string) {
   const max = Math.min(4.75, Math.max(2.5, 4.75 - (value.length - 1) * 0.3))
   return `clamp(1.85rem, 1.1rem + 3.4vw, ${max}rem)`

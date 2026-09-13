@@ -14,10 +14,6 @@ import OverlayMenu from './components/cinematic/OverlayMenu'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
 import { initAnalytics } from './lib/analytics'
 
-// Below-the-fold sections: code-split so their JS (and, for Experience/
-// LightningRush, their heavier animation/game logic) isn't parsed until the
-// browser actually needs it, instead of shipping it all in the initial
-// bundle up front.
 const Trailblazer = lazy(() => import('./components/Trailblazer'))
 const Skills = lazy(() => import('./components/Skills'))
 const Experience = lazy(() => import('./components/Experience'))
@@ -58,10 +54,7 @@ export default function App() {
           <Hero />
           <Metrics />
           <About />
-          {/* A null fallback is intentional: these chunks are small and load
-              quickly, so a loading spinner would just flash distractingly.
-              Nothing here is above the fold, so a brief blank gap while a
-              chunk fetches is preferable to layout-shifting content in. */}
+
           <Suspense fallback={null}>
             <Trailblazer />
             <Skills />

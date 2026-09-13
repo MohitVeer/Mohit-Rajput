@@ -86,7 +86,7 @@ export default function LightningRush() {
         </div>
       </Reveal>
 
-      {/* Live region: announces score/game-state changes to screen reader users without moving focus */}
+      {}
       <p role="status" aria-live="polite" className="sr-only">
         {announcement}
       </p>

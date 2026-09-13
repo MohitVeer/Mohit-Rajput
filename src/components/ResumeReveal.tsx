@@ -17,10 +17,7 @@ export default function ResumeReveal() {
   const panelRef = useRef<HTMLDivElement>(null)
   const returnFocusRef = useRef<HTMLElement | null>(null)
 
-  // Any "View Résumé" button anywhere in the app calls openResume(), which
-  // dispatches this event — keeps a single overlay/instance instead of one
-  // per trigger button (avoiding duplicate ids/focus-trap conflicts).
-  useEffect(() => {
+useEffect(() => {
     const handleOpen = () => {
       returnFocusRef.current = document.activeElement as HTMLElement
       setPhase(reduceMotion ? 'reveal' : 'boot')
@@ -32,8 +29,7 @@ export default function ResumeReveal() {
     return () => window.removeEventListener(OPEN_RESUME_EVENT, handleOpen)
   }, [reduceMotion])
 
-  // Advance the boot-sequence lines, then flip to the reveal phase.
-  useEffect(() => {
+useEffect(() => {
     if (!open || phase !== 'boot') return
     if (lineIndex >= BOOT_LINES.length - 1) {
       const toReveal = setTimeout(() => setPhase('reveal'), LINE_INTERVAL_MS)
@@ -47,9 +43,7 @@ export default function ResumeReveal() {
 
   useBodyScrollLock(open)
 
-  // Focus management + focus trap + Escape-to-close, same pattern as the
-  // scene menu overlay.
-  useEffect(() => {
+useEffect(() => {
     if (!open) {
       returnFocusRef.current?.focus()
       return
@@ -136,13 +130,8 @@ export default function ResumeReveal() {
                 <iframe
                 src={`${profile.resumeUrl}#toolbar=0`}
                 title="Resume preview"
-  // No sandbox attribute here: this is a same-origin,
-  // trusted static PDF, and Chrome's built-in PDF viewer
-  // needs same-origin + script permissions to render at
-  // all — a sandboxed iframe just shows a blank/broken
-  // preview instead. referrerPolicy still applies since it
-  // doesn't affect rendering.
-                referrerPolicy="no-referrer"
+
+referrerPolicy="no-referrer"
                 className="h-72 w-full sm:h-80"
                 />
                 <p className="border-t border-border px-4 py-2 text-center text-xs text-muted-foreground">

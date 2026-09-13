@@ -17,11 +17,7 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!enabled) return
 
-    // mousemove only records the latest position (cheap) — the actual DOM
-    // write happens at most once per animation frame below, instead of
-    // once per raw mouse event (which can fire far faster than the screen
-    // refreshes on high-poll-rate mice/trackpads).
-    const moveCursor = (e: MouseEvent) => {
+const moveCursor = (e: MouseEvent) => {
       positionRef.current = { x: e.clientX, y: e.clientY }
       const target = e.target as HTMLElement
       setHoveringLink(Boolean(target.closest('a, button, [role="button"]')))

@@ -143,10 +143,8 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
     return () => {
       cancelled = true
     }
-    // dateRange.range is a derived object recomputed each render from
-    // stable primitives (preset/customStart/customEnd) — depending on
-    // those directly avoids refetching every render from a new object identity.
-  }, [dateRange.preset, dateRange.customStart, dateRange.customEnd])
+
+}, [dateRange.preset, dateRange.customStart, dateRange.customEnd])
 
   return (
     <div className="min-h-screen bg-background px-6 py-10 text-foreground md:px-12">

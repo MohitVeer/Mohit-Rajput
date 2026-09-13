@@ -8,18 +8,6 @@ export interface ActiveScene {
 
 const FALLBACK: ActiveScene = { id: 'top', index: '00', label: 'Home' }
 
-/**
- * Watches every element tagged `data-scene` and reports whichever one
- * currently occupies the most viewport space — powers the corner index
- * nav ("05 — Experience") without needing per-scene scroll math.
- *
- * Several scenes (Trailblazer, Skills, Experience, ...) are behind
- * React.lazy/Suspense, so they don't exist in the DOM yet on first paint.
- * A MutationObserver keeps attaching the IntersectionObserver to new
- * `[data-scene]` nodes as those chunks mount, instead of only the ones
- * present at the very first effect run — otherwise the indicator freezes
- * on the last scene that existed at mount (e.g. "About") forever.
- */
 export function useActiveScene(): ActiveScene {
   const [active, setActive] = useState<ActiveScene>(FALLBACK)
 

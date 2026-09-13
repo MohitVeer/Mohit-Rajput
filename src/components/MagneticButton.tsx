@@ -12,12 +12,6 @@ interface MagneticButtonProps {
   children: ReactNode
 }
 
-/**
- * Wraps a link/button so it gently pulls toward the cursor while hovered —
- * a small, tactile "this is clickable" cue on the hero/contact CTAs.
- * Skipped entirely for touch and reduced-motion, where it's just the
- * plain element with no transform.
- */
 export default function MagneticButton({
   as = 'a',
   className,
@@ -26,7 +20,7 @@ export default function MagneticButton({
 }: MagneticButtonProps) {
   const ref = useRef<HTMLElement | null>(null)
   const reduceMotion = useReducedMotion()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  
   const Component = motion(as as any)
 
   const handleMove = (e: MouseEvent<HTMLElement>) => {
@@ -45,7 +39,7 @@ export default function MagneticButton({
 
   return (
     <Component
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      
       ref={ref as any}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
