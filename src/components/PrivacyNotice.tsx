@@ -12,7 +12,7 @@ export default function PrivacyNotice() {
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-24 text-foreground">
-      <a href="/" className="font-mono text-sm text-muted-foreground hover:text-foreground">
+      <a href="/" className="font-sans text-sm text-muted-foreground hover:text-foreground">
         ← Back
       </a>
       <h1 className="mt-6 font-display text-3xl font-semibold sm:text-4xl">Privacy &amp; analytics</h1>

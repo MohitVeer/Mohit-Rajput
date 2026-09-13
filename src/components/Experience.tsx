@@ -22,7 +22,7 @@ function JobCard({ job, index }: { job: (typeof experience)[number]; index: numb
           <h3 className="font-display text-2xl font-semibold leading-snug md:text-3xl">
             {job.role} · <span className="text-accent">{job.company}</span>
           </h3>
-          <span className="shrink-0 font-mono text-xs text-muted-foreground sm:text-sm">
+          <span className="shrink-0 font-sans text-xs text-muted-foreground sm:text-sm">
             {job.period} · {job.location}
           </span>
         </div>
@@ -41,7 +41,7 @@ function JobCard({ job, index }: { job: (typeof experience)[number]; index: numb
             type="button"
             onClick={() => setExpanded((v) => !v)}
             aria-expanded={expanded}
-            className="mt-4 font-mono text-xs uppercase tracking-widest text-accent transition hover:opacity-80"
+            className="mt-4 font-sans text-xs font-semibold uppercase tracking-widest text-accent transition hover:opacity-80"
           >
             {expanded ? '− Show less' : `+ Show ${job.bullets.length - COLLAPSED_COUNT} more`}
           </button>
@@ -49,13 +49,13 @@ function JobCard({ job, index }: { job: (typeof experience)[number]; index: numb
 
         {job.achievements && job.achievements.length > 0 && (
           <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">
-            <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+            <span className="font-sans text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
               Achievements
             </span>
             {job.achievements.map((achievement) => (
               <span
                 key={achievement}
-                className="rounded-full border border-accent-2/30 bg-accent-2/10 px-3 py-1 font-mono text-xs text-accent-2"
+                className="rounded-full border border-accent-2/30 bg-accent-2/10 px-3 py-1 font-sans text-xs font-medium text-accent-2"
               >
                 {achievement}
               </span>
@@ -65,13 +65,13 @@ function JobCard({ job, index }: { job: (typeof experience)[number]; index: numb
 
         {job.clients.length > 0 && (
           <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
-            <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+            <span className="font-sans text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
               Clients
             </span>
             {job.clients.map((client) => (
               <span
                 key={client}
-                className="rounded-full border border-border px-3 py-1 font-mono text-xs text-foreground"
+                className="rounded-full border border-border px-3 py-1 font-sans text-xs font-medium text-foreground"
               >
                 {client}
               </span>

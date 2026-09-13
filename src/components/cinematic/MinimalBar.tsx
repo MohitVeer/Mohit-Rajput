@@ -18,7 +18,7 @@ const MinimalBar = forwardRef<HTMLButtonElement, MinimalBarProps>(function Minim
         MR<span className="text-accent">.</span>
       </a>
 
-      <div className="hidden items-center gap-3 font-mono text-xs text-muted-foreground md:flex">
+      <div className="hidden items-center gap-3 font-sans text-xs font-semibold tabular-nums text-muted-foreground md:flex">
         <span aria-hidden="true">{active.index}</span>
         <span className="text-border" aria-hidden="true">
           /
@@ -33,7 +33,7 @@ const MinimalBar = forwardRef<HTMLButtonElement, MinimalBarProps>(function Minim
         aria-expanded={menuOpen}
         aria-controls="site-menu"
         aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        className="group flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-foreground"
+        className="group -my-3 flex items-center gap-3 py-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-foreground"
       >
         <span>{menuOpen ? 'Close' : 'Menu'}</span>
         <span className="relative flex h-4 w-6 flex-col justify-between" aria-hidden="true">

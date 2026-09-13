@@ -42,7 +42,7 @@ export default function Trailblazer() {
             width={80}
             height={80}
           />
-          <dl className="flex flex-wrap gap-x-8 gap-y-4 font-mono">
+          <dl className="flex flex-wrap gap-x-8 gap-y-4 font-sans">
             <TrailStat value={String(trailhead.badges)} label="Badges" />
             <TrailStat value={trailhead.points} label="Points" />
             <TrailStat value={String(trailhead.trails)} label="Trails" />

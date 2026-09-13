@@ -22,18 +22,18 @@ export default function LightningRush() {
       </Reveal>
 
       <Reveal delay={0.1} className="mt-12 grid gap-10 md:grid-cols-[1fr_2fr] md:items-center">
-        <div className="flex gap-6 font-mono md:flex-col md:gap-8">
+        <div className="flex gap-6 font-sans md:flex-col md:gap-8">
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-muted-foreground">Score</div>
-            <div className="mt-1 text-3xl font-semibold">{score}</div>
+            <div className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Score</div>
+            <div className="mt-1 text-3xl font-semibold tabular-nums">{score}</div>
           </div>
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-muted-foreground">Time</div>
-            <div className="mt-1 text-3xl font-semibold">{timeLeft}s</div>
+            <div className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Time</div>
+            <div className="mt-1 text-3xl font-semibold tabular-nums">{timeLeft}s</div>
           </div>
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-muted-foreground">Best</div>
-            <div className="mt-1 text-3xl font-semibold text-accent">{best}</div>
+            <div className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Best</div>
+            <div className="mt-1 text-3xl font-semibold tabular-nums text-accent">{best}</div>
           </div>
         </div>
 

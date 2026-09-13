@@ -33,7 +33,7 @@ export default function Articles() {
                   {article.title}
                   <span className="sr-only"> (opens in a new tab)</span>
                 </h3>
-                <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                <span className="shrink-0 font-sans text-xs text-muted-foreground">
                   {article.publishedOn} · {article.readTime}
                 </span>
               </a>
