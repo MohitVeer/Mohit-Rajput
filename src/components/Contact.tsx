@@ -1,6 +1,7 @@
 import { profile } from '../data/profile'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
+import MagneticButton from './MagneticButton'
 import { openResume } from '../lib/resumeEvents'
 import { trackExternalLink } from '../lib/analytics'
 
@@ -36,17 +37,17 @@ export default function Contact() {
       </Reveal>
 
       <Reveal delay={0.2}>
-        <div className="mt-12">
-          <a
+        <div className="glass-card mt-12 min-w-0 p-8 sm:p-10">
+          <MagneticButton
             href={mailtoHref}
             onClick={() => trackExternalLink(mailtoHref, 'email')}
-            className="group inline-flex items-baseline gap-3 border-b-2 border-accent font-display text-2xl font-semibold transition hover:text-accent md:text-4xl"
+            className="group inline-flex w-full max-w-full flex-wrap items-baseline gap-x-3 gap-y-1 border-b-2 border-accent font-display text-xl font-semibold hover:text-accent sm:text-2xl md:text-4xl"
           >
-            {profile.email}
-            <span className="text-2xl transition group-hover:translate-x-1 md:text-4xl" aria-hidden="true">
+            <span className="break-all">{profile.email}</span>
+            <span className="text-xl transition group-hover:translate-x-1 sm:text-2xl md:text-4xl" aria-hidden="true">
               →
             </span>
-          </a>
+          </MagneticButton>
 
           <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4 font-mono text-base">
             <a
