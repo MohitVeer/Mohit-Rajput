@@ -1,5 +1,7 @@
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { certGroups, superbadges } from '../data/profile'
+import { fetchCertGroups, fetchSuperbadges, type CertGroupRow, type SuperbadgeRow } from '../lib/contentApi'
+import { useLiveContent } from '../hooks/useLiveContent'
 import CertificateReveal, { CertificateData } from './CertificateReveal'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
@@ -8,6 +10,23 @@ import { trackEvent, trackExternalLink } from '../lib/analytics'
 export default function Certifications() {
   const [activeCert, setActiveCert] = useState<CertificateData | null>(null)
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null)
+
+  const certGroupsFallback = useMemo<CertGroupRow[]>(
+    () =>
+      certGroups.map((g, i) => ({
+        ...g,
+        certs: Array.isArray(g.certs) ? g.certs : [g.certs],
+        id: `static-${i}`,
+        sort_order: i,
+      })),
+    [],
+  )
+  const superbadgesFallback = useMemo<SuperbadgeRow[]>(
+    () => superbadges.map((s, i) => ({ ...s, id: `static-${i}`, sort_order: i })),
+    [],
+  )
+  const groups = useLiveContent(fetchCertGroups, certGroupsFallback)
+  const badges = useLiveContent(fetchSuperbadges, superbadgesFallback)
 
   const openCert = (cert: CertificateData, trigger: HTMLButtonElement) => {
     lastTriggerRef.current = trigger
@@ -31,11 +50,11 @@ export default function Certifications() {
       </Reveal>
 
       <div className="mt-14 grid gap-6 md:grid-cols-2">
-        {certGroups.map((group, i) => (
-          <Reveal key={group.title} delay={i * 0.08} className="glass-card p-6 transition-colors hover:border-accent/40 sm:p-8">
+        {groups.map((group, i) => (
+          <Reveal key={group.id} delay={i * 0.08} className="glass-card p-6 transition-colors hover:border-accent/40 sm:p-8">
             <div className="flex items-center gap-3 border-b border-border pb-4">
               <img
-                src={group.logo}
+                src={group.logo ?? undefined}
                 alt={group.title}
                 loading="lazy"
                 className="h-8 w-8 rounded-sm bg-white p-1"
@@ -46,7 +65,7 @@ export default function Certifications() {
             </div>
 
             <ul className="mt-4 space-y-1">
-              {(Array.isArray(group.certs) ? group.certs : [group.certs]).map((cert) => (
+              {group.certs.map((cert) => (
                 <li key={cert.name}>
                   <button
                     type="button"
@@ -81,8 +100,8 @@ export default function Certifications() {
       <div className="mt-16 border-t border-border pt-10">
         <span className="scene-index">Trailhead superbadges</span>
         <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {superbadges.map((badge, i) => (
-            <li key={badge.title}>
+          {badges.map((badge, i) => (
+            <li key={badge.id}>
               <Reveal delay={i * 0.08} className="h-full">
                 <a
                   href={badge.url}
@@ -92,7 +111,7 @@ export default function Certifications() {
                   className="group glass-card flex h-full gap-4 p-5 transition-all hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow"
                 >
                   <img
-                    src={badge.image}
+                    src={badge.image ?? undefined}
                     alt={badge.title}
                     loading="lazy"
                     className="h-14 w-14 shrink-0"
