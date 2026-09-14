@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchSkillGroups, type SkillGroupRow } from '../../../lib/contentApi'
 import { createSkillGroup, deleteSkillGroup, updateSkillGroup } from '../../../lib/contentAdminApi'
-import { EditorCard, Field, ListTextArea, SaveDeleteRow, TextInput } from './fields'
+import { cleanLines, EditorCard, Field, ListTextArea, MoveButtons, SaveDeleteRow, TextInput } from './fields'
 
 type Draft = Omit<SkillGroupRow, 'id' | 'sort_order'>
 
@@ -15,6 +15,7 @@ function GroupForm({
   onSave,
   onDelete,
   saveLabel,
+  header,
 }: {
   initial: Draft
   sortOrder: number
@@ -22,20 +23,21 @@ function GroupForm({
   onSave: (draft: Draft & { sort_order: number }) => void
   onDelete?: () => void
   saveLabel?: string
+  header?: ReactNode
 }) {
   const [draft, setDraft] = useState<Draft>(initial)
 
   return (
-    <EditorCard>
+    <EditorCard header={header}>
       <Field label="Group title">
         <TextInput value={draft.title} onChange={(v) => setDraft((d) => ({ ...d, title: v }))} />
       </Field>
-      <Field label="Skills (one per line — matches an icon automatically by exact name)">
+      <Field label="Skills — one per line, in the order they should appear. Each matches an icon automatically by exact name; reorder by re-arranging these lines.">
         <ListTextArea value={draft.skills} onChange={(v) => setDraft((d) => ({ ...d, skills: v }))} rows={8} />
       </Field>
       <SaveDeleteRow
         saving={saving}
-        onSave={() => onSave({ ...draft, sort_order: sortOrder })}
+        onSave={() => onSave({ ...draft, skills: cleanLines(draft.skills), sort_order: sortOrder })}
         onDelete={onDelete}
         saveLabel={saveLabel}
       />
@@ -44,7 +46,7 @@ function GroupForm({
 }
 
 export default function SkillGroupsEditor() {
-  const { items, loading, error, savingId, create, update, remove } = useCrudList(
+  const { items, loading, error, savingId, create, update, remove, move } = useCrudList(
     fetchSkillGroups,
     createSkillGroup,
     updateSkillGroup,
@@ -57,7 +59,7 @@ export default function SkillGroupsEditor() {
       {error && <p className="rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-300">{error}</p>}
       {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
 
-      {items.map((group) => (
+      {items.map((group, i) => (
         <GroupForm
           key={group.id}
           initial={group}
@@ -65,6 +67,14 @@ export default function SkillGroupsEditor() {
           saving={savingId === group.id}
           onSave={(draft) => update(group.id, draft)}
           onDelete={() => window.confirm(`Delete the "${group.title}" group?`) && remove(group.id)}
+          header={
+            <MoveButtons
+              onMoveUp={() => move(group.id, 'up')}
+              onMoveDown={() => move(group.id, 'down')}
+              disableUp={i === 0}
+              disableDown={i === items.length - 1}
+            />
+          }
         />
       ))}
 

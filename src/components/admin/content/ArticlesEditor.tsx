@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchArticles, type ArticleRow } from '../../../lib/contentApi'
 import { createArticle, deleteArticle, updateArticle } from '../../../lib/contentAdminApi'
-import { EditorCard, Field, SaveDeleteRow, TextArea, TextInput } from './fields'
+import { EditorCard, Field, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './fields'
 
 type Draft = Omit<ArticleRow, 'id' | 'sort_order'>
 
@@ -15,6 +15,7 @@ function ArticleForm({
   onSave,
   onDelete,
   saveLabel,
+  header,
 }: {
   initial: Draft
   sortOrder: number
@@ -22,11 +23,12 @@ function ArticleForm({
   onSave: (draft: Draft & { sort_order: number }) => void
   onDelete?: () => void
   saveLabel?: string
+  header?: ReactNode
 }) {
   const [draft, setDraft] = useState<Draft>(initial)
 
   return (
-    <EditorCard>
+    <EditorCard header={header}>
       <Field label="Title">
         <TextInput value={draft.title} onChange={(v) => setDraft((d) => ({ ...d, title: v }))} />
       </Field>
@@ -59,7 +61,7 @@ function ArticleForm({
 }
 
 export default function ArticlesEditor() {
-  const { items, loading, error, savingId, create, update, remove } = useCrudList(
+  const { items, loading, error, savingId, create, update, remove, move } = useCrudList(
     fetchArticles,
     createArticle,
     updateArticle,
@@ -72,7 +74,7 @@ export default function ArticlesEditor() {
       {error && <p className="rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-300">{error}</p>}
       {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
 
-      {items.map((article) => (
+      {items.map((article, i) => (
         <ArticleForm
           key={article.id}
           initial={article}
@@ -80,6 +82,14 @@ export default function ArticlesEditor() {
           saving={savingId === article.id}
           onSave={(draft) => update(article.id, draft)}
           onDelete={() => window.confirm(`Delete "${article.title}"?`) && remove(article.id)}
+          header={
+            <MoveButtons
+              onMoveUp={() => move(article.id, 'up')}
+              onMoveDown={() => move(article.id, 'down')}
+              disableUp={i === 0}
+              disableDown={i === items.length - 1}
+            />
+          }
         />
       ))}
 

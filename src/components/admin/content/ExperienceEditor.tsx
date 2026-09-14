@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchExperience, type ExperienceRow } from '../../../lib/contentApi'
 import { createExperience, deleteExperience, updateExperience } from '../../../lib/contentAdminApi'
-import { EditorCard, Field, ListTextArea, SaveDeleteRow, TextInput } from './fields'
+import { cleanLines, EditorCard, Field, ListTextArea, MoveButtons, SaveDeleteRow, TextInput } from './fields'
 
 type Draft = Omit<ExperienceRow, 'id' | 'sort_order'>
 
@@ -15,6 +15,7 @@ function ExperienceForm({
   onSave,
   onDelete,
   saveLabel,
+  header,
 }: {
   initial: Draft
   sortOrder: number
@@ -22,11 +23,12 @@ function ExperienceForm({
   onSave: (draft: Draft & { sort_order: number }) => void
   onDelete?: () => void
   saveLabel?: string
+  header?: ReactNode
 }) {
   const [draft, setDraft] = useState<Draft>(initial)
 
   return (
-    <EditorCard>
+    <EditorCard header={header}>
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Role">
           <TextInput value={draft.role} onChange={(v) => setDraft((d) => ({ ...d, role: v }))} />
@@ -56,7 +58,15 @@ function ExperienceForm({
       </Field>
       <SaveDeleteRow
         saving={saving}
-        onSave={() => onSave({ ...draft, sort_order: sortOrder })}
+        onSave={() =>
+          onSave({
+            ...draft,
+            bullets: cleanLines(draft.bullets),
+            achievements: cleanLines(draft.achievements),
+            clients: cleanLines(draft.clients),
+            sort_order: sortOrder,
+          })
+        }
         onDelete={onDelete}
         saveLabel={saveLabel}
       />
@@ -65,7 +75,7 @@ function ExperienceForm({
 }
 
 export default function ExperienceEditor() {
-  const { items, loading, error, savingId, create, update, remove } = useCrudList(
+  const { items, loading, error, savingId, create, update, remove, move } = useCrudList(
     fetchExperience,
     createExperience,
     updateExperience,
@@ -78,7 +88,7 @@ export default function ExperienceEditor() {
       {error && <p className="rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-300">{error}</p>}
       {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
 
-      {items.map((job) => (
+      {items.map((job, i) => (
         <ExperienceForm
           key={job.id}
           initial={job}
@@ -86,6 +96,14 @@ export default function ExperienceEditor() {
           saving={savingId === job.id}
           onSave={(draft) => update(job.id, draft)}
           onDelete={() => window.confirm(`Delete "${job.role} · ${job.company}"?`) && remove(job.id)}
+          header={
+            <MoveButtons
+              onMoveUp={() => move(job.id, 'up')}
+              onMoveDown={() => move(job.id, 'down')}
+              disableUp={i === 0}
+              disableDown={i === items.length - 1}
+            />
+          }
         />
       ))}
 
