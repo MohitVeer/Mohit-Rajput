@@ -1,11 +1,29 @@
+import { useMemo } from 'react'
 import { articles } from '../data/profile'
+import { fetchArticles, type ArticleRow } from '../lib/contentApi'
+import { useLiveContent } from '../hooks/useLiveContent'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
 import { trackEvent } from '../lib/analytics'
 
 export default function Articles() {
+  const fallback = useMemo<ArticleRow[]>(
+    () =>
+      articles.map((a, i) => ({
+        title: a.title,
+        summary: a.summary,
+        url: a.url,
+        published_on: a.publishedOn,
+        read_time: a.readTime,
+        id: `static-${i}`,
+        sort_order: i,
+      })),
+    [],
+  )
+  const items = useLiveContent(fetchArticles, fallback)
+
   return (
-    <Scene id="articles" index="07" label="Articles">
+    <Scene id="articles" index="08" label="Articles">
       <Reveal>
         <h2
           id="articles-heading"
@@ -19,8 +37,8 @@ export default function Articles() {
       </Reveal>
 
       <ul className="mt-14 divide-y divide-border border-t border-border">
-        {articles.map((article, i) => (
-          <li key={article.title}>
+        {items.map((article, i) => (
+          <li key={article.id}>
             <Reveal delay={i * 0.06}>
               <a
                 href={article.url}
@@ -34,7 +52,7 @@ export default function Articles() {
                   <span className="sr-only"> (opens in a new tab)</span>
                 </h3>
                 <span className="shrink-0 font-sans text-xs text-muted-foreground">
-                  {article.publishedOn} · {article.readTime}
+                  {article.published_on} · {article.read_time}
                 </span>
               </a>
               <p className="max-w-2xl pb-6 text-base text-muted-foreground">{article.summary}</p>

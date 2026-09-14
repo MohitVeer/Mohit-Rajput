@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { skillGroups } from '../data/profile'
+import { fetchSkillGroups, type SkillGroupRow } from '../lib/contentApi'
+import { useLiveContent } from '../hooks/useLiveContent'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
 import { getLenisInstance } from '../lib/lenisInstance'
@@ -9,10 +11,14 @@ import { groupIcons, skillIcons } from './icons/TechIcons'
 export default function Skills() {
   const [activeGroup, setActiveGroup] = useState<string>('All')
   const reduceMotion = useReducedMotion()
-  const categories = useMemo(() => ['All', ...skillGroups.map((g) => g.title)], [])
+  const fallback = useMemo<SkillGroupRow[]>(
+    () => skillGroups.map((g, i) => ({ ...g, id: `static-${i}`, sort_order: i })),
+    [],
+  )
+  const groups = useLiveContent(fetchSkillGroups, fallback)
+  const categories = useMemo(() => ['All', ...groups.map((g) => g.title)], [groups])
 
-  const visibleGroups =
-    activeGroup === 'All' ? skillGroups : skillGroups.filter((g) => g.title === activeGroup)
+  const visibleGroups = activeGroup === 'All' ? groups : groups.filter((g) => g.title === activeGroup)
 
   const selectCategory = (category: string) => {
     const y = window.scrollY
@@ -68,7 +74,7 @@ export default function Skills() {
 
       <div className="mt-10 space-y-10">
         {visibleGroups.map((group) => (
-          <div key={group.title}>
+          <div key={group.id}>
             <h3 className="flex items-center gap-2 scene-index">
               {groupIcons[group.title] && (
                 <img
