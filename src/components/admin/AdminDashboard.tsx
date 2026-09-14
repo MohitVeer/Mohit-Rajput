@@ -27,6 +27,7 @@ import {
   type TrafficSourceRow,
 } from '../../lib/adminApi'
 import { useDateRange } from '../../hooks/useDateRange'
+import ContentManager from './content/ContentManager'
 import DateRangeBar from './analytics/DateRangeBar'
 import OverviewCards from './analytics/OverviewCards'
 import VisitorTrendChart from './analytics/VisitorTrendChart'
@@ -60,6 +61,7 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [data, setData] = useState<DashboardData | null>(null)
+  const [view, setView] = useState<'analytics' | 'content'>('analytics')
   const dateRange = useDateRange('30d')
 
   useEffect(() => {
@@ -163,28 +165,67 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
           </button>
         </div>
 
-        <div className="mt-6">
-          <DateRangeBar
-            preset={dateRange.preset}
-            onPresetChange={dateRange.setPreset}
-            customStart={dateRange.customStart}
-            customEnd={dateRange.customEnd}
-            onCustomStartChange={dateRange.setCustomStart}
-            onCustomEndChange={dateRange.setCustomEnd}
-            presetLabels={dateRange.presetLabels}
-            isDefault={dateRange.isDefault}
-            onReset={dateRange.reset}
-          />
+        <div className="mt-6 flex gap-2" role="tablist" aria-label="Admin sections">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={view === 'analytics'}
+            onClick={() => setView('analytics')}
+            className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-colors ${
+              view === 'analytics'
+                ? 'border-accent bg-accent text-accent-foreground'
+                : 'border-border text-muted-foreground hover:border-accent/60 hover:text-foreground'
+            }`}
+          >
+            Analytics
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={view === 'content'}
+            onClick={() => setView('content')}
+            className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-colors ${
+              view === 'content'
+                ? 'border-accent bg-accent text-accent-foreground'
+                : 'border-border text-muted-foreground hover:border-accent/60 hover:text-foreground'
+            }`}
+          >
+            Content
+          </button>
         </div>
 
-        {error && (
-          <p className="mt-4 rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-300">{error}</p>
+        {view === 'content' && (
+          <div className="mt-6">
+            <ContentManager />
+          </div>
         )}
 
-        {loading && <p className="mt-10 text-center text-muted-foreground">Loading…</p>}
+        {view === 'analytics' && (
+          <>
+            <div className="mt-6">
+              <DateRangeBar
+                preset={dateRange.preset}
+                onPresetChange={dateRange.setPreset}
+                customStart={dateRange.customStart}
+                customEnd={dateRange.customEnd}
+                onCustomStartChange={dateRange.setCustomStart}
+                onCustomEndChange={dateRange.setCustomEnd}
+                presetLabels={dateRange.presetLabels}
+                isDefault={dateRange.isDefault}
+                onReset={dateRange.reset}
+              />
+            </div>
 
-        {!loading && data && (
-          <div className="mt-6 space-y-6">
+            {error && (
+              <p className="mt-4 rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-300">
+                {error}
+              </p>
+            )}
+
+            {loading && <p className="mt-10 text-center text-muted-foreground">Loading…</p>}
+
+            {!loading && data && (
+              <div className="mt-6 space-y-6">
             <OverviewCards overview={data.overview} />
 
             <LiveVisitors />
@@ -206,7 +247,9 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
               resumeDownloads={data.resumeDownloads[0]?.total ?? 0}
               allEvents={data.allEvents}
             />
-          </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

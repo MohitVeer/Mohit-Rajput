@@ -17,7 +17,7 @@ export default function Contact() {
   useSectionView('contact', 'Contact', 'contact_section_view')
 
   return (
-    <Scene id="contact" index="09" label="Contact" minHeight={false} className="pb-32">
+    <Scene id="contact" index="10" label="Contact" minHeight={false} className="pb-32">
       <Reveal>
         <h2
           id="contact-heading"

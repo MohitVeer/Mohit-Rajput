@@ -7,7 +7,7 @@ export default function LightningRush() {
     useLightningRush()
 
   return (
-    <Scene id="game" index="08" label="Break" center>
+    <Scene id="game" index="09" label="Break" center>
       <Reveal>
         <h2
           id="game-heading"

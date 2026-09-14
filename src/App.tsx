@@ -18,6 +18,7 @@ const Trailblazer = lazy(() => import('./components/Trailblazer'))
 const Skills = lazy(() => import('./components/Skills'))
 const Experience = lazy(() => import('./components/Experience'))
 const Certifications = lazy(() => import('./components/Certifications'))
+const Projects = lazy(() => import('./components/Projects'))
 const Articles = lazy(() => import('./components/Articles'))
 const LightningRush = lazy(() => import('./components/LightningRush'))
 const Contact = lazy(() => import('./components/Contact'))
@@ -60,6 +61,7 @@ export default function App() {
             <Skills />
             <Experience />
             <Certifications />
+            <Projects />
             <Articles />
             <LightningRush />
             <Contact />

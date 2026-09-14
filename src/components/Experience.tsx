@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { experience } from '../data/profile'
+import { fetchExperience, type ExperienceRow } from '../lib/contentApi'
+import { useLiveContent } from '../hooks/useLiveContent'
 import Scene from './cinematic/Scene'
 import Reveal from './cinematic/Reveal'
 
 const COLLAPSED_COUNT = 4
 
-function JobCard({ job, index }: { job: (typeof experience)[number]; index: number }) {
+function JobCard({ job, index }: { job: ExperienceRow; index: number }) {
   const [expanded, setExpanded] = useState(false)
   const hasMore = job.bullets.length > COLLAPSED_COUNT
   const visibleBullets = expanded ? job.bullets : job.bullets.slice(0, COLLAPSED_COUNT)
@@ -84,6 +86,18 @@ function JobCard({ job, index }: { job: (typeof experience)[number]; index: numb
 }
 
 export default function Experience() {
+  const fallback = useMemo<ExperienceRow[]>(
+    () =>
+      experience.map((job, i) => ({
+        ...job,
+        achievements: job.achievements ?? [],
+        id: `static-${i}`,
+        sort_order: i,
+      })),
+    [],
+  )
+  const jobs = useLiveContent(fetchExperience, fallback)
+
   return (
     <Scene id="experience" index="05" label="Experience" center>
       <Reveal>
@@ -100,8 +114,8 @@ export default function Experience() {
       </Reveal>
 
       <ol className="relative mt-14 space-y-8 before:absolute before:left-[5px] before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-gradient-to-b before:from-accent/60 before:via-border before:to-transparent sm:before:left-[9px]">
-        {experience.map((job, index) => (
-          <JobCard key={`${job.company}-${job.period}`} job={job} index={index} />
+        {jobs.map((job, index) => (
+          <JobCard key={job.id} job={job} index={index} />
         ))}
       </ol>
     </Scene>

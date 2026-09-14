@@ -20,9 +20,10 @@ export const sceneList = [
   { href: '#skills', index: '04', label: 'Skills' },
   { href: '#experience', index: '05', label: 'Experience' },
   { href: '#certs', index: '06', label: 'Certifications' },
-  { href: '#articles', index: '07', label: 'Articles' },
-  { href: '#game', index: '08', label: 'Break' },
-  { href: '#contact', index: '09', label: 'Contact' },
+  { href: '#projects', index: '07', label: 'Projects' },
+  { href: '#articles', index: '08', label: 'Articles' },
+  { href: '#game', index: '09', label: 'Break' },
+  { href: '#contact', index: '10', label: 'Contact' },
 ]
 
 export const heroTags = [
