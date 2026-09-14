@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchProjects, type ProjectRow } from '../../../lib/contentApi'
 import { createProject, deleteProject, updateProject } from '../../../lib/contentAdminApi'
-import { EditorCard, Field, SaveDeleteRow, TextArea, TextInput } from './fields'
+import { EditorCard, Field, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './fields'
 
 type Draft = {
   title: string
@@ -33,6 +33,7 @@ function ProjectForm({
   onSave,
   onDelete,
   saveLabel,
+  header,
 }: {
   initial: Draft
   sortOrder: number
@@ -40,6 +41,7 @@ function ProjectForm({
   onSave: (draft: Omit<ProjectRow, 'id'>) => void
   onDelete?: () => void
   saveLabel?: string
+  header?: ReactNode
 }) {
   const [draft, setDraft] = useState<Draft>(initial)
 
@@ -59,7 +61,7 @@ function ProjectForm({
   }
 
   return (
-    <EditorCard>
+    <EditorCard header={header}>
       <Field label="Title">
         <TextInput value={draft.title} onChange={(v) => setDraft((d) => ({ ...d, title: v }))} />
       </Field>
@@ -90,7 +92,7 @@ function ProjectForm({
 }
 
 export default function ProjectsEditor() {
-  const { items, loading, error, savingId, create, update, remove } = useCrudList(
+  const { items, loading, error, savingId, create, update, remove, move } = useCrudList(
     fetchProjects,
     createProject,
     updateProject,
@@ -108,7 +110,7 @@ export default function ProjectsEditor() {
         </p>
       )}
 
-      {items.map((project) => (
+      {items.map((project, i) => (
         <ProjectForm
           key={project.id}
           initial={toDraft(project)}
@@ -116,6 +118,14 @@ export default function ProjectsEditor() {
           saving={savingId === project.id}
           onSave={(draft) => update(project.id, draft)}
           onDelete={() => window.confirm(`Delete "${project.title}"?`) && remove(project.id)}
+          header={
+            <MoveButtons
+              onMoveUp={() => move(project.id, 'up')}
+              onMoveDown={() => move(project.id, 'down')}
+              disableUp={i === 0}
+              disableDown={i === items.length - 1}
+            />
+          }
         />
       ))}
 

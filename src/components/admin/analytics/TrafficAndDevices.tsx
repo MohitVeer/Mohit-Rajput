@@ -3,7 +3,7 @@ import type { NamedCount, TrafficSourceRow } from '../../../lib/adminApi'
 import { exportAsCsv, exportAsJson } from '../../../lib/adminApi'
 import ChartCard from '../ChartCard'
 import ExportMenu from './ExportMenu'
-import { ACCENT, BORDER, MUTED, PIE_COLORS, formatSeconds, tooltipStyle } from './chartTheme'
+import { ACCENT, BORDER, MUTED, PIE_COLORS, formatSeconds, tooltipStyle, tooltipLabelStyle, tooltipItemStyle } from './chartTheme'
 
 export default function TrafficAndDevices({
   sources,
@@ -76,7 +76,7 @@ export default function TrafficAndDevices({
                     <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={tooltipStyle} />
+                <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={tooltipItemStyle} />
               </PieChart>
             </ResponsiveContainer>
             <ul className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
@@ -100,7 +100,7 @@ export default function TrafficAndDevices({
             <CartesianGrid stroke={BORDER} strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="browser" tick={{ fill: MUTED, fontSize: 11 }} axisLine={{ stroke: BORDER }} tickLine={false} />
             <YAxis tick={{ fill: MUTED, fontSize: 11 }} axisLine={{ stroke: BORDER }} tickLine={false} allowDecimals={false} />
-            <Tooltip contentStyle={tooltipStyle} />
+            <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={tooltipItemStyle} />
             <Bar dataKey="sessions" fill={ACCENT} radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
@@ -113,7 +113,7 @@ export default function TrafficAndDevices({
             <CartesianGrid stroke={BORDER} strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="os" tick={{ fill: MUTED, fontSize: 11 }} axisLine={{ stroke: BORDER }} tickLine={false} />
             <YAxis tick={{ fill: MUTED, fontSize: 11 }} axisLine={{ stroke: BORDER }} tickLine={false} allowDecimals={false} />
-            <Tooltip contentStyle={tooltipStyle} />
+            <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={tooltipItemStyle} />
             <Bar dataKey="sessions" fill={ACCENT} radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>

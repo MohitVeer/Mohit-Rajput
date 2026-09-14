@@ -12,6 +12,14 @@ export const tooltipStyle = {
   color: FOREGROUND,
 }
 
+// Recharts' <Tooltip> only applies `contentStyle` to the wrapper div — the
+// label line (e.g. a pie slice's name) and each item row default to their
+// own near-black text color regardless of contentStyle, which read as
+// invisible dark-on-dark against this app's dark tooltip background.
+// Pass both of these alongside contentStyle on every <Tooltip>.
+export const tooltipLabelStyle = { color: FOREGROUND }
+export const tooltipItemStyle = { color: FOREGROUND }
+
 export function formatSeconds(seconds: number | null | undefined): string {
   if (seconds === null || seconds === undefined || Number.isNaN(seconds)) return '—'
   const s = Math.round(seconds)

@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchSuperbadges, type SuperbadgeRow } from '../../../lib/contentApi'
 import { createSuperbadge, deleteSuperbadge, updateSuperbadge } from '../../../lib/contentAdminApi'
-import { EditorCard, Field, SaveDeleteRow, TextArea, TextInput } from './fields'
+import { EditorCard, Field, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './fields'
 
 type Draft = Omit<SuperbadgeRow, 'id' | 'sort_order'>
 
@@ -15,6 +15,7 @@ function BadgeForm({
   onSave,
   onDelete,
   saveLabel,
+  header,
 }: {
   initial: Draft
   sortOrder: number
@@ -22,11 +23,12 @@ function BadgeForm({
   onSave: (draft: Draft & { sort_order: number }) => void
   onDelete?: () => void
   saveLabel?: string
+  header?: ReactNode
 }) {
   const [draft, setDraft] = useState<Draft>(initial)
 
   return (
-    <EditorCard>
+    <EditorCard header={header}>
       <Field label="Title">
         <TextInput value={draft.title} onChange={(v) => setDraft((d) => ({ ...d, title: v }))} />
       </Field>
@@ -52,7 +54,7 @@ function BadgeForm({
 }
 
 export default function SuperbadgesEditor() {
-  const { items, loading, error, savingId, create, update, remove } = useCrudList(
+  const { items, loading, error, savingId, create, update, remove, move } = useCrudList(
     fetchSuperbadges,
     createSuperbadge,
     updateSuperbadge,
@@ -65,7 +67,7 @@ export default function SuperbadgesEditor() {
       {error && <p className="rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-300">{error}</p>}
       {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
 
-      {items.map((badge) => (
+      {items.map((badge, i) => (
         <BadgeForm
           key={badge.id}
           initial={badge}
@@ -73,6 +75,14 @@ export default function SuperbadgesEditor() {
           saving={savingId === badge.id}
           onSave={(draft) => update(badge.id, draft)}
           onDelete={() => window.confirm(`Delete "${badge.title}"?`) && remove(badge.id)}
+          header={
+            <MoveButtons
+              onMoveUp={() => move(badge.id, 'up')}
+              onMoveDown={() => move(badge.id, 'down')}
+              disableUp={i === 0}
+              disableDown={i === items.length - 1}
+            />
+          }
         />
       ))}
 

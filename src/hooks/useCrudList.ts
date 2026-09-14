@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 // Each content type (Experience, Skills, ...) has its own field shape but
 // identical list lifecycle — fetch on mount, save in place, remove with
 // optimistic UI — so that part lives here once instead of six times over.
-export function useCrudList<T extends { id: string }>(
+export function useCrudList<T extends { id: string; sort_order: number }>(
   fetchFn: () => Promise<T[]>,
   createFn: (row: Omit<T, 'id'>) => Promise<T>,
   updateFn: (id: string, row: Partial<T>) => Promise<T>,
@@ -73,5 +73,36 @@ export function useCrudList<T extends { id: string }>(
     }
   }
 
-  return { items, loading, error, savingId, create, update, remove, reload }
+  // Swaps this item's sort_order with its neighbor in the current (already
+  // sort_order-ascending) list, so "move up/down" is just persisting two
+  // writes rather than renumbering the whole list.
+  const move = async (id: string, direction: 'up' | 'down') => {
+    const index = items.findIndex((item) => item.id === id)
+    const neighborIndex = direction === 'up' ? index - 1 : index + 1
+    if (index === -1 || neighborIndex < 0 || neighborIndex >= items.length) return
+
+    const current = items[index]
+    const neighbor = items[neighborIndex]
+    const [a, b] = [current.sort_order, neighbor.sort_order]
+
+    // Optimistic reorder so the UI responds immediately.
+    setItems((prev) => {
+      const next = [...prev]
+      next[index] = { ...neighbor, sort_order: a }
+      next[neighborIndex] = { ...current, sort_order: b }
+      return next.sort((x, y) => x.sort_order - y.sort_order)
+    })
+
+    try {
+      await Promise.all([
+        updateFn(current.id, { sort_order: b } as Partial<T>),
+        updateFn(neighbor.id, { sort_order: a } as Partial<T>),
+      ])
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to reorder.')
+      reload()
+    }
+  }
+
+  return { items, loading, error, savingId, create, update, remove, move, reload }
 }
