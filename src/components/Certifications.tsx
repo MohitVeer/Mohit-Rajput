@@ -55,7 +55,7 @@ export default function Certifications() {
             <div className="flex items-center gap-3 border-b border-border pb-4">
               <img
                 src={group.logo ?? undefined}
-                alt={group.title}
+                alt=""
                 loading="lazy"
                 className="h-8 w-8 rounded-sm bg-white p-1"
                 width={32}
@@ -98,7 +98,7 @@ export default function Certifications() {
       </div>
 
       <div className="mt-16 border-t border-border pt-10">
-        <span className="scene-index">Trailhead superbadges</span>
+        <h3 className="scene-index">Trailhead superbadges</h3>
         <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {badges.map((badge, i) => (
             <li key={badge.id}>
@@ -112,7 +112,7 @@ export default function Certifications() {
                 >
                   <img
                     src={badge.image ?? undefined}
-                    alt={badge.title}
+                    alt=""
                     loading="lazy"
                     className="h-14 w-14 shrink-0"
                     width={56}

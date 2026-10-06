@@ -43,7 +43,7 @@ function JobCard({ job, index }: { job: ExperienceRow; index: number }) {
             type="button"
             onClick={() => setExpanded((v) => !v)}
             aria-expanded={expanded}
-            className="mt-4 font-sans text-xs font-semibold uppercase tracking-widest text-accent transition hover:opacity-80"
+            className="-mb-3 mt-1 py-3 font-sans text-xs font-semibold uppercase tracking-widest text-accent transition hover:opacity-80"
           >
             {expanded ? '− Show less' : `+ Show ${job.bullets.length - COLLAPSED_COUNT} more`}
           </button>

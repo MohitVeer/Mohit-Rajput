@@ -1,4 +1,6 @@
+# https://mohitveer.netlify.app — public portfolio, everything public is crawlable.
 User-agent: *
 Allow: /
+Disallow: /api/
 
 Sitemap: https://mohitveer.netlify.app/sitemap.xml

@@ -1,0 +1,19 @@
+# Mohit Rajput — Salesforce UI Developer
+
+> Portfolio of Mohit Rajput, a Salesforce front-end engineer with 5+ years of experience building Lightning Web Components (LWC), OmniStudio, Experience Cloud and Marketing Cloud solutions at Wipro and Mphasis Silverline. Nine Salesforce certifications, five Trailhead superbadges, Triple Star Ranger. Open to opportunities worldwide (remote, hybrid or onsite).
+
+## Pages
+
+- [Portfolio home](https://mohitveer.netlify.app/): Impact, about, Trailhead status, skills, experience, certifications, projects and articles on one page. Sections: #metrics, #about, #trailblazer, #skills, #experience, #certs, #projects, #articles, #contact.
+- [Privacy & analytics](https://mohitveer.netlify.app/privacy): What lightweight, first-party usage analytics are collected, and how to opt out.
+
+## Profiles and documents
+
+- [Resume (PDF)](https://mohitveer.netlify.app/Mohit_Rajput_Frontend_Engineer.pdf): Current resume.
+- [LinkedIn](https://www.linkedin.com/in/mohit-veer): Professional profile and technical articles.
+- [Trailblazer profile](https://www.salesforce.com/trailblazer/mrajputsl): Verified Salesforce certifications, superbadges and Trailhead rank.
+- [GitHub](https://github.com/MohitVeer): Source code.
+
+## Contact
+
+- Email: rajput.mohit.veer@gmail.com

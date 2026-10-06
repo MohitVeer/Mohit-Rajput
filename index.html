@@ -11,30 +11,25 @@
     <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Only the mono face is web-fetched now — display/body typography uses
-         the Apple system-font stack (see tailwind.config.js), which resolves
-         to the real SF Pro on Apple devices with zero font download, and
-         falls back to Segoe UI/Roboto/system-ui elsewhere. -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
-    />
+    <!-- No web fonts are fetched: display/body use the Apple system-font stack
+         and monospace uses the system mono stack (see tailwind.config.js), so
+         there is no render-blocking third-party stylesheet on first paint. -->
 
-    <title>Mohit Rajput — Salesforce UI Developer | LWC, OmniStudio, Marketing Cloud</title>
+    <title>Mohit Rajput — Salesforce UI Developer | LWC &amp; OmniStudio</title>
     <meta
       name="description"
       content="Salesforce UI Developer with 5+ years building LWC, OmniStudio, Experience Cloud and Marketing Cloud solutions. Cut portal load times 50%. Available for hire."
     />
     <meta name="author" content="Mohit Rajput" />
     <meta name="theme-color" content="#0b0b0c" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
 
     <link rel="canonical" href="https://mohitveer.netlify.app/" />
 
     <!-- Open Graph -->
+    <meta property="og:site_name" content="Mohit Rajput" />
     <meta property="og:title" content="Mohit Rajput — Salesforce UI Developer" />
     <meta
       property="og:description"
@@ -42,9 +37,14 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://mohitveer.netlify.app/" />
-    <meta property="og:image" content="https://mohitveer.netlify.app/og-image.png" />
+    <meta property="og:image" content="https://mohitveer.netlify.app/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Mohit Rajput — Salesforce UI Developer. 9x Salesforce certified, Triple Star Ranger."
+    />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
@@ -54,34 +54,100 @@
       name="twitter:description"
       content="5+ years shipping LWC, OmniStudio and Marketing Cloud at Wipro & Mphasis. Open to opportunities worldwide."
     />
-    <meta name="twitter:image" content="https://mohitveer.netlify.app/og-image.png" />
+    <meta name="twitter:image" content="https://mohitveer.netlify.app/og-image.jpg" />
+    <meta
+      name="twitter:image:alt"
+      content="Mohit Rajput — Salesforce UI Developer. 9x Salesforce certified, Triple Star Ranger."
+    />
 
-    <!-- Structured data: helps Google show a rich Person/profile result -->
+    <!-- Structured data: WebSite + Person + ProfilePage, linked by @id.
+         Everything here mirrors what's visible on the page (Google's
+         requirement for structured data) — keep it in sync if the
+         certifications or employer change. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Mohit Rajput",
-        "jobTitle": "Salesforce UI Developer",
-        "url": "https://mohitveer.netlify.app/",
-        "email": "mailto:rajput.mohit.veer@gmail.com",
-        "sameAs": [
-          "https://www.linkedin.com/in/mohit-veer",
-          "https://www.salesforce.com/trailblazer/mrajputsl"
-        ],
-        "knowsAbout": [
-          "Lightning Web Components",
-          "OmniStudio",
-          "Experience Cloud",
-          "Salesforce Marketing Cloud",
-          "Agentforce",
-          "Salesforce UI Development"
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://mohitveer.netlify.app/#website",
+            "url": "https://mohitveer.netlify.app/",
+            "name": "Mohit Rajput — Portfolio",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://mohitveer.netlify.app/#person" }
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://mohitveer.netlify.app/#profilepage",
+            "url": "https://mohitveer.netlify.app/",
+            "name": "Mohit Rajput — Salesforce UI Developer",
+            "isPartOf": { "@id": "https://mohitveer.netlify.app/#website" },
+            "mainEntity": { "@id": "https://mohitveer.netlify.app/#person" },
+            "dateModified": "2026-10-06"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mohitveer.netlify.app/#person",
+            "name": "Mohit Rajput",
+            "jobTitle": "Salesforce UI Developer",
+            "url": "https://mohitveer.netlify.app/",
+            "email": "mailto:rajput.mohit.veer@gmail.com",
+            "worksFor": { "@type": "Organization", "name": "Wipro" },
+            "sameAs": [
+              "https://www.linkedin.com/in/mohit-veer",
+              "https://www.salesforce.com/trailblazer/mrajputsl",
+              "https://github.com/MohitVeer"
+            ],
+            "knowsAbout": [
+              "Lightning Web Components",
+              "OmniStudio",
+              "Experience Cloud",
+              "Salesforce Marketing Cloud",
+              "Agentforce",
+              "Salesforce UI Development",
+              "Web Accessibility (WCAG)"
+            ],
+            "hasCredential": [
+              { "@type": "EducationalOccupationalCredential", "name": "Salesforce Certified AI Associate", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Salesforce" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Salesforce Certified OmniStudio Consultant", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Salesforce" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Salesforce Certified OmniStudio Developer", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Salesforce" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Salesforce Certified Marketing Cloud Email Specialist", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Salesforce" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Salesforce Certified Marketing Cloud Engagement Developer", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Salesforce" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Marketing Cloud Personalization Accredited Professional", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Salesforce" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Salesforce Certified Platform Foundations", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Salesforce" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Salesforce Certified Platform Developer I", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Salesforce" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Salesforce Certified Platform User Experience Designer", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Salesforce" } }
+            ]
+          }
         ]
       }
     </script>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Plain-HTML fallback for crawlers/AI agents that don't run JavaScript
+         (the app itself is client-rendered). Not shown when JS is enabled. -->
+    <noscript>
+      <main style="max-width: 40rem; margin: 0 auto; padding: 4rem 1.5rem; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #f3f3f1; background: #0b0b0c">
+        <h1>Mohit Rajput — Salesforce UI Developer</h1>
+        <p>
+          Salesforce front-end engineer with 5+ years building Lightning Web Components, OmniStudio,
+          Experience Cloud and Marketing Cloud solutions at Wipro and Mphasis Silverline. Nine Salesforce
+          certifications, five Trailhead superbadges, and a Triple Star Ranger rank. Open to opportunities
+          worldwide — remote, hybrid or onsite.
+        </p>
+        <ul>
+          <li><a href="mailto:rajput.mohit.veer@gmail.com" style="color: #8fa4ff">rajput.mohit.veer@gmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/mohit-veer" style="color: #8fa4ff">LinkedIn</a></li>
+          <li><a href="https://github.com/MohitVeer" style="color: #8fa4ff">GitHub</a></li>
+          <li><a href="https://www.salesforce.com/trailblazer/mrajputsl" style="color: #8fa4ff">Trailblazer profile</a></li>
+          <li><a href="/Mohit_Rajput_Frontend_Engineer.pdf" style="color: #8fa4ff">Resume (PDF)</a></li>
+        </ul>
+        <p>Enable JavaScript to view the full interactive portfolio.</p>
+      </main>
+    </noscript>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
