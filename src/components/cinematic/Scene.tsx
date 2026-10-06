@@ -7,7 +7,9 @@ interface SceneProps {
   children: ReactNode
   className?: string
   minHeight?: boolean
-  center?: boolean   
+  center?: boolean
+  /** Rendered after the centered column, edge to edge (cancels the section's horizontal padding). */
+  bleed?: ReactNode
 }
 
 const AURORA_PAIRS: Array<[string, string]> = [
@@ -16,7 +18,16 @@ const AURORA_PAIRS: Array<[string, string]> = [
   ['38 96% 62%', '262 83% 68%'], 
 ]
 
-export default function Scene({ id, index, label, children, className = '', minHeight = true, center = false }: SceneProps) {
+export default function Scene({
+  id,
+  index,
+  label,
+  children,
+  className = '',
+  minHeight = true,
+  center = false,
+  bleed,
+}: SceneProps) {
   const [a, b] = AURORA_PAIRS[Number.parseInt(index, 10) % AURORA_PAIRS.length]
   const auroraVars = { '--aurora-a': a, '--aurora-b': b } as CSSProperties
 
@@ -39,6 +50,7 @@ export default function Scene({ id, index, label, children, className = '', minH
         </span>
         {children}
       </div>
+      {bleed && <div className="relative z-10 -mx-5 sm:-mx-8 md:-mx-16 lg:-mx-24">{bleed}</div>}
     </section>
   )
 }
