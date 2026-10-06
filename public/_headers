@@ -28,3 +28,7 @@
   X-Robots-Tag: noindex
 /Mohit_Rajput_Resume.pdf
   X-Robots-Tag: noindex
+
+# Correct MIME type for the web manifest.
+/site.webmanifest
+  Content-Type: application/manifest+json
