@@ -1,8 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { isTrackingDisabled, setTrackingDisabled } from '../lib/analytics'
+import { setPageMeta } from '../lib/pageMeta'
 
 export default function PrivacyNotice() {
   const [disabled, setDisabled] = useState(isTrackingDisabled())
+
+  useEffect(() => {
+    setPageMeta({
+      title: 'Privacy & analytics — Mohit Rajput',
+      description:
+        'What lightweight, first-party usage analytics this portfolio collects, what it does not collect, and how to opt out.',
+      path: '/privacy',
+    })
+  }, [])
 
   const toggle = () => {
     const next = !disabled

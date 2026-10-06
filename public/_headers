@@ -3,4 +3,32 @@
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
-  Content-Security-Policy: default-src 'self'; img-src 'self' data: https://res.cloudinary.com https://thc-public-files-nonproduction.s3.amazonaws.com https://trailhead.salesforce.com; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self' https://*.supabase.co; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; img-src 'self' data: https://res.cloudinary.com https://thc-public-files-nonproduction.s3.amazonaws.com https://trailhead.salesforce.com; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.supabase.co; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests
+
+# Hashed build output (filename changes whenever content does) — safe to cache forever.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Rarely-changing static images (new content gets a new filename).
+/Agentblazer/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+/Superbadges/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# The admin panel is auth-gated and must never appear in search results.
+/admin
+  X-Robots-Tag: noindex, nofollow
+
+/404.html
+  X-Robots-Tag: noindex
+
+# Older resume copies that nothing on the site links to — keep them out of search
+# so the current resume is the only one that ranks.
+/resume.pdf
+  X-Robots-Tag: noindex
+/Mohit_Rajput_Resume.pdf
+  X-Robots-Tag: noindex
+
+# Correct MIME type for the web manifest.
+/site.webmanifest
+  Content-Type: application/manifest+json

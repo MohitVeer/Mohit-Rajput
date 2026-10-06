@@ -41,10 +41,10 @@ export const heroTags = [
 export const trailhead = {
   rank: 'Triple Star Ranger',
   rankImage:
-    '/Salesforce Product Icons/triple-star-ranger.png',
- agentblazerImage: '/Agentblazer/agentblazer-Innovator.png',
+    '/Salesforce Product Icons/triple-star-ranger.webp',
+ agentblazerImage: '/Agentblazer/agentblazer-innovator.webp',
   agentblazerChampionImage:
-    '/Agentblazer/agentblazer-champion.png',
+    '/Agentblazer/agentblazer-champion.webp',
   badges: 329,
   points: '154,250',
   trails: 52,

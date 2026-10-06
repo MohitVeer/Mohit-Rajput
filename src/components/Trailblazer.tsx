@@ -37,10 +37,10 @@ export default function Trailblazer() {
           <img
             loading="lazy"
             src={trailhead.rankImage}
-            alt=""
-            className="h-20 w-20 shrink-0"
+            alt="Triple Star Ranger badge"
+            className="h-auto w-20 shrink-0"
             width={80}
-            height={80}
+            height={69}
           />
           <dl className="flex flex-wrap gap-x-8 gap-y-4 font-sans">
             <TrailStat value={String(trailhead.badges)} label="Badges" />

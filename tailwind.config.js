@@ -47,7 +47,7 @@ export default {
           'Arial',
           'sans-serif',
         ],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        mono: ['ui-monospace', '"SF Mono"', 'SFMono-Regular', 'Menlo', 'Consolas', '"Liberation Mono"', 'monospace'],
       },
       boxShadow: {
         glow: '0 0 40px hsl(var(--accent) / 0.25)',

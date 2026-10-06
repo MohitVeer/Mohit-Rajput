@@ -39,7 +39,7 @@ export default function Projects() {
               {project.image && (
                 <img
                   src={project.image}
-                  alt=""
+                  alt={`Screenshot of ${project.title}`}
                   loading="lazy"
                   className="h-48 w-full object-cover"
                   width={640}

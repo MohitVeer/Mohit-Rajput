@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { setPageMeta } from '../lib/pageMeta'
 import type { Session } from '@supabase/supabase-js'
 import { supabase, supabaseConfigured } from '../lib/supabaseClient'
 import AdminLogin from './admin/AdminLogin'
@@ -7,6 +8,10 @@ import AdminDashboard from './admin/AdminDashboard'
 export default function Admin() {
   const [session, setSession] = useState<Session | null>(null)
   const [checked, setChecked] = useState(false)
+
+  useEffect(() => {
+    setPageMeta({ title: 'Admin — Mohit Rajput', path: '/admin', noindex: true })
+  }, [])
 
   useEffect(() => {
     if (!supabase) {

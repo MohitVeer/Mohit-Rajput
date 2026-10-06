@@ -12,26 +12,56 @@ const BOOT_LINES = [
   'ready.'
 ]
 
+// The overlay sits on top of the hero until it finishes, and Chrome's LCP lands
+// when it clears — measured: ~2.5s of intro cost ~1.7s of LCP (Performance 83 vs
+// 96 with the intro skipped). So it's kept short and shown once per browser
+// session; tweak these two numbers (or SEEN_KEY logic) to change the trade-off.
+const LINE_MS = 110
+const FINISH_MS = 250
+const SEEN_KEY = 'mr:intro-seen'
+
+function introAlreadySeen() {
+  try {
+    return sessionStorage.getItem(SEEN_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
+function markIntroSeen() {
+  try {
+    sessionStorage.setItem(SEEN_KEY, '1')
+  } catch {
+    /* storage unavailable — the intro just plays again next load */
+  }
+}
+
 export default function Preloader() {
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(() => !introAlreadySeen())
   const [lineIndex, setLineIndex] = useState(0)
   const [skip, setSkip] = useState(false)
 
   useEffect(() => {
+    if (!visible) return
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion || skip) {
+      markIntroSeen()
       setVisible(false)
       return
     }
 
     if (lineIndex >= BOOT_LINES.length - 1) {
-      const finish = setTimeout(() => setVisible(false), 450)
+      const finish = setTimeout(() => {
+        markIntroSeen()
+        setVisible(false)
+      }, FINISH_MS)
       return () => clearTimeout(finish)
     }
 
-    const advance = setTimeout(() => setLineIndex((i) => i + 1), 260)
+    const advance = setTimeout(() => setLineIndex((i) => i + 1), LINE_MS)
     return () => clearTimeout(advance)
-  }, [lineIndex, skip])
+  }, [lineIndex, skip, visible])
 
   return (
     <AnimatePresence>
@@ -41,7 +71,7 @@ export default function Preloader() {
           aria-live="polite"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.25 }}
           className="pointer-events-none fixed inset-0 z-[200] flex items-center justify-center bg-background"
         >
           <div className="pointer-events-auto text-center">
