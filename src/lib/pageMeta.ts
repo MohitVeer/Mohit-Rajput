@@ -1,14 +1,8 @@
-// The app is a client-rendered SPA with three routes (/, /privacy, /admin) that
-// all share one index.html. index.html carries the right head for "/", so the
-// other routes override title / description / canonical / robots here at
-// runtime — otherwise /privacy would claim the home page as its canonical URL
-// (telling search engines it's a duplicate) and /admin would be indexable.
 export const SITE_URL = 'https://mohitveer.netlify.app'
 
 interface PageMeta {
   title: string
   description?: string
-  /** Path of this page, e.g. "/privacy" — becomes the canonical + og:url. */
   path: string
   noindex?: boolean
 }

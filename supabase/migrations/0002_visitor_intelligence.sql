@@ -1,24 +1,3 @@
--- Visitor Intelligence upgrade
---
--- Additive only: no existing table/view/policy from 0001 is dropped or
--- redefined in a breaking way. The existing dashboard queries
--- (daily_overview, country_breakdown, device_breakdown, browser_breakdown,
--- referrer_breakdown, resume_funnel, top_certifications, top_articles,
--- outbound_link_breakdown, section_engagement) keep working untouched.
---
--- New in this migration:
---   - A few new columns on `sessions` (still no raw IP, no precise GPS).
---   - Date-range-parameterized RPC functions (Postgres functions instead
---     of fixed views) so the admin dashboard can filter by Today /
---     Yesterday / 7d / 30d / 90d / a custom range without N near-duplicate
---     views per range.
---   - A generic "top labeled events" function so new event types/pages
---     show up in the dashboard automatically, without a new query for
---     every new component/action pair.
---   - A live-visitors function driven by a lightweight heartbeat.
---   - A single-session timeline function for the visitor-timeline view.
-
--- ── New columns on sessions ─────────────────────────────────────────────
 
 alter table sessions
   add column if not exists country_code text,
@@ -26,9 +5,6 @@ alter table sessions
   add column if not exists longitude numeric(8, 4),
   add column if not exists screen_width int,
   add column if not exists screen_height int,
-  -- Third-party ISP/org lookup result only — the IP address used to look
-  -- it up is never read into this database, only held in function memory
-  -- for the duration of that one outbound request.
   add column if not exists isp_org text,
   add column if not exists traffic_source text,
   add column if not exists is_returning boolean not null default false,
@@ -42,9 +18,6 @@ create index if not exists idx_sessions_traffic_source on sessions(traffic_sourc
 create index if not exists idx_page_views_path on page_views(path);
 create index if not exists idx_events_component_action on events(component, action);
 
--- Called from the track function (service-role key) on every page_view —
--- keeps a running count on the session row so bounce-rate / pages-per-
--- session aggregates don't need a join+count over page_views every query.
 create or replace function increment_page_view_count(p_session_id uuid, p_path text)
 returns void
 language sql as $$
@@ -52,12 +25,7 @@ language sql as $$
   where id = p_session_id;
 $$;
 
--- ── Helper: bounds for a "pages viewed" count per session ──────────────
--- `page_view_count` above is denormalized (kept in sync by the track
--- function) specifically so bounce-rate / pages-per-session aggregates
--- below don't need a join+count over page_views for every dashboard load.
 
--- ── Overview KPIs for an arbitrary date range ──────────────────────────
 
 create or replace function fn_overview(start_date timestamptz, end_date timestamptz)
 returns table (
@@ -96,8 +64,6 @@ language sql stable as $$
   from s;
 $$;
 
--- ── Daily series for the visitor-trend chart ────────────────────────────
-
 create or replace function fn_daily_series(start_date timestamptz, end_date timestamptz)
 returns table (day date, visitors bigint, sessions bigint, page_views bigint)
 language sql stable as $$
@@ -111,8 +77,6 @@ language sql stable as $$
   group by 1
   order by 1;
 $$;
-
--- ── Country / city breakdowns ────────────────────────────────────────────
 
 create or replace function fn_country_breakdown(start_date timestamptz, end_date timestamptz)
 returns table (
@@ -158,7 +122,6 @@ language sql stable as $$
   order by 5 desc;
 $$;
 
--- ── Device / browser / OS ────────────────────────────────────────────────
 
 create or replace function fn_device_breakdown(start_date timestamptz, end_date timestamptz)
 returns table (device_type text, sessions bigint)
@@ -187,7 +150,6 @@ language sql stable as $$
   group by 1 order by 2 desc;
 $$;
 
--- ── Traffic sources ───────────────────────────────────────────────────────
 
 create or replace function fn_traffic_source_breakdown(start_date timestamptz, end_date timestamptz)
 returns table (
@@ -206,7 +168,6 @@ language sql stable as $$
   group by 1 order by 3 desc;
 $$;
 
--- ── Page-level analytics (supports pages that don't exist yet) ──────────
 
 create or replace function fn_popular_pages(start_date timestamptz, end_date timestamptz)
 returns table (
@@ -238,10 +199,6 @@ language sql stable as $$
   order by 2 desc;
 $$;
 
--- ── Generic "top labeled events" — covers projects, certifications,
---    articles, outbound links, CTAs, resume, nav clicks, and anything
---    tracked in the future via trackEvent(component, action, label) —
---    without a new SQL function per event type. ─────────────────────────
 
 create or replace function fn_top_labeled_events(
   p_component text, p_action text, start_date timestamptz, end_date timestamptz, p_limit int default 10
@@ -261,10 +218,6 @@ language sql stable as $$
   limit p_limit;
 $$;
 
--- Fully generic "what is everyone doing" breakdown — every distinct
--- component+action pair ever tracked via trackEvent(), with no curated
--- list to maintain. A brand-new event type (a future /projects page, a
--- new CTA) shows up here automatically the moment it's tracked.
 create or replace function fn_event_type_breakdown(start_date timestamptz, end_date timestamptz)
 returns table (component text, action text, total bigint, unique_sessions bigint)
 language sql stable as $$
@@ -279,8 +232,6 @@ language sql stable as $$
   order by 3 desc;
 $$;
 
--- Scroll-depth milestone reach counts (25/50/75/90/100), fired client-side
--- once per milestone crossed per page view — see trackScrollMilestone.
 create or replace function fn_scroll_milestones(start_date timestamptz, end_date timestamptz)
 returns table (milestone int, page_views bigint)
 language sql stable as $$
@@ -291,7 +242,6 @@ language sql stable as $$
   group by 1 order by 1;
 $$;
 
--- ── Engagement + conversion funnel ───────────────────────────────────────
 
 create or replace function fn_engagement(start_date timestamptz, end_date timestamptz)
 returns table (
@@ -349,9 +299,6 @@ language sql stable as $$
         and e.action in ('contact_form_submit', 'email_click'));
 $$;
 
--- ── Live visitors ────────────────────────────────────────────────────────
--- A session counts as "live" if it has sent a heartbeat/page_view within
--- the last N minutes and hasn't been explicitly ended.
 
 create or replace function fn_live_visitors(minutes int default 5)
 returns table (
@@ -375,7 +322,6 @@ language sql stable as $$
   order by s.last_activity_at desc;
 $$;
 
--- ── Single-session timeline (page_views + events, time-ordered) ─────────
 
 create or replace function fn_session_timeline(p_session_id uuid)
 returns table (
@@ -390,12 +336,6 @@ language sql stable as $$
   order by 1;
 $$;
 
--- ── Realtime ──────────────────────────────────────────────────────────
--- Supabase only pushes postgres_changes events for tables explicitly
--- added to this publication. The admin "Live visitors" view subscribes
--- to `sessions` so a heartbeat/new session shows up instantly instead of
--- waiting for the next poll; RLS still applies to what a subscriber
--- actually receives, same as any other read.
 do $$
 begin
   execute 'alter publication supabase_realtime add table sessions';
@@ -403,13 +343,6 @@ exception when others then
   raise notice 'supabase_realtime publication step skipped (already added, or publication missing): %', sqlerrm;
 end $$;
 
--- Broad grant for the read-only, date-range analytics functions above —
--- each runs as the calling role (none are SECURITY DEFINER), so the RLS
--- policies on sessions/page_views/events still apply underneath: an
--- unauthenticated caller gets zero rows back, not a security hole.
 grant execute on all functions in schema public to authenticated;
 
--- ...except the one above that mutates data — only the service-role key
--- (used exclusively by the track function) may call it. Must come after
--- the blanket grant so it isn't immediately re-granted by it.
 revoke execute on function increment_page_view_count(uuid, text) from public, authenticated;

@@ -21,10 +21,6 @@
     @apply border-border;
   }
 
-  /* overflow-x: clip (not hidden) on html/body/#root: `hidden` turns each of them into a
-     scroll container, which silently stops position: sticky from pinning anywhere inside
-     (the Experience section's scroll-linked horizontal timeline relies on sticky). `clip`
-     hides horizontal overflow the same way without creating a scroll container. */
   html {
     scroll-behavior: auto;
     overflow-x: hidden;

@@ -1,10 +1,3 @@
--- CMS content schema: lets the admin edit Experience/Skills/Certifications/
--- Superbadges/Articles/Projects from the dashboard without a code deploy.
--- Public (anon) role gets read-only SELECT on all of these — this is the
--- same content already public in the compiled JS bundle today, so no new
--- exposure. Writes are restricted to the authenticated admin, matching the
--- existing analytics tables' "auth.role() = 'authenticated'" convention.
-
 create table public.experience (
   id uuid primary key default gen_random_uuid(),
   role text not null,
@@ -32,8 +25,6 @@ create table public.cert_groups (
   id uuid primary key default gen_random_uuid(),
   title text not null,
   logo text,
-  -- array of {name, image, alt, fileUrl} — kept as jsonb rather than a
-  -- child table since it's edited as a unit and rarely changes.
   certs jsonb not null default '[]'::jsonb,
   sort_order int not null default 0,
   created_at timestamptz not null default now(),

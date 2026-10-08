@@ -1,9 +1,3 @@
-// A small, hand-drawn set of technology/brand glyphs in their real brand
-// colors — deliberately not a full icon-library dependency (simple-icons
-// et al. ship 3000+ icons; pulling one in for ~20 marks would bloat the
-// public bundle for no reason). Colors are the actual brand hex values
-// where a brand has one; Next.js/GitHub are intentionally kept
-// monochrome since that IS their brand (no color in their real marks).
 import type { SVGProps } from 'react'
 
 type IconProps = SVGProps<SVGSVGElement>
@@ -255,9 +249,6 @@ export function SfdxCliIcon(props: IconProps) {
   )
 }
 
-// Real Salesforce product marks (already shipped as static assets for the
-// Certifications section) — reused here as <img>, not redrawn, since an
-// official logo beats a hand-approximated one.
 export function AgentforceIcon(props: IconProps) {
   return (
     <img
@@ -270,9 +261,6 @@ export function AgentforceIcon(props: IconProps) {
   )
 }
 
-// Litmus's real mark is a multi-color pinwheel; approximated here as five
-// wedges in the same palette (olive, orange, red, navy, green) since a
-// pixel-exact curved petal shape isn't worth the path complexity at 15px.
 export function LitmusIcon(props: IconProps) {
   return (
     <svg {...base(props)}>
@@ -285,8 +273,6 @@ export function LitmusIcon(props: IconProps) {
   )
 }
 
-// Gearset's mark is an orange cog with a navy center — redrawn as a simple
-// geometric gear rather than an imported asset.
 export function GearsetIcon(props: IconProps) {
   return (
     <svg {...base(props)}>
@@ -310,10 +296,6 @@ export function ScssIcon(props: IconProps) {
   )
 }
 
-// Lookup by the exact skill label used in src/data/profile.ts — anything
-// not in here just renders as plain text, no icon. Kept intentionally
-// curated to widely-recognized marks; skill names with no standard
-// logo (SOQL, DataRaptors, Agile ceremonies, ...) are left as text.
 export const skillIcons: Record<string, (props: IconProps) => JSX.Element> = {
   'HTML5': Html5Icon,
   'CSS3 / SCSS': ScssIcon,
@@ -337,11 +319,6 @@ export const skillIcons: Record<string, (props: IconProps) => JSX.Element> = {
   'Gearset': GearsetIcon,
 }
 
-// Group-level marks (shown next to the section heading, e.g. "SALESFORCE")
-// for groups whose individual skills are Salesforce jargon with no
-// standard logo of their own (SOQL, FlexCards, ...) — the real product
-// mark on the group still gives that whole cluster a colorful, branded
-// anchor instead of leaving it as plain text throughout.
 export const groupIcons: Record<string, string> = {
   Salesforce: '/Salesforce%20Product%20Icons/salesforce-platform-logo.png',
   'Marketing Cloud': '/Salesforce%20Product%20Icons/marketing-cloud-logo.png',

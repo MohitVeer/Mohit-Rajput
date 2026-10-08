@@ -27,8 +27,6 @@ export default function ContentManager() {
       </p>
 
       <div className="mt-6 md:grid md:grid-cols-[200px_1fr] md:items-start md:gap-8">
-        {/* Sidebar: a vertical nav from md up, a horizontal scroller on mobile so it never
-            wraps into a confusing multi-row grid of pills. */}
         <div
           role="tablist"
           aria-label="Content sections"

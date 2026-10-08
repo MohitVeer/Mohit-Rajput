@@ -32,24 +32,10 @@ export function TextInput({
   )
 }
 
-// Strips blank/whitespace-only lines — call this at save time, never on
-// every keystroke (see the note on ListTextArea below for why).
 export function cleanLines(lines: string[]): string[] {
   return lines.map((line) => line.trim()).filter(Boolean)
 }
 
-// One item per line — used for bullets / achievements / clients / tags.
-// Simpler and more forgiving to type into than a nested add/remove list UI
-// for content that's mostly written in a text editor and pasted in.
-//
-// Deliberately does NOT trim/filter on every keystroke: doing that (and
-// reflecting the filtered result straight back into the controlled value)
-// silently deleted the trailing blank line the instant you pressed Enter,
-// since `''.trim()` is falsy and got filtered out before React ever
-// re-rendered the textarea — Enter looked like it did nothing. Cleaning
-// blank lines only happens where the caller actually persists the value
-// (via cleanLines above), so the textarea behaves like a normal one while
-// you're editing it.
 export function ListTextArea({
   value,
   onChange,

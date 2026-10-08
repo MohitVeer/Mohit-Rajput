@@ -1,12 +1,5 @@
--- Portfolio analytics schema
--- Deliberately does NOT store: raw IP addresses, precise coordinates,
--- ISP/ASN/organization data, or any device-fingerprint combination used
--- to re-identify a visitor. Identity is a random, disclosed, opt-outable
--- first-party id (visitor_uid) stored client-side.
-
 create extension if not exists pgcrypto;
 
--- ── Core tables ─────────────────────────────────────────────────────────
 
 create table if not exists visitors (
   id uuid primary key default gen_random_uuid(),
@@ -17,7 +10,7 @@ create table if not exists visitors (
 );
 
 create table if not exists sessions (
-  id uuid primary key,                    -- client-generated (crypto.randomUUID())
+  id uuid primary key,
   visitor_id uuid not null references visitors(id) on delete cascade,
   started_at timestamptz not null default now(),
   ended_at timestamptz,
@@ -32,11 +25,11 @@ create table if not exists sessions (
   region text,
   city text,
   timezone text,
-  device_type text,        -- desktop | mobile | tablet
+  device_type text,
   os text,
   browser text,
   browser_version text,
-  color_scheme text,       -- light | dark
+  color_scheme text,
   language text
 );
 
@@ -53,9 +46,9 @@ create table if not exists events (
   id uuid primary key default gen_random_uuid(),
   session_id uuid not null references sessions(id) on delete cascade,
   path text,
-  component text,           -- e.g. 'Hero', 'ProjectCard', 'Contact'
-  action text not null,     -- e.g. 'click', 'resume_download', 'resume_view'
-  label text,               -- e.g. project name, link destination
+  component text,
+  action text not null,
+  label text,
   occurred_at timestamptz not null default now(),
   meta jsonb
 );
@@ -66,22 +59,11 @@ create index if not exists idx_page_views_session on page_views(session_id);
 create index if not exists idx_events_session on events(session_id);
 create index if not exists idx_events_action on events(action);
 
--- ── Row Level Security ──────────────────────────────────────────────────
--- Inserts happen only from the Netlify function using the service-role
--- key, which bypasses RLS entirely — no insert policy is needed for it,
--- and no anon/public insert policy is created, so the tables cannot be
--- written to directly from the browser.
-
 alter table visitors enable row level security;
 alter table sessions enable row level security;
 alter table page_views enable row level security;
 alter table events enable row level security;
 
--- Postgres has no `create policy if not exists` — drop-then-create makes
--- this migration safe to re-run against a database that already has it
--- applied (e.g. a Supabase preview branch re-run, or a branch cloned from
--- a database where this migration already ran), instead of failing with
--- "policy already exists" on the very first statement.
 drop policy if exists "admin read visitors" on visitors;
 create policy "admin read visitors" on visitors
   for select using (auth.role() = 'authenticated');
@@ -95,7 +77,6 @@ drop policy if exists "admin read events" on events;
 create policy "admin read events" on events
   for select using (auth.role() = 'authenticated');
 
--- ── Aggregate views for the dashboard ───────────────────────────────────
 
 create or replace view daily_overview as
 select

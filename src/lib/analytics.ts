@@ -20,9 +20,7 @@ export function isTrackingDisabled(): boolean {
 export function setTrackingDisabled(disabled: boolean) {
   try {
     localStorage.setItem(DNT_KEY, disabled ? '1' : '0')
-  } catch {
-    /* ignore */
-  }
+  } catch {}
 }
 
 function getVisitorUid(): string {
@@ -63,7 +61,6 @@ function send(body: unknown, useBeacon = false) {
       body: payload,
       keepalive: true,
     }).catch(() => {
-      /* analytics must never break the UI */
     })
   }
 }

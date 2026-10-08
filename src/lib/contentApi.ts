@@ -1,24 +1,3 @@
-// CMS content: Experience / Skills / Certifications / Superbadges / Articles /
-// Projects are editable from the admin dashboard without a code deploy — the
-// tables back the exact same content that used to live only in
-// src/data/profile.ts. Public (anon) reads are open (this content is already
-// public in the compiled JS bundle); writes require the authenticated admin
-// session (see contentAdminApi.ts and the RLS policies in
-// supabase/migrations/*_cms_content_schema.sql).
-//
-// Reads here go over plain PostgREST `fetch()`, not the @supabase/supabase-js
-// client, on purpose: this file is imported by every public page section, so
-// pulling in the ~55KB (gzipped) SDK just to run a handful of anonymous
-// SELECTs would bloat the public bundle for every visitor. The SDK is only
-// ever loaded on the gated /admin route (contentAdminApi.ts, adminApi.ts).
-//
-// Every public component still imports the matching static fallback from
-// profile.ts and renders it immediately — the live fetch swaps it in once it
-// resolves. If Supabase is unreachable, misconfigured, or mid-migration, the
-// site still renders correctly from the static data; a failed content fetch
-// is caught and logged, never thrown into the UI (same resilience pattern as
-// the analytics client).
-
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string | undefined
 const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
 

@@ -22,11 +22,6 @@ export default {
         'accent-2': 'hsl(var(--accent-2) / <alpha-value>)',
       },
       fontFamily: {
-        // Apple's own site font-family stack — no font files are shipped or
-        // self-hosted here (SF Pro / Myriad Set Pro are Apple-licensed and
-        // not redistributable): this stack simply *requests* those faces,
-        // so macOS/iOS visitors render true SF Pro at zero download cost,
-        // and everyone else falls through to Helvetica/Arial/system-ui.
         display: [
           '"SF Pro Text"',
           '"Myriad Set Pro"',

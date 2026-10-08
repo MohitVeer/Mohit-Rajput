@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { ElementType, MouseEvent, ReactNode, useRef } from 'react'
+import { ComponentType, ElementType, MouseEvent, ReactNode, useRef } from 'react'
 
 interface MagneticButtonProps {
   as?: ElementType
@@ -20,8 +20,7 @@ export default function MagneticButton({
 }: MagneticButtonProps) {
   const ref = useRef<HTMLElement | null>(null)
   const reduceMotion = useReducedMotion()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Component = motion(as as any)
+  const Component = motion(as as unknown as ComponentType<Record<string, unknown>>)
 
   const handleMove = (e: MouseEvent<HTMLElement>) => {
     if (reduceMotion || !ref.current) return
@@ -39,8 +38,7 @@ export default function MagneticButton({
 
   return (
     <Component
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ref={ref as any}
+      ref={ref}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={{ transform: 'translate3d(var(--mx, 0), var(--my, 0), 0)' }}

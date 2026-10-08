@@ -11,13 +11,6 @@ function project(lat: number, lon: number) {
   return { x, y }
 }
 
-/**
- * Lightweight visitor-density map: a real (if simplified) world landmass
- * silhouette — baked-in path data, no mapping-library dependency — with
- * one dot per city sized by session count. Kept intentionally simple so
- * it stays fast and never pulls in a mapping package just for an
- * admin-only chart.
- */
 export default function WorldDotMap({ cities }: { cities: CityRow[] }) {
   const [hovered, setHovered] = useState<CityRow | null>(null)
   const plotted = cities.filter((c) => c.latitude !== null && c.longitude !== null)

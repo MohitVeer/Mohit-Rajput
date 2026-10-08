@@ -12,10 +12,6 @@ const BOOT_LINES = [
   'ready.'
 ]
 
-// The overlay sits on top of the hero until it finishes, and Chrome's LCP lands
-// when it clears — measured: ~2.5s of intro cost ~1.7s of LCP (Performance 83 vs
-// 96 with the intro skipped). So it's kept short and shown once per browser
-// session; tweak these two numbers (or SEEN_KEY logic) to change the trade-off.
 const LINE_MS = 110
 const FINISH_MS = 250
 const SEEN_KEY = 'mr:intro-seen'
@@ -31,9 +27,7 @@ function introAlreadySeen() {
 function markIntroSeen() {
   try {
     sessionStorage.setItem(SEEN_KEY, '1')
-  } catch {
-    /* storage unavailable — the intro just plays again next load */
-  }
+  } catch {}
 }
 
 export default function Preloader() {

@@ -1,7 +1,3 @@
-// Admin-only writes for the CMS content tables. Split out from contentApi.ts
-// (the public read side) so the @supabase/supabase-js client — needed here
-// for authenticated inserts/updates/deletes — is only ever pulled into the
-// gated /admin bundle, never the public site's. See contentApi.ts for why.
 import { supabase } from './supabaseClient'
 import type { ArticleRow, Cert, CertGroupRow, ExperienceRow, ProjectRow, SkillGroupRow, SuperbadgeRow } from './contentApi'
 
@@ -9,19 +5,14 @@ type TableName = 'experience' | 'skill_groups' | 'cert_groups' | 'superbadges' |
 
 async function createContent<T extends { id: string }>(table: TableName, row: Partial<T>): Promise<T> {
   if (!supabase) throw new Error('Supabase not configured')
-  // The untyped Supabase client's insert() overload doesn't accept a generic
-  // Partial<T> — the real shape is enforced by the DB schema and RLS on the
-  // way in, and by the T return-type cast on the way out.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data, error } = await supabase.from(table).insert(row as any).select().single()
+  const { data, error } = await supabase.from(table).insert(row as never).select().single()
   if (error) throw error
   return data as T
 }
 
 async function updateContent<T>(table: TableName, id: string, row: Partial<T>): Promise<T> {
   if (!supabase) throw new Error('Supabase not configured')
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data, error } = await supabase.from(table).update(row as any).eq('id', id).select().single()
+  const { data, error } = await supabase.from(table).update(row as never).eq('id', id).select().single()
   if (error) throw error
   return data as T
 }
