@@ -9,14 +9,9 @@ import Reveal from './cinematic/Reveal'
 
 const COLLAPSED_COUNT = 4
 
-// Share of the pinned scroll distance spent holding on the first / last role before / after
-// the cards start / stop moving, so each end gets a moment to be read.
 const HOLD = 0.06
-const NAV_HEIGHT = 72 // fixed top bar the pinned view has to clear
+const NAV_HEIGHT = 72
 
-/* ------------------------------------------------------------------ */
-/* Shared bits                                                         */
-/* ------------------------------------------------------------------ */
 
 function Pills({
   label,
@@ -80,8 +75,6 @@ function ArrowButton({
   )
 }
 
-/** Dot on the timeline + a line running on to the next role's dot. `gapClass` is the overshoot
- *  that crosses the space between two cards. */
 function TimelineMarker({ isLast, gapClass }: { isLast: boolean; gapClass: string }) {
   return (
     <div className="relative h-6" aria-hidden="true">
@@ -95,14 +88,6 @@ function TimelineMarker({ isLast, gapClass }: { isLast: boolean; gapClass: strin
   )
 }
 
-/* ------------------------------------------------------------------ */
-/* Pinned, scroll-linked timeline                                      */
-/*                                                                     */
-/* The section is a tall scroll track with a sticky one-screen window  */
-/* inside it. Scrolling down slides the cards sideways; when the last  */
-/* role has been reached the sticky window releases and the page       */
-/* carries on to the next section.                                     */
-/* ------------------------------------------------------------------ */
 
 function PinnedJobCard({
   job,
@@ -139,7 +124,6 @@ function PinnedJobCard({
         </ul>
 
         <Pills label="Achievements" items={job.achievements ?? []} amber max={1} />
-        {/* Clients drop out first on shorter windows (still in the DOM and in "Full details"). */}
         <div className="[@media(max-height:840px)]:hidden">
           <Pills label="Clients" items={job.clients} max={3} />
         </div>
@@ -169,7 +153,6 @@ function JobDialog({ job, onClose }: { job: ExperienceRow | null; onClose: () =>
     if (!job && dialog.open) dialog.close()
   }, [job])
 
-  // If the pinned view unmounts while the dialog is open, don't leave smooth scrolling stopped.
   useEffect(() => () => getLenisInstance()?.start(), [])
 
   const handleClose = () => {
@@ -238,7 +221,6 @@ function PinnedTimeline({ jobs, onDoesNotFit }: { jobs: ExperienceRow[]; onDoesN
   const progress = useMotionValue(0)
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ['start start', 'end end'] })
 
-  // Vertical scroll progress -> horizontal position of the card track.
   const apply = useCallback(
     (p: number) => {
       const t = Math.min(1, Math.max(0, (p - HOLD) / (1 - 2 * HOLD)))
@@ -256,7 +238,6 @@ function PinnedTimeline({ jobs, onDoesNotFit }: { jobs: ExperienceRow[]; onDoesN
     const content = contentRef.current
     if (!viewport || !track || !content) return
 
-    // Line the first card up with the section heading (which lives in the centered column).
     const heading = document.getElementById('experience-heading')
     const padLeft = heading ? Math.max(0, Math.round(heading.getBoundingClientRect().left)) : 20
     const trackContent = track.scrollWidth - 2 * padRef.current
@@ -267,8 +248,6 @@ function PinnedTimeline({ jobs, onDoesNotFit }: { jobs: ExperienceRow[]; onDoesN
     setLayout((prev) => (prev.travel === travel && prev.padLeft === padLeft ? prev : { travel, padLeft }))
     apply(scrollYProgress.get())
 
-    // Everything has to fit on one screen for pinning to make sense — otherwise hand back to
-    // the swipe carousel rather than clip content.
     if (content.offsetHeight + NAV_HEIGHT + 16 > window.innerHeight) onDoesNotFit()
   }, [apply, scrollYProgress, onDoesNotFit])
 
@@ -285,7 +264,6 @@ function PinnedTimeline({ jobs, onDoesNotFit }: { jobs: ExperienceRow[]; onDoesN
     }
   }, [measure])
 
-  // Scroll the page to the position where role `index` is in view (arrows, keyboard focus).
   const jumpTo = useCallback(
     (index: number) => {
       const outer = outerRef.current
@@ -362,10 +340,6 @@ function PinnedTimeline({ jobs, onDoesNotFit }: { jobs: ExperienceRow[]; onDoesN
   )
 }
 
-/* ------------------------------------------------------------------ */
-/* Swipe carousel — fallback for reduced motion, browsers without      */
-/* sticky/clip/svh, and screens too short to pin the cards            */
-/* ------------------------------------------------------------------ */
 
 function CarouselJobCard({ job, isLast }: { job: ExperienceRow; isLast: boolean }) {
   const [expanded, setExpanded] = useState(false)
@@ -423,13 +397,11 @@ function CarouselTimeline({ jobs }: { jobs: ExperienceRow[] }) {
   const itemsOf = (el: HTMLElement) => Array.from(el.querySelectorAll<HTMLElement>('[data-job]'))
   const leftPad = (el: HTMLElement) => parseFloat(getComputedStyle(el).paddingLeft) || 0
 
-  // Which role is currently at the left edge — drives the counter and arrow states.
   const syncActive = useCallback(() => {
     const el = scrollerRef.current
     if (!el) return
     const items = itemsOf(el)
     if (items.length === 0) return
-    // The last card can't always reach the left edge, so treat "scrolled to the end" as last.
     if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 2) {
       setActive(items.length - 1)
       return
@@ -453,8 +425,6 @@ function CarouselTimeline({ jobs }: { jobs: ExperienceRow[] }) {
     return () => window.removeEventListener('resize', syncActive)
   }, [syncActive, jobs.length])
 
-  // While a smooth scroll is still animating, `active` lags behind (it follows scroll position),
-  // so a quick second tap on an arrow would re-target the same card. Remember where we're headed.
   const pending = useRef<{ index: number; until: number } | null>(null)
   const currentIndex = () =>
     pending.current && performance.now() < pending.current.until ? pending.current.index : active
@@ -490,15 +460,9 @@ function CarouselTimeline({ jobs }: { jobs: ExperienceRow[] }) {
         </div>
       </div>
 
-      {/* Horizontal scroller (CSS scroll-snap — native touch/trackpad/keyboard scrolling). Bleeds
-          to the screen edge on mobile so the next card peeks in. The vertical padding keeps the
-          dot glow from being clipped by overflow. */}
       <div
         ref={scrollerRef}
         onScroll={syncActive}
-        // Keyboard users need to focus the scroller to move it with the arrow keys
-        // (axe: scrollable-region-focusable) — it can hold no focusable child.
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
         role="region"
         aria-label="Work history — scrolls horizontally"
@@ -513,8 +477,6 @@ function CarouselTimeline({ jobs }: { jobs: ExperienceRow[] }) {
     </Reveal>
   )
 }
-
-/* ------------------------------------------------------------------ */
 
 function canPinTimeline() {
   if (typeof window === 'undefined') return false
@@ -542,7 +504,6 @@ export default function Experience() {
   const pinned = capable && fits && jobs.length > 1
   const markDoesNotFit = useCallback(() => setFits(false), [])
 
-  // A taller / wider window may make pinning possible again — try once per resize.
   useEffect(() => {
     if (fits) return
     const retry = () => setFits(true)

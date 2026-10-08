@@ -8,7 +8,6 @@ interface SceneProps {
   className?: string
   minHeight?: boolean
   center?: boolean
-  /** Rendered after the centered column, edge to edge (cancels the section's horizontal padding). */
   bleed?: ReactNode
 }
 

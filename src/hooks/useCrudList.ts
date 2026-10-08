@@ -1,9 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
 
-// Shared list/create/update/delete state machine for the admin CMS editors.
-// Each content type (Experience, Skills, ...) has its own field shape but
-// identical list lifecycle — fetch on mount, save in place, remove with
-// optimistic UI — so that part lives here once instead of six times over.
 export function useCrudList<T extends { id: string; sort_order: number }>(
   fetchFn: () => Promise<T[]>,
   createFn: (row: Omit<T, 'id'>) => Promise<T>,
@@ -26,7 +22,6 @@ export function useCrudList<T extends { id: string; sort_order: number }>(
 
   useEffect(() => {
     reload()
-    // Intentionally run once on mount only — fetchFn is stable per call site.
   }, [])
 
   const create = async (row: Omit<T, 'id'>) => {
@@ -73,9 +68,6 @@ export function useCrudList<T extends { id: string; sort_order: number }>(
     }
   }
 
-  // Swaps this item's sort_order with its neighbor in the current (already
-  // sort_order-ascending) list, so "move up/down" is just persisting two
-  // writes rather than renumbering the whole list.
   const move = async (id: string, direction: 'up' | 'down') => {
     const index = items.findIndex((item) => item.id === id)
     const neighborIndex = direction === 'up' ? index - 1 : index + 1
@@ -85,7 +77,6 @@ export function useCrudList<T extends { id: string; sort_order: number }>(
     const neighbor = items[neighborIndex]
     const [a, b] = [current.sort_order, neighbor.sort_order]
 
-    // Optimistic reorder so the UI responds immediately.
     setItems((prev) => {
       const next = [...prev]
       next[index] = { ...neighbor, sort_order: a }

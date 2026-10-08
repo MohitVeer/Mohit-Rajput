@@ -179,15 +179,6 @@ const geo = context.geo
           screen_height: body.screen?.height ?? null,
           isp_org: ispOrg,
           is_returning: isReturning,
-          // Not set here (leave the column's own `default 0`): the client
-          // always sends a separate `page_view` event right after
-          // `session_start` for the landing page too (see
-          // initAnalytics() in analytics.ts), and that event's
-          // increment_page_view_count call is what counts it. Hardcoding
-          // 1 here double-counted the landing page — every session's
-          // count was inflated by exactly one, which silently understated
-          // bounce rate (a real single-page visit no longer showed as
-          // page_view_count <= 1).
         })
         if (sErr) throw sErr
         break
@@ -205,7 +196,6 @@ await supabase.rpc('increment_page_view_count', { p_session_id: body.sessionId, 
       }
 
       case 'page_view_end': {
-        
         const { data: row } = await supabase
           .from('page_views')
           .select('id')

@@ -14,5 +14,7 @@ module.exports = {
   },
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'no-empty': ['error', { allowEmptyCatch: true }],
+    'jsx-a11y/no-noninteractive-tabindex': ['error', { roles: ['tabpanel', 'region'] }],
   },
 }

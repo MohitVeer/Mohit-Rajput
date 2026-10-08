@@ -83,7 +83,6 @@ export default function LightningRush() {
         </div>
       </Reveal>
 
-      {}
       <p role="status" aria-live="polite" className="sr-only">
         {announcement}
       </p>

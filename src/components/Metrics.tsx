@@ -37,11 +37,6 @@ export default function Metrics() {
         </h2>
       </Reveal>
 
-      {/* Plain divs, not dl/dt/dd — these are stat tiles, not true
-          term/definition pairs, and the Reveal + glass-card wrappers each
-          nest of one own div between dl and its dt/dd, which HTML5 only
-          allows a single such wrapper for — real markup issue Lighthouse
-          flagged, not just a style choice. */}
       <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
         {stats.map((stat, i) => (
           <Reveal key={stat.label} delay={i * 0.06}>
