@@ -37,10 +37,7 @@ export default function LightningRush() {
           </div>
         </div>
 
-        <div
-          data-lenis-prevent
-          className="relative h-[340px] w-full max-w-lg overflow-hidden rounded-2xl border border-border"
-        >
+        <div className="relative h-[340px] w-full max-w-lg overflow-hidden rounded-2xl border border-border">
           <div className="grid h-full grid-cols-3 grid-rows-3 gap-3 p-4">
             {Array.from({ length: gridSize }).map((_, index) => {
               const isActive = activeCell === index
