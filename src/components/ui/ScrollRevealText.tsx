@@ -3,7 +3,7 @@ import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } f
 import { cn } from '../../lib/cn'
 
 function Word({ word, range, progress }: { word: string; range: [number, number]; progress: MotionValue<number> }) {
-  const opacity = useTransform(progress, range, [0.15, 1])
+  const opacity = useTransform(progress, range, [0.4, 1])
   return (
     <motion.span style={{ opacity }} className="mr-[0.25em] inline-block">
       {word}

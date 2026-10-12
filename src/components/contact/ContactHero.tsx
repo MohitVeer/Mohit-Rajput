@@ -28,9 +28,11 @@ const LINE_TWO = ['AVAILABLE FOR FULL-TIME & CONTRACT', 'REMOTE · HYBRID · ONS
 
 const words = (items: string[]) =>
   items.map((text) => (
-    <span key={text} className="mx-6 whitespace-nowrap text-[clamp(3rem,10vw,9rem)] font-black leading-none tracking-tighter text-foreground/10">
-      {text} <span aria-hidden="true">·</span>
-    </span>
+    <span
+      key={text}
+      data-text={`${text} ·`}
+      className="mx-6 whitespace-nowrap text-[clamp(3rem,10vw,9rem)] font-black leading-none tracking-tighter text-foreground/10 before:content-[attr(data-text)]"
+    />
   ))
 
 export default function ContactHero() {

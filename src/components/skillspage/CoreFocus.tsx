@@ -57,7 +57,7 @@ export default function CoreFocus({ groups }: { groups: SkillGroupRow[] }) {
             >
               {groupIcons[group.title] && <img src={groupIcons[group.title]} alt="" width={16} height={16} className="h-4 w-4 rounded-sm bg-white object-contain p-px" />}
               <span>{group.title}</span>
-              <span className={cn('font-mono text-[10px]', active === i ? 'text-background/60' : 'text-muted-foreground/70')}>{group.skills.length}</span>
+              <span className={cn('font-mono text-[10px]', active === i ? 'text-background/60' : 'text-muted-foreground')}>{group.skills.length}</span>
             </button>
           ))}
         </div>

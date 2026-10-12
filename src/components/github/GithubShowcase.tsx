@@ -13,13 +13,13 @@ import GithubDashboard from './GithubDashboard'
 
 function Metric({ value, label }: { value: number | null; label: string }) {
   const text = value === null ? '—' : value.toLocaleString('en-US')
-  const { ref, display } = useCountUp<HTMLSpanElement>(text)
+  const { ref, display } = useCountUp<HTMLElement>(text)
   return (
-    <div>
-      <span ref={ref} className="block text-3xl font-black tabular-nums tracking-tight text-[#16a34a] dark:text-[#22c55e] md:text-4xl">
+    <div className="flex flex-col-reverse">
+      <dt className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{label}</dt>
+      <dd ref={ref as React.RefObject<HTMLElement>} className="text-3xl font-black tabular-nums tracking-tight text-[#16a34a] dark:text-[#22c55e] md:text-4xl">
         {display}
-      </span>
-      <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{label}</span>
+      </dd>
     </div>
   )
 }

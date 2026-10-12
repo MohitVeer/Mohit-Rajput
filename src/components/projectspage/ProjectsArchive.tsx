@@ -71,7 +71,7 @@ function Target({ target, className, children, title }: { target: LinkTarget; cl
 function Row({ item, index, target }: { item: ProjectItem; index: number; target: LinkTarget | null }) {
   const body = (
     <>
-      <span className="font-mono text-2xl font-light text-muted-foreground/50 transition-colors group-hover:text-foreground md:text-4xl">
+      <span className="font-mono text-2xl font-light text-muted-foreground transition-colors group-hover:text-foreground md:text-4xl">
         {String(index + 1).padStart(2, '0')}
       </span>
       <span className="min-w-0">

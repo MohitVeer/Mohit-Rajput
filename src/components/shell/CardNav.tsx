@@ -21,7 +21,7 @@ interface MegaItem {
 const certCount = stats.find((s) => s.label === 'Salesforce Certifications')?.value ?? ''
 
 const BIG: MegaItem[] = [
-  { id: 'projects', to: '/projects', icon: Rocket, title: 'Projects', desc: 'Builds and live open-source work' },
+  { id: 'projects', to: '/projects', icon: Rocket, title: 'Projects', desc: 'Client work for global brands' },
   { id: 'experience', to: '/experience', icon: Briefcase, title: 'Experience', desc: 'My professional journey' },
 ]
 
@@ -32,7 +32,7 @@ const SMALL: MegaItem[] = [
 ]
 
 const SIDE: MegaItem[] = [
-  { id: 'github', to: '/projects#open-source', icon: GitHubMark, title: 'GitHub', desc: 'Live activity and repositories' },
+  { id: 'github', to: '/projects#open-source', icon: GitHubMark, title: 'GitHub', desc: 'Live activity and heatmap' },
   { id: 'resume', to: '/resume', icon: FileText, title: 'Resume', desc: 'View or download my CV' },
   { id: 'contact', to: '/contact', icon: Mail, title: 'Contact', desc: 'Let’s work together' },
 ]

@@ -24,7 +24,7 @@ function JobCard({ job, className }: { job: ExperienceRow; className?: string })
       )}
     >
       <div>
-        <h4 className="text-lg font-bold leading-tight text-neutral-900 dark:text-white">{job.company}</h4>
+        <h3 className="text-lg font-bold leading-tight text-neutral-900 dark:text-white">{job.company}</h3>
         <p className="mt-1 text-sm font-medium text-neutral-700 dark:text-neutral-300">{job.role}</p>
         <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
           <span>{job.period}</span>

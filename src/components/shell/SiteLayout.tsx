@@ -13,7 +13,7 @@ import { initAnalytics, trackPageView } from '../../lib/analytics'
 
 function PageFallback() {
   return (
-    <div role="status" aria-live="polite" className="grid min-h-[70vh] place-items-center">
+    <div role="status" aria-live="polite" className="grid min-h-[100svh] place-items-center">
       <span className="sr-only">Loading page</span>
       <span aria-hidden="true" className="h-10 w-10 animate-spin rounded-full border-2 border-foreground/15 border-t-foreground" />
     </div>

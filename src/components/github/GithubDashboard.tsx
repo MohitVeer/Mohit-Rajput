@@ -50,13 +50,13 @@ function Pill({ children }: { children: React.ReactNode }) {
 }
 
 function Stat({ value, label }: { value: string; label: string }) {
-  const { ref, display } = useCountUp<HTMLSpanElement>(value)
+  const { ref, display } = useCountUp<HTMLElement>(value)
   return (
-    <div>
-      <span ref={ref} className="block text-3xl font-black tabular-nums tracking-tight text-foreground md:text-4xl">
+    <div className="flex flex-col-reverse">
+      <dt className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{label}</dt>
+      <dd ref={ref as React.RefObject<HTMLElement>} className="text-3xl font-black tabular-nums tracking-tight text-foreground md:text-4xl">
         {display}
-      </span>
-      <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{label}</span>
+      </dd>
     </div>
   )
 }
