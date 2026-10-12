@@ -34,6 +34,8 @@ export default {
       fontFamily: {
         display: ['"Inter Variable"', 'Inter', 'system-ui', '"Helvetica Neue"', 'Arial', 'sans-serif'],
         sans: ['"Inter Variable"', 'Inter', 'system-ui', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        signature: ['"Alex Brush"', 'cursive'],
         mono: ['"JetBrains Mono Variable"', '"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
       },
       borderRadius: {
@@ -48,21 +50,6 @@ export default {
         card: '0 1px 0 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -20px rgba(0, 0, 0, 0.6)',
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translate3d(0, 0, 0)' },
-          '50%': { transform: 'translate3d(0, -18px, 0)' },
-        },
-        drift: {
-          '0%, 100%': { transform: 'translate3d(0, 0, 0) scale(1)' },
-          '50%': { transform: 'translate3d(3%, -4%, 0) scale(1.06)' },
-        },
-        marquee: {
-          '0%': { transform: 'translate3d(0, 0, 0)' },
-          '100%': { transform: 'translate3d(-50%, 0, 0)' },
-        },
-        'spin-slow': {
-          to: { transform: 'rotate(360deg)' },
-        },
         'text-shiny': {
           from: { backgroundPosition: '200% center' },
           to: { backgroundPosition: '-200% center' },
@@ -70,10 +57,6 @@ export default {
         'gradient-flow': {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
-        },
-        'arc-spin': {
-          from: { transform: 'translateZ(0) rotate(0deg)' },
-          to: { transform: 'translateZ(0) rotate(360deg)' },
         },
         'marquee-left': {
           from: { transform: 'translateX(0)' },
@@ -85,13 +68,8 @@ export default {
         },
       },
       animation: {
-        float: 'float 6s ease-in-out infinite',
-        drift: 'drift 16s ease-in-out infinite',
-        marquee: 'marquee 28s linear infinite',
-        'spin-slow': 'spin-slow 14s linear infinite',
         'text-shiny': 'text-shiny 4s linear infinite',
         'gradient-flow': 'gradient-flow 6s ease infinite',
-        'arc-spin': 'arc-spin 60s linear infinite',
         'marquee-left': 'marquee-left var(--duration, 30s) linear infinite',
         'marquee-right': 'marquee-right var(--duration, 30s) linear infinite',
       },

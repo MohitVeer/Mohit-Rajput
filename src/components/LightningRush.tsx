@@ -1,5 +1,5 @@
 import { useLightningRush } from '../hooks/useLightningRush'
-import Scene from './cinematic/Scene'
+import Section from './shell/Section'
 import Reveal from './cinematic/Reveal'
 
 export default function LightningRush() {
@@ -7,13 +7,15 @@ export default function LightningRush() {
     useLightningRush()
 
   return (
-    <Scene id="game" index="09" label="Break" center>
+    <Section id="game" index="09" label="Break" className="relative bg-background px-6 py-32 md:px-12 lg:px-24">
+      <div className="mx-auto max-w-[1600px]">
       <Reveal>
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary/60">Take a break</p>
         <h2
           id="game-heading"
-          className="max-w-4xl mt-2 font-display text-4xl font-semibold leading-tight md:text-6xl"
+          className="mt-4 text-4xl font-black leading-[1.05] tracking-tighter text-foreground md:text-6xl lg:text-7xl"
         >
-          Spot the <span className="text-gradient">Blaze.</span>
+          Spot the <span className="font-serif font-normal italic">blaze</span>
         </h2>
         <p className="mt-4 max-w-xl text-base text-muted-foreground md:text-lg">
           A tiny reflex game — because portfolios shouldn&apos;t be homework. Fully keyboard playable:
@@ -33,11 +35,11 @@ export default function LightningRush() {
           </div>
           <div>
             <div className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Best</div>
-            <div className="mt-1 text-3xl font-semibold tabular-nums text-accent">{best}</div>
+            <div className="mt-1 text-3xl font-semibold tabular-nums text-foreground">{best}</div>
           </div>
         </div>
 
-        <div className="relative h-[340px] w-full max-w-lg overflow-hidden rounded-2xl border border-border">
+        <div className="relative h-[340px] w-full max-w-lg overflow-hidden rounded-3xl border border-neutral-200 bg-white/70 shadow-xl backdrop-blur-sm dark:border-neutral-800 dark:bg-zinc-950/60">
           <div className="grid h-full grid-cols-3 grid-rows-3 gap-3 p-4">
             {Array.from({ length: gridSize }).map((_, index) => {
               const isActive = activeCell === index
@@ -52,13 +54,13 @@ export default function LightningRush() {
                     isActive ? `Blaze mark lit in cell ${index + 1}, tap now` : `Cell ${index + 1}`
                   }
                   className={`grid place-items-center rounded-xl border transition-colors focus-visible:z-10 disabled:cursor-not-allowed ${
-                    isActive ? 'border-accent bg-accent/15 motion-safe:animate-pulse' : 'border-border bg-card'
+                    isActive ? 'border-foreground bg-foreground/10 motion-safe:animate-pulse' : 'border-neutral-200 bg-card dark:border-neutral-800'
                   }`}
                 >
                   <span
                     aria-hidden="true"
                     className={`h-6 w-3 rounded-[2px] transition-opacity ${
-                      isActive ? 'bg-accent opacity-100' : 'opacity-0'
+                      isActive ? 'bg-foreground opacity-100' : 'opacity-0'
                     }`}
                   />
                 </button>
@@ -74,7 +76,7 @@ export default function LightningRush() {
               <button
                 type="button"
                 onClick={startGame}
-                className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-glow transition hover:opacity-90"
+                className="rounded-full bg-foreground px-6 py-3 text-xs font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
               >
                 {score > 0 || timeLeft === 0 ? 'Play again' : 'Start game'}
               </button>
@@ -86,6 +88,7 @@ export default function LightningRush() {
       <p role="status" aria-live="polite" className="sr-only">
         {announcement}
       </p>
-    </Scene>
+      </div>
+    </Section>
   )
 }

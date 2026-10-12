@@ -4,7 +4,7 @@ import { experience } from '../data/profile'
 import { fetchExperience, type ExperienceRow } from '../lib/contentApi'
 import { getLenisInstance } from '../lib/lenisInstance'
 import { useLiveContent } from '../hooks/useLiveContent'
-import Scene from './cinematic/Scene'
+import Section from './shell/Section'
 import Reveal from './cinematic/Reveal'
 
 const COLLAPSED_COUNT = 4
@@ -27,8 +27,8 @@ function Pills({
   if (items.length === 0) return null
   const hidden = max ? Math.max(0, items.length - max) : 0
   const pill = amber
-    ? 'border-accent-2/30 bg-accent-2/10 text-accent-2'
-    : 'border-border text-foreground'
+    ? 'border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400'
+    : 'border-neutral-200 text-foreground dark:border-neutral-800'
   return (
     <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2">
       <span className="font-sans text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -68,7 +68,7 @@ function ArrowButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={direction === 'prev' ? 'Previous role' : 'Next role'}
-      className="grid h-11 w-11 place-items-center rounded-full border border-border text-foreground transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-border disabled:hover:text-foreground"
+      className="grid h-11 w-11 place-items-center rounded-full border border-neutral-200 text-foreground transition hover:bg-foreground hover:text-background disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-foreground dark:border-neutral-800"
     >
       <span aria-hidden="true">{direction === 'prev' ? '←' : '→'}</span>
     </button>
@@ -77,10 +77,12 @@ function ArrowButton({
 
 function TimelineMarker({ isLast, gapClass }: { isLast: boolean; gapClass: string }) {
   return (
-    <div className="relative h-6" aria-hidden="true">
-      <span className="absolute left-0 top-1 h-3 w-3 rounded-full border-2 border-accent bg-background shadow-glow" />
+    <div className="relative h-7" aria-hidden="true">
+      <span className="absolute left-0 top-1 grid h-4 w-4 place-items-center rounded-full border border-neutral-400 bg-background dark:border-neutral-700">
+        <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
+      </span>
       <span
-        className={`absolute left-4 top-[10px] h-px bg-gradient-to-r from-accent/60 via-border to-border ${
+        className={`absolute left-6 top-[14px] h-[2px] bg-gradient-to-r from-purple-500/60 via-neutral-300 to-neutral-200 dark:via-neutral-700 dark:to-neutral-800 ${
           isLast ? 'right-0 to-transparent' : gapClass
         }`}
       />
@@ -105,9 +107,9 @@ function PinnedJobCard({
         {job.period}
       </p>
 
-      <div className="glass-card p-5 transition-colors hover:border-accent/40 sm:p-6">
+      <div className="rounded-2xl border border-neutral-200 bg-white/80 shadow-xl backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/80 p-5 transition-colors hover:border-foreground/30 sm:p-6">
         <h3 className="font-display text-xl font-semibold leading-snug sm:text-2xl">
-          {job.role} · <span className="text-accent">{job.company}</span>
+          {job.role} · <span className="text-muted-foreground">{job.company}</span>
         </h3>
         <p className="mt-1 font-sans text-xs text-muted-foreground sm:text-sm">{job.location}</p>
 
@@ -117,7 +119,7 @@ function PinnedJobCard({
               key={bullet}
               className={`flex gap-3 ${i >= 3 ? 'hidden' : i === 2 ? '[@media(max-height:740px)]:hidden' : ''}`}
             >
-              <span className="mt-2 h-1.5 w-1 shrink-0 rounded-[1px] bg-accent" aria-hidden="true" />
+              <span className="mt-2 h-1.5 w-1 shrink-0 rounded-[1px] bg-foreground/50" aria-hidden="true" />
               <span className="line-clamp-3">{bullet}</span>
             </li>
           ))}
@@ -131,7 +133,7 @@ function PinnedJobCard({
         <button
           type="button"
           onClick={onOpen}
-          className="-mb-2 mt-3 py-2.5 font-sans text-xs font-semibold uppercase tracking-widest text-accent transition hover:opacity-80"
+          className="-mb-2 mt-3 py-2.5 font-sans text-xs font-semibold uppercase tracking-widest text-foreground underline underline-offset-4 transition hover:opacity-70"
         >
           Full details →
         </button>
@@ -165,7 +167,7 @@ function JobDialog({ job, onClose }: { job: ExperienceRow | null; onClose: () =>
       ref={ref}
       onClose={handleClose}
       aria-label={job ? `${job.role} at ${job.company}` : undefined}
-      className="m-auto max-h-[88vh] w-[min(92vw,44rem)] overflow-hidden rounded-2xl border border-border bg-card p-0 text-foreground shadow-card backdrop:bg-black/70 backdrop:backdrop-blur-sm"
+      className="m-auto max-h-[88vh] w-[min(92vw,44rem)] overflow-hidden rounded-2xl border border-neutral-200 bg-card p-0 text-foreground shadow-card backdrop:bg-black/70 dark:border-neutral-800 backdrop:backdrop-blur-sm"
     >
       {job && (
         <div data-lenis-prevent className="max-h-[88vh] overflow-y-auto overscroll-contain p-6 sm:p-8">
@@ -175,14 +177,14 @@ function JobDialog({ job, onClose }: { job: ExperienceRow | null; onClose: () =>
                 {job.period} · {job.location}
               </p>
               <h3 className="mt-2 font-display text-2xl font-semibold leading-snug">
-                {job.role} · <span className="text-accent">{job.company}</span>
+                {job.role} · <span className="text-muted-foreground">{job.company}</span>
               </h3>
             </div>
             <button
               type="button"
               onClick={() => ref.current?.close()}
               aria-label="Close details"
-              className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-border text-foreground transition hover:border-accent hover:text-accent"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-neutral-200 text-foreground transition hover:bg-foreground hover:text-background dark:border-neutral-800"
             >
               <span aria-hidden="true">✕</span>
             </button>
@@ -191,7 +193,7 @@ function JobDialog({ job, onClose }: { job: ExperienceRow | null; onClose: () =>
           <ul className="mt-6 space-y-3 text-base text-muted-foreground">
             {job.bullets.map((bullet) => (
               <li key={bullet} className="flex gap-3">
-                <span className="mt-2.5 h-1.5 w-1 shrink-0 rounded-[1px] bg-accent" aria-hidden="true" />
+                <span className="mt-2.5 h-1.5 w-1 shrink-0 rounded-[1px] bg-foreground/50" aria-hidden="true" />
                 <span>{bullet}</span>
               </li>
             ))}
@@ -304,11 +306,11 @@ function PinnedTimeline({ jobs, onDoesNotFit }: { jobs: ExperienceRow[]; onDoesN
           </div>
 
           <div
-            className="mt-3 h-px bg-border"
+            className="mt-3 h-[2px] bg-neutral-200 dark:bg-neutral-800"
             style={{ marginLeft: layout.padLeft, marginRight: layout.padLeft }}
             aria-hidden="true"
           >
-            <motion.div className="h-px origin-left bg-accent" style={{ scaleX: progress }} />
+            <motion.div className="h-[2px] origin-left bg-gradient-to-r from-purple-500 via-blue-500 to-blue-500/40" style={{ scaleX: progress }} />
           </div>
 
           <div ref={viewportRef} className="mt-6 overflow-clip">
@@ -353,10 +355,10 @@ function CarouselJobCard({ job, isLast }: { job: ExperienceRow; isLast: boolean 
         {job.period}
       </p>
 
-      <div className="glass-card p-6 transition-colors hover:border-accent/40 sm:p-8">
+      <div className="rounded-2xl border border-neutral-200 bg-white/80 shadow-xl backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/80 p-6 transition-colors hover:border-foreground/30 sm:p-8">
         <div className="flex flex-col gap-1">
           <h3 className="font-display text-2xl font-semibold leading-snug">
-            {job.role} · <span className="text-accent">{job.company}</span>
+            {job.role} · <span className="text-muted-foreground">{job.company}</span>
           </h3>
           <span className="font-sans text-xs text-muted-foreground sm:text-sm">{job.location}</span>
         </div>
@@ -364,7 +366,7 @@ function CarouselJobCard({ job, isLast }: { job: ExperienceRow; isLast: boolean 
         <ul className="mt-5 space-y-3 text-base text-muted-foreground">
           {visibleBullets.map((bullet) => (
             <li key={bullet} className="flex gap-3">
-              <span className="mt-2.5 h-1.5 w-1 shrink-0 rounded-[1px] bg-accent" aria-hidden="true" />
+              <span className="mt-2.5 h-1.5 w-1 shrink-0 rounded-[1px] bg-foreground/50" aria-hidden="true" />
               <span>{bullet}</span>
             </li>
           ))}
@@ -375,7 +377,7 @@ function CarouselJobCard({ job, isLast }: { job: ExperienceRow; isLast: boolean 
             type="button"
             onClick={() => setExpanded((v) => !v)}
             aria-expanded={expanded}
-            className="-mb-3 mt-1 py-3 font-sans text-xs font-semibold uppercase tracking-widest text-accent transition hover:opacity-80"
+            className="-mb-3 mt-1 py-3 font-sans text-xs font-semibold uppercase tracking-widest text-foreground underline underline-offset-4 transition hover:opacity-70"
           >
             {expanded ? '− Show less' : `+ Show ${job.bullets.length - COLLAPSED_COUNT} more`}
           </button>
@@ -512,27 +514,25 @@ export default function Experience() {
   }, [fits])
 
   return (
-    <Scene
-      id="experience"
-      index="05"
-      label="Experience"
-      center
-      bleed={pinned ? <PinnedTimeline jobs={jobs} onDoesNotFit={markDoesNotFit} /> : undefined}
-    >
-      <Reveal>
-        <h2
-          id="experience-heading"
-          className="max-w-4xl mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
-        >
-          Professional <span className="text-gradient">Experience.</span>
-        </h2>
-        <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
-          Enterprise Salesforce consulting across Wipro, Mphasis Silverline, and product studios —
-          delivering scalable solutions from UI engineering to AI-powered experiences.
-        </p>
-      </Reveal>
+    <Section id="experience" index="04" label="Experience" className="relative bg-background pt-28 md:pt-36">
+      <div className="mx-auto w-full max-w-[1600px] px-6 md:px-12 lg:px-24">
+        <Reveal>
+          <h2
+            id="experience-heading"
+            className="mb-6 bg-gradient-to-b from-neutral-900 to-neutral-500 bg-clip-text pb-2 text-[clamp(2rem,10vw,4.5rem)] font-black leading-[1.1] tracking-tight text-transparent dark:from-white dark:to-neutral-500"
+          >
+            Professional Experience
+          </h2>
+          <p className="max-w-2xl text-base leading-relaxed text-neutral-600 dark:text-neutral-400 md:text-xl">
+            Enterprise Salesforce consulting across Wipro, Mphasis Silverline, and product studios — delivering scalable
+            solutions from UI engineering to AI-powered experiences.
+          </p>
+        </Reveal>
 
-      {!pinned && <CarouselTimeline jobs={jobs} />}
-    </Scene>
+        {!pinned && <CarouselTimeline jobs={jobs} />}
+      </div>
+
+      {pinned && <PinnedTimeline jobs={jobs} onDoesNotFit={markDoesNotFit} />}
+    </Section>
   )
 }

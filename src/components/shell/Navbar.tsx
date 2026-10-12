@@ -74,7 +74,8 @@ const Navbar = forwardRef<HTMLButtonElement, NavbarProps>(function Navbar({ menu
             scrolled ? 'glass-strong px-4 py-2 md:px-6 md:py-3' : 'py-2',
           )}
         >
-          <a href="#top" aria-label="Mohit Rajput — back to top" className="group relative flex min-h-11 min-w-[120px] items-center">
+          <a href="#top" className="group relative flex min-h-11 min-w-[120px] items-center">
+            <span className="sr-only">Mohit Rajput — back to top</span>
             <Clock />
           </a>
 

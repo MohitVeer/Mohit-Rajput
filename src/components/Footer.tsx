@@ -233,6 +233,7 @@ export default function Footer() {
                 <motion.button
                   ref={moreRef}
                   type="button"
+                  aria-label="More"
                   aria-expanded={expanded}
                   aria-controls="footer-expanded"
                   onClick={() => setExpanded((v) => !v)}

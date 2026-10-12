@@ -2,6 +2,9 @@ import { lazy, StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import '@fontsource-variable/inter'
 import '@fontsource-variable/jetbrains-mono'
+import '@fontsource/playfair-display/latin-400-italic.css'
+import '@fontsource/playfair-display/latin-400.css'
+import '@fontsource/alex-brush/latin-400.css'
 import './index.css'
 import App from './App'
 import { ThemeProvider } from './theme/ThemeProvider'
@@ -36,7 +39,7 @@ function Root() {
 
 createRoot(rootEl).render(
   <StrictMode>
-    <ThemeProvider>
+    <ThemeProvider forced={path === '/admin' ? 'dark' : undefined}>
       <Root />
     </ThemeProvider>
   </StrictMode>,

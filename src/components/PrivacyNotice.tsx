@@ -60,7 +60,7 @@ export default function PrivacyNotice() {
       <button
         type="button"
         onClick={toggle}
-        className="mt-4 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:border-accent"
+        className="mt-4 rounded-full border-2 border-neutral-200 px-6 py-3 text-xs font-bold uppercase tracking-widest text-foreground transition-colors hover:bg-foreground hover:text-background dark:border-white/20"
       >
         {disabled ? 'Analytics disabled — click to re-enable' : 'Disable analytics for this browser'}
       </button>

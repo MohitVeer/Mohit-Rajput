@@ -1,43 +1,45 @@
-import { aboutFacts } from '../data/profile'
-import Scene from './cinematic/Scene'
-import Reveal from './cinematic/Reveal'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useMediaQuery } from '../hooks/useMediaQuery'
+import AboutHijack from './about/AboutHijack'
+import AboutLeadIn from './about/AboutLeadIn'
 
 export default function About() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const overlayRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: overlayRef, offset: ['start end', 'start start'] })
+  const scale = useTransform(scrollYProgress, [0, 0.9], [1, 0.92])
+  const opacity = useTransform(scrollYProgress, [0.3, 0.95], [1, 0])
+  const y = useTransform(scrollYProgress, [0, 1], [0, -80])
+  const pinned = useMediaQuery('(min-width: 768px) and (min-height: 640px)')
+
   return (
-    <Scene id="about" index="02" label="About" center>
-      <Reveal>
-        <h2
-          id="about-heading"
-          className="max-w-4xl font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl mt-2"
-        >
-          About <span className="text-gradient">Me.</span>
-        </h2>
-      </Reveal>
+    <section
+      id="about"
+      ref={sectionRef}
+      data-scene
+      data-index="01"
+      data-label="About"
+      aria-labelledby="about-heading"
+      className="relative bg-background text-foreground transition-colors duration-500 dark:bg-black"
+    >
+      {pinned ? (
+        <div className="pointer-events-none sticky top-0 z-0 flex h-screen w-full items-center justify-center overflow-hidden">
+          <motion.div style={{ scale, opacity, y }} className="relative mx-auto w-full max-w-[1700px] px-4 md:px-6">
+            <AboutLeadIn />
+          </motion.div>
+        </div>
+      ) : (
+        <div className="relative z-0 flex w-full items-center justify-center px-4 pb-16 pt-24">
+          <AboutLeadIn />
+        </div>
+      )}
 
-      <Reveal delay={0.1}>
-      <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-  I build scalable, user-focused digital experiences across the Salesforce ecosystem and modern
-  front-end technologies. With 5+ years of experience, I work with{' '}
-  <span className="text-foreground">
-    Lightning Web Components, Experience Cloud, Agentforce, OmniStudio, Marketing Cloud, and modern
-    JavaScript frameworks
-  </span>{' '}
-  to turn complex requirements into intuitive, production-ready solutions.
-</p>
-      </Reveal>
-
-      <Reveal delay={0.2}>
-        <ul className="mt-12 grid gap-x-10 gap-y-4 font-sans text-base text-foreground sm:grid-cols-2">
-          {aboutFacts.map((fact) => (
-            <li key={fact} className="flex items-baseline gap-3 border-b border-border pb-4">
-              <span className="text-accent" aria-hidden="true">
-                —
-              </span>
-              <span>{fact}</span>
-            </li>
-          ))}
-        </ul>
-      </Reveal>
-    </Scene>
+      <div ref={overlayRef} className={pinned ? 'relative mt-[20vh]' : 'relative'}>
+        <div className="relative bg-background transition-colors duration-500 dark:bg-black">
+          <AboutHijack />
+        </div>
+      </div>
+    </section>
   )
 }

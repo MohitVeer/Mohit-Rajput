@@ -30,15 +30,16 @@ function applyClass(resolved: ResolvedTheme) {
   if (meta) meta.content = resolved === 'dark' ? '#000000' : '#ffffff'
 }
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
+export function ThemeProvider({ children, forced }: { children: ReactNode; forced?: ResolvedTheme }) {
   const [theme, setThemeState] = useState<Theme>(readStoredTheme)
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => resolve(readStoredTheme()))
+  const effective: Theme = forced ?? theme
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => resolve(forced ?? readStoredTheme()))
 
   useEffect(() => {
-    const next = resolve(theme)
+    const next = resolve(effective)
     setResolvedTheme(next)
     applyClass(next)
-    if (theme !== 'system') return
+    if (effective !== 'system') return
     const query = window.matchMedia('(prefers-color-scheme: dark)')
     const onChange = () => {
       const updated = systemTheme()
@@ -47,7 +48,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
     query.addEventListener('change', onChange)
     return () => query.removeEventListener('change', onChange)
-  }, [theme])
+  }, [effective])
 
   const setTheme = useCallback((next: Theme) => {
     setThemeState(next)
@@ -58,7 +59,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const value = useMemo(() => ({ theme, resolvedTheme, setTheme }), [theme, resolvedTheme, setTheme])
+  const value = useMemo(() => ({ theme: effective, resolvedTheme, setTheme }), [effective, resolvedTheme, setTheme])
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }

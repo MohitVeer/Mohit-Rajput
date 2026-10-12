@@ -13,23 +13,25 @@ export function useActiveScene(): ActiveScene {
 
   useEffect(() => {
     const observed = new WeakSet<Element>()
+    const crossing = new Set<HTMLElement>()
+
+    const publish = () => {
+      const nodes = Array.from(crossing)
+      if (nodes.length === 0) return
+      const el = nodes.reduce((best, node) => (node.getBoundingClientRect().top > best.getBoundingClientRect().top ? node : best))
+      setActive({ id: el.id, index: el.dataset.index ?? '00', label: el.dataset.label ?? '' })
+    }
 
     const io = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-
-        if (visible) {
-          const el = visible.target as HTMLElement
-          setActive({
-            id: el.id,
-            index: el.dataset.index ?? '00',
-            label: el.dataset.label ?? '',
-          })
-        }
+        entries.forEach((entry) => {
+          const el = entry.target as HTMLElement
+          if (entry.isIntersecting) crossing.add(el)
+          else crossing.delete(el)
+        })
+        publish()
       },
-      { threshold: [0.25, 0.5, 0.75] },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
     )
 
     const observeNewScenes = () => {
@@ -42,7 +44,6 @@ export function useActiveScene(): ActiveScene {
     }
 
     observeNewScenes()
-
     const mo = new MutationObserver(observeNewScenes)
     mo.observe(document.body, { childList: true, subtree: true })
 

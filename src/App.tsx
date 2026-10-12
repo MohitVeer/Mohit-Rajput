@@ -3,7 +3,6 @@ import About from './components/About'
 import ClickConstellation from './components/ClickConstellation'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
-import Metrics from './components/Metrics'
 import Preloader from './components/Preloader'
 import ResumeReveal from './components/ResumeReveal'
 import BackToTop from './components/shell/BackToTop'
@@ -47,14 +46,13 @@ export default function App() {
       <div ref={contentRef}>
         <main id="main-content">
           <Hero />
-          <Metrics />
           <About />
 
           <Suspense fallback={null}>
-            <Trailblazer />
             <Skills />
             <Experience />
             <Certifications />
+            <Trailblazer />
             <Projects />
             <Articles />
             <LightningRush />

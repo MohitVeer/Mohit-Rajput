@@ -108,12 +108,12 @@ useEffect(() => {
               className="w-full max-w-sm"
             >
               <div className="flex items-center justify-between">
-                <span className="scene-index">Resume</span>
+                <span className="font-mono text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Resume</span>
                 <button
                   type="button"
                   onClick={close}
                   aria-label="Close"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-border text-foreground transition hover:border-accent hover:text-accent"
+                  className="grid h-10 w-10 place-items-center rounded-full bg-muted text-foreground transition hover:scale-105 hover:bg-foreground hover:text-background"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path
@@ -144,7 +144,7 @@ referrerPolicy="no-referrer"
                   href={profile.resumeUrl}
                   download
                   onClick={() => trackResumeDownload()}
-                  className="flex-1 rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold text-accent-foreground shadow-glow transition hover:opacity-90"
+                  className="flex-1 rounded-full bg-foreground px-6 py-3 text-center text-xs font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
                 >
                   Download PDF
                 </a>
@@ -152,7 +152,7 @@ referrerPolicy="no-referrer"
                   href={profile.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 rounded-full border border-border px-6 py-3 text-center text-sm font-semibold text-foreground transition hover:border-accent"
+                  className="flex-1 rounded-full border-2 border-neutral-200 px-6 py-3 text-center text-xs font-bold uppercase tracking-widest text-foreground transition-colors hover:bg-foreground hover:text-background dark:border-white/20"
                 >
                   Open in new tab
                   <span className="sr-only"> (opens in a new tab)</span>
