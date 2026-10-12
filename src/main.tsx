@@ -1,7 +1,10 @@
 import { lazy, StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
+import '@fontsource-variable/inter'
+import '@fontsource-variable/jetbrains-mono'
 import './index.css'
 import App from './App'
+import { ThemeProvider } from './theme/ThemeProvider'
 
 const PrivacyNotice = lazy(() => import('./components/PrivacyNotice'))
 const Admin = lazy(() => import('./components/Admin'))
@@ -33,6 +36,8 @@ function Root() {
 
 createRoot(rootEl).render(
   <StrictMode>
-    <Root />
+    <ThemeProvider>
+      <Root />
+    </ThemeProvider>
   </StrictMode>,
 )
