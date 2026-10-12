@@ -56,5 +56,5 @@ const NO_ROWS: ProjectRow[] = []
 
 export function useProjects(): ProjectItem[] {
   const rows = useLiveContent(fetchProjects, NO_ROWS)
-  return useMemo(() => (rows.length > 0 ? rows.map(fromCaseStudy) : clientProjects.map(fromStatic)), [rows])
+  return useMemo(() => [...rows.map(fromCaseStudy), ...clientProjects.map(fromStatic)], [rows])
 }

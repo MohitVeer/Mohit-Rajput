@@ -42,7 +42,7 @@ export const clientProjects: ClientProject[] = [
     current: true,
     kind: 'client',
     summary: 'Current client engagement as a Salesforce Consultant at Wipro, covering Salesforce front-end work.',
-    stack: ['LWC', 'Salesforce'],
+    stack: ['Salesforce'],
   },
   {
     id: 'intellect-design-arena',
@@ -51,7 +51,7 @@ export const clientProjects: ClientProject[] = [
     ...WIPRO,
     kind: 'client',
     summary: WIPRO_SUMMARY,
-    stack: ['LWC', 'Salesforce'],
+    stack: ['Salesforce'],
   },
   {
     id: 'st-jamess-place',
@@ -80,7 +80,7 @@ export const clientProjects: ClientProject[] = [
     ...WIPRO,
     kind: 'client',
     summary: WIPRO_SUMMARY,
-    stack: ['LWC', 'Salesforce'],
+    stack: ['Salesforce'],
   },
   {
     id: 'republic-finance',

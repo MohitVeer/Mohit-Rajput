@@ -138,7 +138,7 @@ npm run preview
 npm run lint
 ```
 
-Requires **Node.js 18+**
+Requires **Node.js 20+**
 
 ### GitHub feed
 

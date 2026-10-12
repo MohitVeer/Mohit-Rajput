@@ -39,7 +39,7 @@ const onClick = (e: MouseEvent) => {
       const target = document.querySelector<HTMLElement>(hash)
       if (!target) return
       e.preventDefault()
-      lenis.scrollTo(target, { offset: -88 })
+      lenis.scrollTo(Math.max(0, target.getBoundingClientRect().top + window.scrollY - 88))
     }
     document.addEventListener('click', onClick)
 

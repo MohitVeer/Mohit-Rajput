@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useMediaQuery } from '../hooks/useMediaQuery'
+import { FitToViewport } from './ui/FitToParent'
 import AboutHijack from './about/AboutHijack'
 import AboutLeadIn from './about/AboutLeadIn'
 
@@ -23,7 +24,9 @@ export default function About() {
       {pinned ? (
         <div className="pointer-events-none sticky top-0 z-0 flex h-screen w-full items-center justify-center overflow-hidden">
           <motion.div style={{ scale, opacity, y }} className="relative mx-auto w-full max-w-[1700px] px-4 md:px-6">
-            <AboutLeadIn />
+            <FitToViewport>
+              <AboutLeadIn />
+            </FitToViewport>
           </motion.div>
         </div>
       ) : (

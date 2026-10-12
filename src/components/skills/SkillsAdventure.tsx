@@ -3,6 +3,7 @@ import { motion, useMotionValueEvent, useScroll, useSpring, useTransform, type M
 import { ChevronDown } from 'lucide-react'
 import { cn } from '../../lib/cn'
 import CubeLoader from '../ui/CubeLoader'
+import FitToParent from '../ui/FitToParent'
 import HoverScrambleText from '../ui/HoverScrambleText'
 import MagneticTag from './MagneticTag'
 import { FEATURES, type Feature } from './features'
@@ -97,7 +98,9 @@ function FeatureSlide({ feature, index, progress }: { feature: Feature; index: n
           whileHover={{ height: '100%' }}
           transition={{ duration: 0.4 }}
         />
-        <Editorial feature={feature} index={index} />
+        <FitToParent>
+          <Editorial feature={feature} index={index} />
+        </FitToParent>
       </div>
     </motion.div>
   )

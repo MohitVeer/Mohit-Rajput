@@ -141,7 +141,8 @@ function CaseStudyCard({ item, index, total }: { item: ProjectItem; index: numbe
 export default function Projects() {
   const items = useProjects()
   const slugs = useRoleSlugs()
-  const caseStudies = items.filter((item) => item.kind === 'case-study')
+  const cases = items.filter((item) => item.kind === 'case-study').slice(0, 3)
+  const total = cases.length + engagements.length
 
   return (
     <Section id="projects" index="07" label="Projects" className="relative bg-background">
@@ -152,11 +153,12 @@ export default function Projects() {
       </div>
 
       <ShowcaseStack>
-        {caseStudies.length > 0
-          ? caseStudies.slice(0, 5).map((item, i, list) => <CaseStudyCard key={item.id} item={item} index={i} total={list.length} />)
-          : engagements.map((engagement, i) => (
-              <EngagementCard key={engagement.id} engagement={engagement} index={i} total={engagements.length} slug={slugs.get(engagement.employerKey)} />
-            ))}
+        {[
+          ...cases.map((item, i) => <CaseStudyCard key={item.id} item={item} index={i} total={total} />),
+          ...engagements.map((engagement, i) => (
+            <EngagementCard key={engagement.id} engagement={engagement} index={cases.length + i} total={total} slug={slugs.get(engagement.employerKey)} />
+          )),
+        ]}
       </ShowcaseStack>
 
       <div className="flex justify-center px-6 pb-16 pt-10 md:pb-24">

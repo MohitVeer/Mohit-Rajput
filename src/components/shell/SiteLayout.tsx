@@ -34,21 +34,46 @@ function useRouteScroll(pathname: string, hash: string) {
 
   useEffect(() => {
     if (!hash) return
-    let attempts = 0
     const id = decodeURIComponent(hash.slice(1))
-    const timer = window.setInterval(() => {
+    const timers: number[] = []
+    let attempts = 0
+    let landedAt = 0
+
+    const go = (target: HTMLElement) => {
+      const lenis = getLenisInstance()
+      const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 88)
+      if (lenis) {
+        lenis.resize()
+        lenis.scrollTo(top, { immediate: true, force: true })
+      } else {
+        window.scrollTo({ top })
+      }
+      landedAt = window.scrollY
+    }
+
+    const poll = window.setInterval(() => {
       attempts += 1
       const target = document.getElementById(id)
       if (target) {
-        window.clearInterval(timer)
-        const lenis = getLenisInstance()
-        if (lenis) lenis.scrollTo(target, { offset: -88, immediate: attempts === 1 })
-        else target.scrollIntoView({ behavior: 'auto', block: 'start' })
+        window.clearInterval(poll)
+        go(target)
+        for (const delay of [350, 900, 1800]) {
+          timers.push(
+            window.setTimeout(() => {
+              const userMoved = Math.abs(window.scrollY - landedAt) > 80
+              if (!userMoved && Math.abs(target.getBoundingClientRect().top - 88) > 6) go(target)
+            }, delay),
+          )
+        }
       } else if (attempts > 40) {
-        window.clearInterval(timer)
+        window.clearInterval(poll)
       }
     }, 100)
-    return () => window.clearInterval(timer)
+
+    return () => {
+      window.clearInterval(poll)
+      timers.forEach((timer) => window.clearTimeout(timer))
+    }
   }, [pathname, hash])
 }
 

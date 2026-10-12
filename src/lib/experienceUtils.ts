@@ -69,7 +69,7 @@ export function jobSlug(job: ExperienceRow): string {
 export function clientsForJob(job: ExperienceRow): string[] {
   const key = employerKeyFor(job.company)
   const known = key ? clientProjects.filter((project) => project.employerKey === key && project.kind === 'client').map((project) => project.client) : []
-  const seen = new Set<string>()
+  const seen = new Set<string>([job.company.toLowerCase()])
   const merged: string[] = []
   for (const name of [...known, ...job.clients.map(normalizeClient)]) {
     const id = name.toLowerCase()
