@@ -36,16 +36,15 @@ A modern, responsive portfolio showcasing my expertise as a Salesforce UI Engine
 
 ## ✨ Features
 
-- Modern, responsive UI
+- Multi-page experience: Home, Projects, Experience, Skills, Achievements, Articles, Contact and Résumé
+- Fully responsive layouts with graceful fallbacks for small and short screens
 - Dark & Light theme
-- Interactive animations
+- Scroll-driven animations (Framer Motion + Lenis)
 - Enterprise experience timeline
-- Salesforce certifications & superbadges
-- Technical skills showcase
-- Project portfolio
-- Published technical articles
-- Interactive "Lightning Rush" mini-game
-- Contact section
+- Original Salesforce certificates, superbadges, Trailhead status and awards
+- Client projects drawn from professional experience (Wipro, Mphasis Silverline, DJT), overridable from the admin CMS
+- Live GitHub integration — contribution heatmap, languages and recent activity refresh automatically
+- Contact form that delivers by email to the owner, with a hire-me call to action
 - Keyboard accessibility
 - SEO optimized
 
@@ -56,14 +55,16 @@ A modern, responsive portfolio showcasing my expertise as a Salesforce UI Engine
 ```
 src/
 │
-├── components/          # Reusable UI components
-├── sections/            # Portfolio sections
-├── data/                # Centralized content
+├── pages/               # Route-level pages (Home, Projects, Experience, Skills, ...)
+├── components/          # Sections and reusable UI, grouped by page
+├── data/                # Centralized fallback content
 ├── hooks/               # Custom React hooks
-├── assets/              # Images & icons
-├── utils/               # Helper utilities
-├── App.tsx
+├── lib/                 # API clients, analytics and helpers
+├── App.tsx              # Routes
 └── main.tsx
+netlify/functions/
+├── github.mts           # Live GitHub feed served at /api/github
+└── track.mts            # First-party analytics endpoint
 ```
 
 Most portfolio content—including projects, certifications, skills, experience, articles, and contact information—is managed from the data layer, making updates straightforward without modifying component logic.
@@ -83,7 +84,7 @@ Features include:
 - Accessible color contrast
 - Screen reader friendly content
 - Reduced motion support
-- Fully keyboard-playable Lightning Rush game
+- Dialogs with focus trapping, Escape to close and focus restoration
 
 ---
 
@@ -138,6 +139,16 @@ npm run lint
 ```
 
 Requires **Node.js 18+**
+
+### GitHub feed
+
+`/api/github` is a Netlify Function that returns the public profile, repositories, languages, recent activity and the contribution calendar for the configured GitHub user. During `npm run dev` the same function runs through a Vite middleware, so no extra tooling is needed. Responses are cached for ten minutes. Setting an optional `GITHUB_TOKEN` environment variable raises the GitHub API rate limit; the feed works without it.
+
+### Contact form
+
+The contact page posts to `/api/contact` (`netlify/functions/contact.mts`). The recipient is hard-coded to `rajput.mohit.veer@gmail.com`, the visitor's address is set as the reply-to, and nothing in the browser can change the destination. Delivery uses [Resend](https://resend.com): create a free account with that same email address, create an API key and add it as the `RESEND_API_KEY` environment variable in Netlify (Site configuration → Environment variables). With the default `onboarding@resend.dev` sender, Resend delivers to the account owner's own address, so no domain setup is needed.
+
+If `RESEND_API_KEY` is not set, the form falls back to Netlify Forms (form name `contact`, declared in `index.html`). That requires enabling form detection (Site configuration → Forms) and adding an email notification for the `contact` form under Forms → Form notifications. If neither is configured, the page shows an error with the direct email address instead of reporting a false success. During `npm run dev` nothing is sent; the form shows a development notice.
 
 ---
 

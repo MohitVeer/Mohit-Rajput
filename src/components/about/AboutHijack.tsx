@@ -1,9 +1,25 @@
 import { useRef, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import IdentitySequence from './IdentitySequence'
+import IdentityStatic from './IdentityStatic'
 import ImpactPanel from './ImpactPanel'
 
+function StackedAbout() {
+  return (
+    <div id="metrics" aria-labelledby="metrics-heading" className="relative">
+      <ImpactPanel compact />
+      <IdentityStatic />
+    </div>
+  )
+}
+
 export default function AboutHijack() {
+  const pinned = useMediaQuery('(min-width: 768px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)')
+  return pinned ? <PinnedAbout /> : <StackedAbout />
+}
+
+function PinnedAbout() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: sectionRef })
   const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 25, mass: 0.5 })
@@ -24,7 +40,7 @@ export default function AboutHijack() {
   const exitRadius = useTransform(exit, [0, 1], ['0px', '40px'])
 
   return (
-    <div id="metrics" data-scene data-index="02" data-label="Impact" aria-labelledby="metrics-heading" ref={sectionRef} className="relative h-[600vh]">
+    <div id="metrics" aria-labelledby="metrics-heading" ref={sectionRef} className="relative h-[600vh]">
       <div className="sticky top-0 z-10 h-screen w-full overflow-hidden">
         <motion.div style={{ scale: exitScale, opacity: exitOpacity, borderRadius: exitRadius }} className="relative h-full w-full origin-center">
           <AnimatePresence>

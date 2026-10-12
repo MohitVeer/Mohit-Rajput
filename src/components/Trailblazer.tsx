@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
-import { profile, stats, superbadges, trailhead } from '../data/profile'
+import { profile, superbadges, trailhead } from '../data/profile'
 import { fetchSuperbadges, type SuperbadgeRow } from '../lib/contentApi'
 import { useLiveContent } from '../hooks/useLiveContent'
 import { trackExternalLink } from '../lib/analytics'
@@ -36,11 +37,10 @@ function Card({ children, label }: { children: React.ReactNode; label: string })
 export default function Trailblazer() {
   const fallback = useMemo<SuperbadgeRow[]>(() => superbadges.map((s, i) => ({ ...s, id: `static-${i}`, sort_order: i })), [])
   const badges = useLiveContent(fetchSuperbadges, fallback)
-  const certCount = stats.find((s) => s.label === 'Salesforce Certifications')?.value
 
   return (
     <Section id="trailblazer" index="06" label="Trailblazer" className="relative bg-background">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center space-y-4 px-6 pb-16 pt-32 text-center">
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center space-y-4 px-6 pb-10 pt-16 text-center md:pt-24">
         <motion.h2
           id="trailblazer-heading"
           initial={{ opacity: 0, y: 15 }}
@@ -60,6 +60,12 @@ export default function Trailblazer() {
           Triple Star Ranger and Agentblazer Innovator 2026 — verified rank, badges, and points from my Salesforce Trailblazer
           profile.
         </motion.p>
+        <Link
+          to="/achievements"
+          className="inline-flex items-center gap-2 pt-4 text-xs font-bold uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+        >
+          See every certificate and badge →
+        </Link>
       </div>
 
       <div className="w-full">
@@ -78,7 +84,7 @@ export default function Trailblazer() {
         </ZoomParallax>
       </div>
 
-      <div className="relative pb-32">
+      <div className="relative pb-16 md:pb-24">
         <ShowcaseStack>
           <Card label="Trailhead">
             <div className="grid items-center gap-10 md:grid-cols-[auto_1fr]">
@@ -122,7 +128,7 @@ export default function Trailblazer() {
             </div>
           </Card>
 
-          <Card label={`${badges.length} Trailhead superbadges · ${certCount ?? ''} certifications`}>
+          <Card label={`${badges.length} Trailhead superbadges`}>
             <ul className="grid grid-cols-2 gap-6 md:grid-cols-5">
               {badges.map((badge) => (
                 <li key={badge.id}>

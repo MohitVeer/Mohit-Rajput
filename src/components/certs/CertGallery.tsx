@@ -5,13 +5,15 @@ function Column({ images, y, offset }: { images: string[]; y: MotionValue<number
   return (
     <motion.div className="relative flex h-full w-1/3 min-w-[250px] flex-col gap-4 will-change-transform md:gap-6" style={{ y, top: offset, translateZ: 0 }}>
       {images.map((src, i) => (
-        <div key={`${src}-${i}`} className="relative w-full overflow-hidden bg-zinc-100 ring-1 ring-black/5 dark:bg-zinc-900 dark:ring-white/10" style={{ paddingTop: '75%' }}>
+        <div key={`${src}-${i}`} className="relative w-full overflow-hidden rounded-lg bg-zinc-100 shadow-xl ring-1 ring-black/5 dark:bg-zinc-900 dark:ring-white/10" style={{ paddingTop: '56.25%' }}>
           <img
             src={src}
             alt=""
+            width={1280}
+            height={720}
             loading="lazy"
             decoding="async"
-            className="pointer-events-none absolute inset-0 m-auto h-3/5 w-3/5 object-contain"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover"
           />
         </div>
       ))}

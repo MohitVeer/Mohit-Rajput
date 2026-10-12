@@ -1,5 +1,6 @@
 import { useRef, type ReactNode } from 'react'
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 const POSITION: Record<number, string> = {
   1: '[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]',
@@ -15,8 +16,29 @@ interface ZoomParallaxProps {
   children?: ReactNode
 }
 
+function StaticTiles({ tiles, children }: ZoomParallaxProps) {
+  return (
+    <div className="px-4 pb-4">
+      <ul className="mx-auto grid max-w-xl grid-cols-2 gap-3">
+        {tiles.slice(0, 6).map((tile, index) => (
+          <li
+            key={index}
+            aria-hidden="true"
+            className="aspect-square overflow-hidden rounded-2xl border border-black/10 shadow-xl dark:border-white/10"
+            style={{ containerType: 'inline-size' }}
+          >
+            {tile}
+          </li>
+        ))}
+      </ul>
+      {children && <div className="mt-8 flex justify-center">{children}</div>}
+    </div>
+  )
+}
+
 export default function ZoomParallax({ tiles, children }: ZoomParallaxProps) {
   const container = useRef<HTMLDivElement>(null)
+  const zoom = useMediaQuery('(prefers-reduced-motion: no-preference)')
   const { scrollYProgress } = useScroll({ target: container, offset: ['start start', 'end end'] })
 
   const scale4 = useTransform(scrollYProgress, [0, 1], [1, 4])
@@ -26,8 +48,10 @@ export default function ZoomParallax({ tiles, children }: ZoomParallaxProps) {
   const scale9 = useTransform(scrollYProgress, [0, 1], [1, 9])
   const scales: MotionValue<number>[] = [scale4, scale5, scale6, scale5, scale6, scale8, scale9]
 
+  if (!zoom) return <StaticTiles tiles={tiles}>{children}</StaticTiles>
+
   return (
-    <div ref={container} className="relative z-[1] h-[300vh]">
+    <div ref={container} className="relative z-[1] h-[260vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
         {tiles.slice(0, 7).map((tile, index) => (
           <motion.div
@@ -39,10 +63,14 @@ export default function ZoomParallax({ tiles, children }: ZoomParallaxProps) {
               <div aria-hidden="true" className="absolute inset-0">
                 {tile}
               </div>
-              {index === 0 && children && <div className="pointer-events-auto relative z-10 flex flex-col items-center justify-center">{children}</div>}
             </div>
           </motion.div>
         ))}
+        {children && (
+          <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+            <div className="pointer-events-auto">{children}</div>
+          </div>
+        )}
       </div>
     </div>
   )

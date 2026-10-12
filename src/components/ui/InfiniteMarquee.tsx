@@ -21,7 +21,7 @@ export default function InfiniteMarquee({ items, speed = 20, direction = 'left',
   )
 
   return (
-    <div className={cn('relative flex overflow-hidden py-4', className)}>
+    <div data-marquee className={cn('relative flex overflow-hidden py-4', className)}>
       <motion.div
         animate={{ x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'] }}
         transition={{ duration: speed, ease: 'linear', repeat: Infinity }}

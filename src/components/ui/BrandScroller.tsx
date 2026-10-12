@@ -35,6 +35,7 @@ export default function BrandScroller({ items, reverse = false, duration = 30, l
 
   return (
     <div
+      data-marquee
       role="group"
       aria-label={label}
       className="relative flex w-full overflow-hidden py-2 [mask-image:linear-gradient(to_right,rgba(0,0,0,0),rgba(0,0,0,1)_10%,rgba(0,0,0,1)_90%,rgba(0,0,0,0))]"

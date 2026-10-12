@@ -5,7 +5,7 @@ import { FEATURES } from './features'
 
 export default function FeatureList() {
   return (
-    <div className="space-y-20 px-6 py-24">
+    <div className="space-y-16 px-6 py-16">
       {FEATURES.map((feature, i) => (
         <motion.article
           key={feature.heading}

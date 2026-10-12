@@ -8,7 +8,7 @@ import InfiniteMarquee from '../ui/InfiniteMarquee'
 import MagneticEffect from '../ui/MagneticEffect'
 import { frontEndStack, salesforceStack } from './stackItems'
 
-const NARRATIVE =
+export const NARRATIVE =
   'I build scalable, user-focused digital experiences across the Salesforce ecosystem and modern front-end technologies. With 5+ years of experience, I work with Lightning Web Components, Experience Cloud, Agentforce, OmniStudio, Marketing Cloud and modern JavaScript frameworks to turn complex requirements into intuitive, production-ready solutions.'
 
 const PLATFORMS = [
@@ -17,6 +17,43 @@ const PLATFORMS = [
   { name: 'Industry Solutions', detail: 'OmniScripts, FlexCards, DataRaptors', image: '/Salesforce%20Product%20Icons/industry-solutions-logo.png' },
   { name: 'Marketing Cloud', detail: 'Email Studio, AMPscript, Journeys', image: '/Salesforce%20Product%20Icons/marketing-cloud-logo.png' },
 ]
+
+export function PlatformGrid() {
+  return (
+    <div className="mx-auto w-full max-w-[1500px]">
+      <div className="mb-8 flex items-center gap-4">
+        <span aria-hidden="true" className="h-px w-10 bg-black/30 dark:bg-white/30" />
+        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">Platforms I build on</p>
+      </div>
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6">
+        {PLATFORMS.map((platform, i) => (
+          <motion.div
+            key={platform.name}
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-10%' }}
+            transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="group flex flex-col items-center justify-center gap-4 rounded-3xl border border-black/10 bg-white/70 p-4 text-center shadow-xl backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 dark:border-white/10 dark:bg-zinc-900/60 sm:gap-8 sm:p-8 lg:min-h-[28rem]"
+          >
+            <img
+              src={platform.image}
+              alt=""
+              width={150}
+              height={150}
+              loading="lazy"
+              decoding="async"
+              className="h-16 w-16 object-contain grayscale transition-all duration-700 group-hover:scale-110 group-hover:grayscale-0 sm:h-32 sm:w-32 lg:h-40 lg:w-40"
+            />
+            <div>
+              <h3 className="text-base font-bold tracking-tight text-black dark:text-white sm:text-xl md:text-2xl">{platform.name}</h3>
+              <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400 sm:text-sm">{platform.detail}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 function BlurInUpText({ text, animate }: { text: string; animate: boolean }) {
   const words = text.split(' ')
@@ -132,38 +169,7 @@ export default function IdentitySequence({ scrollYProgress }: IdentitySequencePr
           </div>
 
           <div className="relative flex min-h-screen w-full flex-shrink-0 flex-col items-center justify-center px-4 md:px-10 lg:px-20">
-            <div className="w-full max-w-[1500px]">
-              <div className="mb-8 flex items-center gap-4">
-                <span aria-hidden="true" className="h-px w-10 bg-black/30 dark:bg-white/30" />
-                <p className="font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">Platforms I build on</p>
-              </div>
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6">
-                {PLATFORMS.map((platform, i) => (
-                  <motion.div
-                    key={platform.name}
-                    initial={{ opacity: 0, y: 60 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-10%' }}
-                    transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="group flex flex-col items-center justify-center gap-4 rounded-3xl border border-black/10 bg-white/70 p-4 text-center shadow-xl backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 dark:border-white/10 dark:bg-zinc-900/60 sm:gap-8 sm:p-8 lg:min-h-[28rem]"
-                  >
-                    <img
-                      src={platform.image}
-                      alt=""
-                      width={150}
-                      height={150}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-16 w-16 object-contain grayscale transition-all duration-700 group-hover:scale-110 group-hover:grayscale-0 sm:h-32 sm:w-32 lg:h-40 lg:w-40"
-                    />
-                    <div>
-                      <h3 className="text-base font-bold tracking-tight text-black dark:text-white sm:text-xl md:text-2xl">{platform.name}</h3>
-                      <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400 sm:text-sm">{platform.detail}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+            <PlatformGrid />
           </div>
 
           <motion.div

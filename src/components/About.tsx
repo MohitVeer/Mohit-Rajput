@@ -17,9 +17,6 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      data-scene
-      data-index="01"
-      data-label="About"
       aria-labelledby="about-heading"
       className="relative bg-background text-foreground transition-colors duration-500 dark:bg-black"
     >

@@ -4,7 +4,14 @@
 
 ## Pages
 
-- [Portfolio home](https://mohitveer.netlify.app/): Impact, about, Trailhead status, skills, experience, certifications, projects and articles on one page. Sections: #metrics, #about, #trailblazer, #skills, #experience, #certs, #projects, #articles, #contact.
+- [Home](https://mohitveer.netlify.app/): Introduction, impact numbers, skills overview, client projects, professional journey, certificates, Trailhead status, live GitHub activity, articles and contact.
+- [Projects](https://mohitveer.netlify.app/projects): Client projects delivered at Wipro and Mphasis Silverline (Ericsson, Sony, St. James's Place, American Honda, Republic Finance, Arvest Bank, Teladoc and more), plus live GitHub contribution heatmap and activity.
+- [Experience](https://mohitveer.netlify.app/experience): Year-by-year career timeline at Wipro, Mphasis Silverline, DJT Corporation and Escade Technologies.
+- [Skills](https://mohitveer.netlify.app/skills): Salesforce, front-end, design-to-code, Marketing Cloud and DevOps toolkit.
+- [Achievements](https://mohitveer.netlify.app/achievements): Nine Salesforce certifications with the original certificates, five Trailhead superbadges, Trailhead rank and awards.
+- [Articles](https://mohitveer.netlify.app/blog): Articles on Experience Cloud performance, SLDS 2, Marketing Cloud and personalization.
+- [Contact](https://mohitveer.netlify.app/contact): Contact form, social profiles and frequently asked questions.
+- [Resume](https://mohitveer.netlify.app/resume): Embedded résumé with download.
 - [Privacy & analytics](https://mohitveer.netlify.app/privacy): What lightweight, first-party usage analytics are collected, and how to opt out.
 
 ## Profiles and documents

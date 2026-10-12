@@ -1,68 +1,35 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import About from './components/About'
-import ClickConstellation from './components/ClickConstellation'
-import Footer from './components/Footer'
-import Hero from './components/Hero'
-import Preloader from './components/Preloader'
-import ResumeReveal from './components/ResumeReveal'
-import BackToTop from './components/shell/BackToTop'
-import Navbar from './components/shell/Navbar'
-import OverlayMenu from './components/cinematic/OverlayMenu'
-import { useSmoothScroll } from './hooks/useSmoothScroll'
-import { initAnalytics } from './lib/analytics'
+import { lazy } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import SiteLayout from './components/shell/SiteLayout'
+import HomePage from './pages/HomePage'
+import NotFoundPage from './pages/NotFoundPage'
 
-const Trailblazer = lazy(() => import('./components/Trailblazer'))
-const Skills = lazy(() => import('./components/Skills'))
-const Experience = lazy(() => import('./components/Experience'))
-const Certifications = lazy(() => import('./components/Certifications'))
-const Projects = lazy(() => import('./components/Projects'))
-const Articles = lazy(() => import('./components/Articles'))
-const LightningRush = lazy(() => import('./components/LightningRush'))
-const Contact = lazy(() => import('./components/Contact'))
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
+const ExperiencePage = lazy(() => import('./pages/ExperiencePage'))
+const SkillsPage = lazy(() => import('./pages/SkillsPage'))
+const AchievementsPage = lazy(() => import('./pages/AchievementsPage'))
+const BlogPage = lazy(() => import('./pages/BlogPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const ResumePage = lazy(() => import('./pages/ResumePage'))
+const PrivacyPage = lazy(() => import('./components/PrivacyNotice'))
+const Admin = lazy(() => import('./components/Admin'))
 
 export default function App() {
-  useSmoothScroll()
-
-  useEffect(() => {
-    initAnalytics()
-  }, [])
-
-  const [menuOpen, setMenuOpen] = useState(false)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const menuTriggerRef = useRef<HTMLButtonElement>(null)
-
   return (
-    <div className="bg-background text-foreground">
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
-
-      <Preloader />
-      <ClickConstellation />
-      <Navbar ref={menuTriggerRef} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((v) => !v)} />
-      <OverlayMenu open={menuOpen} onClose={() => setMenuOpen(false)} triggerRef={menuTriggerRef} />
-      <ResumeReveal />
-
-      <div ref={contentRef}>
-        <main id="main-content">
-          <Hero />
-          <About />
-
-          <Suspense fallback={null}>
-            <Skills />
-            <Experience />
-            <Certifications />
-            <Trailblazer />
-            <Projects />
-            <Articles />
-            <LightningRush />
-            <Contact />
-          </Suspense>
-        </main>
-
-        <Footer />
-      </div>
-      <BackToTop />
-    </div>
+    <Routes>
+      <Route path="/admin" element={<Admin />} />
+      <Route element={<SiteLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="projects" element={<ProjectsPage />} />
+        <Route path="experience" element={<ExperiencePage />} />
+        <Route path="skills" element={<SkillsPage />} />
+        <Route path="achievements" element={<AchievementsPage />} />
+        <Route path="blog" element={<BlogPage />} />
+        <Route path="contact" element={<ContactPage />} />
+        <Route path="resume" element={<ResumePage />} />
+        <Route path="privacy" element={<PrivacyPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   )
 }

@@ -1,9 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
-import { articles } from '../data/profile'
-import { fetchArticles, type ArticleRow } from '../lib/contentApi'
-import { useLiveContent } from '../hooks/useLiveContent'
+import { useArticles } from '../hooks/useArticles'
 import { useBreakpointValue } from '../hooks/useBreakpointValue'
 import Book from './ui/Book'
 import Section from './shell/Section'
@@ -16,20 +15,7 @@ const COUNT_BREAKPOINTS = { sm: 1, md: 2, lg: 3 }
 const BOOK_WIDTH = { sm: 180, md: 220, lg: 260 }
 
 export default function Articles() {
-  const fallback = useMemo<ArticleRow[]>(
-    () =>
-      articles.map((a, i) => ({
-        title: a.title,
-        summary: a.summary,
-        url: a.url,
-        published_on: a.publishedOn,
-        read_time: a.readTime,
-        id: `static-${i}`,
-        sort_order: i,
-      })),
-    [],
-  )
-  const items = useLiveContent(fetchArticles, fallback)
+  const items = useArticles()
   const visibleCount = Math.min(useBreakpointValue(COUNT_BREAKPOINTS), items.length)
   const [index, setIndex] = useState(0)
   const [direction, setDirection] = useState(0)
@@ -45,7 +31,7 @@ export default function Articles() {
   })
 
   return (
-    <Section id="articles" index="08" label="Articles" className="relative bg-background px-6 py-32 md:px-12">
+    <Section id="articles" index="08" label="Articles" className="relative bg-background px-6 py-16 md:px-12 md:py-24">
       <div className="mx-auto max-w-[1600px]">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -123,7 +109,7 @@ export default function Articles() {
                           <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{article.read_time}</span>
                         )}
                       </span>
-                      <span className="line-clamp-3 block text-sm font-medium leading-relaxed text-muted-foreground">{article.summary}</span>
+                      <span className="block text-sm font-medium leading-relaxed text-muted-foreground">{article.summary}</span>
                     </span>
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
@@ -133,7 +119,17 @@ export default function Articles() {
           </AnimatePresence>
         </div>
 
-        <ul className="mx-auto mt-4 max-w-3xl divide-y divide-border/60 border-t border-border/60">
+        <div className="mt-10 flex justify-center">
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-4 text-xs font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
+          >
+            Browse full archive
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
+
+        <ul className="mx-auto mt-10 max-w-3xl divide-y divide-border/60 border-t border-border/60">
           {items.map((article) => (
             <li key={article.id}>
               <a

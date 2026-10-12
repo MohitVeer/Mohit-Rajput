@@ -1,4 +1,5 @@
 import { useRef, useState, type AnchorHTMLAttributes, type ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { cn } from '../../lib/cn'
 
@@ -7,12 +8,13 @@ interface MagneticCtaProps {
   className?: string
   variant?: 'primary' | 'outline'
   href?: string
+  to?: string
   onClick?: () => void
   target?: AnchorHTMLAttributes<HTMLAnchorElement>['target']
   rel?: string
 }
 
-export default function MagneticCta({ children, className, variant = 'primary', href, onClick, target, rel }: MagneticCtaProps) {
+export default function MagneticCta({ children, className, variant = 'primary', href, to, onClick, target, rel }: MagneticCtaProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [hovered, setHovered] = useState(false)
   const x = useMotionValue(0)
@@ -67,6 +69,14 @@ export default function MagneticCta({ children, className, variant = 'primary', 
       </span>
     </motion.div>
   )
+
+  if (to) {
+    return (
+      <Link to={to} onClick={onClick} className="block rounded-full">
+        {body}
+      </Link>
+    )
+  }
 
   if (href) {
     return (

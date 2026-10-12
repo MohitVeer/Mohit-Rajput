@@ -2,19 +2,12 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Layers, Mail } from 'lucide-react'
 import { profile } from '../data/profile'
-import { openResume } from '../lib/resumeEvents'
-import { trackExternalLink } from '../lib/analytics'
+import { trackEvent, trackExternalLink } from '../lib/analytics'
 import { useSectionView } from '../hooks/useSectionView'
 import { LinkedInIcon } from './icons/TechIcons'
 import InfiniteRibbon from './ui/InfiniteRibbon'
 import MagneticCta from './ui/MagneticCta'
 import Section from './shell/Section'
-
-const emailSubject = encodeURIComponent('Interview / Role — Mohit Rajput')
-const emailBody = encodeURIComponent(
-  'Hi Mohit,\n\nI came across your portfolio and would like to discuss an opportunity.\n\nRole:\nCompany:\nLocation:\n\nThanks,\n',
-)
-const mailtoHref = `mailto:${profile.email}?subject=${emailSubject}&body=${emailBody}`
 
 const WORDS = ['Amazing', 'Accessible', 'Scalable', 'Intelligent']
 const LONGEST = WORDS.reduce((a, b) => (a.length > b.length ? a : b), '')
@@ -94,11 +87,11 @@ export default function Contact() {
         </p>
 
         <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
-          <MagneticCta href={mailtoHref} variant="primary" className="px-10 py-5 text-lg" onClick={() => trackExternalLink(mailtoHref, 'email')}>
+          <MagneticCta to="/contact" variant="primary" className="px-10 py-5 text-lg" onClick={() => trackEvent('Contact', 'hire_me_click')}>
             <Mail className="h-5 w-5" aria-hidden="true" />
             <span>Hire Me</span>
           </MagneticCta>
-          <MagneticCta variant="outline" className="px-10 py-5 text-lg" onClick={openResume}>
+          <MagneticCta to="/resume" variant="outline" className="px-10 py-5 text-lg">
             <Layers className="h-5 w-5" aria-hidden="true" />
             <span>View My Resume</span>
           </MagneticCta>

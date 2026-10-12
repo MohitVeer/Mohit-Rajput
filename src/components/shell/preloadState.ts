@@ -20,6 +20,7 @@ export function markIntroSeen() {
 
 function shouldPreload() {
   if (typeof window === 'undefined') return false
+  if (window.location.pathname.replace(/\/+$/, '') !== '') return false
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
   return !introAlreadySeen()
 }

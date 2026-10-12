@@ -12,20 +12,6 @@ export const profile = {
   resumeUrl: '/Mohit_Rajput_Frontend_Engineer.pdf',
 }
 
-export const sceneList = [
-  { href: '#top', index: '00', label: 'Home' },
-  { href: '#about', index: '01', label: 'About' },
-  { href: '#metrics', index: '02', label: 'Impact' },
-  { href: '#skills', index: '03', label: 'Skills' },
-  { href: '#experience', index: '04', label: 'Experience' },
-  { href: '#certs', index: '05', label: 'Certifications' },
-  { href: '#trailblazer', index: '06', label: 'Trailblazer' },
-  { href: '#projects', index: '07', label: 'Projects' },
-  { href: '#articles', index: '08', label: 'Articles' },
-  { href: '#game', index: '09', label: 'Break' },
-  { href: '#contact', index: '10', label: 'Contact' },
-]
-
 export const heroTags = [
   'Front-End Engineering',
   'React.js',
@@ -200,7 +186,7 @@ export const experience = [
     achievements: [
       'Circle of Excellence Award — resolving high-impact production defects and improving platform stability.'
     ],
-    clients: ['American Honda', "St. James's Place"],
+    clients: ['Ericsson', 'Intellect Design Arena', "St. James's Place", 'American Honda', 'Sony'],
   },
   {
     role: 'Developer',
@@ -223,7 +209,8 @@ export const experience = [
       'Republic Finance',
       'Arvest Bank',
       'Wealth Enhancement Group',
-      'Teledoc',
+      'Peoples Bank',
+      'Teladoc',
       'Five Star Bank',
       'Beatport',
     ],

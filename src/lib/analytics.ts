@@ -170,6 +170,27 @@ const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(),
   window.addEventListener('pagehide', endSession)
 }
 
+export function trackPageView(path: string) {
+  if (isTrackingDisabled()) return
+  if (!currentPath) {
+    currentPath = path
+    return
+  }
+  if (path === currentPath) return
+  send({
+    type: 'page_view_end',
+    sessionId: getSessionId(),
+    path: currentPath,
+    durationSeconds: Math.round((Date.now() - pageEnteredAt) / 1000),
+    maxScrollPct,
+  })
+  currentPath = path
+  pageEnteredAt = Date.now()
+  maxScrollPct = 0
+  firedMilestones.clear()
+  send({ type: 'page_view', sessionId: getSessionId(), path })
+}
+
 export function trackEvent(component: string, action: string, label?: string, meta?: Record<string, unknown>) {
   send({ type: 'event', sessionId: getSessionId(), path: currentPath, component, action, label, meta })
 }

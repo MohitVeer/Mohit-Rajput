@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState, type ComponentType } from 'react'
+import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Award, BookOpen, Briefcase, ChevronDown, FileText, Layers, Mail, Rocket } from 'lucide-react'
 import { cn } from '../../lib/cn'
-import { openResume } from '../../lib/resumeEvents'
 import { trackEvent } from '../../lib/analytics'
 import { stats, trailhead } from '../../data/profile'
+import { GitHubMark } from '../icons/BrandMarks'
 
 type IconType = ComponentType<{ className?: string }>
 
 interface MegaItem {
   id: string
-  href?: string
-  onSelect?: () => void
+  to: string
   icon?: IconType
   image?: string
   title: string
@@ -21,26 +21,20 @@ interface MegaItem {
 const certCount = stats.find((s) => s.label === 'Salesforce Certifications')?.value ?? ''
 
 const BIG: MegaItem[] = [
-  { id: 'projects', href: '#projects', icon: Rocket, title: 'Projects', desc: 'Discover my latest builds' },
-  { id: 'experience', href: '#experience', icon: Briefcase, title: 'Experience', desc: 'My professional journey' },
+  { id: 'projects', to: '/projects', icon: Rocket, title: 'Projects', desc: 'Builds and live open-source work' },
+  { id: 'experience', to: '/experience', icon: Briefcase, title: 'Experience', desc: 'My professional journey' },
 ]
 
 const SMALL: MegaItem[] = [
-  { id: 'skills', href: '#skills', icon: Layers, title: 'Skills', desc: 'Technical expertise' },
-  { id: 'certs', href: '#certs', icon: Award, title: 'Certifications', desc: `${certCount} Salesforce credentials` },
-  { id: 'articles', href: '#articles', icon: BookOpen, title: 'Articles', desc: 'Insights and write-ups' },
+  { id: 'skills', to: '/skills', icon: Layers, title: 'Skills', desc: 'Technical expertise' },
+  { id: 'achievements', to: '/achievements', icon: Award, title: 'Achievements', desc: `${certCount} certificates, ${trailhead.rank}` },
+  { id: 'blog', to: '/blog', icon: BookOpen, title: 'Articles', desc: 'Insights and write-ups' },
 ]
 
 const SIDE: MegaItem[] = [
-  {
-    id: 'trailblazer',
-    href: '#trailblazer',
-    image: trailhead.rankImage,
-    title: 'Trailblazer',
-    desc: trailhead.rank,
-  },
-  { id: 'resume', onSelect: openResume, icon: FileText, title: 'Resume', desc: 'View or download my CV' },
-  { id: 'contact', href: '#contact', icon: Mail, title: 'Contact', desc: 'Let’s work together' },
+  { id: 'github', to: '/projects#open-source', icon: GitHubMark, title: 'GitHub', desc: 'Live activity and repositories' },
+  { id: 'resume', to: '/resume', icon: FileText, title: 'Resume', desc: 'View or download my CV' },
+  { id: 'contact', to: '/contact', icon: Mail, title: 'Contact', desc: 'Let’s work together' },
 ]
 
 function ActiveDot() {
@@ -114,7 +108,11 @@ function MegaIcon({ item, className }: { item: MegaItem; className: string }) {
     return <img src={item.image} alt="" width={28} height={28} loading="lazy" decoding="async" className={cn('object-contain', className)} />
   }
   const Icon = item.icon
-  return Icon ? <Icon className={className} /> : null
+  return Icon ? (
+    <span aria-hidden="true" className="contents">
+      <Icon className={className} />
+    </span>
+  ) : null
 }
 
 const surface = (active: boolean) =>
@@ -131,23 +129,9 @@ const iconTone = (active: boolean) =>
 const descTone = 'text-black/60 group-hover:text-black/80 dark:text-white/60 dark:group-hover:text-white/80'
 
 function renderTarget(item: MegaItem, onSelect: () => void, className: string, children: React.ReactNode) {
-  if (item.onSelect) {
-    return (
-      <button
-        type="button"
-        onClick={() => {
-          item.onSelect?.()
-          onSelect()
-        }}
-        className={cn('w-full text-left', className)}
-      >
-        {children}
-      </button>
-    )
-  }
   return (
-    <a
-      href={item.href}
+    <Link
+      to={item.to}
       onClick={() => {
         trackEvent('Navigation', 'nav_click', item.title)
         onSelect()
@@ -155,7 +139,7 @@ function renderTarget(item: MegaItem, onSelect: () => void, className: string, c
       className={className}
     >
       {children}
-    </a>
+    </Link>
   )
 }
 
@@ -257,6 +241,21 @@ interface CardNavProps {
 export default function CardNav({ activeId }: CardNavProps) {
   const [expanded, setExpanded] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const closeTimer = useRef<number | null>(null)
+
+  const cancelClose = () => {
+    if (closeTimer.current !== null) {
+      window.clearTimeout(closeTimer.current)
+      closeTimer.current = null
+    }
+  }
+
+  const scheduleClose = () => {
+    cancelClose()
+    closeTimer.current = window.setTimeout(() => setExpanded(false), 180)
+  }
+
+  useEffect(() => cancelClose, [])
 
   useEffect(() => {
     const onPointerDown = (event: MouseEvent) => {
@@ -273,17 +272,21 @@ export default function CardNav({ activeId }: CardNavProps) {
     }
   }, [])
 
-  const ids = [...BIG, ...SMALL, ...SIDE].map((item) => item.id)
+  const ids = [...BIG, ...SMALL, ...SIDE].map((item) => item.id).filter((id) => id !== 'contact')
   const sectionActive = ids.includes(activeId)
-  const close = () => setExpanded(false)
+  const close = () => {
+    cancelClose()
+    setExpanded(false)
+  }
 
   return (
-    <div ref={containerRef} className="relative" onMouseLeave={close}>
+    <div ref={containerRef} className="relative" onMouseEnter={cancelClose} onMouseLeave={scheduleClose}>
       <button
         type="button"
         aria-expanded={expanded}
         aria-controls="explore-menu"
         onMouseEnter={() => {
+          cancelClose()
           if (window.matchMedia('(hover: hover)').matches) setExpanded(true)
         }}
         onClick={(event) => {
@@ -315,11 +318,11 @@ export default function CardNav({ activeId }: CardNavProps) {
         {expanded && (
           <motion.div
             id="explore-menu"
-            initial={{ opacity: 0, y: 10, scale: 0.98, x: '-50%' }}
-            animate={{ opacity: 1, y: 20, scale: 1, x: '-50%' }}
-            exit={{ opacity: 0, y: 10, scale: 0.98, x: '-50%' }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="pointer-events-auto absolute left-1/2 top-full z-[100]"
+            initial={{ opacity: 0, y: 8, scale: 0.98, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, scale: 1, x: '-50%' }}
+            exit={{ opacity: 0, y: 8, scale: 0.98, x: '-50%' }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className="pointer-events-auto absolute left-1/2 top-full z-[100] pt-4"
           >
             <div className="relative flex w-[850px] max-w-[calc(100vw-3rem)] overflow-hidden rounded-[1.5rem] border border-black/10 bg-white/95 shadow-2xl shadow-black/5 backdrop-blur-2xl dark:border-white/10 dark:bg-[#0a0a0a]/95 dark:shadow-black/80">
               <div className="flex flex-1 flex-col gap-4 p-5">

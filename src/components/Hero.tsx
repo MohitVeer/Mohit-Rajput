@@ -1,8 +1,8 @@
 import { useState, type ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowDownRight, ExternalLink, Mail, Zap } from 'lucide-react'
 import { profile, heroTags, trailhead } from '../data/profile'
-import { openResume } from '../lib/resumeEvents'
 import { trackExternalLink } from '../lib/analytics'
 import { cn } from '../lib/cn'
 import { GitHubMark, LinkedInMark, SalesforceMark } from './icons/BrandMarks'
@@ -21,6 +21,8 @@ const LINE_CLASS =
   'text-shiny flex items-center text-[clamp(2.4rem,11vw,13rem)] font-black leading-[0.85] tracking-tighter will-change-transform px-4'
 
 const EASE = [0.16, 1, 0.3, 1] as const
+
+const MotionLink = motion.create(Link)
 
 interface FloatProps {
   revealed: boolean
@@ -76,9 +78,6 @@ export default function Hero() {
   return (
     <section
       id="top"
-      data-scene
-      data-index="00"
-      data-label="Home"
       aria-labelledby="top-heading"
       className="relative flex min-h-screen w-full flex-col overflow-hidden bg-background text-foreground selection:bg-primary/20"
     >
@@ -171,8 +170,8 @@ export default function Hero() {
               </Float>
               <motion.span {...line(0.1)} className={cn(LINE_CLASS, 'items-center')}>
                 <span>FRONT</span>
-                <motion.a
-                  href="#projects"
+                <MotionLink
+                  to="/projects"
                   aria-label="See my projects"
                   animate={revealed && !reduce ? { scale: [1, 1.2, 1] } : { scale: 1 }}
                   transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
@@ -180,7 +179,7 @@ export default function Hero() {
                   className="group relative mx-[0.02em] block cursor-pointer lg:mx-[0.05em]"
                 >
                   <Zap className="h-[0.8em] w-[0.8em] fill-sky-400/20 text-sky-400 transition-colors group-hover:text-sky-300" strokeWidth={1.5} aria-hidden="true" />
-                </motion.a>
+                </MotionLink>
                 <span>END</span>
               </motion.span>
             </span>
@@ -189,8 +188,8 @@ export default function Hero() {
           <span className="relative items-center gap-8 md:flex">
             <motion.span {...line(0.2)} className={cn(LINE_CLASS, 'items-center')}>
               <span>DEVEL</span>
-              <motion.a
-                href="#contact"
+              <MotionLink
+                to="/contact"
                 aria-label="Get in touch"
                 animate={revealed && !reduce ? { rotate: [0, 8, 0], y: [0, -10, 0] } : { rotate: 0, y: 0 }}
                 transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
@@ -198,7 +197,7 @@ export default function Hero() {
                 className="group relative mx-[0.05em] block cursor-pointer"
               >
                 <SalesforceMark className="h-[0.85em] w-[0.85em] text-[#00A1E0] transition-colors group-hover:text-[#33b5e8]" />
-              </motion.a>
+              </MotionLink>
               <span>OPER</span>
             </motion.span>
             <motion.span
@@ -257,12 +256,7 @@ export default function Hero() {
             <p className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground md:text-xs">
               Remote · Worldwide — {year}
             </p>
-            <button
-              type="button"
-              onClick={openResume}
-              aria-label="View resume"
-              className="group flex items-center"
-            >
+            <Link to="/resume" aria-label="View resume" className="group flex items-center">
               <span className="relative flex h-12 w-12 items-center overflow-hidden rounded-full bg-zinc-100 shadow-xl transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:w-44 group-focus-visible:w-44 dark:bg-white">
                 <span className="whitespace-nowrap pl-6 pr-12 text-[10px] font-black uppercase tracking-widest text-zinc-900 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:delay-150 group-focus-visible:opacity-100 dark:text-black">
                   View Resume
@@ -271,7 +265,7 @@ export default function Hero() {
                   <ArrowDownRight className="h-5 w-5" aria-hidden="true" />
                 </span>
               </span>
-            </button>
+            </Link>
           </div>
         </div>
       </div>

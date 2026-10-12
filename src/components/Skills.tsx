@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import FeatureList from './skills/FeatureList'
-import SkillExplorer from './skills/SkillExplorer'
 import SkillsAdventure from './skills/SkillsAdventure'
 import Section from './shell/Section'
 
@@ -13,7 +14,15 @@ export default function Skills() {
         Skills and expertise
       </h2>
       {wide ? <SkillsAdventure /> : <FeatureList />}
-      <SkillExplorer />
+      <div className="relative z-10 flex justify-center px-6 pb-16 pt-6">
+        <Link
+          to="/skills"
+          className="group inline-flex items-center gap-3 rounded-full bg-foreground px-8 py-4 text-xs font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
+        >
+          Explore all skills &amp; tools
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+        </Link>
+      </div>
     </Section>
   )
 }

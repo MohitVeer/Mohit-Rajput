@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronUp, Copy, Mail, X } from 'lucide-react'
 import { heroTags, profile } from '../data/profile'
@@ -9,16 +10,11 @@ import { GitHubMark, LinkedInMark, SalesforceMark } from './icons/BrandMarks'
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 import SpotlightBeams from './shell/SpotlightBeams'
 import { useTheme } from '../theme/useTheme'
+import { siteRoutes } from '../lib/siteRoutes'
 
-const SECTION_LINKS = [
-  { href: '#experience', label: 'Experience' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#certs', label: 'Certifications' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#articles', label: 'Articles' },
-  { href: '#trailblazer', label: 'Trailblazer' },
-  { href: '#contact', label: 'Contact' },
-]
+const FOOTER_LINES = [`${profile.name}.`, 'All rights reserved.']
+
+const SECTION_LINKS = siteRoutes.filter((route) => route.id !== 'home' && route.id !== 'privacy')
 
 const MARQUEE = ['Open to Opportunities', ...heroTags.slice(0, 5)]
 
@@ -64,18 +60,26 @@ interface FooterLinkProps {
 }
 
 function FooterLink({ href, children, external, onClick }: FooterLinkProps) {
+  const className =
+    'block w-fit whitespace-nowrap py-1 text-[clamp(14px,1.2vw,22px)] font-medium text-zinc-900 transition-colors hover:text-zinc-500 dark:text-white dark:hover:text-zinc-400'
   return (
     <motion.div whileHover={{ x: 5 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-      <a
-        href={href}
-        target={external ? '_blank' : undefined}
-        rel={external ? 'noreferrer' : undefined}
-        onClick={onClick}
-        className="block w-fit whitespace-nowrap py-1 text-[clamp(14px,1.2vw,22px)] font-medium text-zinc-900 transition-colors hover:text-zinc-500 dark:text-white dark:hover:text-zinc-400"
-      >
-        {children}
-        {external && <span className="sr-only"> (opens in a new tab)</span>}
-      </a>
+      {href.startsWith('/') ? (
+        <Link to={href} onClick={onClick} className={className}>
+          {children}
+        </Link>
+      ) : (
+        <a
+          href={href}
+          target={external ? '_blank' : undefined}
+          rel={external ? 'noreferrer' : undefined}
+          onClick={onClick}
+          className={className}
+        >
+          {children}
+          {external && <span className="sr-only"> (opens in a new tab)</span>}
+        </a>
+      )}
     </motion.div>
   )
 }
@@ -193,26 +197,29 @@ export default function Footer() {
   return (
     <>
       <footer className={cn('relative z-20 bg-background', expanded && 'pointer-events-none opacity-0')}>
-        <div className="mx-auto max-w-[1600px] px-6 py-6 md:px-12 md:py-8 lg:px-24">
+        <div className="mx-auto max-w-[1600px] px-6 pb-24 pt-6 md:px-12 md:py-8 lg:px-24">
           <div className="rounded-3xl border border-border bg-card/60 px-6 py-4 shadow-card backdrop-blur-2xl md:px-8 md:py-6">
-            <div className="flex items-center justify-between gap-4">
-              <div className="relative z-10 flex h-6 items-center gap-1.5 overflow-hidden pl-2 md:gap-2 md:pl-4">
-                <span className="text-gradient-mono text-xs font-bold uppercase tracking-widest md:text-sm">© {year}</span>
-                <div className="relative flex h-full w-[190px] items-center md:w-[280px]">
-                  <AnimatePresence mode="popLayout">
+            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+              <p className="relative z-10 flex min-w-0 items-center gap-1.5 pl-2 text-xs font-bold uppercase tracking-widest md:gap-2 md:pl-4 md:text-sm">
+                <span className="text-gradient-mono">© {year}</span>
+                <span className="relative grid py-0.5">
+                  <span aria-hidden="true" className="invisible col-start-1 row-start-1 whitespace-nowrap">
+                    {FOOTER_LINES[1]}
+                  </span>
+                  <AnimatePresence mode="wait" initial={false}>
                     <motion.span
                       key={rotation}
-                      initial={{ y: 20, opacity: 0 }}
+                      initial={{ y: 12, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: -20, opacity: 0 }}
-                      transition={{ duration: 0.5, ease: 'easeInOut' }}
-                      className="text-gradient-mono absolute left-0 whitespace-nowrap text-xs font-bold uppercase tracking-widest md:text-sm"
+                      exit={{ y: -12, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: 'easeInOut' }}
+                      className="text-gradient-mono col-start-1 row-start-1 whitespace-nowrap"
                     >
-                      {rotation === 0 ? `${profile.name}.` : 'All rights reserved.'}
+                      {FOOTER_LINES[rotation]}
                     </motion.span>
                   </AnimatePresence>
-                </div>
-              </div>
+                </span>
+              </p>
 
               <div className="relative z-10 ml-auto flex items-center justify-end gap-2 md:gap-6">
                 <div className="flex items-center">
@@ -252,13 +259,13 @@ export default function Footer() {
 
           <nav aria-label="Site sections" className="mt-4 flex flex-wrap justify-center gap-x-5 text-xs text-muted-foreground md:justify-start md:px-4">
             {SECTION_LINKS.map((link) => (
-              <a key={link.href} href={link.href} className="py-3 transition-colors hover:text-foreground">
+              <Link key={link.path} to={link.path} className="py-3 transition-colors hover:text-foreground">
                 {link.label}
-              </a>
+              </Link>
             ))}
-            <a href="/privacy" className="py-3 transition-colors hover:text-foreground">
+            <Link to="/privacy" className="py-3 transition-colors hover:text-foreground">
               Privacy
-            </a>
+            </Link>
           </nav>
         </div>
       </footer>
@@ -312,10 +319,11 @@ export default function Footer() {
 
                   <div className="grid w-full grid-cols-2 gap-x-[5vw] gap-y-[4vh] md:grid-cols-4">
                     <FooterColumn title="LINKS">
-                      <FooterLink href="#top" onClick={close}>Home</FooterLink>
-                      <FooterLink href="#experience" onClick={close}>Experience</FooterLink>
-                      <FooterLink href="#projects" onClick={close}>Projects</FooterLink>
-                      <FooterLink href="#contact" onClick={close}>Contact</FooterLink>
+                      <FooterLink href="/" onClick={close}>Home</FooterLink>
+                      <FooterLink href="/experience" onClick={close}>Experience</FooterLink>
+                      <FooterLink href="/projects" onClick={close}>Projects</FooterLink>
+                      <FooterLink href="/achievements" onClick={close}>Achievements</FooterLink>
+                      <FooterLink href="/contact" onClick={close}>Contact</FooterLink>
                     </FooterColumn>
 
                     <FooterColumn title="SOCIALS">
@@ -344,7 +352,7 @@ export default function Footer() {
                       <p className="text-[clamp(14px,1.2vw,22px)] font-medium tracking-tight text-zinc-900 dark:text-white">
                         {year} © Edition
                       </p>
-                      <FooterLink href="/privacy">Privacy</FooterLink>
+                      <FooterLink href="/privacy" onClick={close}>Privacy</FooterLink>
                     </FooterColumn>
                   </div>
                 </div>

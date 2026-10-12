@@ -1,9 +1,9 @@
 import { forwardRef, useEffect, useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import { FileText, Menu, X } from 'lucide-react'
 import { cn } from '../../lib/cn'
-import { openResume } from '../../lib/resumeEvents'
-import { useActiveScene } from '../../hooks/useActiveScene'
+import { routeFor } from '../../lib/siteRoutes'
 import AnimatedThemeToggler from '../ui/AnimatedThemeToggler'
 import CardNav from './CardNav'
 import { usePreloading } from './preloadState'
@@ -40,7 +40,8 @@ interface NavbarProps {
 const Navbar = forwardRef<HTMLButtonElement, NavbarProps>(function Navbar({ menuOpen, onToggleMenu }, menuButtonRef) {
   const { scrollY } = useScroll()
   const preloading = usePreloading()
-  const active = useActiveScene()
+  const { pathname } = useLocation()
+  const activeId = routeFor(pathname).id
   const [visible, setVisible] = useState(true)
   const [scrolled, setScrolled] = useState(false)
   const [lastY, setLastY] = useState(0)
@@ -52,8 +53,7 @@ const Navbar = forwardRef<HTMLButtonElement, NavbarProps>(function Navbar({ menu
     setLastY(latest)
   })
 
-  const onHome = active.id === 'top'
-  const linkClass = (isActive: boolean) =>
+  const linkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
       'relative rounded-full px-5 py-2 text-sm font-bold transition-all duration-300',
       isActive ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground',
@@ -74,32 +74,31 @@ const Navbar = forwardRef<HTMLButtonElement, NavbarProps>(function Navbar({ menu
             scrolled ? 'glass-strong px-4 py-2 md:px-6 md:py-3' : 'py-2',
           )}
         >
-          <a href="#top" className="group relative flex min-h-11 min-w-[120px] items-center">
-            <span className="sr-only">Mohit Rajput — back to top</span>
+          <Link to="/" className="group relative flex min-h-11 min-w-[120px] items-center">
+            <span className="sr-only">Mohit Rajput — home</span>
             <Clock />
-          </a>
+          </Link>
 
           <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex">
-            <a href="#top" aria-current={onHome ? 'page' : undefined} className={linkClass(onHome)}>
+            <NavLink to="/" end className={linkClass}>
               Home
-            </a>
-            <CardNav activeId={active.id} />
-            <a href="#contact" aria-current={active.id === 'contact' ? 'page' : undefined} className={linkClass(active.id === 'contact')}>
+            </NavLink>
+            <CardNav activeId={activeId} />
+            <NavLink to="/contact" className={linkClass}>
               Contact
-            </a>
+            </NavLink>
           </nav>
 
           <div className="flex items-center gap-1 md:gap-3">
-            <motion.button
-              type="button"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={openResume}
-              aria-label="View resume"
-              className="rounded-full bg-muted/80 p-2.5 text-foreground transition-colors hover:bg-muted md:p-3"
-            >
-              <FileText className="h-4 w-4" aria-hidden="true" />
-            </motion.button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/resume"
+                aria-label="View resume"
+                className="grid rounded-full bg-muted/80 p-2.5 text-foreground transition-colors hover:bg-muted md:p-3"
+              >
+                <FileText className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </motion.div>
 
             <AnimatedThemeToggler className="bg-muted/80 hover:bg-muted md:p-3" />
 

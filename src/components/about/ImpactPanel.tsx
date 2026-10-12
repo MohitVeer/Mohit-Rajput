@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 import { stats } from '../../data/profile'
 import { useCountUp } from '../../hooks/useCountUp'
+import { cn } from '../../lib/cn'
 
 const HEADLINE = [
   { text: 'Front-end that performs.', color: '#6366f1', delay: 0 },
@@ -14,10 +16,10 @@ const HEADLINE = [
 const byLabel = (label: string) => stats.find((s) => s.label === label)
 
 const PRIMARY = [
-  { label: 'Salesforce Certifications', href: '#certs', cta: 'View certifications' },
-  { label: 'Trailhead Badges', href: '#trailblazer', cta: 'Open Trailblazer' },
-  { label: 'Faster LWC portal load time', href: '#experience', cta: 'See the work' },
-  { label: 'Client CSAT sustained', href: '#experience', cta: 'Read the roles' },
+  { label: 'Salesforce Certifications', href: '/achievements', cta: 'View certifications' },
+  { label: 'Trailhead Badges', href: '/achievements', cta: 'Open achievements' },
+  { label: 'Faster LWC portal load time', href: '/experience', cta: 'See the work' },
+  { label: 'Client CSAT sustained', href: '/experience', cta: 'Read the roles' },
 ]
   .map((item) => ({ ...item, value: byLabel(item.label)?.value ?? '' }))
   .filter((item) => item.value)
@@ -35,11 +37,11 @@ function Counter({ value }: { value: string }) {
   )
 }
 
-export default function ImpactPanel() {
+export default function ImpactPanel({ compact = false }: { compact?: boolean }) {
   const [hovered, setHovered] = useState<number | null>(null)
 
   return (
-    <div className="relative grid min-h-screen w-full place-content-center bg-white px-4 py-16 dark:bg-black md:px-8 lg:px-16">
+    <div className={cn('relative grid w-full place-content-center bg-white px-4 py-16 dark:bg-black md:px-8 lg:px-16', !compact && 'min-h-screen')}>
       <div className="mx-auto max-w-6xl">
         <div className="mb-6 flex justify-center">
           <div className="flex items-center gap-2.5 rounded-full border border-neutral-200 bg-[#f1efec] px-5 py-1.5 text-xs font-semibold uppercase tracking-wider text-black shadow-sm dark:border-zinc-800 dark:bg-zinc-900 dark:text-white">
@@ -89,8 +91,8 @@ export default function ImpactPanel() {
           <li aria-hidden="true" className="pointer-events-none absolute left-1/4 top-0 -z-0 h-full w-1/2 bg-blue-500/5 blur-[100px]" />
           {PRIMARY.map((stat, index) => (
             <li key={stat.label} className="relative flex-1">
-              <a
-                href={stat.href}
+              <Link
+                to={stat.href}
                 onMouseEnter={() => setHovered(index)}
                 onMouseLeave={() => setHovered(null)}
                 onFocus={() => setHovered(index)}
@@ -130,7 +132,7 @@ export default function ImpactPanel() {
                     </motion.span>
                   )}
                 </AnimatePresence>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
