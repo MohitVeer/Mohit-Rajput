@@ -189,7 +189,12 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
 
   const travel = Math.max(0, dims.track - dims.view + 200)
   const x = useTransform(scrollYProgress, [0, 1], [0, -travel])
-  const lineProgress = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+  const lastLeft = lefts[lefts.length - 1]
+  const lineEnd = useTransform(scrollYProgress, (progress) => {
+    if (lastLeft === undefined || dims.view === 0) return dims.view
+    return Math.min(dims.view, Math.max(0, lastLeft - progress * travel))
+  })
+  const progressWidth = useTransform([scrollYProgress, lineEnd], ([progress, end]: number[]) => Math.min(progress * dims.view, end))
   const lineOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1])
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
@@ -214,10 +219,15 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
 
       <div className="sticky top-0 z-30 flex h-screen w-full max-w-[100vw] flex-col justify-center overflow-hidden">
         <div className="relative flex h-full w-full items-center justify-center">
-          <div className="absolute left-0 top-1/2 h-[2px] w-full -translate-y-1/2 bg-[linear-gradient(to_right,transparent,var(--tw-gradient-stops))] from-neutral-200 via-neutral-200 to-transparent [mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)] dark:from-neutral-700 dark:via-neutral-700" />
           <motion.div
-            style={{ width: lineProgress, opacity: lineOpacity }}
-            className="absolute left-0 top-1/2 z-10 h-[2px] -translate-y-1/2 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-transparent"
+            aria-hidden="true"
+            style={{ width: lineEnd }}
+            className="absolute left-0 top-1/2 h-[2px] -translate-y-1/2 bg-[linear-gradient(to_right,transparent,var(--tw-gradient-stops))] from-neutral-200 via-neutral-200 to-neutral-200 [mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_100%)] dark:from-neutral-700 dark:via-neutral-700 dark:to-neutral-700"
+          />
+          <motion.div
+            aria-hidden="true"
+            style={{ width: progressWidth, opacity: lineOpacity }}
+            className="absolute left-0 top-1/2 z-10 h-[2px] -translate-y-1/2 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-blue-500"
           />
 
           <motion.div
