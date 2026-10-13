@@ -2,6 +2,7 @@ import { useId, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { SkillGroupRow } from '../../lib/contentApi'
 import { cn } from '../../lib/cn'
+import { hasSalesforceContext } from '../../lib/techIcons'
 import { groupIcons } from '../icons/TechIcons'
 import SkillIcon from './SkillIcon'
 
@@ -78,7 +79,7 @@ export default function CoreFocus({ groups }: { groups: SkillGroupRow[] }) {
                   className="group flex items-center gap-3 rounded-2xl border border-border bg-card/50 px-4 py-4 transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:bg-card"
                 >
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-muted text-foreground transition-transform group-hover:scale-110">
-                    <SkillIcon name={skill} size={22} />
+                    <SkillIcon name={skill} size={22} context={hasSalesforceContext([current.title, ...current.skills]) ? 'salesforce' : undefined} />
                   </span>
                   <span className="text-sm font-semibold leading-snug text-foreground">{skill}</span>
                 </li>

@@ -81,6 +81,7 @@ Most portfolio content—including projects, certifications, skills, experience,
 - The site is **database-first**: when a table has rows they replace the built-in content from `src/data`; when it is empty the built-in content is shown. Every editor can import the built-in entries, and Experience and Certifications offer **Add missing roles / certificates** for entries that exist in code but are not in the database yet.
 - Role documents (experience, relieving or offer letters, certificates) are added under Experience → Documents. Uploads go to the public Supabase Storage bucket `documents` (PDF, PNG, JPG or WebP up to 10 MB) and appear as links under the role.
 - Content edits are live immediately. New project or article pages get their own meta tags and sitemap entry on the next deploy, because the build reads the tables when `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` are set (and falls back to the built-in pages if the database cannot be reached).
+- Tags and skills pick their logo automatically: Salesforce terms (Apex, LWC, Service Cloud, …) get the Salesforce logo, and in a Salesforce project words such as Trigger or Admin do too; about 200 well-known technologies get their own logo from `public/tech`. To refresh that set, install `simple-icons` somewhere (`npm install simple-icons --no-save`) and run `node scripts/build-tech-icons.mjs node_modules/simple-icons`.
 - The database setup lives in `supabase/migrations`.
 
 ---

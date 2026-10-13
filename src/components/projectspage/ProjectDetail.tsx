@@ -10,6 +10,7 @@ import { trackProjectClick } from '../../lib/analytics'
 import { cn } from '../../lib/cn'
 import { toneFor } from '../../lib/projectTone'
 import SkillIcon from '../skillspage/SkillIcon'
+import { hasSalesforceContext } from '../../lib/techIcons'
 import Typewriter from '../ui/Typewriter'
 import ProjectCover from './ProjectCover'
 
@@ -219,7 +220,7 @@ export default function ProjectDetail({ item, items }: { item: ProjectItem; item
                       style={{ '--tone': toneFor(tag) } as React.CSSProperties}
                     >
                       <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-border bg-background transition-colors group-hover:border-[var(--tone)]">
-                        <SkillIcon name={tag} size={20} />
+                        <SkillIcon name={tag} size={20} context={hasSalesforceContext(item.tags) ? 'salesforce' : undefined} />
                       </span>
                       <span className="min-w-0 break-words text-sm font-bold text-foreground">{tag}</span>
                     </li>

@@ -161,7 +161,7 @@ function ProjectForm({
       <Field label="Delivery highlights (one per line — optional)">
         <ListTextArea value={draft.highlights} onChange={(v) => set('highlights', v)} rows={4} placeholder="Leave empty to reuse the engagement's highlights" />
       </Field>
-      <Field label="Tags (comma-separated — matches a tech icon by exact name)">
+      <Field label="Tags (comma-separated — the logo is picked automatically)">
         <TextInput value={draft.tagsCsv} onChange={(v) => set('tagsCsv', v)} placeholder="React.js, TypeScript, LWC" />
       </Field>
       <Field label="Screenshot / thumbnail path or URL">
