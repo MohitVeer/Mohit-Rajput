@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { ArrowUpRight, Check, Loader2 } from 'lucide-react'
 import { profile } from '../../data/profile'
 import { trackEvent, trackExternalLink } from '../../lib/analytics'
@@ -7,9 +8,35 @@ import { cn } from '../../lib/cn'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
-const fieldClass =
-  'peer w-full border-b border-border bg-transparent pb-3 pt-1 text-base text-foreground placeholder:text-transparent transition-colors focus:border-foreground focus:outline-none'
-const labelClass = 'block font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground transition-colors peer-focus:text-foreground'
+const FIELD =
+  'peer block w-full appearance-none border-0 border-b-2 border-foreground/20 bg-transparent px-0 py-2.5 text-xl font-medium text-foreground transition-colors duration-300 focus:border-foreground focus:outline-none focus:ring-0'
+
+interface FieldProps {
+  id: string
+  name: string
+  label: string
+  type?: string
+  autoComplete?: string
+  multiline?: boolean
+}
+
+function FloatingField({ id, name, label, type = 'text', autoComplete, multiline = false }: FieldProps) {
+  return (
+    <div className="group relative z-0 mb-10 w-full">
+      {multiline ? (
+        <textarea id={id} name={name} required rows={1} placeholder=" " className={cn(FIELD, 'max-h-[200px] min-h-[50px] resize-y')} />
+      ) : (
+        <input id={id} name={name} type={type} required autoComplete={autoComplete} placeholder=" " className={FIELD} />
+      )}
+      <label
+        htmlFor={id}
+        className="absolute top-3 -z-10 origin-[0] -translate-y-8 scale-75 transform text-sm font-bold uppercase tracking-widest text-muted-foreground duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-8 peer-focus:scale-75 peer-focus:text-foreground"
+      >
+        {label}
+      </label>
+    </div>
+  )
+}
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
@@ -62,7 +89,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form name="contact" method="POST" onSubmit={onSubmit} className="space-y-8" aria-describedby="contact-form-status">
+    <form name="contact" method="POST" onSubmit={onSubmit} className="relative z-10 w-full" aria-describedby="contact-form-status">
       <input type="hidden" name="form-name" value="contact" />
       <p className="hidden">
         <label>
@@ -71,61 +98,48 @@ export default function ContactForm() {
         </label>
       </p>
 
-      <div className="grid gap-8 sm:grid-cols-2">
-        <div className="relative flex flex-col-reverse">
-          <input id="contact-name" name="name" type="text" required autoComplete="name" placeholder="Your name" className={fieldClass} />
-          <label htmlFor="contact-name" className={labelClass}>
-            Your name
-          </label>
-        </div>
-        <div className="relative flex flex-col-reverse">
-          <input id="contact-email" name="email" type="email" required autoComplete="email" placeholder="Your email" className={fieldClass} />
-          <label htmlFor="contact-email" className={labelClass}>
-            Your email
-          </label>
-        </div>
-      </div>
-      <div className="relative flex flex-col-reverse">
-        <input id="contact-subject" name="subject" type="text" required placeholder="Subject" className={fieldClass} />
-        <label htmlFor="contact-subject" className={labelClass}>
-          Subject
-        </label>
-      </div>
-      <div className="relative flex flex-col-reverse">
-        <textarea id="contact-message" name="message" required rows={4} placeholder="Tell me about your project" className={cn(fieldClass, 'resize-none')} />
-        <label htmlFor="contact-message" className={labelClass}>
-          Tell me about your project
-        </label>
-      </div>
+      <FloatingField id="contact-name" name="name" label="Your name" autoComplete="name" />
+      <FloatingField id="contact-email" name="email" label="Your email" type="email" autoComplete="email" />
+      <FloatingField id="contact-subject" name="subject" label="Subject" />
+      <FloatingField id="contact-message" name="message" label="Tell me about your project..." multiline />
 
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-foreground pb-4">
-        <button type="submit" disabled={status === 'sending'} className="group inline-flex items-center gap-4 text-2xl font-black uppercase tracking-tight disabled:opacity-60 md:text-3xl">
-          {status === 'sending' ? 'Sending…' : 'Send message'}
-          <span className="grid h-11 w-11 place-items-center rounded-full bg-foreground text-background transition-transform duration-300 group-hover:rotate-45">
-            {status === 'sending' ? <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" /> : <ArrowUpRight className="h-5 w-5" aria-hidden="true" />}
-          </span>
-        </button>
-      </div>
+      <motion.button
+        type="submit"
+        disabled={status === 'sending'}
+        whileTap={{ scale: 0.98 }}
+        className="group relative flex w-full items-center justify-between gap-4 border-b-2 border-foreground py-8 text-left transition-colors hover:bg-foreground/5 disabled:opacity-50"
+      >
+        <span className="text-3xl font-bold uppercase tracking-tight text-foreground transition-all duration-300 group-hover:pl-4 md:text-4xl">
+          {status === 'sending' ? 'Sending...' : 'Send message'}
+        </span>
+        <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-foreground text-background transition-transform duration-500 group-hover:scale-110">
+          {status === 'sending' ? (
+            <Loader2 className="h-6 w-6 animate-spin" aria-hidden="true" />
+          ) : (
+            <ArrowUpRight className="h-6 w-6 transition-transform duration-300 group-hover:rotate-45" aria-hidden="true" />
+          )}
+        </span>
+      </motion.button>
 
-      <p className="text-sm text-muted-foreground">
+      <p className="mt-6 text-sm text-muted-foreground">
         Prefer email?{' '}
         <a
           href={`mailto:${profile.email}`}
           onClick={() => trackExternalLink(`mailto:${profile.email}`, 'email_form')}
-          className="font-semibold text-foreground underline underline-offset-4"
+          className="break-words font-semibold text-foreground underline underline-offset-4"
         >
           {profile.email}
         </a>
       </p>
 
-      <div id="contact-form-status" role="status" aria-live="polite" className="min-h-6 text-sm">
+      <div id="contact-form-status" role="status" aria-live="polite" className="mt-4 min-h-6 text-sm">
         {status === 'error' && (
           <p className="text-red-500">
             Something went wrong sending that. Please email me directly at{' '}
             <a
               href={`mailto:${profile.email}`}
               onClick={() => trackExternalLink(`mailto:${profile.email}`, 'email_form_error')}
-              className="font-semibold underline underline-offset-4"
+              className="break-words font-semibold underline underline-offset-4"
             >
               {profile.email}
             </a>
