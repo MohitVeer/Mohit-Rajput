@@ -7,12 +7,13 @@ import { clientsForJob, jobSlug } from '../../lib/experienceUtils'
 import { splitAward } from '../../lib/achievements'
 import { cn } from '../../lib/cn'
 import { useExperience } from '../../hooks/useExperience'
+import { useProjects, type ProjectItem } from '../../hooks/useProjects'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { trackEvent } from '../../lib/analytics'
 
-function JobCard({ job, className }: { job: ExperienceRow; className?: string }) {
+function JobCard({ job, projects, className }: { job: ExperienceRow; projects: ProjectItem[]; className?: string }) {
   const awards = job.achievements.slice(0, 2)
-  const allClients = clientsForJob(job)
+  const allClients = clientsForJob(job, projects)
   const clients = allClients.slice(0, 3)
   const moreClients = Math.max(0, allClients.length - clients.length)
 
@@ -132,7 +133,7 @@ function ScreenReaderList({ jobs }: { jobs: ExperienceRow[] }) {
   )
 }
 
-function StackedJourney({ jobs }: { jobs: ExperienceRow[] }) {
+function StackedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: ProjectItem[] }) {
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-16 md:px-12 md:py-20 lg:px-24">
       <Heading />
@@ -140,7 +141,7 @@ function StackedJourney({ jobs }: { jobs: ExperienceRow[] }) {
         {jobs.map((job) => (
           <li key={job.id} className="relative">
             <span aria-hidden="true" className="absolute -left-[31px] top-6 h-3 w-3 rounded-full border border-neutral-400 bg-background dark:border-neutral-600" />
-            <JobCard job={job} className="w-full" />
+            <JobCard job={job} projects={projects} className="w-full" />
           </li>
         ))}
       </ol>
@@ -155,7 +156,7 @@ function StackedJourney({ jobs }: { jobs: ExperienceRow[] }) {
   )
 }
 
-function PinnedJourney({ jobs }: { jobs: ExperienceRow[] }) {
+function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: ProjectItem[] }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const itemRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -281,7 +282,7 @@ function PinnedJourney({ jobs }: { jobs: ExperienceRow[] }) {
                       >
                         <div className={cn('transition-[visibility] duration-500', !isActive && 'invisible')}>
                           <FitCard above={above}>
-                            <JobCard job={entry.job} />
+                            <JobCard job={entry.job} projects={projects} />
                           </FitCard>
                         </div>
                       </div>
@@ -312,11 +313,12 @@ function PinnedJourney({ jobs }: { jobs: ExperienceRow[] }) {
 
 export default function JourneyTimeline() {
   const jobs = useExperience()
+  const projects = useProjects()
   const pinned = useMediaQuery('(min-width: 768px) and (min-height: 560px) and (prefers-reduced-motion: no-preference)')
 
   return (
     <section id="journey" aria-labelledby="journey-heading" className="relative bg-background">
-      {pinned ? <PinnedJourney jobs={jobs} /> : <StackedJourney jobs={jobs} />}
+      {pinned ? <PinnedJourney jobs={jobs} projects={projects} /> : <StackedJourney jobs={jobs} projects={projects} />}
     </section>
   )
 }

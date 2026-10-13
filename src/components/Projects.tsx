@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, Building2 } from 'lucide-react'
-import { engagements, type Engagement } from '../data/clientProjects'
 import { useRoleSlugs } from '../hooks/useExperience'
-import { projectSlugFor, useProjects, type ProjectItem } from '../hooks/useProjects'
+import { projectSlugFor, usePortfolio, type EngagementItem, type ProjectItem } from '../hooks/useProjects'
 import { trackProjectClick } from '../lib/analytics'
 import Section from './shell/Section'
 import ScrollRevealText from './ui/ScrollRevealText'
@@ -16,7 +15,7 @@ const shell =
 const pill =
   'inline-flex h-12 items-center rounded-full px-7 text-xs font-bold uppercase tracking-widest transition-transform hover:scale-105'
 
-function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagement: Engagement; index: number; total: number; slug?: string; hrefFor: (client: string) => string | undefined }) {
+function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagement: EngagementItem; index: number; total: number; slug?: string; hrefFor: (client: string) => string | undefined }) {
   const tone = TONES[index % TONES.length]
   return (
     <article aria-label={engagement.title} className={shell}>
@@ -149,7 +148,7 @@ function CaseStudyCard({ item, index, total }: { item: ProjectItem; index: numbe
 }
 
 export default function Projects() {
-  const items = useProjects()
+  const { items, engagements } = usePortfolio()
   const slugs = useRoleSlugs()
   const cases = items.filter((item) => item.kind === 'case-study').slice(0, 3)
   const hrefFor = (client: string) => {

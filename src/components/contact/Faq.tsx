@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
-import { faq } from '../../data/faq'
+import { useFaqs } from '../../hooks/useFaqs'
 
 export default function Faq() {
+  const faq = useFaqs()
   const [open, setOpen] = useState<number | null>(0)
 
   return (
@@ -17,7 +18,7 @@ export default function Faq() {
           {faq.map((item, i) => {
             const expanded = open === i
             return (
-              <li key={item.question}>
+              <li key={item.id}>
                 <h3>
                   <button
                     type="button"

@@ -1,5 +1,6 @@
 import type { ExperienceRow } from './contentApi'
-import { clientProjects, employerKeyFor, normalizeClient } from '../data/clientProjects'
+import { employerKeyOf, normalizeClient } from '../data/clientProjects'
+import { clientNamesFor, type ProjectItem } from './contentModel'
 
 const TECH_VOCABULARY = [
   'LWC',
@@ -66,9 +67,8 @@ export function jobSlug(job: ExperienceRow): string {
   return `${job.company}-${job.role}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 }
 
-export function clientsForJob(job: ExperienceRow): string[] {
-  const key = employerKeyFor(job.company)
-  const known = key ? clientProjects.filter((project) => project.employerKey === key && project.kind === 'client').map((project) => project.client) : []
+export function clientsForJob(job: ExperienceRow, projects: ProjectItem[]): string[] {
+  const known = clientNamesFor(projects, employerKeyOf(job.company))
   const seen = new Set<string>([job.company.toLowerCase()])
   const merged: string[] = []
   for (const name of [...known, ...job.clients.map(normalizeClient)]) {

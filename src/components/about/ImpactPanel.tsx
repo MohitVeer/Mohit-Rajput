@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
-import { stats } from '../../data/profile'
+import { useStats } from '../../hooks/useSiteSettings'
+import type { StatItem } from '../../lib/siteSettings'
 import { useCountUp } from '../../hooks/useCountUp'
 import { cn } from '../../lib/cn'
 
@@ -13,20 +14,22 @@ const HEADLINE = [
   { text: 'and the numbers behind the work.', color: '#ef4444', delay: 0.45 },
 ]
 
-const byLabel = (label: string) => stats.find((s) => s.label === label)
-
-const PRIMARY = [
+const PRIMARY_SPEC = [
   { label: 'Salesforce Certifications', href: '/achievements', cta: 'View certifications' },
   { label: 'Trailhead Badges', href: '/achievements', cta: 'Open achievements' },
   { label: 'Faster LWC portal load time', href: '/experience', cta: 'See the work' },
   { label: 'Client CSAT sustained', href: '/experience', cta: 'Read the roles' },
 ]
-  .map((item) => ({ ...item, value: byLabel(item.label)?.value ?? '' }))
-  .filter((item) => item.value)
 
-const SECONDARY = ['Salesforce Superbadges', 'Trailhead Points', 'Shorter delivery cycles']
-  .map((label) => ({ label, value: byLabel(label)?.value ?? '' }))
-  .filter((item) => item.value)
+const SECONDARY_LABELS = ['Salesforce Superbadges', 'Trailhead Points', 'Shorter delivery cycles']
+
+function figures(stats: StatItem[]) {
+  const byLabel = (label: string) => stats.find((s) => s.label === label)
+  return {
+    primary: PRIMARY_SPEC.map((item) => ({ ...item, value: byLabel(item.label)?.value ?? '' })).filter((item) => item.value),
+    secondary: SECONDARY_LABELS.map((label) => ({ label, value: byLabel(label)?.value ?? '' })).filter((item) => item.value),
+  }
+}
 
 function Counter({ value }: { value: string }) {
   const { ref, display } = useCountUp<HTMLSpanElement>(value)
@@ -39,6 +42,8 @@ function Counter({ value }: { value: string }) {
 
 export default function ImpactPanel({ compact = false }: { compact?: boolean }) {
   const [hovered, setHovered] = useState<number | null>(null)
+  const stats = useStats()
+  const { primary: PRIMARY, secondary: SECONDARY } = figures(stats)
 
   return (
     <div className={cn('relative grid w-full place-content-center bg-white px-4 py-16 dark:bg-black md:px-8 lg:px-16', !compact && 'min-h-screen')}>

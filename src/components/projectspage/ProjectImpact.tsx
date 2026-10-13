@@ -1,9 +1,7 @@
 import { Sparkles } from 'lucide-react'
-import { stats } from '../../data/profile'
+import { useStats } from '../../hooks/useSiteSettings'
 import { useCountUp } from '../../hooks/useCountUp'
 import type { ProjectItem } from '../../hooks/useProjects'
-
-const byLabel = (label: string) => stats.find((stat) => stat.label === label)?.value
 
 function Figure({ value, label }: { value: string; label: string }) {
   const { ref, display } = useCountUp<HTMLSpanElement>(value)
@@ -18,6 +16,8 @@ function Figure({ value, label }: { value: string; label: string }) {
 }
 
 export default function ProjectImpact({ items }: { items: ProjectItem[] }) {
+  const stats = useStats()
+  const byLabel = (label: string) => stats.find((stat) => stat.label === label)?.value
   const clients = items.filter((item) => item.kind === 'client').length
   const figures = [
     clients > 0 ? { value: String(clients), label: 'Enterprise clients' } : null,

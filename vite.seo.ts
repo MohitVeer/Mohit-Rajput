@@ -2,7 +2,7 @@ import { execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
-import { createServer, type Plugin } from 'vite'
+import { createServer, loadEnv, type Plugin } from 'vite'
 
 type JsonLd = Record<string, unknown>
 
@@ -18,8 +18,14 @@ interface SeoPage {
   priority: number
 }
 
+interface ContentSnapshot {
+  projects: unknown[]
+  engagements: unknown[]
+  articles: unknown[]
+}
+
 interface SeoModule {
-  builtInPages: () => SeoPage[]
+  pagesFor: (snapshot: ContentSnapshot) => SeoPage[]
 }
 
 interface ManifestEntry {
@@ -131,6 +137,30 @@ function sitemapXml(pages: SeoPage[], siteUrl: string, lastmod: string): string 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>\n`
 }
 
+async function fetchSnapshot(env: Record<string, string>): Promise<ContentSnapshot> {
+  const empty: ContentSnapshot = { projects: [], engagements: [], articles: [] }
+  const url = env.VITE_SUPABASE_URL
+  const key = env.VITE_SUPABASE_ANON_KEY
+  if (!url || !key) return empty
+
+  const read = async (table: string): Promise<unknown[]> => {
+    const response = await fetch(`${url}/rest/v1/${table}?select=*&order=sort_order.asc`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+      signal: AbortSignal.timeout(10_000),
+    })
+    if (!response.ok) throw new Error(`${table} responded ${response.status}`)
+    return (await response.json()) as unknown[]
+  }
+
+  try {
+    const [projects, engagements, articles] = await Promise.all([read('projects'), read('engagements'), read('articles')])
+    return { projects, engagements, articles }
+  } catch (error) {
+    console.warn(`[seo] could not read CMS content, prerendering built-in pages only: ${error instanceof Error ? error.message : String(error)}`)
+    return empty
+  }
+}
+
 function lastCommitDate(): string {
   try {
     return execSync('git log -1 --format=%cs', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim() || new Date().toISOString().slice(0, 10)
@@ -142,6 +172,7 @@ function lastCommitDate(): string {
 export function seoPrerender(): Plugin {
   let root = process.cwd()
   let outDir = resolve(root, 'dist')
+  let env: Record<string, string> = {}
 
   return {
     name: 'seo-prerender',
@@ -149,6 +180,7 @@ export function seoPrerender(): Plugin {
     configResolved(config) {
       root = config.root
       outDir = resolve(config.root, config.build.outDir)
+      env = loadEnv(config.mode, config.envDir || config.root, 'VITE_')
     },
     async closeBundle() {
       const loader = await createServer({
@@ -164,7 +196,7 @@ export function seoPrerender(): Plugin {
       try {
         const seo = (await loader.ssrLoadModule('/src/lib/seo.ts')) as SeoModule
         const site = (await loader.ssrLoadModule('/src/lib/site.ts')) as { SITE_URL: string }
-        pages = seo.builtInPages()
+        pages = seo.pagesFor(await fetchSnapshot(env))
         siteUrl = site.SITE_URL
       } finally {
         await loader.close()

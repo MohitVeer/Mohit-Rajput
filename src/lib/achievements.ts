@@ -1,6 +1,7 @@
 import type { CertGroupRow, ExperienceRow, SuperbadgeRow } from './contentApi'
 import { certificateImage, certificateThumb, credentialFor, VERIFY_URL } from '../data/credentials'
-import { profile, trailhead } from '../data/profile'
+import { profile } from '../data/profile'
+import type { TrailheadData } from './siteSettings'
 
 export type AchievementKind = 'certification' | 'superbadge' | 'trailhead' | 'award'
 
@@ -51,7 +52,7 @@ export function splitAward(text: string): { title: string; description?: string 
   return { title, description: text.trim() }
 }
 
-export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[], jobs: ExperienceRow[]): Achievement[] {
+export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[], jobs: ExperienceRow[], trailhead: TrailheadData): Achievement[] {
   const items: Achievement[] = []
 
   for (const group of groups) {

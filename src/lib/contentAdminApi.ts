@@ -1,7 +1,7 @@
 import { supabase } from './supabaseClient'
-import type { ArticleRow, Cert, CertGroupRow, ExperienceRow, ProjectRow, SkillGroupRow, SuperbadgeRow } from './contentApi'
+import { resetSettingsCache, type ArticleRow, type Cert, type CertGroupRow, type EngagementRow, type ExperienceRow, type FaqRow, type ProjectRow, type SkillGroupRow, type SuperbadgeRow } from './contentApi'
 
-type TableName = 'experience' | 'skill_groups' | 'cert_groups' | 'superbadges' | 'articles' | 'projects'
+type TableName = 'experience' | 'skill_groups' | 'cert_groups' | 'superbadges' | 'articles' | 'projects' | 'engagements' | 'faqs'
 
 async function createContent<T extends { id: string }>(table: TableName, row: Partial<T>): Promise<T> {
   if (!supabase) throw new Error('Supabase not configured')
@@ -51,3 +51,36 @@ export const deleteArticle = (id: string) => deleteContent('articles', id)
 export const createProject = (row: Omit<ProjectRow, 'id'>) => createContent<ProjectRow>('projects', row)
 export const updateProject = (id: string, row: Partial<ProjectRow>) => updateContent<ProjectRow>('projects', id, row)
 export const deleteProject = (id: string) => deleteContent('projects', id)
+
+export const createEngagement = (row: Omit<EngagementRow, 'id'>) => createContent<EngagementRow>('engagements', row)
+export const updateEngagement = (id: string, row: Partial<EngagementRow>) => updateContent<EngagementRow>('engagements', id, row)
+export const deleteEngagement = (id: string) => deleteContent('engagements', id)
+
+export const createFaq = (row: Omit<FaqRow, 'id'>) => createContent<FaqRow>('faqs', row)
+export const updateFaq = (id: string, row: Partial<FaqRow>) => updateContent<FaqRow>('faqs', id, row)
+export const deleteFaq = (id: string) => deleteContent('faqs', id)
+
+export async function saveSetting(key: string, value: unknown): Promise<void> {
+  if (!supabase) throw new Error('Supabase not configured')
+  const { error } = await supabase.from('site_settings').upsert({ key, value } as never, { onConflict: 'key' })
+  if (error) throw error
+  resetSettingsCache()
+}
+
+export async function deleteSetting(key: string): Promise<void> {
+  if (!supabase) throw new Error('Supabase not configured')
+  const { error } = await supabase.from('site_settings').delete().eq('key', key)
+  if (error) throw error
+  resetSettingsCache()
+}
+
+async function createManyContent<T>(table: TableName, rows: object[]): Promise<T[]> {
+  if (!supabase) throw new Error('Supabase not configured')
+  const { data, error } = await supabase.from(table).insert(rows as never).select()
+  if (error) throw error
+  return (data ?? []) as T[]
+}
+
+export const createProjects = (rows: Omit<ProjectRow, 'id'>[]) => createManyContent<ProjectRow>('projects', rows)
+export const createEngagements = (rows: Omit<EngagementRow, 'id'>[]) => createManyContent<EngagementRow>('engagements', rows)
+export const createFaqs = (rows: Omit<FaqRow, 'id'>[]) => createManyContent<FaqRow>('faqs', rows)

@@ -1,3 +1,5 @@
+import { slugify } from '../lib/slug'
+
 export type ProjectKind = 'client' | 'accelerator' | 'product'
 
 export interface ClientProject {
@@ -21,7 +23,7 @@ export interface Engagement {
   role: string
   period: string
   current?: boolean
-  clients: string[]
+  kind: ProjectKind
   highlights: string[]
   stack: string[]
 }
@@ -173,7 +175,7 @@ export const engagements: Engagement[] = [
     title: 'Enterprise Experience Cloud programs',
     period: 'Sep 2024 — Present',
     current: true,
-    clients: ['Ericsson', 'Intellect Design Arena', "St. James's Place", 'American Honda'],
+    kind: 'client',
     highlights: [
       'Built reusable Lightning Web Components and Apex integration layers for enterprise portals, turning Figma designs into production-ready, responsive UI.',
       'Reduced portal load time from ~3.2s to 1.5s (~50%) with cacheable Apex, reactive-property tuning and fewer DOM re-renders.',
@@ -187,7 +189,7 @@ export const engagements: Engagement[] = [
     ...MPHASIS,
     title: 'Financial Services & Health Cloud implementations',
     period: 'Aug 2022 — Sep 2024',
-    clients: ['Republic Finance', 'Arvest Bank', 'Wealth Enhancement Group', 'Peoples Bank', 'Teladoc', 'Five Star Bank', 'Beatport'],
+    kind: 'client',
     highlights: [
       'Delivered Apex, LWC, FlexCard and OmniScript solutions across 5+ implementations for 8+ enterprise clients, improving user-journey completion rates 20%.',
       'Designed reusable LWC and OmniStudio frameworks for 4 client-facing Experience Cloud portals, cutting per-portal development time by about 30%.',
@@ -200,7 +202,7 @@ export const engagements: Engagement[] = [
     ...MPHASIS,
     title: 'Foundry — reusable component and OmniStudio accelerator',
     period: 'Aug 2022 — Sep 2024',
-    clients: ['Foundry'],
+    kind: 'accelerator',
     highlights: [
       'Contributed reusable components to the accelerator, reducing implementation timelines 35% across 3 engagements.',
       'Enabled pre-sales demos with ready-made, production-quality building blocks.',
@@ -212,7 +214,7 @@ export const engagements: Engagement[] = [
     ...DJT,
     title: 'Retail & e-commerce front ends',
     period: 'Nov 2021 — May 2022',
-    clients: ['Smart Cart', 'House of Believe'],
+    kind: 'product',
     highlights: [
       'Built the Smart Cart React.js application for in-store product scanning and digital checkout.',
       'Customised the House of Believe Shopify storefront to brand and responsive design requirements.',
@@ -231,10 +233,14 @@ export const EMPLOYER_LABEL: Record<string, string> = {
 export function employerKeyFor(company: string): string | null {
   const name = company.toLowerCase()
   if (name.includes('wipro')) return 'wipro'
-  if (name.includes('mphasis')) return 'mphasis'
+  if (name.includes('mphasis') || name.includes('silverline')) return 'mphasis'
   if (name.includes('djt')) return 'djt'
   if (name.includes('escade')) return 'escade'
   return null
+}
+
+export function employerKeyOf(employer: string): string {
+  return employerKeyFor(employer) ?? (slugify(employer) || 'other')
 }
 
 const CLIENT_ALIASES: Record<string, string> = {

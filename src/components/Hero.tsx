@@ -2,7 +2,8 @@ import { useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowDownRight, ExternalLink, Mail, Zap } from 'lucide-react'
-import { profile, heroTags, trailhead } from '../data/profile'
+import { profile } from '../data/profile'
+import { useHeroTags, useTrailhead } from '../hooks/useSiteSettings'
 import { trackExternalLink } from '../lib/analytics'
 import { cn } from '../lib/cn'
 import { GitHubMark, LinkedInMark, SalesforceMark } from './icons/BrandMarks'
@@ -61,6 +62,8 @@ function Float({ revealed, delay, axis, distance, duration, className, children 
 }
 
 export default function Hero() {
+  const heroTags = useHeroTags()
+  const trailhead = useTrailhead()
   const preloading = usePreloading()
   const reduce = useReducedMotion()
   const revealed = !preloading

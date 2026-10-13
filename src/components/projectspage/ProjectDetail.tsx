@@ -2,7 +2,6 @@ import { useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, ArrowUpRight, Box, ChevronLeft, ChevronRight, Clock, Code, Layers, Sparkles, Terminal, Users, Zap } from 'lucide-react'
-import { EMPLOYER_LABEL } from '../../data/clientProjects'
 import { useArticles } from '../../hooks/useArticles'
 import { useRoleSlugs } from '../../hooks/useExperience'
 import { projectSlugFor, type ProjectItem } from '../../hooks/useProjects'
@@ -92,7 +91,7 @@ export default function ProjectDetail({ item, items }: { item: ProjectItem; item
   const ongoing = item.status === 'ongoing'
   const roleSlug = item.employerKey ? roleSlugs.get(item.employerKey) : undefined
   const fromList = (location.state as { from?: string } | null)?.from === 'projects'
-  const employerName = item.employerKey ? (EMPLOYER_LABEL[item.employerKey] ?? item.employer) : item.employer
+  const employerName = item.employerLabel
 
   const projectTopics = topicsIn(`${item.tags.join(' ')} ${item.description} ${item.engagementTitle ?? ''}`)
   const reading = articles.filter((article) => articleTopics(article).some((topic) => projectTopics.includes(topic))).slice(0, 2)

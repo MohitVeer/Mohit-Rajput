@@ -3,7 +3,8 @@ import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronUp, Copy, Mail, X } from 'lucide-react'
-import { heroTags, profile } from '../data/profile'
+import { profile } from '../data/profile'
+import { useHeroTags } from '../hooks/useSiteSettings'
 import { trackExternalLink } from '../lib/analytics'
 import { cn } from '../lib/cn'
 import { GitHubMark, LinkedInMark, SalesforceMark } from './icons/BrandMarks'
@@ -16,10 +17,10 @@ const FOOTER_LINES = [`${profile.name}.`, 'All rights reserved.']
 
 const SECTION_LINKS = siteRoutes.filter((route) => route.id !== 'home' && route.id !== 'privacy')
 
-const MARQUEE = ['Open to Opportunities', ...heroTags.slice(0, 5)]
-
 function Marquee() {
-  const items = [...MARQUEE, ...MARQUEE, ...MARQUEE]
+  const heroTags = useHeroTags()
+  const marquee = ['Open to Opportunities', ...heroTags.slice(0, 5)]
+  const items = [...marquee, ...marquee, ...marquee]
   return (
     <div
       aria-hidden="true"

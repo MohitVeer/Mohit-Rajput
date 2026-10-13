@@ -1,8 +1,7 @@
-import { clientProjects } from '../data/clientProjects'
-import { articles } from '../data/profile'
+import type { ArticleRow, EngagementRow, ProjectRow } from './contentApi'
+import { buildArticles, buildPortfolio } from './contentModel'
 import { SITE_NAME, SITE_URL } from './site'
 import { routeFor, siteRoutes } from './siteRoutes'
-import { uniqueSlugs } from './slug'
 
 export type JsonLd = Record<string, unknown>
 
@@ -225,34 +224,37 @@ export function seoForArticle(input: ArticleSeoInput): SeoPage {
   }
 }
 
-export function builtInProjectPages(): SeoPage[] {
-  return clientProjects.map((project) =>
+export interface ContentSnapshot {
+  projects: ProjectRow[]
+  engagements: EngagementRow[]
+  articles: ArticleRow[]
+}
+
+export function pagesFor(snapshot: ContentSnapshot = { projects: [], engagements: [], articles: [] }): SeoPage[] {
+  const { projects } = buildPortfolio(snapshot.projects, snapshot.engagements)
+  const articles = buildArticles(snapshot.articles)
+
+  const collections: Record<string, { name: string; path: string }[]> = {
+    '/projects': projects.map((project) => ({ name: project.title, path: `/projects/${project.slug}` })),
+    '/blog': articles.map((article) => ({ name: article.title, path: `/blog/${article.slug}` })),
+  }
+
+  const routes = siteRoutes.map((route) => seoForRoute(route.path, collections[route.path]))
+  const projectPages = projects.map((project) =>
     seoForProject({
-      slug: project.id,
-      title: project.client,
-      description: project.summary,
-      tags: project.stack,
+      slug: project.slug,
+      title: project.title,
+      description: project.description,
+      tags: project.tags,
       sector: project.sector,
       employer: project.employer,
       role: project.role,
     }),
   )
-}
-
-export function builtInArticlePages(): SeoPage[] {
-  const slugs = uniqueSlugs(articles.map((article) => article.title))
-  return articles.map((article, index) =>
-    seoForArticle({ slug: slugs[index], title: article.title, summary: article.summary, url: article.url, read_time: article.readTime }),
+  const articlePages = articles.map((article) =>
+    seoForArticle({ slug: article.slug, title: article.title, summary: article.summary, url: article.url, read_time: article.read_time }),
   )
+  return [...routes, ...projectPages, ...articlePages]
 }
 
-export function builtInPages(): SeoPage[] {
-  const collections: Record<string, { name: string; path: string }[]> = {
-    '/projects': clientProjects.map((project) => ({ name: project.client, path: `/projects/${project.id}` })),
-  }
-  const articleSlugs = uniqueSlugs(articles.map((article) => article.title))
-  collections['/blog'] = articles.map((article, index) => ({ name: article.title, path: `/blog/${articleSlugs[index]}` }))
-
-  const routes = siteRoutes.map((route) => seoForRoute(route.path, collections[route.path]))
-  return [...routes, ...builtInProjectPages(), ...builtInArticlePages()]
-}
+export const builtInPages = () => pagesFor()

@@ -14,7 +14,7 @@ export default function ExperiencePage() {
   const jobs = useExperience()
   const wide = useMediaQuery('(min-width: 768px)')
   const projects = useProjects()
-  const clients = Array.from(new Set(jobs.flatMap((job) => clientsForJob(job)))).slice(0, 16)
+  const clients = Array.from(new Set(jobs.flatMap((job) => clientsForJob(job, projects)))).slice(0, 16)
   const hrefFor = (name: string) => {
     const slug = projectSlugFor(projects, name)
     return slug ? `/projects/${slug}` : undefined

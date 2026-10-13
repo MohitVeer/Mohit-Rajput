@@ -2,9 +2,10 @@ import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
-import { profile, superbadges, trailhead } from '../data/profile'
+import { profile, superbadges } from '../data/profile'
 import { fetchSuperbadges, type SuperbadgeRow } from '../lib/contentApi'
 import { useLiveContent } from '../hooks/useLiveContent'
+import { useSiteSettings } from '../hooks/useSiteSettings'
 import { trackExternalLink } from '../lib/analytics'
 import { useCountUp } from '../hooks/useCountUp'
 import { SalesforceMark } from './icons/BrandMarks'
@@ -35,6 +36,7 @@ function Card({ children, label }: { children: React.ReactNode; label: string })
 }
 
 export default function Trailblazer() {
+  const { trailhead, stats } = useSiteSettings()
   const fallback = useMemo<SuperbadgeRow[]>(() => superbadges.map((s, i) => ({ ...s, id: `static-${i}`, sort_order: i })), [])
   const badges = useLiveContent(fetchSuperbadges, fallback)
 
@@ -57,8 +59,7 @@ export default function Trailblazer() {
           transition={{ delay: 0.2 }}
           className="mx-auto max-w-2xl text-lg font-medium text-muted-foreground/80 md:text-xl"
         >
-          Triple Star Ranger and Agentblazer Innovator 2026 — verified rank, badges, and points from my Salesforce Trailblazer
-          profile.
+          {trailhead.rank} and {trailhead.status} — verified rank, badges, and points from my Salesforce Trailblazer profile.
         </motion.p>
         <Link
           to="/achievements"
@@ -69,7 +70,7 @@ export default function Trailblazer() {
       </div>
 
       <div className="w-full">
-        <ZoomParallax tiles={buildTrailTiles()}>
+        <ZoomParallax tiles={buildTrailTiles(trailhead, stats)}>
           <a
             href={profile.trailblazerUrl}
             target="_blank"
@@ -115,12 +116,12 @@ export default function Trailblazer() {
             <div className="grid items-center gap-10 md:grid-cols-[auto_1fr]">
               <div className="relative mx-auto h-48 w-60">
                 <img src={trailhead.agentblazerChampionImage} alt="" width={192} height={192} className="absolute left-0 top-4 h-36 w-36 opacity-60 md:h-44 md:w-44" />
-                <img src={trailhead.agentblazerImage} alt="Agentblazer Innovator badge" width={192} height={192} className="absolute left-16 top-0 h-40 w-40 drop-shadow-xl md:left-20 md:h-48 md:w-48" />
+                <img src={trailhead.agentblazerImage} alt={`${trailhead.status} badge`} width={192} height={192} className="absolute left-16 top-0 h-40 w-40 drop-shadow-xl md:left-20 md:h-48 md:w-48" />
               </div>
               <div>
-                <h3 className="text-3xl font-bold tracking-tight text-foreground md:text-5xl">Agentblazer Innovator 2026</h3>
+                <h3 className="text-3xl font-bold tracking-tight text-foreground md:text-5xl">{trailhead.status}</h3>
                 <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-                  Earned the Agentblazer Innovator 2026 recognition through Salesforce Trailhead by completing all required
+                  Earned the {trailhead.status} recognition through Salesforce Trailhead by completing all required
                   learning paths. Currently building hands-on Agentforce experience while continuing to deepen my expertise in
                   Salesforce AI.
                 </p>

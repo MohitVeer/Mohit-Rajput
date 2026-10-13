@@ -45,7 +45,7 @@ function Chips({ items, tone, hrefFor }: { items: string[]; tone: 'tech' | 'awar
 function JobBlock({ job, projects }: { job: ExperienceRow; projects: ProjectItem[] }) {
   const [lead, ...rest] = job.bullets
   const tech = extractTech(job)
-  const clients = clientsForJob(job)
+  const clients = clientsForJob(job, projects)
   const hrefFor = (name: string) => {
     const slug = projectSlugFor(projects, name)
     return slug ? `/projects/${slug}` : undefined

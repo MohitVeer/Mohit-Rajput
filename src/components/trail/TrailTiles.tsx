@@ -1,11 +1,10 @@
 import type { ReactNode } from 'react'
-import { stats, trailhead } from '../../data/profile'
+import type { StatItem, TrailheadData } from '../../lib/siteSettings'
 import { SalesforceMark } from '../icons/BrandMarks'
 import StatTile from './StatTile'
 
-const find = (label: string) => stats.find((s) => s.label === label)?.value ?? ''
-
-export function buildTrailTiles(): ReactNode[] {
+export function buildTrailTiles(trailhead: TrailheadData, stats: StatItem[]): ReactNode[] {
+  const find = (label: string) => stats.find((s) => s.label === label)?.value ?? ''
   return [
     <div key="mark" className="flex h-full w-full items-center justify-center bg-[#00A1E0]">
       <SalesforceMark className="h-[55%] w-[55%] text-white opacity-90" />

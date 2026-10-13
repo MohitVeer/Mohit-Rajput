@@ -1,16 +1,17 @@
 import wiproColor from '../../assets/wipro/wipro-primary-color.svg'
 import wiproWhite from '../../assets/wipro/wipro-primary-white.svg'
-import { experience, profile } from '../../data/profile'
+import { profile } from '../../data/profile'
+import { useExperience } from '../../hooks/useExperience'
 import { CARD_HEIGHT, CARD_WIDTH, CLIP_LENGTH } from './lanyardPhysics'
 
 const BRAND_STRIPE = 'linear-gradient(90deg,#7ec45f,#3498b3,#355493,#746fa7,#be266a,#f57f2a,#ffcd2e)'
-const job = experience.find((entry) => entry.company === 'Wipro')
-
 function since(period: string): string {
   return period.split(/\s*[—–-]\s*/)[0]?.trim() ?? period
 }
 
 export default function WiproIdCard() {
+  const jobs = useExperience()
+  const job = jobs.find((entry) => /wipro/i.test(entry.company))
   return (
     <div className="relative" style={{ width: CARD_WIDTH, height: CLIP_LENGTH + CARD_HEIGHT }}>
       <div

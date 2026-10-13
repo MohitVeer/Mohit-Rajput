@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom'
 import { Link, useSearchParams } from 'react-router-dom'
 import { AnimatePresence, motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform, type MotionValue } from 'framer-motion'
 import { ArrowRight, ArrowUpRight, LayoutGrid, Layers, List, Search, X } from 'lucide-react'
-import { EMPLOYER_LABEL } from '../../data/clientProjects'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import type { ProjectItem, ProjectStatus } from '../../hooks/useProjects'
 import { cn } from '../../lib/cn'
@@ -68,8 +67,7 @@ function StatusPill({ status }: { status: ProjectStatus }) {
 }
 
 function metaLine(item: ProjectItem): string {
-  const employer = item.employerKey ? (EMPLOYER_LABEL[item.employerKey] ?? item.employer) : item.employer
-  return [item.sector, employer].filter(Boolean).join(' · ')
+  return [item.sector, item.employerLabel].filter(Boolean).join(' · ')
 }
 
 function FloatingPreview({ item, x, y }: { item: ProjectItem; x: MotionValue<number>; y: MotionValue<number> }) {
@@ -324,10 +322,13 @@ export default function ProjectsArchive({ items }: { items: ProjectItem[] }) {
   }, [query, employer, status])
 
   const chips = useMemo(() => {
-    const keys = Array.from(new Set(items.map((item) => item.employerKey).filter((key): key is string => Boolean(key))))
+    const labels = new Map<string, string>()
+    for (const item of items) {
+      if (item.employerKey && !labels.has(item.employerKey)) labels.set(item.employerKey, item.employerLabel ?? item.employerKey)
+    }
     return [
       { id: 'all', label: 'All Realms' },
-      ...keys.map((key) => ({ id: key, label: EMPLOYER_LABEL[key] ?? key })),
+      ...Array.from(labels, ([id, label]) => ({ id, label })),
       ...(items.some((item) => item.kind === 'case-study') ? [{ id: 'case-study', label: 'Case studies' }] : []),
     ]
   }, [items])

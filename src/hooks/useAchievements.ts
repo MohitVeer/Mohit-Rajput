@@ -4,6 +4,7 @@ import { fetchCertGroups, fetchSuperbadges, type CertGroupRow, type SuperbadgeRo
 import { buildAchievements, type Achievement } from '../lib/achievements'
 import { useExperience } from './useExperience'
 import { useLiveContent } from './useLiveContent'
+import { useTrailhead } from './useSiteSettings'
 
 export function useAchievements(): Achievement[] {
   const certFallback = useMemo<CertGroupRow[]>(
@@ -20,6 +21,7 @@ export function useAchievements(): Achievement[] {
   const groups = useLiveContent(fetchCertGroups, certFallback)
   const badges = useLiveContent(fetchSuperbadges, badgeFallback)
   const jobs = useExperience()
+  const trailhead = useTrailhead()
 
-  return useMemo(() => buildAchievements(groups, badges, jobs), [groups, badges, jobs])
+  return useMemo(() => buildAchievements(groups, badges, jobs, trailhead), [groups, badges, jobs, trailhead])
 }

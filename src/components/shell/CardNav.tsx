@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Award, BookOpen, Briefcase, ChevronDown, FileText, Layers, Mail, Rocket } from 'lucide-react'
 import { cn } from '../../lib/cn'
 import { trackEvent } from '../../lib/analytics'
-import { stats, trailhead } from '../../data/profile'
+import { useSiteSettings } from '../../hooks/useSiteSettings'
+import { statValue } from '../../lib/siteSettings'
 import { GitHubMark } from '../icons/BrandMarks'
 
 type IconType = ComponentType<{ className?: string }>
@@ -18,16 +19,14 @@ interface MegaItem {
   desc: string
 }
 
-const certCount = stats.find((s) => s.label === 'Salesforce Certifications')?.value ?? ''
-
 const BIG: MegaItem[] = [
   { id: 'projects', to: '/projects', icon: Rocket, title: 'Projects', desc: 'Client work for global brands' },
   { id: 'experience', to: '/experience', icon: Briefcase, title: 'Experience', desc: 'My professional journey' },
 ]
 
-const SMALL: MegaItem[] = [
+const smallItems = (certCount: string, rank: string): MegaItem[] => [
   { id: 'skills', to: '/skills', icon: Layers, title: 'Skills', desc: 'Technical expertise' },
-  { id: 'achievements', to: '/achievements', icon: Award, title: 'Achievements', desc: `${certCount} certificates, ${trailhead.rank}` },
+  { id: 'achievements', to: '/achievements', icon: Award, title: 'Achievements', desc: `${certCount} certificates, ${rank}` },
   { id: 'blog', to: '/blog', icon: BookOpen, title: 'Articles', desc: 'Insights and write-ups' },
 ]
 
@@ -272,6 +271,8 @@ export default function CardNav({ activeId }: CardNavProps) {
     }
   }, [])
 
+  const { stats, trailhead } = useSiteSettings()
+  const SMALL = smallItems(statValue(stats, 'Salesforce Certifications'), trailhead.rank)
   const ids = [...BIG, ...SMALL, ...SIDE].map((item) => item.id).filter((id) => id !== 'contact')
   const sectionActive = ids.includes(activeId)
   const close = () => {
