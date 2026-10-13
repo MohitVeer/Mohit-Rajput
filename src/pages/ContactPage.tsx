@@ -1,7 +1,7 @@
-import BadgeCard from '../components/contact/BadgeCard'
 import ContactForm from '../components/contact/ContactForm'
 import ContactHero from '../components/contact/ContactHero'
 import Faq from '../components/contact/Faq'
+import WiproLanyard from '../components/contact/WiproLanyard'
 import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function ContactPage() {
@@ -12,9 +12,9 @@ export default function ContactPage() {
       <ContactHero />
 
       <section aria-labelledby="talk-heading" className="relative px-6 py-14 md:px-12 md:py-20">
-        <div className="mx-auto grid max-w-6xl items-start gap-16 lg:grid-cols-[320px_1fr]">
-          <div className="hidden lg:block">
-            <BadgeCard />
+        <div className="mx-auto grid max-w-6xl items-start gap-10 lg:grid-cols-[380px_1fr] lg:gap-16">
+          <div className="lg:sticky lg:top-24">
+            <WiproLanyard />
           </div>
           <div>
             <h2 id="talk-heading" className="text-5xl font-black uppercase tracking-tighter md:text-7xl">

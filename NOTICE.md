@@ -32,3 +32,7 @@ SOFTWARE.
 The Salesforce, GitHub and LinkedIn marks in `src/components/icons/BrandMarks.tsx` are path data from
 Simple Icons (https://simpleicons.org), released under CC0 1.0. The marks themselves remain trademarks
 of their respective owners.
+
+## Wipro name and logo
+
+The Wipro name and logo are trademarks of Wipro Limited. They appear on the contact page's hanging ID card only to identify the author's employer. The logo artwork was taken from Wikimedia Commons (Wipro Primary Logo and Wipro Secondary Logo files) and cropped; no endorsement by Wipro is implied.
