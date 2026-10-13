@@ -27,9 +27,9 @@ function Counter({ value, label }: { value: string; label: string }) {
 
 function Card({ children, label }: { children: React.ReactNode; label: string }) {
   return (
-    <div className="mx-auto w-[min(92vw,1200px)] overflow-hidden rounded-[2rem] border border-neutral-200 bg-white p-8 shadow-2xl dark:border-neutral-800 dark:bg-zinc-950 md:p-14">
+    <div className="mx-auto flex w-[min(92vw,1200px)] flex-col overflow-hidden rounded-[2rem] border border-neutral-200 bg-white p-8 shadow-2xl dark:border-neutral-800 dark:bg-zinc-950 md:p-14">
       <p className="mb-8 font-mono text-[11px] font-bold uppercase tracking-[0.4em] text-muted-foreground">{label}</p>
-      {children}
+      <div className="flex flex-1 flex-col justify-center">{children}</div>
     </div>
   )
 }
@@ -129,18 +129,27 @@ export default function Trailblazer() {
           </Card>
 
           <Card label={`${badges.length} Trailhead superbadges`}>
-            <ul className="grid grid-cols-2 gap-6 md:grid-cols-5">
+            <ul className="mx-auto flex w-full max-w-5xl flex-wrap justify-center gap-x-6 gap-y-10">
               {badges.map((badge) => (
-                <li key={badge.id}>
+                <li key={badge.id} className="w-[calc(50%-0.75rem)] min-[520px]:w-[calc(33.333%-1rem)] md:w-[calc(20%-1.2rem)]">
                   <a
                     href={badge.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackExternalLink(badge.url, `superbadge:${badge.title}`)}
-                    className="group flex flex-col items-center gap-3 text-center"
+                    className="group flex h-full flex-col items-center gap-4 text-center"
                   >
-                    <img src={badge.image ?? undefined} alt="" loading="lazy" width={120} height={120} className="h-24 w-24 transition-transform duration-500 group-hover:scale-110 md:h-28 md:w-28" />
-                    <span className="text-sm font-semibold leading-snug text-foreground">
+                    <span className="grid h-24 w-24 shrink-0 place-items-center md:h-28 md:w-28">
+                      <img
+                        src={badge.image ?? undefined}
+                        alt=""
+                        loading="lazy"
+                        width={120}
+                        height={120}
+                        className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </span>
+                    <span className="text-sm font-semibold leading-snug text-foreground [text-wrap:balance]">
                       {badge.title.replace('Superbadge: ', '')}
                       <span className="sr-only"> (opens in a new tab)</span>
                     </span>

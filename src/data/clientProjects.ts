@@ -74,15 +74,6 @@ export const clientProjects: ClientProject[] = [
     stack: ['LWC', 'Apex', 'Experience Cloud'],
   },
   {
-    id: 'sony',
-    client: 'Sony',
-    sector: 'Consumer electronics & entertainment',
-    ...WIPRO,
-    kind: 'client',
-    summary: WIPRO_SUMMARY,
-    stack: ['Salesforce'],
-  },
-  {
     id: 'republic-finance',
     client: 'Republic Finance',
     sector: 'Consumer finance',
@@ -182,7 +173,7 @@ export const engagements: Engagement[] = [
     title: 'Enterprise Experience Cloud programs',
     period: 'Sep 2024 — Present',
     current: true,
-    clients: ['Ericsson', 'Intellect Design Arena', "St. James's Place", 'American Honda', 'Sony'],
+    clients: ['Ericsson', 'Intellect Design Arena', "St. James's Place", 'American Honda'],
     highlights: [
       'Built reusable Lightning Web Components and Apex integration layers for enterprise portals, turning Figma designs into production-ready, responsive UI.',
       'Reduced portal load time from ~3.2s to 1.5s (~50%) with cacheable Apex, reactive-property tuning and fewer DOM re-renders.',

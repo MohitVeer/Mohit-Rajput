@@ -186,7 +186,7 @@ export const experience = [
     achievements: [
       'Circle of Excellence Award — resolving high-impact production defects and improving platform stability.'
     ],
-    clients: ['Ericsson', 'Intellect Design Arena', "St. James's Place", 'American Honda', 'Sony'],
+    clients: ['Ericsson', 'Intellect Design Arena', "St. James's Place", 'American Honda'],
   },
   {
     role: 'Developer',
