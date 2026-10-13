@@ -10,7 +10,7 @@ import Preloader from '../Preloader'
 import RouteCurtain from './RouteCurtain'
 import { useSmoothScroll } from '../../hooks/useSmoothScroll'
 import { getLenisInstance } from '../../lib/lenisInstance'
-import { initAnalytics, trackPageView } from '../../lib/analytics'
+import { startAnalytics, trackPageView } from '../../lib/analytics'
 
 function PageFallback() {
   return (
@@ -172,7 +172,7 @@ export default function SiteLayout() {
   const menuTriggerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    initAnalytics()
+    startAnalytics()
   }, [])
 
   useEffect(() => {

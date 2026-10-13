@@ -18,7 +18,7 @@ export function markIntroSeen() {
   }
 }
 
-const CRAWLER = /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|whatsapp|pinterest|quora|linkedinbot|twitterbot|duckduck|yandex|baidu/i
+const CRAWLER = /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|whatsapp|pinterest|quora|linkedinbot|twitterbot|duckduck|yandex|baidu|lighthouse|pagespeed|gtmetrix/i
 
 function shouldPreload() {
   if (typeof window === 'undefined') return false

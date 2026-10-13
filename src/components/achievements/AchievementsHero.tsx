@@ -91,12 +91,15 @@ function computeLayout(vw: number, vh: number): HeroLayout {
   return { from, to }
 }
 
-function ShowcaseImage({ item }: { item: Achievement }) {
+const HIGH_PRIORITY = { fetchpriority: 'high' } as Record<string, string>
+
+function ShowcaseImage({ item, priority }: { item: Achievement; priority: boolean }) {
   const small = item.thumb ?? item.image ?? ''
   const full = item.image ?? small
   const responsive = small !== full
   return (
     <img
+      {...(priority ? HIGH_PRIORITY : undefined)}
       src={small}
       srcSet={responsive ? `${small} 640w, ${full} 1280w` : undefined}
       sizes={responsive ? SHOWCASE_SIZES : undefined}
@@ -157,7 +160,7 @@ function HeroImage({ item, index, register }: { item: Achievement; index: number
         transition={{ duration: 0.6, delay: index * 0.03, ease: [0.215, 0.61, 0.355, 1] }}
         className="relative h-full w-full"
       >
-        <ShowcaseImage item={item} />
+        <ShowcaseImage item={item} priority={index < 3} />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60" />
       </motion.div>
     </div>
@@ -262,7 +265,7 @@ function StaticHero({ picks, layout }: { picks: Achievement[]; layout: HeroLayou
               className="absolute overflow-hidden border border-border/20 bg-card shadow-2xl"
               style={{ top: rect.top, left: rect.left, width: rect.width, height: rect.height, borderRadius: rect.radius, opacity: 0.8, transform: `rotate(${tilt(index)}deg)` }}
             >
-              <ShowcaseImage item={item} />
+              <ShowcaseImage item={item} priority={index < 3} />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60" />
             </div>
           )

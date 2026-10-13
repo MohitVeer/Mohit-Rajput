@@ -74,6 +74,14 @@ function getUtmParams() {
   }
 }
 
+let started = false
+const queued: Array<() => void> = []
+
+function whenStarted(run: () => void) {
+  if (started) run()
+  else queued.push(run)
+}
+
 let sessionStartedAt = 0
 let currentPath = ''
 let pageEnteredAt = 0
@@ -168,10 +176,27 @@ const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(),
     if (document.visibilityState === 'hidden') endSession()
   })
   window.addEventListener('pagehide', endSession)
+
+  started = true
+  queued.splice(0).forEach((run) => run())
+}
+
+let analyticsScheduled = false
+
+export function startAnalytics(delayMs = 2000) {
+  if (analyticsScheduled) return
+  analyticsScheduled = true
+  const begin = () => {
+    window.clearTimeout(timer)
+    window.removeEventListener('pagehide', begin)
+    initAnalytics()
+  }
+  const timer = window.setTimeout(begin, delayMs)
+  window.addEventListener('pagehide', begin)
 }
 
 export function trackPageView(path: string) {
-  if (isTrackingDisabled()) return
+  if (isTrackingDisabled() || !started) return
   if (!currentPath) {
     currentPath = path
     return
@@ -192,7 +217,8 @@ export function trackPageView(path: string) {
 }
 
 export function trackEvent(component: string, action: string, label?: string, meta?: Record<string, unknown>) {
-  send({ type: 'event', sessionId: getSessionId(), path: currentPath, component, action, label, meta })
+  if (isTrackingDisabled()) return
+  whenStarted(() => send({ type: 'event', sessionId: getSessionId(), path: currentPath, component, action, label, meta }))
 }
 
 export function trackResumeView() {
