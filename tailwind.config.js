@@ -66,12 +66,18 @@ export default {
           from: { transform: 'translateX(calc(-100% - var(--gap, 1rem)))' },
           to: { transform: 'translateX(0)' },
         },
+        meteor: {
+          '0%': { transform: 'rotate(var(--angle)) translateX(0)', opacity: '1' },
+          '70%': { opacity: '1' },
+          '100%': { transform: 'rotate(var(--angle)) translateX(-500px)', opacity: '0' },
+        },
       },
       animation: {
         'text-shiny': 'text-shiny 4s linear infinite',
         'gradient-flow': 'gradient-flow 6s ease infinite',
         'marquee-left': 'marquee-left var(--duration, 30s) linear infinite',
         'marquee-right': 'marquee-right var(--duration, 30s) linear infinite',
+        meteor: 'meteor 5s linear infinite',
       },
     },
   },
