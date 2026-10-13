@@ -38,8 +38,8 @@ export default function SkillsHero() {
         </motion.span>
       ))}
 
-      <div aria-hidden="true" className="relative h-[34svh] min-h-[260px] w-full max-w-md md:h-[38vh]">
-        <div className="absolute inset-0 scale-[1.1] sm:scale-[1.4] md:scale-[1.9]">
+      <div aria-hidden="true" className="relative h-[300px] w-full max-w-md md:h-[38vh]">
+        <div className="absolute inset-x-0 top-1/2 h-[400px] -translate-y-1/2 scale-[0.9] sm:scale-[1.2] md:inset-0 md:top-0 md:h-auto md:translate-y-0 md:scale-[1.9]">
           <CubeLoader faces={FEATURES[0].faces} />
         </div>
       </div>
