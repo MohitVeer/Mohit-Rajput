@@ -1,5 +1,5 @@
 import type { CertGroupRow, ExperienceRow, SuperbadgeRow } from './contentApi'
-import { certificateImage, credentialFor, VERIFY_URL } from '../data/credentials'
+import { certificateImage, certificateThumb, credentialFor, VERIFY_URL } from '../data/credentials'
 import { profile, trailhead } from '../data/profile'
 
 export type AchievementKind = 'certification' | 'superbadge' | 'trailhead' | 'award'
@@ -11,6 +11,7 @@ export interface Achievement {
   issuer: string
   group?: string
   image: string | null
+  thumb?: string | null
   badge: string | null
   issued?: string
   credentialId?: string
@@ -63,6 +64,7 @@ export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[
         issuer: 'Salesforce',
         group: group.title,
         image: certificateImage(cert.fileUrl),
+        thumb: certificateThumb(cert.fileUrl),
         badge: cert.image,
         issued: meta?.issued,
         credentialId: meta?.credentialId,

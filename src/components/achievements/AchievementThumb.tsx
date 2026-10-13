@@ -15,19 +15,21 @@ interface AchievementThumbProps {
   className?: string
   alt?: string
   priority?: boolean
+  full?: boolean
 }
 
-export default function AchievementThumb({ item, className, alt = '', priority = false }: AchievementThumbProps) {
+export default function AchievementThumb({ item, className, alt = '', priority = false, full = false }: AchievementThumbProps) {
   const [failed, setFailed] = useState(false)
-  const showCertificate = item.image && !failed
+  const source = full ? item.image : (item.thumb ?? item.image)
+  const showCertificate = source && !failed
 
   if (showCertificate) {
     return (
       <img
-        src={item.image ?? undefined}
+        src={source}
         alt={alt}
-        width={1280}
-        height={720}
+        width={full ? 1280 : 640}
+        height={full ? 720 : 360}
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
         onError={() => setFailed(true)}

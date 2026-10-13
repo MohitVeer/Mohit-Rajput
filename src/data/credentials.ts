@@ -28,6 +28,11 @@ export function certificateImage(fileUrl?: string): string | null {
   return key ? `/certificates/${key}.webp` : null
 }
 
+export function certificateThumb(fileUrl?: string): string | null {
+  const key = credentialKey(fileUrl)
+  return key ? `/certificates/${key}-sm.webp` : null
+}
+
 export function credentialFor(fileUrl?: string): CredentialMeta | null {
   return credentialMeta[credentialKey(fileUrl)] ?? null
 }

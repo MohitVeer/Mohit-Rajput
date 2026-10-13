@@ -39,7 +39,7 @@ export default function AchievementViewer({ items, index, onClose, onNavigate }:
         <div className="mx-auto grid min-h-screen max-w-[1500px] items-center gap-10 px-5 pb-12 pt-24 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:px-12">
           <div className="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/10 dark:ring-white/10">
             <div className="aspect-video">
-              <AchievementThumb item={item} alt={`${item.title} — ${KIND_LABEL[item.kind].toLowerCase()} awarded to Mohit Rajput`} priority />
+              <AchievementThumb item={item} full alt={`${item.title} — ${KIND_LABEL[item.kind].toLowerCase()} awarded to Mohit Rajput`} priority />
             </div>
           </div>
 

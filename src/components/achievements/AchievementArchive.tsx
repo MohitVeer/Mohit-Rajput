@@ -166,7 +166,7 @@ export default function AchievementArchive({ items }: { items: Achievement[] }) 
           </nav>
 
           <div className="mt-auto hidden pt-8 lg:block" aria-hidden="true">
-            <p className="text-[clamp(5rem,8vw,8rem)] font-black leading-none tracking-tighter text-muted-foreground/25">{visible.length}</p>
+            <p data-count={visible.length} className="text-[clamp(5rem,8vw,8rem)] font-black leading-none tracking-tighter text-muted-foreground/25 before:content-[attr(data-count)]" />
             <p className="font-mono text-[10px] font-bold uppercase tracking-[0.35em] text-muted-foreground">Achievements</p>
           </div>
         </aside>

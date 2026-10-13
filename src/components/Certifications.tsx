@@ -8,7 +8,7 @@ import Section from './shell/Section'
 
 export default function Certifications() {
   const items = useAchievements()
-  const certificates = useMemo(() => items.filter((item) => item.kind === 'certification' && item.image).map((item) => item.image as string), [items])
+  const certificates = useMemo(() => items.filter((item) => item.kind === 'certification' && item.image).map((item) => (item.thumb ?? item.image) as string), [items])
   const certCount = items.filter((item) => item.kind === 'certification').length
   const badgeCount = items.filter((item) => item.kind === 'superbadge').length
 

@@ -21,6 +21,12 @@ const LINE_CLASS =
   'text-shiny flex items-center text-[clamp(2.4rem,11vw,13rem)] font-black leading-[0.85] tracking-tighter will-change-transform px-4'
 
 const EASE = [0.16, 1, 0.3, 1] as const
+const FAINT = 0.01
+const LINE_HIDDEN = { opacity: FAINT, y: 30 }
+const LINE_SHOWN = { opacity: 1, y: 0 }
+const SIDE_LEFT_HIDDEN = { opacity: FAINT, x: -20 }
+const SIDE_RIGHT_HIDDEN = { opacity: FAINT, x: 20 }
+const SIDE_SHOWN = { opacity: 1, x: 0 }
 
 const MotionLink = motion.create(Link)
 
@@ -62,8 +68,8 @@ export default function Hero() {
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   const line = (delay: number) => ({
-    initial: { opacity: 0, y: 30 },
-    animate: revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 },
+    initial: LINE_HIDDEN,
+    animate: revealed ? LINE_SHOWN : LINE_HIDDEN,
     transition: { duration: reduce ? 0 : 1.2, delay: reduce ? 0 : delay, ease: EASE },
   })
 
@@ -116,8 +122,8 @@ export default function Hero() {
         >
           <span className="relative items-center gap-8 md:flex">
             <motion.span
-              initial={{ opacity: 0, x: -20 }}
-              animate={revealed ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+              initial={SIDE_LEFT_HIDDEN}
+              animate={revealed ? SIDE_SHOWN : SIDE_LEFT_HIDDEN}
               transition={{ duration: reduce ? 0 : 0.8, delay: reduce ? 0 : 0.2 }}
               className="block max-w-[200px] text-start text-[10px] font-medium uppercase leading-relaxed tracking-[0.2em] text-muted-foreground md:max-w-[220px] md:text-right md:text-xs"
             >
@@ -201,8 +207,8 @@ export default function Hero() {
               <span>OPER</span>
             </motion.span>
             <motion.span
-              initial={{ opacity: 0, x: 20 }}
-              animate={revealed ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+              initial={SIDE_RIGHT_HIDDEN}
+              animate={revealed ? SIDE_SHOWN : SIDE_RIGHT_HIDDEN}
               transition={{ duration: reduce ? 0 : 0.8, delay: reduce ? 0 : 0.4 }}
               className="block max-w-[250px] pt-4 text-[10px] font-medium uppercase leading-relaxed tracking-widest text-muted-foreground md:max-w-[200px] md:pt-8 md:text-xs"
             >

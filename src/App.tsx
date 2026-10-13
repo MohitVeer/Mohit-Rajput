@@ -1,9 +1,9 @@
 import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import SiteLayout from './components/shell/SiteLayout'
-import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
 
+const HomePage = lazy(() => import('./pages/HomePage'))
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
 const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage'))
 const ExperiencePage = lazy(() => import('./pages/ExperiencePage'))
