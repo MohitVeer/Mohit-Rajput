@@ -87,9 +87,15 @@
   h3,
   h4 {
     @apply font-display;
+    text-wrap: balance;
   }
 
-a:focus-visible,
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  a:focus-visible,
   button:focus-visible,
   [tabindex]:focus-visible,
   input:focus-visible,
@@ -137,6 +143,16 @@ a:focus-visible,
 }
 
 @layer components {
+  .experience-hero {
+    height: calc(var(--run) + 100vh);
+  }
+
+  @supports (height: 100svh) {
+    .experience-hero {
+      height: calc(var(--run) + 100svh);
+    }
+  }
+
   .glass {
     @apply backdrop-blur-2xl;
     background: rgba(255, 255, 255, 0.7);

@@ -1,4 +1,5 @@
 import type { ExperienceRow } from './contentApi'
+import { parseWhen } from './achievements'
 import { employerKeyOf, normalizeClient } from '../data/clientProjects'
 import { clientNamesFor, type ProjectItem } from './contentModel'
 
@@ -80,4 +81,27 @@ export function clientsForJob(job: ExperienceRow, projects: ProjectItem[]): stri
     merged.push(name)
   }
   return merged
+}
+
+export function isInternship(job: ExperienceRow): boolean {
+  return /intern/i.test(job.role)
+}
+
+export function periodMonths(period: string, now: number = Date.now()): number | null {
+  const { start, end } = periodRange(period)
+  const from = parseWhen(start)
+  const to = /present|now|current/i.test(end) ? now : parseWhen(end)
+  if (from === undefined || to === undefined) return null
+  const a = new Date(from)
+  const b = new Date(to)
+  const months = (b.getUTCFullYear() - a.getUTCFullYear()) * 12 + (b.getUTCMonth() - a.getUTCMonth()) + 1
+  return months > 0 ? months : null
+}
+
+export function formatDuration(months: number): string {
+  if (months < 12) return `${months} ${months === 1 ? 'month' : 'months'}`
+  const years = Math.floor(months / 12)
+  const rest = months % 12
+  const yearText = `${years} ${years === 1 ? 'year' : 'years'}`
+  return rest === 0 ? yearText : `${yearText} ${rest} ${rest === 1 ? 'month' : 'months'}`
 }

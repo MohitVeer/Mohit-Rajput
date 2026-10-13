@@ -33,7 +33,7 @@ export const KIND_PLURAL: Record<AchievementKind, string> = {
 
 const MONTHS: Record<string, number> = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 }
 
-function parseWhen(value?: string): number | undefined {
+export function parseWhen(value?: string): number | undefined {
   if (!value) return undefined
   const named = value.match(/([A-Za-z]{3})[a-z]*\.?\s+(?:(\d{1,2}),?\s+)?(\d{4})/)
   if (named) {
