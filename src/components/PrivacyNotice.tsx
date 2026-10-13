@@ -1,18 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { isTrackingDisabled, setTrackingDisabled } from '../lib/analytics'
-import { setPageMeta } from '../lib/pageMeta'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function PrivacyNotice() {
   const [disabled, setDisabled] = useState(isTrackingDisabled())
 
-  useEffect(() => {
-    setPageMeta({
-      title: 'Privacy & analytics — Mohit Rajput',
-      description:
-        'What lightweight, first-party usage analytics this portfolio collects, what it does not collect, and how to opt out.',
-      path: '/privacy',
-    })
-  }, [])
+  usePageMeta('/privacy')
 
   const toggle = () => {
     const next = !disabled
@@ -21,10 +15,10 @@ export default function PrivacyNotice() {
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-24 text-foreground">
-      <a href="/" className="font-sans text-sm text-muted-foreground hover:text-foreground">
+    <section className="mx-auto max-w-2xl px-6 pb-24 pt-32 text-foreground">
+      <Link to="/" className="font-sans text-sm text-muted-foreground hover:text-foreground">
         ← Back
-      </a>
+      </Link>
       <h1 className="mt-6 font-display text-3xl font-semibold sm:text-4xl">Privacy &amp; analytics</h1>
 
       <p className="mt-6 text-base leading-relaxed text-muted-foreground">
@@ -52,6 +46,19 @@ export default function PrivacyNotice() {
         <li>No cross-site tracking, fingerprinting, or ad targeting</li>
       </ul>
 
+      <h2 className="mt-10 font-display text-xl font-semibold">Contact form</h2>
+      <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+        If you send a message through the contact form, the name, email address, subject and message you enter are
+        emailed to me through a transactional email service and may also be kept in Netlify Forms. They are used only
+        to reply to you and are never added to the analytics data above.
+      </p>
+
+      <h2 className="mt-10 font-display text-xl font-semibold">GitHub activity</h2>
+      <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+        The GitHub section shows public data (profile, repositories and the contribution calendar). It is fetched by
+        this site's server, so your browser never contacts GitHub directly from this page.
+      </p>
+
       <h2 className="mt-10 font-display text-xl font-semibold">Opt out</h2>
       <p className="mt-4 text-base text-muted-foreground">
         You can disable analytics for this browser at any time. This is stored locally and takes
@@ -60,10 +67,10 @@ export default function PrivacyNotice() {
       <button
         type="button"
         onClick={toggle}
-        className="mt-4 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:border-accent"
+        className="mt-4 rounded-full border-2 border-neutral-200 px-6 py-3 text-xs font-bold uppercase tracking-widest text-foreground transition-colors hover:bg-foreground hover:text-background dark:border-white/20"
       >
         {disabled ? 'Analytics disabled — click to re-enable' : 'Disable analytics for this browser'}
       </button>
-    </main>
+    </section>
   )
 }

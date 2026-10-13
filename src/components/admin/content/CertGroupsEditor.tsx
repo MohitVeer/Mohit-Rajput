@@ -1,8 +1,9 @@
-import { useState, type ReactNode } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchCertGroups, type Cert, type CertGroupRow } from '../../../lib/contentApi'
-import { createCertGroup, deleteCertGroup, updateCertGroup } from '../../../lib/contentAdminApi'
-import { EditorCard, Field, MoveButtons, SaveDeleteRow, TextInput } from './fields'
+import { createCertGroup, createCertGroups, deleteCertGroup, updateCertGroup } from '../../../lib/contentAdminApi'
+import { missingBuiltInCerts } from '../../../lib/contentModel'
+import { EditorCard, Field, Hint, ImportBanner, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './fields'
 
 type Draft = { title: string; logo: string; certs: Cert[] }
 
@@ -13,6 +14,17 @@ function toDraft(row: { title: string; logo: string | null; certs: Cert[] }): Dr
 }
 
 const blank: Draft = { title: '', logo: '', certs: [blankCert] }
+
+const OPTIONAL_CERT_FIELDS = ['issuer', 'issued', 'credentialId', 'verifyUrl', 'description', 'preview'] as const
+
+function cleanCert(cert: Cert): Cert {
+  const cleaned: Cert = { name: cert.name.trim(), image: cert.image.trim(), alt: cert.alt.trim(), fileUrl: cert.fileUrl.trim() }
+  for (const key of OPTIONAL_CERT_FIELDS) {
+    const value = cert[key]?.trim()
+    if (value) cleaned[key] = value
+  }
+  return cleaned
+}
 
 function CertFields({
   cert,
@@ -41,12 +53,36 @@ function CertFields({
         <Field label="Alt text">
           <TextInput value={cert.alt} onChange={(v) => onChange({ ...cert, alt: v })} />
         </Field>
-        <Field label="Certificate PDF path">
+        <Field label="Certificate PDF path (optional)">
           <TextInput
             value={cert.fileUrl}
             onChange={(v) => onChange({ ...cert, fileUrl: v })}
             placeholder="/Certifications/…"
           />
+        </Field>
+        <Field label="Issuer (empty means Salesforce)">
+          <TextInput value={cert.issuer ?? ''} onChange={(v) => onChange({ ...cert, issuer: v })} placeholder="Udemy" />
+        </Field>
+        <Field label="Issued on">
+          <TextInput value={cert.issued ?? ''} onChange={(v) => onChange({ ...cert, issued: v })} placeholder="March 12, 2026" />
+        </Field>
+        <Field label="Credential ID">
+          <TextInput value={cert.credentialId ?? ''} onChange={(v) => onChange({ ...cert, credentialId: v })} />
+        </Field>
+        <Field label="Verification link">
+          <TextInput value={cert.verifyUrl ?? ''} onChange={(v) => onChange({ ...cert, verifyUrl: v })} placeholder="https://…" />
+        </Field>
+        <Field label="Certificate image path (when there is no PDF)">
+          <TextInput
+            value={cert.preview ?? ''}
+            onChange={(v) => onChange({ ...cert, preview: v })}
+            placeholder="/certificates/…webp"
+          />
+        </Field>
+      </div>
+      <div className="mt-3">
+        <Field label="Description (optional)">
+          <TextArea value={cert.description ?? ''} onChange={(v) => onChange({ ...cert, description: v })} rows={2} />
         </Field>
       </div>
       {canRemove && (
@@ -134,7 +170,7 @@ function GroupForm({
           onSave({
             title: draft.title,
             logo: draft.logo,
-            certs: draft.certs.filter((c) => c.name.trim()),
+            certs: draft.certs.filter((c) => c.name.trim()).map(cleanCert),
             sort_order: sortOrder,
           })
         }
@@ -146,18 +182,49 @@ function GroupForm({
 }
 
 export default function CertGroupsEditor() {
-  const { items, loading, error, savingId, create, update, remove, move } = useCrudList(
+  const { items, loading, error, savingId, create, update, remove, move, reload } = useCrudList(
     fetchCertGroups,
     createCertGroup,
     updateCertGroup,
     deleteCertGroup,
   )
   const [adding, setAdding] = useState(false)
+  const [importing, setImporting] = useState(false)
+  const [importError, setImportError] = useState<string | null>(null)
+  const plan = useMemo(() => missingBuiltInCerts(items), [items])
+
+  const importMissing = async () => {
+    setImporting(true)
+    setImportError(null)
+    try {
+      if (plan.add.length > 0) await createCertGroups(plan.add)
+      for (const group of plan.extend) await updateCertGroup(group.id, { certs: group.certs })
+      reload()
+    } catch (err) {
+      setImportError(err instanceof Error ? err.message : 'Import failed.')
+    } finally {
+      setImporting(false)
+    }
+  }
 
   return (
     <div className="space-y-4">
-      {error && <p className="rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-300">{error}</p>}
+      {(error || importError) && (
+        <p className="rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-300">{error ?? importError}</p>
+      )}
       {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
+
+      <Hint>Preview images are files in the site's /certificates folder. For a PDF at /Certifications/Name.pdf the site shows /certificates/Name.webp and Name-sm.webp; a certificate without a PDF (for example an online-only one) uses its own certificate image path instead. Adding a new image file needs a code change and a deploy.</Hint>
+
+      {!loading && plan.names.length > 0 && (
+        <ImportBanner
+          title={`${plan.names.length} built-in ${plan.names.length === 1 ? 'certificate is' : 'certificates are'} not saved here yet`}
+          body={`${plan.names.join('; ')}. The site shows only what is saved in this list, so add them to make them appear. You can edit or reorder them afterwards.`}
+          busy={importing}
+          onImport={importMissing}
+          label="Add missing certificates"
+        />
+      )}
 
       {items.map((group: CertGroupRow, i) => (
         <GroupForm

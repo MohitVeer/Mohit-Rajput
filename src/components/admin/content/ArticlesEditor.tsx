@@ -2,11 +2,12 @@ import { useState, type ReactNode } from 'react'
 import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchArticles, type ArticleRow } from '../../../lib/contentApi'
 import { createArticle, deleteArticle, updateArticle } from '../../../lib/contentAdminApi'
-import { EditorCard, Field, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './fields'
+import { slugify } from '../../../lib/slug'
+import { EditorCard, Field, Hint, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './fields'
 
 type Draft = Omit<ArticleRow, 'id' | 'sort_order'>
 
-const blank: Draft = { title: '', summary: '', url: '', published_on: 'LinkedIn', read_time: '' }
+const blank: Draft = { title: '', summary: '', url: '', published_on: 'LinkedIn', read_time: '', slug: '' }
 
 function ArticleForm({
   initial,
@@ -25,13 +26,18 @@ function ArticleForm({
   saveLabel?: string
   header?: ReactNode
 }) {
-  const [draft, setDraft] = useState<Draft>(initial)
+  const [draft, setDraft] = useState<Draft>({ ...initial, slug: initial.slug ?? '' })
+  const slug = slugify(draft.slug ?? '') || slugify(draft.title)
 
   return (
     <EditorCard header={header}>
       <Field label="Title">
         <TextInput value={draft.title} onChange={(v) => setDraft((d) => ({ ...d, title: v }))} />
       </Field>
+      <Field label="Page address (optional)">
+        <TextInput value={draft.slug ?? ''} onChange={(v) => setDraft((d) => ({ ...d, slug: v }))} placeholder={slugify(draft.title) || 'auto-from-title'} />
+      </Field>
+      {slug && <Hint>This article opens at /blog/{slug}. Changing it later breaks links that already point to the old address.</Hint>}
       <Field label="Summary">
         <TextArea value={draft.summary} onChange={(v) => setDraft((d) => ({ ...d, summary: v }))} rows={2} />
       </Field>
@@ -52,7 +58,7 @@ function ArticleForm({
       </div>
       <SaveDeleteRow
         saving={saving}
-        onSave={() => onSave({ ...draft, sort_order: sortOrder })}
+        onSave={() => onSave({ ...draft, slug: slugify(draft.slug ?? '') || null, sort_order: sortOrder })}
         onDelete={onDelete}
         saveLabel={saveLabel}
       />

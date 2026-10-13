@@ -5,6 +5,9 @@ import CertGroupsEditor from './CertGroupsEditor'
 import SuperbadgesEditor from './SuperbadgesEditor'
 import ArticlesEditor from './ArticlesEditor'
 import ProjectsEditor from './ProjectsEditor'
+import EngagementsEditor from './EngagementsEditor'
+import FaqsEditor from './FaqsEditor'
+import SiteContentEditor from './SiteContentEditor'
 
 const SECTIONS = [
   { key: 'experience', label: 'Experience', Editor: ExperienceEditor },
@@ -12,7 +15,10 @@ const SECTIONS = [
   { key: 'certs', label: 'Certifications', Editor: CertGroupsEditor },
   { key: 'superbadges', label: 'Superbadges', Editor: SuperbadgesEditor },
   { key: 'projects', label: 'Projects', Editor: ProjectsEditor },
+  { key: 'engagements', label: 'Engagement cards', Editor: EngagementsEditor },
   { key: 'articles', label: 'Articles', Editor: ArticlesEditor },
+  { key: 'faqs', label: 'FAQ', Editor: FaqsEditor },
+  { key: 'site', label: 'Numbers & tags', Editor: SiteContentEditor },
 ] as const
 
 export default function ContentManager() {

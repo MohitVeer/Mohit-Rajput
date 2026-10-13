@@ -1,8 +1,13 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
-import { profile, sceneList } from '../../data/profile'
+import { Link, useLocation } from 'react-router-dom'
+import { profile } from '../../data/profile'
 import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
 import { trackEvent } from '../../lib/analytics'
+import { siteRoutes } from '../../lib/siteRoutes'
+import AnimatedThemeToggler from '../ui/AnimatedThemeToggler'
+
+const MENU_ROUTES = siteRoutes.filter((route) => route.id !== 'privacy')
 
 interface OverlayMenuProps {
   open: boolean
@@ -14,6 +19,7 @@ export default function OverlayMenu({ open, onClose, triggerRef }: OverlayMenuPr
   const panelRef = useRef<HTMLDivElement>(null)
   const reduceMotion = useReducedMotion()
   const wasOpenRef = useRef(false)
+  const { pathname } = useLocation()
 
   useBodyScrollLock(open)
 
@@ -70,14 +76,14 @@ data-lenis-prevent
           transition={{ duration: 0.25 }}
         >
           <div className="flex items-center justify-between px-5 py-5 sm:px-8 md:px-16 lg:px-24">
-            <span className="scene-index" aria-hidden="true">
+            <span className="font-mono text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground" aria-hidden="true">
               Menu
             </span>
             <button
               type="button"
               onClick={onClose}
               aria-label="Close menu"
-              className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-border text-foreground transition hover:border-accent hover:text-accent"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-muted text-foreground transition hover:scale-105 hover:bg-foreground hover:text-background"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path
@@ -91,31 +97,33 @@ data-lenis-prevent
           </div>
 
           <nav
-            aria-label="Scenes"
+            aria-label="Pages"
             className="flex flex-1 flex-col justify-center px-5 py-8 sm:px-8 md:px-16 lg:px-24"
           >
             <ul className="w-full space-y-1">
-              {sceneList.map((scene) => (
-                <li key={scene.href} className="w-full border-b border-border">
-                  <a
-                    href={scene.href}
+              {MENU_ROUTES.map((route, index) => (
+                <li key={route.path} className="w-full border-b border-border">
+                  <Link
+                    to={route.path}
+                    aria-current={pathname === route.path ? 'page' : undefined}
                     onClick={() => {
-                      trackEvent('Navigation', 'nav_click', scene.label)
+                      trackEvent('Navigation', 'nav_click', route.label)
                       onClose()
                     }}
-                    className="flex w-full min-w-0 items-baseline gap-3 py-3.5 font-display text-2xl font-semibold text-muted-foreground transition-colors hover:text-foreground sm:gap-4 sm:text-4xl md:py-4 md:text-5xl"
+                    className="flex w-full min-w-0 items-baseline gap-3 py-3.5 font-display text-2xl font-black tracking-tight text-muted-foreground transition-colors hover:text-foreground aria-[current=page]:text-foreground sm:gap-4 sm:text-4xl md:py-4 md:text-5xl"
                   >
-                    <span className="shrink-0 font-sans text-xs font-semibold tabular-nums text-accent sm:text-sm">
-                      {scene.index}
+                    <span className="shrink-0 font-mono text-xs font-bold tabular-nums text-muted-foreground sm:text-sm">
+                      {String(index).padStart(2, '0')}
                     </span>
-                    <span className="min-w-0 break-words">{scene.label}</span>
-                  </a>
+                    <span className="min-w-0 break-words">{route.label}</span>
+                  </Link>
                 </li>
               ))}
             </ul>
           </nav>
 
-          <div className="flex flex-wrap gap-x-8 gap-y-3 px-5 py-6 font-sans text-sm text-muted-foreground sm:px-8 md:px-16 lg:px-24">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 px-5 py-6 font-sans text-sm text-muted-foreground sm:px-8 md:px-16 lg:px-24">
+            <AnimatedThemeToggler className="-ml-2 bg-muted" />
             <a href={`mailto:${profile.email}`} className="hover:text-foreground">
               {profile.email}
             </a>

@@ -12,20 +12,6 @@ export const profile = {
   resumeUrl: '/Mohit_Rajput_Frontend_Engineer.pdf',
 }
 
-export const sceneList = [
-  { href: '#top', index: '00', label: 'Home' },
-  { href: '#metrics', index: '01', label: 'Impact' },
-  { href: '#about', index: '02', label: 'About' },
-  { href: '#trailblazer', index: '03', label: 'Trailblazer' },
-  { href: '#skills', index: '04', label: 'Skills' },
-  { href: '#experience', index: '05', label: 'Experience' },
-  { href: '#certs', index: '06', label: 'Certifications' },
-  { href: '#projects', index: '07', label: 'Projects' },
-  { href: '#articles', index: '08', label: 'Articles' },
-  { href: '#game', index: '09', label: 'Break' },
-  { href: '#contact', index: '10', label: 'Contact' },
-]
-
 export const heroTags = [
   'Front-End Engineering',
   'React.js',
@@ -200,7 +186,7 @@ export const experience = [
     achievements: [
       'Circle of Excellence Award — resolving high-impact production defects and improving platform stability.'
     ],
-    clients: ['American Honda', "St. James's Place"],
+    clients: ['Ericsson', 'Intellect Design Arena', "St. James's Place", 'American Honda'],
   },
   {
     role: 'Developer',
@@ -223,7 +209,8 @@ export const experience = [
       'Republic Finance',
       'Arvest Bank',
       'Wealth Enhancement Group',
-      'Teledoc',
+      'Peoples Bank',
+      'Teladoc',
       'Five Star Bank',
       'Beatport',
     ],
@@ -271,6 +258,21 @@ export const experience = [
     ],
     clients: [],
   },
+  {
+    role: 'Frontend Web Developer (Internship)',
+    company: 'Forelsket Softwares Private Limited',
+    period: 'Nov 2020 — Dec 2020',
+    location: 'Aligarh, Uttar Pradesh, India',
+    bullets: [
+      'Converted InVision design specifications into reusable and modular HTML, CSS, and SCSS components, maintaining strong design fidelity and clean, maintainable code.',
+      'Built fully responsive interfaces using Bootstrap, ensuring consistent cross-device and cross-browser experiences across different screen sizes.',
+    ],
+    achievements: [],
+    clients: [],
+    documents: [
+      { kind: 'certificate' as const, label: 'Internship certificate', url: '/Certifications/Forelsket_Internship_Certificate.jpg' },
+    ],
+  },
 ]
 
 export const certGroups = [
@@ -289,13 +291,13 @@ export const certGroups = [
     logo: '/Salesforce Product Icons/industry-solutions-logo.png',
     certs: [{
       name: 'Salesforce Certified OmniStudio Consultant',
-      image: '/Salesforce Icons/sf-cert-OmniStudio-Consultant/High Res/2025-04_Badge_SF-Certified_Omnistudio-Con_High-Res.png',
+      image: '/Salesforce Icons/sf-cert-omnistudio-Consultant/High Res/2025-04_Badge_SF-Certified_Omnistudio-Con_High-Res.png',
       alt: 'Salesforce Certified OmniStudio Consultant',
       fileUrl: '/Certifications/Omnistudio_Consultant.pdf',
     },
     {
       name: 'Salesforce Certified OmniStudio Developer',
-      image: '/Salesforce Icons/sf-cert-OmniStudio-Developer/High Res/2025-04_Badge_SF-Certified_Omnistudio-Dev_High-Res.png',
+      image: '/Salesforce Icons/sf-cert-omnistudio-Developer/High Res/2025-04_Badge_SF-Certified_Omnistudio-Dev_High-Res.png',
       alt: 'Salesforce Certified OmniStudio Developer',
       fileUrl: '/Certifications/Omnistudio_Developer.pdf',
     }],
@@ -305,13 +307,13 @@ export const certGroups = [
     logo: '/Salesforce Product Icons/marketing-cloud-logo.png',
     certs: [{
       name: 'Salesforce Certified Marketing Cloud Email Specialist',
-      image: '/Salesforce Icons/sf-cert-Marketing-Cloud-Email-Specialist/High Res/2021-03_Badge_SF-Certified_Marketing-Cloud-Email-Specialist_High-Res.png',
+      image: '/Salesforce Icons/sf-cert-marketing-cloud-Email-Specialist/High Res/2021-03_Badge_SF-Certified_Marketing-Cloud-Email-Specialist_High-Res.png',
       alt: 'Salesforce Certified Marketing Cloud Email Specialist',
       fileUrl: '/Certifications/Marketing_Cloud_Email_Specialist.pdf',
     },
     {
       name: 'Salesforce Certified Marketing Cloud Engagement Developer',
-      image: '/Salesforce Icons/sf-cert-Marketing-Cloud-Engagement-Developer/High Res/2025-04_Badge_SF-Certified_MC-Eng-Dev_High-Res.png',
+      image: '/Salesforce Icons/sf-cert-marketing-cloud-Engagement-Developer/High Res/2025-04_Badge_SF-Certified_MC-Eng-Dev_High-Res.png',
       alt: 'Salesforce Certified Marketing Cloud Engagement Developer',
       fileUrl: '/Certifications/Marketing_Cloud_Engagement_Developer.pdf',
     },
@@ -345,6 +347,73 @@ export const certGroups = [
       alt: 'Salesforce Certified Platform User Experience Designer',
       fileUrl: '/Certifications/Platform_User_Experience_Designer.pdf',
     }],
+  },
+  {
+    title: 'Internship',
+    logo: '',
+    certs: [
+      {
+        name: 'Front-End Developer Internship Certificate',
+        image: '',
+        alt: 'Internship certificate from Forelsket Softwares for the front-end developer internship',
+        fileUrl: '/Certifications/Forelsket_Internship_Certificate.jpg',
+        preview: '/certificates/Forelsket_Internship_Certificate.webp',
+        issuer: 'Forelsket Softwares Pvt. Ltd.',
+        issued: 'June 15, 2021',
+        credentialId: 'FA/09/06/2221',
+        description: 'Short-term front-end developer internship from 1 November 2020 to 31 December 2020, certified by the authorised signatory of Forelsket Softwares.',
+      },
+    ],
+  },
+  {
+    title: 'Courses & Training',
+    logo: '',
+    certs: [
+      {
+        name: 'Zero to Hero in Lightning Web Components',
+        image: '',
+        alt: 'Udemy certificate of completion for Zero to Hero in Lightning Web Components',
+        fileUrl: '/Certifications/Udemy_Zero_to_Hero_LWC.pdf',
+        issuer: 'Udemy',
+        issued: 'March 12, 2026',
+        credentialId: 'UC-48330fd3-084c-4f89-be46-cfed08a66067',
+        verifyUrl: 'https://ude.my/UC-48330fd3-084c-4f89-be46-cfed08a66067',
+        description: '41-hour Udemy course on Lightning Web Components, taught by Salesforce troop and Amrita K.',
+      },
+      {
+        name: 'The Complete 2021 Web Development Bootcamp',
+        image: '',
+        alt: 'Udemy certificate of completion for The Complete 2021 Web Development Bootcamp',
+        fileUrl: '/Certifications/Udemy_Complete_Web_Development_Bootcamp.pdf',
+        issuer: 'Udemy',
+        issued: 'October 10, 2021',
+        credentialId: 'UC-3182b272-93de-4b24-9bf3-753956322e35',
+        verifyUrl: 'https://ude.my/UC-3182b272-93de-4b24-9bf3-753956322e35',
+        description: '55-hour Udemy course taught by Dr. Angela Yu.',
+      },
+      {
+        name: 'Legacy Responsive Web Design V8',
+        image: '',
+        alt: 'freeCodeCamp developer certification in Legacy Responsive Web Design V8',
+        fileUrl: '',
+        preview: '/certificates/freeCodeCamp_Responsive_Web_Design.webp',
+        issuer: 'freeCodeCamp',
+        issued: 'August 23, 2021',
+        verifyUrl: 'https://www.freecodecamp.org/certification/fcc8a57e2db-7b95-423b-baae-a34593e6a401/responsive-web-design',
+        description: 'Developer certification representing approximately 300 hours of work.',
+      },
+      {
+        name: 'Ethical Hacking Training',
+        image: '',
+        alt: 'Internshala Trainings certificate of training in Ethical Hacking',
+        fileUrl: '/Certifications/Internshala_Ethical_Hacking.pdf',
+        issuer: 'Internshala Trainings',
+        issued: 'October 12, 2020',
+        credentialId: '05F300D3-F26E-1245-5095-42180BC821A3',
+        verifyUrl: 'https://trainings.internshala.com/verify_certificate',
+        description: 'Eight-week online training covering information security, networking, VAPT for the OWASP Top 10, automation and vulnerability reporting. Scored 98% in the final assessment.',
+      },
+    ],
   },
 ]
 

@@ -1,11 +1,10 @@
 import type { Context } from '@netlify/functions'
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  process.env.SUPABASE_URL as string,
-  process.env.SUPABASE_SERVICE_ROLE_KEY as string,
-  { auth: { persistSession: false } },
-)
+const supabaseUrl = process.env.SUPABASE_URL
+const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+const configured = Boolean(supabaseUrl && serviceKey)
+const supabase = createClient(supabaseUrl ?? 'http://localhost', serviceKey ?? 'not-configured', { auth: { persistSession: false } })
 
 type TrackBody =
   | {
@@ -116,6 +115,10 @@ return data.org ? data.org.replace(/^AS\d+\s+/, '') : null
 export default async (req: Request, context: Context) => {
   if (req.method !== 'POST') {
     return new Response('Method not allowed', { status: 405 })
+  }
+
+  if (!configured) {
+    return new Response(null, { status: 204 })
   }
 
   let body: TrackBody

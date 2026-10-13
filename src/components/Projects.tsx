@@ -1,105 +1,192 @@
-import { fetchProjects } from '../lib/contentApi'
-import { useLiveContent } from '../hooks/useLiveContent'
-import { skillIcons } from './icons/TechIcons'
-import Scene from './cinematic/Scene'
-import Reveal from './cinematic/Reveal'
-import { trackExternalLink } from '../lib/analytics'
+import { Link } from 'react-router-dom'
+import { ArrowUpRight, Building2 } from 'lucide-react'
+import { useRoleSlugs } from '../hooks/useExperience'
+import { projectSlugFor, usePortfolio, type EngagementItem, type ProjectItem } from '../hooks/useProjects'
+import { trackProjectClick } from '../lib/analytics'
+import Section from './shell/Section'
+import CompanyLogo from './ui/CompanyLogo'
+import ScrollRevealText from './ui/ScrollRevealText'
+import ShowcaseStack from './ui/ShowcaseStack'
+
+const TONES = ['#4c76ff', '#22c55e', '#f59e0b', '#a855f7']
+
+const shell =
+  'mx-auto w-[min(92vw,1200px)] overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-2xl dark:border-neutral-800 dark:bg-zinc-950'
+
+const pill =
+  'inline-flex h-12 items-center rounded-full px-7 text-xs font-bold uppercase tracking-widest transition-transform hover:scale-105'
+
+function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagement: EngagementItem; index: number; total: number; slug?: string; hrefFor: (client: string) => string | undefined }) {
+  const tone = TONES[index % TONES.length]
+  return (
+    <article aria-label={engagement.title} className={shell}>
+      <div className="grid md:grid-cols-[1fr_1.2fr]">
+        <div
+          className="relative flex flex-row items-center justify-between gap-3 overflow-hidden p-5 md:flex-col md:items-stretch md:justify-between md:p-12"
+          style={{ background: `linear-gradient(140deg, ${tone}40, transparent 65%)` }}
+        >
+          <span className="flex items-center gap-3">
+            <CompanyLogo company={engagement.employer} size={40} />
+            <span className="font-mono text-xs font-bold tracking-widest text-neutral-500 dark:text-neutral-400">
+              {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+            </span>
+          </span>
+          <span aria-hidden="true" className="relative hidden text-[clamp(2.2rem,4.6vw,4rem)] font-black leading-[0.95] tracking-tighter text-neutral-900 dark:text-white md:block">
+            {engagement.employer}
+          </span>
+          <span className="relative inline-flex w-fit items-center gap-2 rounded-full border border-neutral-300 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-700 dark:border-neutral-700 dark:text-neutral-300">
+            {engagement.current && <span aria-hidden="true" className="h-2 w-2 rounded-full bg-emerald-500" />}
+            {engagement.period}
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-8 p-6 md:p-12">
+          <div>
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">
+              {engagement.employer} · {engagement.role}
+            </p>
+            <h3 className="mt-3 text-2xl font-black leading-tight tracking-tight text-neutral-900 dark:text-white md:text-4xl">{engagement.title}</h3>
+            <ul className="mt-6 space-y-3">
+              {engagement.highlights.map((highlight) => (
+                <li key={highlight} className="flex gap-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 md:text-base">
+                  <span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-400 dark:bg-neutral-600" />
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="mb-3 flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">
+              <Building2 className="h-3.5 w-3.5" aria-hidden="true" />
+              {engagement.clients.length > 1 ? 'Clients' : 'Client'}
+            </p>
+            <ul className="flex flex-wrap gap-2">
+              {engagement.clients.map((client) => {
+                const href = hrefFor(client)
+                const chip = 'inline-flex rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-semibold text-neutral-800 dark:border-neutral-700 dark:text-neutral-200'
+                return (
+                  <li key={client}>
+                    {href ? (
+                      <Link to={href} className={`${chip} transition-colors hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-black`}>
+                        {client}
+                      </Link>
+                    ) : (
+                      <span className={chip}>{client}</span>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <Link to={`/projects?employer=${engagement.employerKey}#archive`} className={`${pill} bg-neutral-900 text-white dark:bg-white dark:text-black`}>
+              View projects
+            </Link>
+            {slug && (
+              <Link
+                to={`/experience#${slug}`}
+                className={`${pill} border-2 border-neutral-300 text-neutral-900 hover:bg-neutral-900 hover:text-white dark:border-neutral-700 dark:text-white dark:hover:bg-white dark:hover:text-black`}
+              >
+                Role details
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+function CaseStudyCard({ item, index, total }: { item: ProjectItem; index: number; total: number }) {
+  return (
+    <article aria-label={item.title} className={shell}>
+      <div className="grid md:grid-cols-[1fr_1.2fr]">
+        <div className="relative flex min-h-[200px] flex-col justify-between gap-4 overflow-hidden bg-gradient-to-br from-sky-500/20 to-transparent p-6 md:p-12">
+          <span className="font-mono text-xs font-bold tracking-widest text-neutral-500 dark:text-neutral-400">
+            {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+          </span>
+          {item.image ? (
+            <img src={item.image} alt={`Screenshot of ${item.title}`} loading="lazy" width={640} height={360} className="w-full rounded-xl object-cover shadow-2xl" />
+          ) : (
+            <span aria-hidden="true" className="text-[clamp(2.2rem,4.6vw,4rem)] font-black leading-[0.95] tracking-tighter text-neutral-900 dark:text-white">
+              {item.title}
+            </span>
+          )}
+        </div>
+        <div className="flex flex-col gap-6 p-6 md:p-12">
+          <h3 className="text-2xl font-black tracking-tight text-neutral-900 dark:text-white md:text-4xl">{item.title}</h3>
+          <p className="text-base leading-relaxed text-neutral-600 dark:text-neutral-400">{item.description}</p>
+          {item.tags.length > 0 && (
+            <ul className="flex flex-wrap gap-2">
+              {item.tags.map((tag) => (
+                <li key={tag} className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-semibold text-neutral-800 dark:border-neutral-700 dark:text-neutral-200">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="flex flex-wrap gap-3">
+            {item.url && (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackProjectClick(item.title, item.url ?? undefined)}
+                className={`${pill} gap-2 bg-neutral-900 text-white dark:bg-white dark:text-black`}
+              >
+                Visit project
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
+            )}
+            <Link to="/projects" className={`${pill} border-2 border-neutral-300 text-neutral-900 hover:bg-neutral-900 hover:text-white dark:border-neutral-700 dark:text-white dark:hover:bg-white dark:hover:text-black`}>
+              All projects
+            </Link>
+          </div>
+        </div>
+      </div>
+    </article>
+  )
+}
 
 export default function Projects() {
-  const projects = useLiveContent(fetchProjects, [])
+  const { items, engagements } = usePortfolio()
+  const slugs = useRoleSlugs()
+  const cases = items.filter((item) => item.kind === 'case-study').slice(0, 3)
+  const hrefFor = (client: string) => {
+    const target = projectSlugFor(items, client)
+    return target ? `/projects/${target}` : undefined
+  }
+  const total = cases.length + engagements.length
 
   return (
-    <Scene id="projects" index="07" label="Projects" center={projects.length === 0}>
-      <Reveal>
-        <h2
-          id="projects-heading"
-          className="max-w-4xl mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
-        >
-          Selected <span className="text-gradient">Projects.</span>
+    <Section id="projects" index="07" label="Projects" className="relative bg-background">
+      <div className="flex min-h-[55vh] items-center justify-center px-6 py-16 text-center md:min-h-[70vh] md:py-24">
+        <h2 id="projects-heading" className="max-w-5xl text-4xl font-medium leading-[1.15] tracking-tight text-foreground md:text-6xl lg:text-7xl">
+          <ScrollRevealText text="Discover my latest work and creative solutions that bring ideas to life" />
         </h2>
-        <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
-          A closer look at a few things I&apos;ve built end to end.
-        </p>
-      </Reveal>
+      </div>
 
-      {projects.length === 0 ? (
-        <Reveal delay={0.1}>
-          <p className="mt-10 max-w-xl text-base text-muted-foreground">
-            Case studies are on the way — check back soon.
-          </p>
-        </Reveal>
-      ) : (
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
-          {projects.map((project, i) => (
-            <Reveal
-              key={project.id}
-              delay={i * 0.08}
-              className="glass-card flex h-full flex-col overflow-hidden transition-colors hover:border-accent/40"
-            >
-              {project.image && (
-                <img
-                  src={project.image}
-                  alt={`Screenshot of ${project.title}`}
-                  loading="lazy"
-                  className="h-48 w-full object-cover"
-                  width={640}
-                  height={360}
-                />
-              )}
-              <div className="flex flex-1 flex-col p-6 sm:p-8">
-                <h3 className="font-display text-2xl font-semibold leading-snug">{project.title}</h3>
-                <p className="mt-3 flex-1 text-base text-muted-foreground">{project.description}</p>
+      <ShowcaseStack>
+        {[
+          ...cases.map((item, i) => <CaseStudyCard key={item.id} item={item} index={i} total={total} />),
+          ...engagements.map((engagement, i) => (
+            <EngagementCard key={engagement.id} engagement={engagement} index={cases.length + i} total={total} slug={slugs.get(engagement.employerKey)} hrefFor={hrefFor} />
+          )),
+        ]}
+      </ShowcaseStack>
 
-                {project.tags.length > 0 && (
-                  <ul className="mt-5 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => {
-                      const Icon = skillIcons[tag]
-                      return (
-                        <li
-                          key={tag}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-sans text-xs font-medium text-foreground/90"
-                        >
-                          {Icon && <Icon className="shrink-0" />}
-                          {tag}
-                        </li>
-                      )
-                    })}
-                  </ul>
-                )}
-
-                {(project.live_url || project.repo_url) && (
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    {project.live_url && (
-                      <a
-                        href={project.live_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => trackExternalLink(project.live_url as string, `project:${project.title}:live`)}
-                        className="rounded-full border border-border px-5 py-2 text-sm font-semibold text-foreground transition hover:border-accent"
-                      >
-                        Live site
-                        <span className="sr-only"> (opens in a new tab)</span>
-                      </a>
-                    )}
-                    {project.repo_url && (
-                      <a
-                        href={project.repo_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => trackExternalLink(project.repo_url as string, `project:${project.title}:repo`)}
-                        className="rounded-full border border-border px-5 py-2 text-sm font-semibold text-foreground transition hover:border-accent"
-                      >
-                        Source
-                        <span className="sr-only"> (opens in a new tab)</span>
-                      </a>
-                    )}
-                  </div>
-                )}
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      )}
-    </Scene>
+      <div className="flex justify-center px-6 pb-16 pt-10 md:pb-24">
+        <Link
+          to="/projects"
+          className="group inline-flex items-center gap-3 rounded-full bg-foreground px-8 py-4 text-xs font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
+        >
+          View all projects
+          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:rotate-45" aria-hidden="true" />
+        </Link>
+      </div>
+    </Section>
   )
 }

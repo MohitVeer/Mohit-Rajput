@@ -9,8 +9,18 @@ export default {
         foreground: 'hsl(var(--foreground) / <alpha-value>)',
         card: 'hsl(var(--card) / <alpha-value>)',
         border: 'hsl(var(--border) / <alpha-value>)',
+        'card-foreground': 'hsl(var(--card-foreground) / <alpha-value>)',
         secondary: 'hsl(var(--secondary) / <alpha-value>)',
-        'muted-foreground': 'hsl(var(--muted-foreground) / <alpha-value>)',
+        muted: {
+          DEFAULT: 'hsl(var(--muted) / <alpha-value>)',
+          foreground: 'hsl(var(--muted-foreground) / <alpha-value>)',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover) / <alpha-value>)',
+          foreground: 'hsl(var(--popover-foreground) / <alpha-value>)',
+        },
+        input: 'hsl(var(--input) / <alpha-value>)',
+        ring: 'hsl(var(--ring) / <alpha-value>)',
         primary: {
           DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
           foreground: 'hsl(var(--primary-foreground) / <alpha-value>)',
@@ -22,27 +32,16 @@ export default {
         'accent-2': 'hsl(var(--accent-2) / <alpha-value>)',
       },
       fontFamily: {
-        display: [
-          '"SF Pro Text"',
-          '"Myriad Set Pro"',
-          '"SF Pro Icons"',
-          '"Apple Legacy Chevron"',
-          '"Helvetica Neue"',
-          'Helvetica',
-          'Arial',
-          'sans-serif',
-        ],
-        sans: [
-          '"SF Pro Text"',
-          '"Myriad Set Pro"',
-          '"SF Pro Icons"',
-          '"Apple Legacy Chevron"',
-          '"Helvetica Neue"',
-          'Helvetica',
-          'Arial',
-          'sans-serif',
-        ],
-        mono: ['ui-monospace', '"SF Mono"', 'SFMono-Regular', 'Menlo', 'Consolas', '"Liberation Mono"', 'monospace'],
+        display: ['"Inter Variable"', 'Inter', 'system-ui', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+        sans: ['"Inter Variable"', 'Inter', 'system-ui', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        signature: ['"Alex Brush"', 'cursive'],
+        mono: ['"JetBrains Mono Variable"', '"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
       boxShadow: {
         glow: '0 0 40px hsl(var(--accent) / 0.25)',
@@ -51,27 +50,28 @@ export default {
         card: '0 1px 0 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -20px rgba(0, 0, 0, 0.6)',
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translate3d(0, 0, 0)' },
-          '50%': { transform: 'translate3d(0, -18px, 0)' },
+        'text-shiny': {
+          from: { backgroundPosition: '200% center' },
+          to: { backgroundPosition: '-200% center' },
         },
-        drift: {
-          '0%, 100%': { transform: 'translate3d(0, 0, 0) scale(1)' },
-          '50%': { transform: 'translate3d(3%, -4%, 0) scale(1.06)' },
+        'gradient-flow': {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
         },
-        marquee: {
-          '0%': { transform: 'translate3d(0, 0, 0)' },
-          '100%': { transform: 'translate3d(-50%, 0, 0)' },
+        'marquee-left': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(calc(-100% - var(--gap, 1rem)))' },
         },
-        'spin-slow': {
-          to: { transform: 'rotate(360deg)' },
+        'marquee-right': {
+          from: { transform: 'translateX(calc(-100% - var(--gap, 1rem)))' },
+          to: { transform: 'translateX(0)' },
         },
       },
       animation: {
-        float: 'float 6s ease-in-out infinite',
-        drift: 'drift 16s ease-in-out infinite',
-        marquee: 'marquee 28s linear infinite',
-        'spin-slow': 'spin-slow 14s linear infinite',
+        'text-shiny': 'text-shiny 4s linear infinite',
+        'gradient-flow': 'gradient-flow 6s ease infinite',
+        'marquee-left': 'marquee-left var(--duration, 30s) linear infinite',
+        'marquee-right': 'marquee-right var(--duration, 30s) linear infinite',
       },
     },
   },

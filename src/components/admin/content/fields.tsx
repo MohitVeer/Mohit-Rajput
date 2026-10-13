@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { useId, type ReactNode } from 'react'
 
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -29,6 +29,101 @@ export function TextInput({
       placeholder={placeholder}
       className={inputClass}
     />
+  )
+}
+
+export function SelectInput<T extends string>({
+  value,
+  onChange,
+  options,
+}: {
+  value: T
+  onChange: (v: T) => void
+  options: { value: T; label: string }[]
+}) {
+  return (
+    <select value={value} onChange={(e) => onChange(e.target.value as T)} className={inputClass}>
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  )
+}
+
+export function ComboInput({
+  value,
+  onChange,
+  suggestions,
+  placeholder,
+}: {
+  value: string
+  onChange: (v: string) => void
+  suggestions: string[]
+  placeholder?: string
+}) {
+  const listId = useId()
+  return (
+    <>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        list={listId}
+        className={inputClass}
+      />
+      <datalist id={listId}>
+        {suggestions.map((suggestion) => (
+          <option key={suggestion} value={suggestion} />
+        ))}
+      </datalist>
+    </>
+  )
+}
+
+export function CheckboxField({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
+  return (
+    <label className="flex items-center gap-2.5 text-sm font-medium text-foreground">
+      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="h-4 w-4 accent-[var(--accent,#4c76ff)]" />
+      {label}
+    </label>
+  )
+}
+
+export function Hint({ children }: { children: ReactNode }) {
+  return <p className="text-xs leading-relaxed text-muted-foreground">{children}</p>
+}
+
+export function ImportBanner({
+  title,
+  body,
+  busy,
+  onImport,
+  label,
+}: {
+  title: string
+  body: string
+  busy: boolean
+  onImport: () => void
+  label: string
+}) {
+  return (
+    <div className="glass-card flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="min-w-0">
+        <p className="text-sm font-semibold">{title}</p>
+        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{body}</p>
+      </div>
+      <button
+        type="button"
+        onClick={onImport}
+        disabled={busy}
+        className="shrink-0 rounded-full border border-border px-5 py-2 text-sm font-semibold transition hover:border-accent disabled:opacity-50"
+      >
+        {busy ? 'Importing…' : label}
+      </button>
+    </div>
   )
 }
 
