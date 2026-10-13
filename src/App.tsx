@@ -2,19 +2,20 @@ import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import SiteLayout from './components/shell/SiteLayout'
 import NotFoundPage from './pages/NotFoundPage'
+import { pageLoaders } from './routes'
 
-const HomePage = lazy(() => import('./pages/HomePage'))
-const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
-const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage'))
-const ExperiencePage = lazy(() => import('./pages/ExperiencePage'))
-const SkillsPage = lazy(() => import('./pages/SkillsPage'))
-const AchievementsPage = lazy(() => import('./pages/AchievementsPage'))
-const BlogPage = lazy(() => import('./pages/BlogPage'))
-const ArticlePage = lazy(() => import('./pages/ArticlePage'))
-const ContactPage = lazy(() => import('./pages/ContactPage'))
-const ResumePage = lazy(() => import('./pages/ResumePage'))
-const PrivacyPage = lazy(() => import('./components/PrivacyNotice'))
-const Admin = lazy(() => import('./components/Admin'))
+const HomePage = lazy(pageLoaders.home)
+const ProjectsPage = lazy(pageLoaders.projects)
+const ProjectDetailPage = lazy(pageLoaders.projectDetail)
+const ExperiencePage = lazy(pageLoaders.experience)
+const SkillsPage = lazy(pageLoaders.skills)
+const AchievementsPage = lazy(pageLoaders.achievements)
+const BlogPage = lazy(pageLoaders.blog)
+const ArticlePage = lazy(pageLoaders.article)
+const ContactPage = lazy(pageLoaders.contact)
+const ResumePage = lazy(pageLoaders.resume)
+const PrivacyPage = lazy(pageLoaders.privacy)
+const Admin = lazy(pageLoaders.admin)
 
 export default function App() {
   return (
