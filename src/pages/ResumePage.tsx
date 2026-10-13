@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowLeft, Download, ExternalLink } from 'lucide-react'
@@ -9,6 +9,12 @@ import { trackResumeDownload, trackResumeView } from '../lib/analytics'
 export default function ResumePage() {
   usePageMeta('/resume')
   const reduce = useReducedMotion()
+  const [previewShown, setPreviewShown] = useState(false)
+
+  useEffect(() => {
+    const fallback = window.setTimeout(() => setPreviewShown(true), 4500)
+    return () => window.clearTimeout(fallback)
+  }, [])
 
   useEffect(() => {
     trackResumeView()
@@ -17,8 +23,8 @@ export default function ResumePage() {
   return (
     <section aria-labelledby="resume-heading" className="flex min-h-screen flex-col px-4 pb-6 pt-24 md:px-8">
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={reduce ? false : { y: -16 }}
+        animate={{ y: 0 }}
         className="mx-auto mb-4 flex w-full max-w-[1400px] flex-col items-center justify-between gap-4 md:flex-row"
       >
         <Link to="/" className="group flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground">
@@ -57,7 +63,18 @@ export default function ResumePage() {
         transition={{ delay: 0.15 }}
         className="relative mx-auto min-h-[70vh] w-full max-w-[1400px] flex-1 overflow-hidden rounded-2xl border border-border bg-muted/30"
       >
-        <iframe src={`${profile.resumeUrl}#view=FitH&navpanes=0`} title="Résumé preview" referrerPolicy="no-referrer" className="absolute inset-0 h-full w-full" />
+        {!previewShown && (
+          <p role="status" className="absolute inset-0 grid place-items-center text-sm text-muted-foreground">
+            Loading résumé preview…
+          </p>
+        )}
+        <iframe
+          src={`${profile.resumeUrl}#view=FitH&navpanes=0`}
+          title="Résumé preview"
+          referrerPolicy="no-referrer"
+          onLoad={() => window.setTimeout(() => setPreviewShown(true), 900)}
+          className={`absolute inset-0 h-full w-full ${previewShown ? 'visible' : 'invisible'}`}
+        />
       </motion.div>
       <p className="mx-auto mt-3 w-full max-w-[1400px] text-center text-xs text-muted-foreground">
         Preview not loading? Use the buttons above to download or open the PDF.

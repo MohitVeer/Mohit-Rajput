@@ -154,7 +154,7 @@ function HeroImage({ item, index, register }: { item: Achievement; index: number
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, delay: index * 0.1, ease: [0.215, 0.61, 0.355, 1] }}
+        transition={{ duration: 0.6, delay: index * 0.03, ease: [0.215, 0.61, 0.355, 1] }}
         className="relative h-full w-full"
       >
         <ShowcaseImage item={item} />
