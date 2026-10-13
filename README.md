@@ -43,7 +43,8 @@ A modern, responsive portfolio showcasing my work as a front-end developer with 
 - Dark & Light theme
 - Scroll-driven animations (Framer Motion + Lenis)
 - Enterprise experience timeline
-- Original Salesforce certificates, superbadges, Trailhead status and awards
+- Original Salesforce certificates, superbadges, Trailhead status and awards, plus course, training and internship certificates from Udemy, freeCodeCamp, Internshala and Forelsket
+- Employer logos next to every role and downloadable role documents (experience letter, relieving letter, …) managed from the admin
 - Client projects drawn from professional experience (Wipro, Mphasis Silverline, DJT), overridable from the admin CMS
 - Live GitHub integration — contribution heatmap, languages and recent activity refresh automatically
 - Contact form that delivers by email to the owner, with a hire-me call to action
@@ -73,9 +74,21 @@ Most portfolio content—including projects, certifications, skills, experience,
 
 ---
 
+## 🛠️ Admin CMS
+
+`/admin` (Supabase sign-in) edits the content tables live, with no deploy needed: Experience (with role documents), Skills, Certifications, Superbadges, Projects, Engagement cards, Articles, FAQ and Numbers & tags (Trailhead figures, impact numbers, hero tags).
+
+- The site is **database-first**: when a table has rows they replace the built-in content from `src/data`; when it is empty the built-in content is shown. Every editor can import the built-in entries, and Experience and Certifications offer **Add missing roles / certificates** for entries that exist in code but are not in the database yet.
+- Role documents (experience, relieving or offer letters, certificates) are added under Experience → Documents. Uploads go to the public Supabase Storage bucket `documents` (PDF, PNG, JPG or WebP up to 10 MB) and appear as links under the role.
+- Content edits are live immediately. New project or article pages get their own meta tags and sitemap entry on the next deploy, because the build reads the tables when `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` are set (and falls back to the built-in pages if the database cannot be reached).
+- The database setup lives in `supabase/migrations`.
+
+---
+
 ## 🔎 SEO and Search Console
 
 - `npm run build` pre-renders `projects/*.html`, `blog/*.html` and every top-level route (see `vite.seo.ts` and `src/lib/seo.ts`) and writes `sitemap.xml`; Netlify serves these files before the SPA fallback, so crawlers and link previews see the right tags without running JavaScript
+- Page titles and descriptions have one source, `src/lib/siteRoutes.ts` (the home `<head>` is rewritten from it at build); the headline wording is `SITE_ROLE` in `src/lib/site.ts`
 - Verify the site in Google Search Console with the **HTML tag** method on the URL-prefix property `https://mohitveer.netlify.app`, copy the token from the meta tag, set `GOOGLE_SITE_VERIFICATION` (and optionally `BING_SITE_VERIFICATION`) in the Netlify environment, redeploy, then press Verify
 - Submit `https://mohitveer.netlify.app/sitemap.xml` under Sitemaps and request indexing for the home page and a few project pages
 
