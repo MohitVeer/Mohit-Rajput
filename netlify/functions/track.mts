@@ -1,10 +1,12 @@
 import type { Context } from '@netlify/functions'
-import { createClient } from '@supabase/supabase-js'
+import { PostgrestClient } from '@supabase/postgrest-js'
 
 const supabaseUrl = process.env.SUPABASE_URL
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 const configured = Boolean(supabaseUrl && serviceKey)
-const supabase = createClient(supabaseUrl ?? 'http://localhost', serviceKey ?? 'not-configured', { auth: { persistSession: false } })
+const supabase = new PostgrestClient(`${supabaseUrl ?? 'http://localhost'}/rest/v1`, {
+  headers: { apikey: serviceKey ?? 'not-configured', Authorization: `Bearer ${serviceKey ?? 'not-configured'}` },
+})
 
 type TrackBody =
   | {
