@@ -3,7 +3,7 @@ import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchArticles, type ArticleRow } from '../../../lib/contentApi'
 import { createArticle, deleteArticle, updateArticle } from '../../../lib/contentAdminApi'
 import { slugify } from '../../../lib/slug'
-import { EditorCard, Field, Hint, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './fields'
+import { EditorCard, Field, Hint, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './EditorFields'
 
 type Draft = Omit<ArticleRow, 'id' | 'sort_order'>
 

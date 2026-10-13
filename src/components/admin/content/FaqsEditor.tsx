@@ -3,7 +3,7 @@ import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchFaqs, type FaqRow } from '../../../lib/contentApi'
 import { createFaq, createFaqs, deleteFaq, updateFaq } from '../../../lib/contentAdminApi'
 import { builtInFaqRows } from '../../../lib/contentModel'
-import { EditorCard, Field, Hint, ImportBanner, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './fields'
+import { EditorCard, Field, Hint, ImportBanner, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './EditorFields'
 
 type Draft = Pick<FaqRow, 'question' | 'answer'>
 

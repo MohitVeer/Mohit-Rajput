@@ -1,15 +1,26 @@
-
-
 const VISITOR_KEY = 'mr_visitor_uid'
 const SESSION_KEY = 'mr_session_id'
 const DNT_KEY = 'mr_dnt'
 const ENDPOINT = '/api/track'
+const HEARTBEAT_INTERVAL_MS = 20_000
+const SCROLL_MILESTONES = [25, 50, 75, 90, 100]
+
+let sessionStartedAt = 0
+let currentPath = ''
+let pageEnteredAt = 0
+let maxScrollPct = 0
+let initialized = false
+let trackingDisabledInMemory = false
+let heartbeatTimer: ReturnType<typeof setInterval> | undefined
+let cleanupAnalytics: (() => void) | undefined
+const firedMilestones = new Set<number>()
 
 function uuid() {
   return crypto.randomUUID()
 }
 
 export function isTrackingDisabled(): boolean {
+  if (trackingDisabledInMemory) return true
   try {
     return localStorage.getItem(DNT_KEY) === '1'
   } catch {
@@ -18,9 +29,29 @@ export function isTrackingDisabled(): boolean {
 }
 
 export function setTrackingDisabled(disabled: boolean) {
+  trackingDisabledInMemory = disabled
   try {
     localStorage.setItem(DNT_KEY, disabled ? '1' : '0')
+  } catch {
+    if (disabled) {
+      cleanupAnalytics?.()
+      cleanupAnalytics = undefined
+      initialized = false
+      return
+    }
+  }
+
+  if (disabled) {
+    cleanupAnalytics?.()
+    cleanupAnalytics = undefined
+    initialized = false
+    return
+  }
+
+  try {
+    sessionStorage.removeItem(SESSION_KEY)
   } catch {}
+  initAnalytics()
 }
 
 function getVisitorUid(): string {
@@ -52,17 +83,18 @@ function getSessionId(): string {
 function send(body: unknown, useBeacon = false) {
   if (isTrackingDisabled()) return
   const payload = JSON.stringify(body)
+
   if (useBeacon && navigator.sendBeacon) {
     navigator.sendBeacon(ENDPOINT, new Blob([payload], { type: 'application/json' }))
-  } else {
-    fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload,
-      keepalive: true,
-    }).catch(() => {
-    })
+    return
   }
+
+  fetch(ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: payload,
+    keepalive: true,
+  }).catch(() => undefined)
 }
 
 function getUtmParams() {
@@ -74,26 +106,21 @@ function getUtmParams() {
   }
 }
 
-let sessionStartedAt = 0
-let currentPath = ''
-let pageEnteredAt = 0
-let maxScrollPct = 0
-const firedMilestones = new Set<number>()
-let heartbeatTimer: ReturnType<typeof setInterval> | undefined
-const HEARTBEAT_INTERVAL_MS = 20_000
-const SCROLL_MILESTONES = [25, 50, 75, 90, 100]
-
 export function initAnalytics() {
-  if (isTrackingDisabled()) return
+  if (initialized || isTrackingDisabled()) return
 
+  initialized = true
   sessionStartedAt = Date.now()
   currentPath = window.location.pathname
   pageEnteredAt = sessionStartedAt
+  maxScrollPct = 0
+  firedMilestones.clear()
 
+  const sessionId = getSessionId()
   send({
     type: 'session_start',
     visitorUid: getVisitorUid(),
-    sessionId: getSessionId(),
+    sessionId,
     path: currentPath,
     referrer: document.referrer || '',
     utm: getUtmParams(),
@@ -102,16 +129,16 @@ export function initAnalytics() {
     colorScheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
     screen: { width: window.screen.width, height: window.screen.height },
   })
+  send({ type: 'page_view', sessionId, path: currentPath })
 
-  send({ type: 'page_view', sessionId: getSessionId(), path: currentPath })
-
-const onScroll = () => {
+  const onScroll = () => {
     const doc = document.documentElement
-    const scrolled = doc.scrollTop
     const total = doc.scrollHeight - doc.clientHeight
     if (total <= 0) return
-    const pct = Math.min(100, Math.round((scrolled / total) * 100))
+
+    const pct = Math.min(100, Math.round((doc.scrollTop / total) * 100))
     maxScrollPct = Math.max(maxScrollPct, pct)
+
     for (const milestone of SCROLL_MILESTONES) {
       if (pct >= milestone && !firedMilestones.has(milestone)) {
         firedMilestones.add(milestone)
@@ -119,23 +146,17 @@ const onScroll = () => {
       }
     }
   }
-  window.addEventListener('scroll', onScroll, { passive: true })
 
-const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(), path: currentPath })
+  const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(), path: currentPath })
   const startHeartbeat = () => {
     if (heartbeatTimer) return
     sendHeartbeat()
     heartbeatTimer = setInterval(sendHeartbeat, HEARTBEAT_INTERVAL_MS)
   }
   const stopHeartbeat = () => {
-    clearInterval(heartbeatTimer)
+    if (heartbeatTimer) clearInterval(heartbeatTimer)
     heartbeatTimer = undefined
   }
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') startHeartbeat()
-    else stopHeartbeat()
-  })
-  startHeartbeat()
 
   const flushPageEnd = () => {
     send(
@@ -150,7 +171,10 @@ const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(),
     )
   }
 
+  let sessionEnded = false
   const endSession = () => {
+    if (sessionEnded) return
+    sessionEnded = true
     stopHeartbeat()
     flushPageEnd()
     send(
@@ -164,10 +188,22 @@ const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(),
     )
   }
 
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') endSession()
-  })
+  const onVisibilityChange = () => {
+    if (document.visibilityState === 'visible') startHeartbeat()
+    else stopHeartbeat()
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('pagehide', endSession)
+  document.addEventListener('visibilitychange', onVisibilityChange)
+  startHeartbeat()
+
+  cleanupAnalytics = () => {
+    stopHeartbeat()
+    window.removeEventListener('scroll', onScroll)
+    window.removeEventListener('pagehide', endSession)
+    document.removeEventListener('visibilitychange', onVisibilityChange)
+  }
 }
 
 export function trackPageView(path: string) {
@@ -177,13 +213,17 @@ export function trackPageView(path: string) {
     return
   }
   if (path === currentPath) return
-  send({
-    type: 'page_view_end',
-    sessionId: getSessionId(),
-    path: currentPath,
-    durationSeconds: Math.round((Date.now() - pageEnteredAt) / 1000),
-    maxScrollPct,
-  })
+
+  send(
+    {
+      type: 'page_view_end',
+      sessionId: getSessionId(),
+      path: currentPath,
+      durationSeconds: Math.round((Date.now() - pageEnteredAt) / 1000),
+      maxScrollPct,
+    },
+  )
+
   currentPath = path
   pageEnteredAt = Date.now()
   maxScrollPct = 0

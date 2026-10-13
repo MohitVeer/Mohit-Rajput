@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { fetchSettings, resetSettingsCache } from '../../../lib/contentApi'
 import { deleteSetting, saveSetting } from '../../../lib/contentAdminApi'
 import { defaultSettings, resolveSettings, type SettingKey, type SiteSettings, type StatItem, type TrailheadData } from '../../../lib/siteSettings'
-import { cleanLines, EditorCard, Field, Hint, ListTextArea, TextInput } from './fields'
+import { cleanLines, EditorCard, Field, Hint, ListTextArea, TextInput } from './EditorFields'
 
 interface Loaded {
   settings: SiteSettings

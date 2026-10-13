@@ -5,7 +5,7 @@ import { createExperience, createExperiences, deleteExperience, updateExperience
 import { missingBuiltInExperience } from '../../../lib/contentModel'
 import { cleanDocuments } from '../../../lib/documents'
 import DocumentsField from './DocumentsField'
-import { cleanLines, EditorCard, Field, ImportBanner, ListTextArea, MoveButtons, SaveDeleteRow, TextInput } from './fields'
+import { cleanLines, EditorCard, Field, ImportBanner, ListTextArea, MoveButtons, SaveDeleteRow, TextInput } from './EditorFields'
 
 type Draft = Omit<ExperienceRow, 'id' | 'sort_order'>
 

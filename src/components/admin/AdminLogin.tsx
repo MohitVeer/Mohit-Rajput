@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { useState, type FormEvent } from 'react'
 import { supabase } from '../../lib/supabaseClient'
 
 export default function AdminLogin({ onSignedIn }: { onSignedIn: () => void }) {
@@ -7,18 +7,28 @@ export default function AdminLogin({ onSignedIn }: { onSignedIn: () => void }) {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    if (!supabase) return
-    setLoading(true)
-    setError(null)
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
-    setLoading(false)
-    if (signInError) {
-      setError(signInError.message)
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!supabase) {
+      setError('Admin sign-in is not configured.')
       return
     }
-    onSignedIn()
+
+    setLoading(true)
+    setError(null)
+
+    try {
+      const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+      if (signInError) {
+        setError('Unable to sign in. Check your credentials and try again.')
+        return
+      }
+      onSignedIn()
+    } catch {
+      setError('Unable to sign in. Check your credentials and try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

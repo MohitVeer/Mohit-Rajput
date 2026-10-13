@@ -4,7 +4,7 @@ import { fetchProjects, type ProjectKind, type ProjectRow, type ProjectStatus } 
 import { createProject, createProjects, deleteProject, updateProject } from '../../../lib/contentAdminApi'
 import { builtInProjectRows, employerSuggestions } from '../../../lib/contentModel'
 import { slugify } from '../../../lib/slug'
-import { cleanLines, ComboInput, EditorCard, Field, Hint, ImportBanner, ListTextArea, MoveButtons, SaveDeleteRow, SelectInput, TextArea, TextInput } from './fields'
+import { cleanLines, ComboInput, EditorCard, Field, Hint, ImportBanner, ListTextArea, MoveButtons, SaveDeleteRow, SelectInput, TextArea, TextInput } from './EditorFields'
 
 type Draft = {
   title: string

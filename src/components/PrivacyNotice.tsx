@@ -22,20 +22,21 @@ export default function PrivacyNotice() {
       <h1 className="mt-6 font-display text-3xl font-semibold sm:text-4xl">Privacy &amp; analytics</h1>
 
       <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-        This site collects lightweight, aggregate usage analytics so I can understand how the
-        portfolio is used — for example, which sections get read, whether the resume was viewed or
-        downloaded, and roughly which country and device visitors are on. It's built and hosted by
-        me; no third-party analytics or advertising service is involved.
+        This site uses first-party analytics to understand how the portfolio is used — for example,
+        which pages get read, whether the résumé was viewed or downloaded, and the approximate
+        location and device type of a visit. The admin dashboard can show individual pseudonymous
+        sessions, including the current page and recent activity, as well as aggregate reports. It is
+        built and hosted by me; no third-party advertising or analytics platform is involved.
       </p>
 
       <h2 className="mt-10 font-display text-xl font-semibold">What's collected</h2>
       <ul className="mt-4 list-disc space-y-2 pl-5 text-base text-muted-foreground">
-        <li>Pages viewed, time on page, and scroll depth (aggregate, not per-visitor detail)</li>
+        <li>Pages viewed, time on page, scroll depth, and interactions, linked to a pseudonymous session</li>
         <li>Interactions like resume views/downloads, certification and article clicks</li>
         <li>Approximate country/region/city, derived from your network's location — not your device's precise location</li>
         <li>Browser, operating system, and device type (desktop/mobile/tablet)</li>
         <li>Referring site and any UTM campaign parameters</li>
-        <li>A random, first-party id stored in your browser, used only to distinguish new vs. returning visits</li>
+        <li>A random first-party browser ID used to associate sessions from the same browser and estimate returning visits</li>
       </ul>
 
       <h2 className="mt-10 font-display text-xl font-semibold">What's not collected</h2>

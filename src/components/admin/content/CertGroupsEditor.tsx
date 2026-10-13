@@ -3,7 +3,7 @@ import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchCertGroups, type Cert, type CertGroupRow } from '../../../lib/contentApi'
 import { createCertGroup, createCertGroups, deleteCertGroup, updateCertGroup } from '../../../lib/contentAdminApi'
 import { missingBuiltInCerts } from '../../../lib/contentModel'
-import { EditorCard, Field, Hint, ImportBanner, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './fields'
+import { EditorCard, Field, Hint, ImportBanner, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './EditorFields'
 
 type Draft = { title: string; logo: string; certs: Cert[] }
 

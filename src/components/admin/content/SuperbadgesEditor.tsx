@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchSuperbadges, type SuperbadgeRow } from '../../../lib/contentApi'
 import { createSuperbadge, deleteSuperbadge, updateSuperbadge } from '../../../lib/contentAdminApi'
-import { EditorCard, Field, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './fields'
+import { EditorCard, Field, MoveButtons, SaveDeleteRow, TextArea, TextInput } from './EditorFields'
 
 type Draft = Omit<SuperbadgeRow, 'id' | 'sort_order'>
 

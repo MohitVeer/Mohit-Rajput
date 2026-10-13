@@ -2,7 +2,7 @@ import { useId, useState } from 'react'
 import type { DocumentKind, ExperienceDocument } from '../../../lib/contentApi'
 import { uploadDocument } from '../../../lib/contentAdminApi'
 import { ALLOWED_DOCUMENT_TYPES, defaultDocumentLabel, DOCUMENT_KINDS, MAX_DOCUMENT_BYTES } from '../../../lib/documents'
-import { Field, Hint, SelectInput, TextInput } from './fields'
+import { Field, Hint, SelectInput, TextInput } from './EditorFields'
 
 export default function DocumentsField({
   value,
