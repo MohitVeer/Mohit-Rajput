@@ -60,7 +60,7 @@ export default function BackToTop() {
           ref={wrapperRef}
           onMouseMove={onMouseMove}
           onMouseLeave={onMouseLeave}
-          className="fixed bottom-4 right-4 z-[60] flex h-24 w-24 items-center justify-center"
+          className="pointer-events-none fixed bottom-[calc(2.5rem+env(safe-area-inset-bottom,0px))] right-3 z-[60] flex h-16 w-16 items-center justify-center md:bottom-4 md:right-4 md:h-24 md:w-24"
         >
           <motion.button
             type="button"
@@ -71,9 +71,9 @@ export default function BackToTop() {
             transition={{ duration: 0.2 }}
             onClick={scrollToTop}
             style={{ x: springX, y: springY }}
-            className="group pointer-events-auto relative flex h-14 w-14 items-center justify-center rounded-full border border-background/20 bg-foreground text-background shadow-2xl backdrop-blur-md"
+            className="group pointer-events-auto relative flex h-12 w-12 items-center justify-center rounded-full border border-background/20 bg-foreground text-background shadow-2xl backdrop-blur-md md:h-14 md:w-14"
           >
-            <ArrowUp className="h-6 w-6 transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110" aria-hidden="true" />
+            <ArrowUp className="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110 md:h-6 md:w-6" aria-hidden="true" />
             <span aria-hidden="true" className="absolute inset-0 -z-10 rounded-full bg-foreground/10 blur-xl transition-all group-hover:blur-2xl" />
           </motion.button>
         </div>

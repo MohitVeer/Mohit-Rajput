@@ -36,7 +36,7 @@ export default function CoreFocus({ groups }: { groups: SkillGroupRow[] }) {
           <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.4em] text-muted-foreground">Capabilities &amp; architectures</p>
         </div>
 
-        <div role="tablist" aria-label="Skill categories" className="mx-auto mt-12 flex max-w-5xl flex-wrap justify-center gap-1 rounded-2xl border border-border bg-card/50 p-1.5 backdrop-blur md:flex-nowrap">
+        <div role="tablist" aria-label="Skill categories" className="mx-auto mt-12 flex max-w-5xl flex-nowrap gap-1 overflow-x-auto rounded-2xl border border-border bg-card/50 p-1.5 backdrop-blur [scrollbar-width:none] md:overflow-visible [&::-webkit-scrollbar]:hidden">
           {groups.map((group, i) => (
             <button
               key={group.id}
@@ -52,7 +52,7 @@ export default function CoreFocus({ groups }: { groups: SkillGroupRow[] }) {
               onClick={() => setActive(i)}
               onKeyDown={(event) => onKeyDown(event, i)}
               className={cn(
-                'flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-xs font-bold transition-colors md:text-sm',
+                'flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-3 text-xs font-bold transition-colors md:flex-1 md:text-sm',
                 active === i ? 'bg-foreground text-background' : 'text-muted-foreground hover:text-foreground',
               )}
             >

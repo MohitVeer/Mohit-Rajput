@@ -42,7 +42,7 @@ export default function AboutLeadIn() {
           <div className="relative mb-8 cursor-default md:mb-14">
             <h2
               id="about-heading"
-              className="text-[clamp(26px,8vw,40px)] font-bold leading-[0.92] tracking-tight text-zinc-900 transition-all duration-700 dark:text-white sm:text-[48px] md:text-[clamp(40px,min(7.5vw,10vh),64px)] lg:text-[clamp(44px,min(5.4vw,10vh),88px)]"
+              className="text-[clamp(26px,8vw,40px)] font-bold leading-[1.1] tracking-tight sm:leading-[0.92] text-zinc-900 transition-all duration-700 dark:text-white sm:text-[48px] md:text-[clamp(40px,min(7.5vw,10vh),64px)] lg:text-[clamp(44px,min(5.4vw,10vh),88px)]"
             >
               <span aria-hidden="true" className="mr-2 text-zinc-300 transition-colors duration-700 group-hover:text-zinc-400 dark:text-zinc-700 dark:group-hover:text-zinc-500">
                 “

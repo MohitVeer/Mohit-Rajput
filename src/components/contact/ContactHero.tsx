@@ -4,7 +4,7 @@ const ROWS = ["Let's build something great · Open to opportunities worldwide ·
 
 export default function ContactHero() {
   return (
-    <section aria-labelledby="contact-heading" className="relative w-full pb-20 pt-40 md:pt-48">
+    <section aria-labelledby="contact-heading" className="relative w-full pb-10 pt-32 md:pb-20 md:pt-48">
       <h1 id="contact-heading" className="sr-only">
         Contact Mohit Rajput
       </h1>

@@ -89,7 +89,7 @@ export default function DeliveryCards({ title, items }: { title: string; items: 
   }
 
   return (
-    <section aria-labelledby="delivery-heading" ref={containerRef} className="relative" style={{ height: `calc(100vh + ${travel * 1.1}px)` }}>
+    <section aria-labelledby="delivery-heading" ref={containerRef} className="relative" style={{ height: `calc(var(--vh) + ${travel * 1.1}px)` }}>
       <div className="sticky top-0 flex h-screen flex-col justify-center gap-12 overflow-hidden px-12 lg:px-24">
         {header}
         <motion.ul ref={trackRef} style={{ x }} className="flex w-max gap-6 will-change-transform">

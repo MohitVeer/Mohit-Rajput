@@ -28,7 +28,7 @@ export default function ContactPage() {
       <motion.div className="relative z-10" style={sheet ? { opacity: fade, scale: shrink } : undefined}>
         <ContactHero />
 
-        <section aria-labelledby="talk-heading" className="mx-auto max-w-[1800px] px-4 pb-24 md:px-8 lg:pb-40">
+        <section aria-labelledby="talk-heading" className="mx-auto max-w-[1800px] px-4 pb-12 md:px-8 md:pb-24 lg:pb-40">
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-20">
             <div className="relative z-20 col-span-1 lg:sticky lg:top-0 lg:col-span-4 lg:min-h-[90vh]">
               <WiproLanyard />
@@ -40,7 +40,7 @@ export default function ContactPage() {
               </motion.div>
 
               <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <div className="mb-16">
+                <div className="mb-10 md:mb-16">
                   <h2 id="talk-heading" className="relative z-10 text-5xl font-black uppercase tracking-tight text-foreground md:text-7xl">
                     Let&apos;s talk
                   </h2>
@@ -62,7 +62,7 @@ export default function ContactPage() {
             <div aria-hidden="true" className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
           </>
         )}
-        <div className="relative z-10 mx-auto max-w-[1700px] py-16 md:px-8 lg:py-32">
+        <div className="relative z-10 mx-auto max-w-[1700px] py-4 md:px-8 md:py-16 lg:py-32">
           <Faq />
         </div>
       </motion.div>
