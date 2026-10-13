@@ -7,9 +7,9 @@ import {
   type Engagement,
 } from '../data/clientProjects'
 import { faq as builtInFaq } from '../data/faq'
-import { articles as builtInArticles } from '../data/profile'
+import { articles as builtInArticles, certGroups as builtInCertGroups, experience as builtInExperience } from '../data/profile'
 import type { ArticleItem } from './articleUtils'
-import type { ArticleRow, EngagementRow, FaqRow, ProjectKind, ProjectRow, ProjectStatus } from './contentApi'
+import type { ArticleRow, Cert, CertGroupRow, EngagementRow, ExperienceRow, FaqRow, ProjectKind, ProjectRow, ProjectStatus } from './contentApi'
 import { resolveSlugs } from './slug'
 
 export type { ProjectKind, ProjectStatus }
@@ -277,4 +277,58 @@ export function builtInFaqRows(startOrder = 0): Omit<FaqRow, 'id'>[] {
 
 export function employerSuggestions(): string[] {
   return Array.from(new Set(clientProjects.map((project) => project.employer)))
+}
+
+const norm = (value: string) => value.trim().toLowerCase()
+
+export function builtInCertGroupList(): { title: string; logo: string; certs: Cert[] }[] {
+  return builtInCertGroups.map((group) => ({
+    title: group.title,
+    logo: group.logo,
+    certs: Array.isArray(group.certs) ? group.certs : [group.certs],
+  }))
+}
+
+export function missingBuiltInExperience(rows: ExperienceRow[]): Omit<ExperienceRow, 'id'>[] {
+  const next = rows.reduce((max, row) => Math.max(max, row.sort_order), -1) + 1
+  return builtInExperience
+    .filter((job) => !rows.some((row) => norm(row.company) === norm(job.company) && (norm(row.role) === norm(job.role) || norm(row.period) === norm(job.period))))
+    .map((job, index) => ({
+      role: job.role,
+      company: job.company,
+      period: job.period,
+      location: job.location,
+      bullets: [...job.bullets],
+      achievements: [...(job.achievements ?? [])],
+      clients: [...job.clients],
+      documents: [...(job.documents ?? [])],
+      sort_order: next + index,
+    }))
+}
+
+export interface CertPlan {
+  add: Omit<CertGroupRow, 'id'>[]
+  extend: { id: string; certs: Cert[] }[]
+  names: string[]
+}
+
+export function missingBuiltInCerts(rows: CertGroupRow[]): CertPlan {
+  const next = rows.reduce((max, row) => Math.max(max, row.sort_order), -1) + 1
+  const plan: CertPlan = { add: [], extend: [], names: [] }
+
+  for (const group of builtInCertGroupList()) {
+    const existing = rows.find((row) => norm(row.title) === norm(group.title))
+    if (!existing) {
+      plan.add.push({ title: group.title, logo: group.logo || null, certs: group.certs, sort_order: next + plan.add.length })
+      plan.names.push(...group.certs.map((cert) => cert.name))
+      continue
+    }
+    const have = new Set(existing.certs.map((cert) => norm(cert.name)))
+    const extra = group.certs.filter((cert) => !have.has(norm(cert.name)))
+    if (extra.length > 0) {
+      plan.extend.push({ id: existing.id, certs: [...existing.certs, ...extra] })
+      plan.names.push(...extra.map((cert) => cert.name))
+    }
+  }
+  return plan
 }

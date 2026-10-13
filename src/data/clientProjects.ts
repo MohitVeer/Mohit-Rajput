@@ -236,6 +236,7 @@ export function employerKeyFor(company: string): string | null {
   if (name.includes('mphasis') || name.includes('silverline')) return 'mphasis'
   if (name.includes('djt')) return 'djt'
   if (name.includes('escade')) return 'escade'
+  if (name.includes('forelsket')) return 'forelsket'
   return null
 }
 

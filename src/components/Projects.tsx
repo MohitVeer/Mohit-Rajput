@@ -4,6 +4,7 @@ import { useRoleSlugs } from '../hooks/useExperience'
 import { projectSlugFor, usePortfolio, type EngagementItem, type ProjectItem } from '../hooks/useProjects'
 import { trackProjectClick } from '../lib/analytics'
 import Section from './shell/Section'
+import CompanyLogo from './ui/CompanyLogo'
 import ScrollRevealText from './ui/ScrollRevealText'
 import ShowcaseStack from './ui/ShowcaseStack'
 
@@ -24,8 +25,11 @@ function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagemen
           className="relative flex flex-row items-center justify-between gap-3 overflow-hidden p-5 md:flex-col md:items-stretch md:justify-between md:p-12"
           style={{ background: `linear-gradient(140deg, ${tone}40, transparent 65%)` }}
         >
-          <span className="font-mono text-xs font-bold tracking-widest text-neutral-500 dark:text-neutral-400">
-            {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+          <span className="flex items-center gap-3">
+            <CompanyLogo company={engagement.employer} size={40} />
+            <span className="font-mono text-xs font-bold tracking-widest text-neutral-500 dark:text-neutral-400">
+              {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+            </span>
           </span>
           <span aria-hidden="true" className="relative hidden text-[clamp(2.2rem,4.6vw,4rem)] font-black leading-[0.95] tracking-tighter text-neutral-900 dark:text-white md:block">
             {engagement.employer}

@@ -6,6 +6,8 @@ import { trackEvent, trackExternalLink } from '../../lib/analytics'
 import FullscreenDialog from '../ui/FullscreenDialog'
 import AchievementThumb from './AchievementThumb'
 
+const isPdf = (path: string) => /\.pdf$/i.test(path)
+
 interface AchievementViewerProps {
   items: Achievement[]
   index: number | null
@@ -94,12 +96,12 @@ export default function AchievementViewer({ items, index, onClose, onNavigate }:
               {item.fileUrl && (
                 <a
                   href={item.fileUrl}
-                  download
+                  {...(isPdf(item.fileUrl) ? { download: true } : { target: '_blank', rel: 'noopener noreferrer' })}
                   onClick={() => trackEvent('Certification', 'cert_download', item.title)}
                   className="inline-flex items-center gap-2 rounded-full border-2 border-neutral-200 px-6 py-3 text-xs font-bold uppercase tracking-widest text-foreground transition-colors hover:bg-foreground hover:text-background dark:border-white/20"
                 >
-                  <Download className="h-4 w-4" aria-hidden="true" />
-                  Download PDF
+                  {isPdf(item.fileUrl) ? <Download className="h-4 w-4" aria-hidden="true" /> : <ArrowUpRight className="h-4 w-4" aria-hidden="true" />}
+                  {isPdf(item.fileUrl) ? 'Download PDF' : 'Open original'}
                 </a>
               )}
             </div>

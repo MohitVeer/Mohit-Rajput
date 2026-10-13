@@ -1,10 +1,12 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useSpring } from 'framer-motion'
-import { ArrowUpRight, Award, Building2, MapPin } from 'lucide-react'
+import { ArrowUpRight, Award, Building2, FileText, MapPin } from 'lucide-react'
 import { projectSlugFor, useProjects, type ProjectItem } from '../../hooks/useProjects'
-import type { ExperienceRow } from '../../lib/contentApi'
+import type { ExperienceDocument, ExperienceRow } from '../../lib/contentApi'
+import { trackEvent } from '../../lib/analytics'
 import { clientsForJob, extractTech, groupByYear, jobSlug } from '../../lib/experienceUtils'
+import CompanyLogo from '../ui/CompanyLogo'
 
 function Chips({ items, tone, hrefFor }: { items: string[]; tone: 'tech' | 'award' | 'client'; hrefFor?: (item: string) => string | undefined }) {
   if (items.length === 0) return null
@@ -42,10 +44,34 @@ function Chips({ items, tone, hrefFor }: { items: string[]; tone: 'tech' | 'awar
   )
 }
 
+function Documents({ job, documents }: { job: ExperienceRow; documents: ExperienceDocument[] }) {
+  return (
+    <ul className="flex flex-wrap gap-2">
+      {documents.map((document) => (
+        <li key={`${document.kind}-${document.url}`}>
+          <a
+            href={document.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent('Document', 'document_open', `${job.company} — ${document.label}`)}
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-[10px] font-bold uppercase leading-snug tracking-wider text-foreground transition-colors hover:border-foreground/40 hover:bg-foreground/5"
+          >
+            <FileText className="h-3 w-3 shrink-0" aria-hidden="true" />
+            {document.label}
+            <ArrowUpRight className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 function JobBlock({ job, projects }: { job: ExperienceRow; projects: ProjectItem[] }) {
   const [lead, ...rest] = job.bullets
   const tech = extractTech(job)
   const clients = clientsForJob(job, projects)
+  const documents = (job.documents ?? []).filter((document) => document.url.trim() && document.label.trim())
   const hrefFor = (name: string) => {
     const slug = projectSlugFor(projects, name)
     return slug ? `/projects/${slug}` : undefined
@@ -56,15 +82,18 @@ function JobBlock({ job, projects }: { job: ExperienceRow; projects: ProjectItem
       <span aria-hidden="true" className="absolute -left-[39px] top-2 h-3 w-3 rounded-full border border-neutral-500 bg-background" />
 
       <header className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-        <div>
-          <h3 id={`${jobSlug(job)}-title`} className="text-2xl font-bold tracking-tight text-foreground">
-            {job.role}
-          </h3>
-          <p className="mt-1 text-lg font-medium text-foreground/85">{job.company}</p>
-          <p className="mt-2 inline-flex items-center gap-1.5 text-sm text-muted-foreground">
-            <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
-            {job.location}
-          </p>
+        <div className="flex items-start gap-4">
+          <CompanyLogo company={job.company} size={52} className="mt-0.5" />
+          <div>
+            <h3 id={`${jobSlug(job)}-title`} className="text-2xl font-bold tracking-tight text-foreground">
+              {job.role}
+            </h3>
+            <p className="mt-1 text-lg font-medium text-foreground/85">{job.company}</p>
+            <p className="mt-2 inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+              <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+              {job.location}
+            </p>
+          </div>
         </div>
         <span className="w-fit shrink-0 rounded-md bg-muted px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
           {job.period}
@@ -101,6 +130,12 @@ function JobBlock({ job, projects }: { job: ExperienceRow; projects: ProjectItem
           <div>
             <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">Clients and products</p>
             <Chips items={clients} tone="client" hrefFor={hrefFor} />
+          </div>
+        )}
+        {documents.length > 0 && (
+          <div>
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">Documents</p>
+            <Documents job={job} documents={documents} />
           </div>
         )}
       </div>

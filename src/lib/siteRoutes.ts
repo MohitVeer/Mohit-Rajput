@@ -33,7 +33,7 @@ export const siteRoutes: SiteRoute[] = [
     label: 'Experience',
     title: 'Experience — Mohit Rajput | Salesforce Front-End Developer',
     description:
-      'Salesforce front-end career at Wipro, Mphasis Silverline, DJT and Escade Technologies: LWC, OmniStudio, Experience Cloud, Marketing Cloud and React.',
+      'Salesforce front-end career at Wipro, Mphasis Silverline, DJT, Escade and Forelsket: LWC, OmniStudio, Experience Cloud, Marketing Cloud and React.',
   },
   {
     path: '/skills',
@@ -49,7 +49,7 @@ export const siteRoutes: SiteRoute[] = [
     label: 'Achievements',
     title: 'Salesforce Certifications — Mohit Rajput | 9x Certified',
     description:
-      'Nine Salesforce certifications with the original certificates, five Trailhead superbadges and Triple Star Ranger status.',
+      'Nine Salesforce certifications, five more from Udemy, freeCodeCamp, Internshala and Forelsket, five Trailhead superbadges and Triple Star Ranger status.',
   },
   {
     path: '/blog',

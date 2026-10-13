@@ -58,20 +58,21 @@ export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[
   for (const group of groups) {
     for (const cert of group.certs) {
       const meta = credentialFor(cert.fileUrl)
+      const preview = cert.preview || null
       items.push({
         id: `cert-${cert.name}`,
         kind: 'certification',
         title: cert.name.replace(/^Salesforce Certified /, '').replace(/^Salesforce /, ''),
-        issuer: 'Salesforce',
+        issuer: cert.issuer || 'Salesforce',
         group: group.title,
-        image: certificateImage(cert.fileUrl),
-        thumb: certificateThumb(cert.fileUrl),
-        badge: cert.image,
-        issued: meta?.issued,
-        credentialId: meta?.credentialId,
-        fileUrl: cert.fileUrl,
-        url: VERIFY_URL,
-        description: cert.name,
+        image: preview ?? certificateImage(cert.fileUrl),
+        thumb: preview ? preview.replace(/\.webp$/i, '-sm.webp') : certificateThumb(cert.fileUrl),
+        badge: cert.image || null,
+        issued: cert.issued || meta?.issued,
+        credentialId: cert.credentialId || meta?.credentialId,
+        fileUrl: cert.fileUrl || undefined,
+        url: cert.verifyUrl || (cert.issuer ? '' : VERIFY_URL),
+        description: cert.description || cert.name,
       })
     }
   }

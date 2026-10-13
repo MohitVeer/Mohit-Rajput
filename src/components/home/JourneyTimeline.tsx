@@ -10,6 +10,7 @@ import { useExperience } from '../../hooks/useExperience'
 import { useProjects, type ProjectItem } from '../../hooks/useProjects'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { trackEvent } from '../../lib/analytics'
+import CompanyLogo from '../ui/CompanyLogo'
 
 function JobCard({ job, projects, className }: { job: ExperienceRow; projects: ProjectItem[]; className?: string }) {
   const awards = job.achievements.slice(0, 2)
@@ -24,16 +25,19 @@ function JobCard({ job, projects, className }: { job: ExperienceRow; projects: P
         className,
       )}
     >
-      <div>
-        <h3 className="text-lg font-bold leading-tight text-neutral-900 dark:text-white">{job.company}</h3>
-        <p className="mt-1 text-sm font-medium text-neutral-700 dark:text-neutral-300">{job.role}</p>
-        <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
-          <span>{job.period}</span>
-          <span className="inline-flex items-center gap-1">
-            <MapPin className="h-3 w-3" aria-hidden="true" />
-            {job.location}
-          </span>
-        </p>
+      <div className="flex items-start gap-3">
+        <CompanyLogo company={job.company} size={44} />
+        <div className="min-w-0">
+          <h3 className="text-lg font-bold leading-tight text-neutral-900 dark:text-white">{job.company}</h3>
+          <p className="mt-1 text-sm font-medium text-neutral-700 dark:text-neutral-300">{job.role}</p>
+          <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
+            <span>{job.period}</span>
+            <span className="inline-flex items-center gap-1">
+              <MapPin className="h-3 w-3" aria-hidden="true" />
+              {job.location}
+            </span>
+          </p>
+        </div>
       </div>
 
       <p className="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">{job.bullets[0]}</p>

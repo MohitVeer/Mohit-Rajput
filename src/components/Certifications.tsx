@@ -9,7 +9,8 @@ import Section from './shell/Section'
 export default function Certifications() {
   const items = useAchievements()
   const certificates = useMemo(() => items.filter((item) => item.kind === 'certification' && item.image).map((item) => (item.thumb ?? item.image) as string), [items])
-  const certCount = items.filter((item) => item.kind === 'certification').length
+  const salesforceCount = items.filter((item) => item.kind === 'certification' && item.issuer === 'Salesforce').length
+  const otherCount = items.filter((item) => item.kind === 'certification' && item.issuer !== 'Salesforce').length
   const badgeCount = items.filter((item) => item.kind === 'superbadge').length
 
   return (
@@ -28,7 +29,7 @@ export default function Certifications() {
               Validating <span className="text-shiny">excellence</span> through Salesforce standards.
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground">
-              {certCount} Salesforce certifications and {badgeCount} Trailhead superbadges — the original certificates, ready to open and verify.
+              {salesforceCount} Salesforce certifications{otherCount > 0 ? `, ${otherCount} other certificates` : ''} and {badgeCount} Trailhead superbadges — the original certificates, ready to open and verify.
             </p>
           </div>
           <Link

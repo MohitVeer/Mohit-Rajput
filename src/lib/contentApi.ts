@@ -1,6 +1,14 @@
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string | undefined
 const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
 
+export type DocumentKind = 'experience-letter' | 'relieving-letter' | 'offer-letter' | 'certificate' | 'other'
+
+export interface ExperienceDocument {
+  label: string
+  kind: DocumentKind
+  url: string
+}
+
 export interface ExperienceRow {
   id: string
   role: string
@@ -10,6 +18,7 @@ export interface ExperienceRow {
   bullets: string[]
   achievements: string[]
   clients: string[]
+  documents?: ExperienceDocument[]
   sort_order: number
 }
 
@@ -25,6 +34,12 @@ export interface Cert {
   image: string
   alt: string
   fileUrl: string
+  issuer?: string
+  issued?: string
+  credentialId?: string
+  verifyUrl?: string
+  description?: string
+  preview?: string
 }
 
 export interface CertGroupRow {

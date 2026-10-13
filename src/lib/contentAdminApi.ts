@@ -1,3 +1,4 @@
+import { slugify } from './slug'
 import { supabase } from './supabaseClient'
 import { resetSettingsCache, type ArticleRow, type Cert, type CertGroupRow, type EngagementRow, type ExperienceRow, type FaqRow, type ProjectRow, type SkillGroupRow, type SuperbadgeRow } from './contentApi'
 
@@ -84,3 +85,16 @@ async function createManyContent<T>(table: TableName, rows: object[]): Promise<T
 export const createProjects = (rows: Omit<ProjectRow, 'id'>[]) => createManyContent<ProjectRow>('projects', rows)
 export const createEngagements = (rows: Omit<EngagementRow, 'id'>[]) => createManyContent<EngagementRow>('engagements', rows)
 export const createFaqs = (rows: Omit<FaqRow, 'id'>[]) => createManyContent<FaqRow>('faqs', rows)
+export const createExperiences = (rows: Omit<ExperienceRow, 'id'>[]) => createManyContent<ExperienceRow>('experience', rows)
+export const createCertGroups = (rows: Omit<CertGroupRow, 'id'>[]) => createManyContent<CertGroupRow>('cert_groups', rows)
+
+const DOCUMENT_BUCKET = 'documents'
+
+export async function uploadDocument(file: File, folder: string): Promise<string> {
+  if (!supabase) throw new Error('Supabase not configured')
+  const name = file.name.toLowerCase().replace(/[^a-z0-9.]+/g, '-').replace(/^-+|-+$/g, '') || 'document'
+  const path = `${slugify(folder) || 'general'}/${Date.now()}-${name}`
+  const { error } = await supabase.storage.from(DOCUMENT_BUCKET).upload(path, file, { contentType: file.type || undefined, upsert: false })
+  if (error) throw error
+  return supabase.storage.from(DOCUMENT_BUCKET).getPublicUrl(path).data.publicUrl
+}
