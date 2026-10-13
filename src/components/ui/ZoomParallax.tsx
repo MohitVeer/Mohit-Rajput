@@ -38,7 +38,7 @@ function StaticTiles({ tiles, children }: ZoomParallaxProps) {
 
 export default function ZoomParallax({ tiles, children }: ZoomParallaxProps) {
   const container = useRef<HTMLDivElement>(null)
-  const zoom = useMediaQuery('(prefers-reduced-motion: no-preference)')
+  const zoom = useMediaQuery('(min-width: 768px) and (prefers-reduced-motion: no-preference)')
   const { scrollYProgress } = useScroll({ target: container, offset: ['start start', 'end end'] })
 
   const scale4 = useTransform(scrollYProgress, [0, 1], [1, 4])

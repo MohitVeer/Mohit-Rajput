@@ -43,7 +43,7 @@ function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagemen
           </span>
         </div>
 
-        <div className="flex flex-col gap-5 p-5 md:gap-8 md:p-12">
+        <div className="flex flex-col justify-between gap-5 p-5 md:justify-start md:gap-8 md:p-12">
           <div>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">
               {engagement.employer} · {engagement.role}

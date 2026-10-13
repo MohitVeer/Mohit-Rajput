@@ -186,28 +186,28 @@ function ScreenReaderList({ jobs }: { jobs: ExperienceRow[] }) {
 
 function StackedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: ProjectItem[] }) {
   return (
-    <div className="mx-auto max-w-[1600px] px-6 py-16 md:px-12 md:py-20 lg:px-24">
+    <div className="mx-auto max-w-[1600px] px-5 py-12 md:px-12 md:py-20 lg:px-24">
       <Heading />
-      <ol className="relative mt-12 space-y-8 border-l border-neutral-200 pl-6 dark:border-neutral-800">
+      <ol className="relative mt-10 space-y-5 border-l border-neutral-200 pl-5 dark:border-neutral-800 md:mt-12 md:space-y-8 md:pl-6">
         {jobs.map((job) => (
           <li key={job.id} className="relative">
-            <span aria-hidden="true" className="absolute -left-[31px] top-6 h-3 w-3 rounded-full border border-neutral-400 bg-background dark:border-neutral-600" />
+            <span aria-hidden="true" className="absolute -left-[26px] top-6 h-3 w-3 rounded-full border border-neutral-400 bg-background dark:border-neutral-600 md:-left-[31px]" />
             <JobCard job={job} projects={projects} className="w-full" />
           </li>
         ))}
       </ol>
       <h3 className="mt-12 text-sm font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">Education</h3>
-      <ol className="relative mt-6 space-y-8 border-l border-neutral-200 pl-6 dark:border-neutral-800">
+      <ol className="relative mt-5 space-y-5 border-l border-neutral-200 pl-5 dark:border-neutral-800 md:mt-6 md:space-y-8 md:pl-6">
         {education.map((entry) => (
           <li key={entry.id} className="relative">
-            <span aria-hidden="true" className="absolute -left-[31px] top-6 h-3 w-3 rounded-full border border-neutral-400 bg-background dark:border-neutral-600" />
+            <span aria-hidden="true" className="absolute -left-[26px] top-6 h-3 w-3 rounded-full border border-neutral-400 bg-background dark:border-neutral-600 md:-left-[31px]" />
             <StudyCard entry={entry} className="w-full" />
           </li>
         ))}
       </ol>
       <Link
         to="/experience"
-        className="mt-10 inline-flex items-center gap-2 rounded-full border-2 border-neutral-200 px-6 py-3 text-xs font-bold uppercase tracking-widest transition-colors hover:bg-foreground hover:text-background dark:border-white/20"
+        className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-neutral-200 px-6 py-3 text-xs font-bold uppercase tracking-widest transition-colors hover:bg-foreground hover:text-background dark:border-white/20 md:mt-10"
       >
         Explore all experience
         <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
