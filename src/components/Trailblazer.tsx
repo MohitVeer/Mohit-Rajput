@@ -57,7 +57,7 @@ export default function Trailblazer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mx-auto max-w-2xl text-lg font-medium text-muted-foreground/80 md:text-xl"
+          className="mx-auto max-w-2xl text-lg font-medium text-muted-foreground md:text-xl"
         >
           {trailhead.rank} and {trailhead.status} — verified rank, badges, and points from my Salesforce Trailblazer profile.
         </motion.p>

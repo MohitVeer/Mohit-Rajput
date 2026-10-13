@@ -63,7 +63,7 @@ const NavItem = memo(function NavItem({ label, count, active, collapsed, onSelec
                   'block overflow-hidden whitespace-nowrap text-2xl font-black tracking-tight sm:text-3xl lg:text-4xl',
                   active
                     ? 'text-foreground'
-                    : 'text-muted-foreground/80 group-hover:text-muted-foreground dark:text-muted-foreground/60 dark:group-hover:text-muted-foreground/80',
+                    : 'text-muted-foreground group-hover:text-foreground dark:text-muted-foreground/60 dark:group-hover:text-muted-foreground/80',
                 )}
               >
                 {label}
@@ -268,7 +268,7 @@ export default function AchievementArchive({ items }: { items: Achievement[] }) 
               data-count={pad(items.length)}
               className="select-none text-[9rem] font-black leading-none text-foreground/[0.18] transition-colors duration-500 before:content-[attr(data-count)] group-hover:text-foreground/[0.35] dark:text-foreground/20 dark:group-hover:text-foreground/40"
             />
-            <div className="-mt-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/80 transition-colors duration-500 group-hover:text-muted-foreground">
+            <div className="-mt-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-colors duration-500 group-hover:text-foreground">
               <Award className="h-3 w-3" aria-hidden="true" />
               Achievements
             </div>

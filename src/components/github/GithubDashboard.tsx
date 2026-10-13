@@ -73,7 +73,7 @@ function ActivityRow({ item }: { item: GithubActivity }) {
         onClick={() => trackExternalLink(item.url, `activity:${item.type}`)}
         className="group block rounded-xl border border-border bg-background/60 p-4 transition-colors hover:border-foreground/30"
       >
-        <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#22c55e]">
+        <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#15803d] dark:text-[#22c55e]">
           <Icon className="h-3.5 w-3.5" aria-hidden="true" />
           <span className="min-w-0 break-words">
             {activityVerb(item)} · {repoShort}

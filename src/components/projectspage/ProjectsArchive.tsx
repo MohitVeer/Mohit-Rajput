@@ -56,8 +56,8 @@ function StatusPill({ status }: { status: ProjectStatus }) {
       className={cn(
         'inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider sm:text-xs',
         ongoing
-          ? 'border-emerald-500/30 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
-          : 'border-blue-500/30 bg-blue-500/15 text-blue-600 dark:text-blue-400',
+          ? 'border-emerald-500/30 bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
+          : 'border-blue-500/30 bg-blue-500/15 text-blue-700 dark:text-blue-400',
       )}
     >
       {ongoing && <span aria-hidden="true" className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />}
@@ -159,7 +159,7 @@ function ProjectRow({ item, index, fx }: { item: ProjectItem; index: number; fx:
             </span>
             <span className="mt-2 block font-mono text-[10px] font-bold uppercase leading-relaxed tracking-[0.2em] text-muted-foreground">{metaLine(item)}</span>
             <span className="mt-2 block max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">{item.description}</span>
-            <span className={cn('mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-widest text-muted-foreground/80', fx && '[@media(hover:hover)_and_(pointer:fine)]:hidden')}>
+            <span className={cn('mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-widest text-muted-foreground', fx && '[@media(hover:hover)_and_(pointer:fine)]:hidden')}>
               {stackText}
             </span>
           </span>

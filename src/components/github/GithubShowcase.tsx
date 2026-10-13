@@ -17,7 +17,7 @@ function Metric({ value, label }: { value: number | null; label: string }) {
   return (
     <div className="flex flex-col-reverse">
       <dt className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{label}</dt>
-      <dd ref={ref as React.RefObject<HTMLElement>} className="text-3xl font-black tabular-nums tracking-tight text-[#16a34a] dark:text-[#22c55e] md:text-4xl">
+      <dd ref={ref as React.RefObject<HTMLElement>} className="text-3xl font-black tabular-nums tracking-tight text-[#15803d] dark:text-[#22c55e] md:text-4xl">
         {display}
       </dd>
     </div>
@@ -46,14 +46,14 @@ export default function GithubShowcase() {
 
         <div className="relative flex items-start justify-between gap-6">
           <div>
-            <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.35em] text-[#16a34a] dark:text-[#22c55e]">
+            <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.35em] text-[#15803d] dark:text-[#22c55e]">
               <GitHubMark className="h-6 w-6" />
               GitHub ecosystem
             </p>
             <h2 id="github-heading" className="mt-6 max-w-4xl text-4xl font-black leading-[1.05] tracking-tight text-foreground md:text-6xl lg:text-7xl">
               Building in the open,
               <br />
-              <span className="text-[#16a34a] dark:text-[#22c55e]">one commit at a time.</span>
+              <span className="text-[#15803d] dark:text-[#22c55e]">one commit at a time.</span>
             </h2>
           </div>
           <button
@@ -109,12 +109,12 @@ export default function GithubShowcase() {
 
       <FullscreenDialog open={open} onClose={() => setOpen(false)} label="GitHub activity">
         <div className="mx-auto max-w-[1500px] px-4 pb-16 pt-24 md:px-10">
-          <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.35em] text-[#16a34a] dark:text-[#22c55e]">
+          <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.35em] text-[#15803d] dark:text-[#22c55e]">
             <GitHubMark className="h-6 w-6" />
             GitHub ecosystem
           </p>
           <h2 className="mb-10 mt-6 max-w-4xl text-4xl font-black leading-[1.05] tracking-tight text-foreground md:text-6xl">
-            Live from <span className="text-[#16a34a] dark:text-[#22c55e]">@{data?.user?.login ?? 'MohitVeer'}</span>
+            Live from <span className="text-[#15803d] dark:text-[#22c55e]">@{data?.user?.login ?? 'MohitVeer'}</span>
           </h2>
           <GithubDashboard />
         </div>

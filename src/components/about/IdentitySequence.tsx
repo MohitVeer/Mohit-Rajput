@@ -23,7 +23,7 @@ export function PlatformGrid() {
     <div className="mx-auto w-full max-w-[1500px]">
       <div className="mb-8 flex items-center gap-4">
         <span aria-hidden="true" className="h-px w-10 bg-black/30 dark:bg-white/30" />
-        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">Platforms I build on</p>
+        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-600 dark:text-zinc-400">Platforms I build on</p>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6">
         {PLATFORMS.map((platform, i) => (
