@@ -48,7 +48,7 @@ A modern, responsive portfolio showcasing my expertise as a Salesforce UI Engine
 - Live GitHub integration — contribution heatmap, languages and recent activity refresh automatically
 - Contact form that delivers by email to the owner, with a hire-me call to action
 - Keyboard accessibility
-- SEO optimized
+- SEO optimized: every route, project and article page is pre-rendered at build time with its own title, description, canonical, Open Graph / Twitter tags and JSON-LD, and `sitemap.xml` is generated from the same data
 
 ---
 
@@ -70,6 +70,14 @@ netlify/functions/
 ```
 
 Most portfolio content—including projects, certifications, skills, experience, articles, and contact information—is managed from the data layer, making updates straightforward without modifying component logic.
+
+---
+
+## 🔎 SEO and Search Console
+
+- `npm run build` pre-renders `projects/*.html`, `blog/*.html` and every top-level route (see `vite.seo.ts` and `src/lib/seo.ts`) and writes `sitemap.xml`; Netlify serves these files before the SPA fallback, so crawlers and link previews see the right tags without running JavaScript
+- Verify the site in Google Search Console with the **HTML tag** method on the URL-prefix property `https://mohitveer.netlify.app`, copy the token from the meta tag, set `GOOGLE_SITE_VERIFICATION` (and optionally `BING_SITE_VERIFICATION`) in the Netlify environment, redeploy, then press Verify
+- Submit `https://mohitveer.netlify.app/sitemap.xml` under Sitemaps and request indexing for the home page and a few project pages
 
 ---
 

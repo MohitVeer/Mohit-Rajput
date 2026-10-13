@@ -8,5 +8,7 @@ dist-ssr
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
+vite.seo.js
+vite.seo.d.ts
 
 .claude/

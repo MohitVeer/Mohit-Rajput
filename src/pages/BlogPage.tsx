@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import ArticleArchive from '../components/blog/ArticleArchive'
 import BlogHero from '../components/blog/BlogHero'
@@ -5,8 +6,9 @@ import { useArticles } from '../hooks/useArticles'
 import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function BlogPage() {
-  usePageMeta('/blog')
   const articles = useArticles()
+  const collection = useMemo(() => articles.map((article) => ({ name: article.title, path: `/blog/${article.slug}` })), [articles])
+  usePageMeta('/blog', collection)
 
   return (
     <>

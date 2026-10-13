@@ -11,13 +11,9 @@ import { topicsIn, articleTopics } from '../lib/articleUtils'
 import { trackEvent } from '../lib/analytics'
 import { cn } from '../lib/cn'
 import { setPageMeta } from '../lib/pageMeta'
+import { seoForArticle } from '../lib/seo'
 
 const sidebarTitle = 'mb-6 border-b border-border pb-4 text-sm font-bold uppercase tracking-widest text-muted-foreground'
-
-function describe(text: string): string {
-  const clean = text.replace(/\s+/g, ' ').trim()
-  return clean.length > 155 ? `${clean.slice(0, 152).trimEnd()}…` : clean
-}
 
 export default function ArticlePage() {
   const { slug } = useParams()
@@ -30,7 +26,8 @@ export default function ArticlePage() {
 
   useEffect(() => {
     if (item) {
-      setPageMeta({ title: `${item.title} — Article | Mohit Rajput`, description: describe(item.summary), path: `/blog/${item.slug}` })
+      const page = seoForArticle({ slug: item.slug, title: item.title, summary: item.summary, url: item.url, read_time: item.read_time })
+      setPageMeta({ title: page.title, description: page.description, path: page.path, type: page.type, jsonLd: page.jsonLd })
     } else if (!loading) {
       setPageMeta({ title: 'Article not found — Mohit Rajput', path: `/blog/${slug ?? ''}`, noindex: true })
     }

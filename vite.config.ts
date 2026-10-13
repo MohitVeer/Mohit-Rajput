@@ -2,6 +2,7 @@ import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { defineConfig, type Connect, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import { seoPrerender } from './vite.seo'
 
 interface DevRequest {
   url?: string
@@ -86,9 +87,10 @@ function netlifyFunctionsLocal(): Plugin {
 }
 
 export default defineConfig(({ mode }) => ({
-  plugins: [react(), netlifyFunctionsLocal()],
+  plugins: [react(), netlifyFunctionsLocal(), seoPrerender()],
   build: {
     outDir: 'dist',
+    manifest: true,
     sourcemap: mode !== 'production',
     assetsInlineLimit: (file: string) => (/\.(woff2?|ttf|otf)$/.test(file) ? false : undefined),
   },

@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import GithubDashboard from '../components/github/GithubDashboard'
 import { GitHubMark } from '../components/icons/BrandMarks'
 import ProjectImpact from '../components/projectspage/ProjectImpact'
@@ -8,8 +9,9 @@ import { usePageMeta } from '../hooks/usePageMeta'
 import { useProjects } from '../hooks/useProjects'
 
 export default function ProjectsPage() {
-  usePageMeta('/projects')
   const items = useProjects()
+  const collection = useMemo(() => items.map((item) => ({ name: item.title, path: `/projects/${item.slug}` })), [items])
+  usePageMeta('/projects', collection)
 
   return (
     <>

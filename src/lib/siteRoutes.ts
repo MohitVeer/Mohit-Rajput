@@ -23,7 +23,7 @@ export const siteRoutes: SiteRoute[] = [
     label: 'Projects',
     title: 'Projects — Mohit Rajput | Enterprise Salesforce Front-End',
     description:
-      'Client projects delivered by Mohit Rajput for global brands — Experience Cloud, LWC and OmniStudio work across telecom, banking, healthcare and automotive — plus live GitHub activity.',
+      'Client projects by Mohit Rajput for global brands: Experience Cloud, LWC and OmniStudio across telecom, banking, healthcare and automotive.',
   },
   {
     path: '/experience',
@@ -31,7 +31,7 @@ export const siteRoutes: SiteRoute[] = [
     label: 'Experience',
     title: 'Experience — Mohit Rajput | Salesforce UI Developer',
     description:
-      'Career timeline across Wipro, Mphasis Silverline, DJT Corporation and Escade Technologies — LWC, OmniStudio, Experience Cloud, Marketing Cloud and React delivery.',
+      'Career timeline at Wipro, Mphasis Silverline, DJT and Escade Technologies: LWC, OmniStudio, Experience Cloud, Marketing Cloud and React.',
   },
   {
     path: '/skills',

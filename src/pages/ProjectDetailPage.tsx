@@ -3,11 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import ProjectDetail from '../components/projectspage/ProjectDetail'
 import { useProject } from '../hooks/useProjects'
 import { setPageMeta } from '../lib/pageMeta'
-
-function describe(text: string): string {
-  const clean = text.replace(/\s+/g, ' ').trim()
-  return clean.length > 155 ? `${clean.slice(0, 152).trimEnd()}…` : clean
-}
+import { seoForProject } from '../lib/seo'
 
 export default function ProjectDetailPage() {
   const { slug } = useParams()
@@ -15,12 +11,16 @@ export default function ProjectDetailPage() {
 
   useEffect(() => {
     if (item) {
-      const owner = item.employer ? ` at ${item.employer}` : ''
-      setPageMeta({
-        title: `${item.title}${owner} — Project | Mohit Rajput`,
-        description: describe(item.description),
-        path: `/projects/${item.slug}`,
+      const page = seoForProject({
+        slug: item.slug,
+        title: item.title,
+        description: item.description,
+        tags: item.tags,
+        sector: item.sector,
+        employer: item.employer,
+        role: item.role,
       })
+      setPageMeta({ title: page.title, description: page.description, path: page.path, type: page.type, jsonLd: page.jsonLd })
     } else if (!loading) {
       setPageMeta({ title: 'Project not found — Mohit Rajput', path: `/projects/${slug ?? ''}`, noindex: true })
     }
