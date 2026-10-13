@@ -37,6 +37,8 @@ A modern, responsive portfolio showcasing my expertise as a Salesforce UI Engine
 ## ✨ Features
 
 - Multi-page experience: Home, Projects, Experience, Skills, Achievements, Articles, Contact and Résumé
+- A dedicated page for every client project (`/projects/:slug`) and article summary (`/blog/:slug`), with hover effects, back-navigation scroll restoration and cross-links between roles, projects and articles
+- Contact page with a draggable, physics-driven Wipro ID card on a lanyard (black ribbon in the dark theme, blue in the light theme)
 - Fully responsive layouts with graceful fallbacks for small and short screens
 - Dark & Light theme
 - Scroll-driven animations (Framer Motion + Lenis)

@@ -8,11 +8,11 @@ const byLabel = (label: string) => stats.find((stat) => stat.label === label)?.v
 function Figure({ value, label }: { value: string; label: string }) {
   const { ref, display } = useCountUp<HTMLSpanElement>(value)
   return (
-    <div className="text-center">
-      <span ref={ref} className="block text-4xl font-black tabular-nums tracking-tight text-foreground md:text-5xl lg:text-6xl">
+    <div className="group flex min-w-0 flex-col items-center px-2 text-center transition-transform duration-300 md:hover:-translate-y-2 md:hover:scale-105">
+      <span ref={ref} className="block text-4xl font-black tabular-nums tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
         {display}
       </span>
-      <span className="mt-2 block font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{label}</span>
+      <span className="mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-[0.3em] text-muted-foreground">{label}</span>
     </div>
   )
 }
@@ -27,7 +27,7 @@ export default function ProjectImpact({ items }: { items: ProjectItem[] }) {
   ].filter((figure): figure is { value: string; label: string } => figure !== null)
 
   return (
-    <section aria-labelledby="impact-heading" className="relative px-6 py-16 text-center md:py-24">
+    <section aria-labelledby="impact-heading" className="relative w-full px-6 py-16 text-center md:px-12 md:py-24 lg:px-20">
       <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
         <Sparkles className="h-3 w-3" aria-hidden="true" />
         Project impact
@@ -38,7 +38,7 @@ export default function ProjectImpact({ items }: { items: ProjectItem[] }) {
       <p className="mx-auto mt-5 max-w-xl text-sm text-muted-foreground md:text-base">
         Production Salesforce experiences for global brands — measured in speed, delivery and client satisfaction.
       </p>
-      <div className="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-10 md:grid-cols-4">
+      <div className="mt-14 grid w-full grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 md:gap-x-10">
         {figures.map((figure) => (
           <Figure key={figure.label} value={figure.value} label={figure.label} />
         ))}

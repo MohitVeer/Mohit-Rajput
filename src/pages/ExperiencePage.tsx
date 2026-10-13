@@ -5,6 +5,7 @@ import ExperienceHero from '../components/experience/ExperienceHero'
 import YearTimeline from '../components/experience/YearTimeline'
 import { useExperience } from '../hooks/useExperience'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { projectSlugFor, useProjects } from '../hooks/useProjects'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import { clientsForJob } from '../lib/experienceUtils'
 
@@ -12,7 +13,12 @@ export default function ExperiencePage() {
   usePageMeta('/experience')
   const jobs = useExperience()
   const wide = useMediaQuery('(min-width: 768px)')
+  const projects = useProjects()
   const clients = Array.from(new Set(jobs.flatMap((job) => clientsForJob(job)))).slice(0, 16)
+  const hrefFor = (name: string) => {
+    const slug = projectSlugFor(projects, name)
+    return slug ? `/projects/${slug}` : undefined
+  }
 
   return (
     <>
@@ -38,14 +44,24 @@ export default function ExperiencePage() {
           </div>
 
           {wide ? (
-            <ClientOrbit labels={clients} />
+            <ClientOrbit labels={clients} hrefFor={hrefFor} />
           ) : (
             <ul className="flex flex-wrap gap-2" aria-label="Clients and products I have shipped for">
-              {clients.map((client) => (
-                <li key={client} className="rounded-full border border-border px-4 py-2 text-xs font-bold text-foreground">
-                  {client}
-                </li>
-              ))}
+              {clients.map((client) => {
+                const href = hrefFor(client)
+                const chip = 'inline-flex rounded-full border border-border px-4 py-2 text-xs font-bold text-foreground'
+                return (
+                  <li key={client}>
+                    {href ? (
+                      <Link to={href} className={`${chip} transition-colors hover:border-foreground/40 hover:bg-foreground/5`}>
+                        {client}
+                      </Link>
+                    ) : (
+                      <span className={chip}>{client}</span>
+                    )}
+                  </li>
+                )
+              })}
             </ul>
           )}
         </div>

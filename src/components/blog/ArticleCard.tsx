@@ -1,11 +1,10 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
-import type { ArticleRow } from '../../lib/contentApi'
-import { articleTopics } from '../../lib/articleUtils'
-import { trackEvent } from '../../lib/analytics'
+import { ArrowRight } from 'lucide-react'
+import { articleTopics, type ArticleItem } from '../../lib/articleUtils'
 import ArticleCover from './ArticleCover'
 
-export default function ArticleCard({ article, index }: { article: ArticleRow; index: number }) {
+export default function ArticleCard({ article, index }: { article: ArticleItem; index: number }) {
   const topics = articleTopics(article).slice(0, 2)
   return (
     <motion.li
@@ -15,11 +14,9 @@ export default function ArticleCard({ article, index }: { article: ArticleRow; i
       viewport={{ once: true, margin: '-5%' }}
       transition={{ duration: 0.6, delay: (index % 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
     >
-      <a
-        href={article.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => trackEvent('Article', 'article_click', article.title, { destination: article.url })}
+      <Link
+        to={`/blog/${article.slug}`}
+        state={{ from: 'blog' }}
         className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card/60 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/30 hover:shadow-2xl"
       >
         <span className="block overflow-hidden">
@@ -40,12 +37,11 @@ export default function ArticleCard({ article, index }: { article: ArticleRow; i
           <span className="mt-4 text-lg font-bold leading-snug tracking-tight text-foreground">{article.title}</span>
           <span className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{article.summary}</span>
           <span className="mt-5 flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground transition-colors group-hover:text-foreground">
-            Read the article
-            <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-            <span className="sr-only">(opens in a new tab)</span>
+            Explore story
+            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </span>
         </span>
-      </a>
+      </Link>
     </motion.li>
   )
 }

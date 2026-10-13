@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { ProjectItem } from '../../hooks/useProjects'
 import InfiniteMarquee from '../ui/InfiniteMarquee'
@@ -7,17 +8,20 @@ const TONES = ['#4c76ff', '#22c55e', '#f59e0b', '#a855f7', '#ef4444', '#06b6d4']
 function Tile({ item, index }: { item: ProjectItem; index: number }) {
   const color = TONES[index % TONES.length]
   return (
-    <div
+    <Link
+      to={`/projects/${item.slug}`}
+      state={{ from: 'projects' }}
+      tabIndex={-1}
       aria-hidden="true"
-      className="mx-3 flex h-40 w-64 flex-col justify-between rounded-2xl border border-border p-5 shadow-xl backdrop-blur-sm md:h-48 md:w-72"
+      className="mx-3 flex h-44 w-64 flex-col justify-between gap-3 whitespace-normal rounded-2xl border border-border p-5 shadow-xl backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.03] md:h-52 md:w-72"
       style={{ background: `linear-gradient(135deg, ${color}2e, transparent 70%)` }}
     >
-      <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-        <span className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />
-        {item.sector ?? 'Project'}
+      <span className="flex items-start gap-2 font-mono text-[10px] uppercase leading-snug tracking-widest text-muted-foreground">
+        <span className="mt-[3px] h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: color }} />
+        <span className="min-w-0 break-words">{item.sector ?? 'Project'}</span>
       </span>
-      <span className="text-xl font-bold leading-tight text-foreground md:text-2xl">{item.title}</span>
-    </div>
+      <span className="min-w-0 break-words text-xl font-bold leading-tight text-foreground [text-wrap:balance] md:text-2xl">{item.title}</span>
+    </Link>
   )
 }
 

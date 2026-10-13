@@ -28,6 +28,11 @@
   status = 200
 
 [[redirects]]
+  from = "/projects/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
   from = "/experience"
   to = "/index.html"
   status = 200
@@ -44,6 +49,11 @@
 
 [[redirects]]
   from = "/blog"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/*"
   to = "/index.html"
   status = 200
 

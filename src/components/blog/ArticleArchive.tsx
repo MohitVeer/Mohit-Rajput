@@ -1,13 +1,13 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUpRight, LayoutGrid, List, Search } from 'lucide-react'
-import type { ArticleRow } from '../../lib/contentApi'
-import { articleTopics } from '../../lib/articleUtils'
-import { trackEvent } from '../../lib/analytics'
+import { ArrowRight, LayoutGrid, List, Search } from 'lucide-react'
+import { articleTopics, type ArticleItem } from '../../lib/articleUtils'
 import { cn } from '../../lib/cn'
 import ArticleCard from './ArticleCard'
 
-export default function ArticleArchive({ articles }: { articles: ArticleRow[] }) {
+export default function ArticleArchive({ articles }: { articles: ArticleItem[] }) {
+  const [params] = useSearchParams()
   const [query, setQuery] = useState('')
   const [topic, setTopic] = useState('all')
   const [view, setView] = useState<'grid' | 'list'>('grid')
@@ -17,6 +17,20 @@ export default function ArticleArchive({ articles }: { articles: ArticleRow[] })
     for (const article of articles) for (const t of articleTopics(article)) counts.set(t, (counts.get(t) ?? 0) + 1)
     return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([name]) => name)
   }, [articles])
+
+  const incoming = params.get('q')
+
+  useEffect(() => {
+    if (!incoming) return
+    const match = topics.find((name) => name.toLowerCase() === incoming.toLowerCase())
+    if (match) {
+      setTopic(match)
+      setQuery('')
+    } else {
+      setTopic('all')
+      setQuery(incoming)
+    }
+  }, [incoming, topics])
 
   const visible = useMemo(() => {
     const needle = query.trim().toLowerCase()
@@ -108,11 +122,9 @@ export default function ArticleArchive({ articles }: { articles: ArticleRow[] })
         <ul className="mt-6 border-t border-border">
           {visible.map(({ article }) => (
             <motion.li layout key={article.id}>
-              <a
-                href={article.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent('Article', 'article_click', article.title, { destination: article.url })}
+              <Link
+                to={`/blog/${article.slug}`}
+                state={{ from: 'blog' }}
                 className="group flex items-center justify-between gap-4 border-b border-border py-5 transition-colors hover:bg-muted/30 md:px-3"
               >
                 <span className="min-w-0">
@@ -124,10 +136,9 @@ export default function ArticleArchive({ articles }: { articles: ArticleRow[] })
                     {article.published_on}
                     {article.read_time ? ` · ${article.read_time}` : ''}
                   </span>
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  <span className="sr-only">(opens in a new tab)</span>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </span>
-              </a>
+              </Link>
             </motion.li>
           ))}
         </ul>

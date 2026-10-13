@@ -17,9 +17,17 @@ const TOPICS = [
   'Accessibility',
 ]
 
-export function articleTopics(article: ArticleRow): string[] {
-  const haystack = `${article.title} ${article.summary}`.toLowerCase()
+export interface ArticleItem extends ArticleRow {
+  slug: string
+}
+
+export function topicsIn(text: string): string[] {
+  const haystack = text.toLowerCase()
   return TOPICS.filter((topic) => new RegExp(`(^|[^a-z0-9])${topic.toLowerCase().replace(/[.*+?^${}()|[\]\\-]/g, '\\$&')}`).test(haystack))
+}
+
+export function articleTopics(article: ArticleRow): string[] {
+  return topicsIn(`${article.title} ${article.summary}`)
 }
 
 export function readMinutes(article: ArticleRow): number {

@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useNavigationType } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import BackToTop from './BackToTop'
 import Navbar from './Navbar'
@@ -20,17 +20,103 @@ function PageFallback() {
   )
 }
 
-function useRouteScroll(pathname: string, hash: string) {
+const SCROLL_STORE = 'mr:scroll'
+
+function readScrollStore(): Record<string, number> {
+  try {
+    return JSON.parse(window.sessionStorage.getItem(SCROLL_STORE) ?? '{}') as Record<string, number>
+  } catch {
+    return {}
+  }
+}
+
+function writeScrollStore(map: Record<string, number>) {
+  try {
+    window.sessionStorage.setItem(SCROLL_STORE, JSON.stringify(Object.fromEntries(Object.entries(map).slice(-40))))
+  } catch {
+    return
+  }
+}
+
+function useScrollMemory(key: string) {
+  const positions = useRef<Record<string, number>>(readScrollStore())
+  const current = useRef(key)
+  current.current = key
+
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
+    let frame = 0
+    const record = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(() => {
+        frame = 0
+        positions.current[current.current] = Math.round(window.scrollY)
+      })
+    }
+    const flush = () => writeScrollStore(positions.current)
+    window.addEventListener('scroll', record, { passive: true })
+    window.addEventListener('pagehide', flush)
+    return () => {
+      window.removeEventListener('scroll', record)
+      window.removeEventListener('pagehide', flush)
+      if (frame) window.cancelAnimationFrame(frame)
+      flush()
+    }
+  }, [])
+
+  return positions
+}
+
+function useRouteScroll(key: string, pathname: string, hash: string, navigationType: string) {
   const previousPath = useRef<string | null>(null)
+  const memoryKey = `${key}|${pathname}`
+  const positions = useScrollMemory(memoryKey)
+  const pending = useRef<number | null>(null)
 
   useLayoutEffect(() => {
-    if (previousPath.current === pathname) return
+    const samePath = previousPath.current === pathname
     previousPath.current = pathname
+    pending.current = null
     if (hash) return
+    const saved = navigationType === 'POP' ? positions.current[memoryKey] : undefined
+    if (saved !== undefined && saved > 0) {
+      pending.current = saved
+      return
+    }
+    if (samePath) return
     const lenis = getLenisInstance()
     if (lenis) lenis.scrollTo(0, { immediate: true, force: true })
     window.scrollTo(0, 0)
-  }, [pathname, hash])
+  }, [memoryKey, pathname, hash, navigationType, positions])
+
+  useEffect(() => {
+    const target = pending.current
+    if (target === null) return
+    pending.current = null
+    let attempts = 0
+    const apply = () => {
+      const lenis = getLenisInstance()
+      if (lenis) lenis.resize()
+      const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
+      const y = Math.min(target, max)
+      if (lenis) lenis.scrollTo(y, { immediate: true, force: true })
+      window.scrollTo(0, y)
+      return max >= target - 2
+    }
+    let timer = 0
+    const stop = () => window.clearInterval(timer)
+    timer = window.setInterval(() => {
+      attempts += 1
+      if (apply() || attempts > 30) stop()
+    }, 100)
+    apply()
+    const cancel = ['wheel', 'touchstart', 'keydown']
+    for (const name of cancel) window.addEventListener(name, stop, { passive: true, once: true })
+    return () => {
+      stop()
+      for (const name of cancel) window.removeEventListener(name, stop)
+    }
+  }, [memoryKey])
 
   useEffect(() => {
     if (!hash) return
@@ -79,7 +165,8 @@ function useRouteScroll(pathname: string, hash: string) {
 
 export default function SiteLayout() {
   useSmoothScroll()
-  const { pathname, hash } = useLocation()
+  const { pathname, hash, key } = useLocation()
+  const navigationType = useNavigationType()
   const [menuOpen, setMenuOpen] = useState(false)
   const menuTriggerRef = useRef<HTMLButtonElement>(null)
 
@@ -92,7 +179,7 @@ export default function SiteLayout() {
     setMenuOpen(false)
   }, [pathname])
 
-  useRouteScroll(pathname, hash)
+  useRouteScroll(key, pathname, hash, navigationType)
 
   return (
     <div className="bg-background text-foreground">

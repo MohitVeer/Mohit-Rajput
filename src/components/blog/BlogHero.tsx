@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight, Clock, FileText, Layers } from 'lucide-react'
-import type { ArticleRow } from '../../lib/contentApi'
-import { readMinutes } from '../../lib/articleUtils'
-import { trackEvent } from '../../lib/analytics'
+import { ArrowRight, Clock, FileText, Layers } from 'lucide-react'
+import { readMinutes, type ArticleItem } from '../../lib/articleUtils'
 import { useCountUp } from '../../hooks/useCountUp'
 import ArticleCover from './ArticleCover'
+
+const MotionLink = motion.create(Link)
 
 function Stat({ icon: Icon, value, label }: { icon: typeof FileText; value: string; label: string }) {
   const { ref, display } = useCountUp<HTMLSpanElement>(value)
@@ -23,7 +24,7 @@ function Stat({ icon: Icon, value, label }: { icon: typeof FileText; value: stri
   )
 }
 
-export default function BlogHero({ articles }: { articles: ArticleRow[] }) {
+export default function BlogHero({ articles }: { articles: ArticleItem[] }) {
   const reduce = useReducedMotion()
   const featured = articles[0]
   const minutes = articles.reduce((sum, article) => sum + readMinutes(article), 0)
@@ -53,11 +54,9 @@ export default function BlogHero({ articles }: { articles: ArticleRow[] }) {
 
         {featured && (
           <div className="mt-16 grid gap-6 lg:grid-cols-[1.6fr_1fr]">
-            <motion.a
-              href={featured.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent('Article', 'article_click', featured.title, { destination: featured.url })}
+            <MotionLink
+              to={`/blog/${featured.slug}`}
+              state={{ from: 'blog' }}
               initial={reduce ? false : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -75,11 +74,10 @@ export default function BlogHero({ articles }: { articles: ArticleRow[] }) {
                 <span className="max-w-xl text-sm leading-relaxed text-white/85 md:text-base">{featured.summary}</span>
                 <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-5 py-2.5 font-mono text-[10px] font-black uppercase tracking-widest text-black">
                   Explore story
-                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  <span className="sr-only">(opens in a new tab)</span>
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>
               </span>
-            </motion.a>
+            </MotionLink>
 
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 30 }}

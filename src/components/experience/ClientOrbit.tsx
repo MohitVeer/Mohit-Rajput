@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Plus } from 'lucide-react'
 import { cn } from '../../lib/cn'
@@ -21,7 +22,7 @@ function layout(labels: string[]): Node[] {
   return [...place(outer, 44, 40, -0.4), ...place(inner, 22, 20, 0.5)]
 }
 
-export default function ClientOrbit({ labels }: { labels: string[] }) {
+export default function ClientOrbit({ labels, hrefFor }: { labels: string[]; hrefFor?: (label: string) => string | undefined }) {
   const reduce = useReducedMotion()
   const nodes = layout(labels)
 
@@ -34,6 +35,15 @@ export default function ClientOrbit({ labels }: { labels: string[] }) {
 
       {nodes.map((node, i) => {
         const rightSide = node.x > 50
+        const href = hrefFor?.(node.label)
+        const inner = (
+          <>
+            <span aria-hidden="true" className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-border bg-muted text-foreground transition-colors group-hover/node:bg-foreground group-hover/node:text-background sm:h-7 sm:w-7">
+              <Plus className="h-3 w-3" />
+            </span>
+            <span className="whitespace-nowrap text-[10px] font-bold text-foreground/80 sm:text-xs">{node.label}</span>
+          </>
+        )
         return (
           <motion.div
             key={node.label}
@@ -50,10 +60,13 @@ export default function ClientOrbit({ labels }: { labels: string[] }) {
               transition={{ duration: 4 + (i % 4), repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
               className={cn('flex items-center gap-2', rightSide && 'flex-row-reverse')}
             >
-              <span aria-hidden="true" className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-border bg-muted text-foreground sm:h-7 sm:w-7">
-                <Plus className="h-3 w-3" />
-              </span>
-              <span className="whitespace-nowrap text-[10px] font-bold text-foreground/80 sm:text-xs">{node.label}</span>
+              {href ? (
+                <Link to={href} className={cn('group/node flex items-center gap-2', rightSide && 'flex-row-reverse')}>
+                  {inner}
+                </Link>
+              ) : (
+                inner
+              )}
             </motion.span>
           </motion.div>
         )

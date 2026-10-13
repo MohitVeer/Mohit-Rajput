@@ -1,10 +1,12 @@
 import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, useScroll, useSpring } from 'framer-motion'
-import { Award, Building2, MapPin } from 'lucide-react'
+import { ArrowUpRight, Award, Building2, MapPin } from 'lucide-react'
+import { projectSlugFor, useProjects, type ProjectItem } from '../../hooks/useProjects'
 import type { ExperienceRow } from '../../lib/contentApi'
 import { clientsForJob, extractTech, groupByYear, jobSlug } from '../../lib/experienceUtils'
 
-function Chips({ items, tone }: { items: string[]; tone: 'tech' | 'award' | 'client' }) {
+function Chips({ items, tone, hrefFor }: { items: string[]; tone: 'tech' | 'award' | 'client'; hrefFor?: (item: string) => string | undefined }) {
   if (items.length === 0) return null
   const base = 'inline-flex max-w-full items-start gap-1.5 rounded-md px-3 py-1.5 text-left text-[10px] font-bold uppercase leading-snug tracking-wider'
   const styles = {
@@ -14,21 +16,40 @@ function Chips({ items, tone }: { items: string[]; tone: 'tech' | 'award' | 'cli
   }
   return (
     <ul className="flex flex-wrap gap-2">
-      {items.map((item) => (
-        <li key={item} className={`${base} ${styles[tone]}`}>
-          {tone === 'award' && <Award className="mt-px h-3 w-3 shrink-0" aria-hidden="true" />}
-          {tone === 'client' && <Building2 className="mt-px h-3 w-3 shrink-0" aria-hidden="true" />}
-          <span>{item}</span>
-        </li>
-      ))}
+      {items.map((item) => {
+        const href = hrefFor?.(item)
+        const content = (
+          <>
+            {tone === 'award' && <Award className="mt-px h-3 w-3 shrink-0" aria-hidden="true" />}
+            {tone === 'client' && <Building2 className="mt-px h-3 w-3 shrink-0" aria-hidden="true" />}
+            <span>{item}</span>
+            {href && <ArrowUpRight className="mt-px h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />}
+          </>
+        )
+        return href ? (
+          <li key={item} className="max-w-full">
+            <Link to={href} className={`${base} ${styles[tone]} transition-colors hover:border-foreground/40 hover:bg-foreground/5`}>
+              {content}
+            </Link>
+          </li>
+        ) : (
+          <li key={item} className={`${base} ${styles[tone]}`}>
+            {content}
+          </li>
+        )
+      })}
     </ul>
   )
 }
 
-function JobBlock({ job }: { job: ExperienceRow }) {
+function JobBlock({ job, projects }: { job: ExperienceRow; projects: ProjectItem[] }) {
   const [lead, ...rest] = job.bullets
   const tech = extractTech(job)
   const clients = clientsForJob(job)
+  const hrefFor = (name: string) => {
+    const slug = projectSlugFor(projects, name)
+    return slug ? `/projects/${slug}` : undefined
+  }
 
   return (
     <article id={jobSlug(job)} className="relative scroll-mt-32 pb-14 last:pb-4" aria-labelledby={`${jobSlug(job)}-title`}>
@@ -79,7 +100,7 @@ function JobBlock({ job }: { job: ExperienceRow }) {
         {clients.length > 0 && (
           <div>
             <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">Clients and products</p>
-            <Chips items={clients} tone="client" />
+            <Chips items={clients} tone="client" hrefFor={hrefFor} />
           </div>
         )}
       </div>
@@ -92,6 +113,7 @@ export default function YearTimeline({ jobs }: { jobs: ExperienceRow[] }) {
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start 70%', 'end 70%'] })
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
   const groups = groupByYear(jobs)
+  const projects = useProjects()
 
   return (
     <div ref={containerRef} className="relative mx-auto w-full max-w-[1400px] px-6 pb-16 md:px-12">
@@ -107,7 +129,7 @@ export default function YearTimeline({ jobs }: { jobs: ExperienceRow[] }) {
           </div>
           <div className="relative ml-10 border-l border-border pl-8 md:ml-0">
             {group.jobs.map((job) => (
-              <JobBlock key={job.id} job={job} />
+              <JobBlock key={job.id} job={job} projects={projects} />
             ))}
           </div>
         </div>

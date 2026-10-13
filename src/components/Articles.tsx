@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useArticles } from '../hooks/useArticles'
 import { useBreakpointValue } from '../hooks/useBreakpointValue'
 import Book from './ui/Book'
 import Section from './shell/Section'
-import { trackEvent } from '../lib/analytics'
 
 const COVERS = ['#9D2127', '#7DC1C1', '#FED954', '#454ADE', '#439775', '#FF0F67']
 const LIGHT_COVERS = new Set(['#7DC1C1', '#FED954'])
@@ -87,13 +86,7 @@ export default function Articles() {
                   transition={{ type: 'spring', stiffness: 260, damping: 26 }}
                   className="relative w-[180px] flex-shrink-0 md:w-[260px]"
                 >
-                  <a
-                    href={article.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => trackEvent('Article', 'article_click', article.title, { destination: article.url })}
-                    className="group/book relative z-10 block"
-                  >
+                  <Link to={`/blog/${article.slug}`} state={{ from: 'blog' }} className="group/book relative z-10 block">
                     <span
                       aria-hidden="true"
                       className="pointer-events-none absolute left-1/2 top-1/2 -z-10 aspect-square w-[180%] -translate-x-1/2 -translate-y-1/2 scale-100 rounded-full opacity-0 blur-[80px] transition-all duration-700 group-hover/book:scale-110 group-hover/book:opacity-70"
@@ -111,8 +104,7 @@ export default function Articles() {
                       </span>
                       <span className="block text-sm font-medium leading-relaxed text-muted-foreground">{article.summary}</span>
                     </span>
-                    <span className="sr-only"> (opens in a new tab)</span>
-                  </a>
+                  </Link>
                 </motion.div>
               )
             })}
@@ -132,23 +124,18 @@ export default function Articles() {
         <ul className="mx-auto mt-10 max-w-3xl divide-y divide-border/60 border-t border-border/60">
           {items.map((article) => (
             <li key={article.id}>
-              <a
-                href={article.url}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => trackEvent('Article', 'article_click', article.title, { destination: article.url })}
+              <Link
+                to={`/blog/${article.slug}`}
+                state={{ from: 'blog' }}
                 className="group flex items-center justify-between gap-4 py-4 text-muted-foreground transition-colors hover:text-foreground"
               >
-                <span className="text-base font-semibold">
-                  {article.title}
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </span>
+                <span className="text-base font-semibold">{article.title}</span>
                 <span className="flex shrink-0 items-center gap-2 text-xs uppercase tracking-widest">
                   {article.published_on}
                   {article.read_time ? ` · ${article.read_time}` : ''}
-                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

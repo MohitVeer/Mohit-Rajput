@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRight, Building2 } from 'lucide-react'
 import { engagements, type Engagement } from '../data/clientProjects'
 import { useRoleSlugs } from '../hooks/useExperience'
-import { useProjects, type ProjectItem } from '../hooks/useProjects'
+import { projectSlugFor, useProjects, type ProjectItem } from '../hooks/useProjects'
 import { trackProjectClick } from '../lib/analytics'
 import Section from './shell/Section'
 import ScrollRevealText from './ui/ScrollRevealText'
@@ -16,7 +16,7 @@ const shell =
 const pill =
   'inline-flex h-12 items-center rounded-full px-7 text-xs font-bold uppercase tracking-widest transition-transform hover:scale-105'
 
-function EngagementCard({ engagement, index, total, slug }: { engagement: Engagement; index: number; total: number; slug?: string }) {
+function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagement: Engagement; index: number; total: number; slug?: string; hrefFor: (client: string) => string | undefined }) {
   const tone = TONES[index % TONES.length]
   return (
     <article aria-label={engagement.title} className={shell}>
@@ -59,16 +59,26 @@ function EngagementCard({ engagement, index, total, slug }: { engagement: Engage
               {engagement.clients.length > 1 ? 'Clients' : 'Client'}
             </p>
             <ul className="flex flex-wrap gap-2">
-              {engagement.clients.map((client) => (
-                <li key={client} className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-semibold text-neutral-800 dark:border-neutral-700 dark:text-neutral-200">
-                  {client}
-                </li>
-              ))}
+              {engagement.clients.map((client) => {
+                const href = hrefFor(client)
+                const chip = 'inline-flex rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-semibold text-neutral-800 dark:border-neutral-700 dark:text-neutral-200'
+                return (
+                  <li key={client}>
+                    {href ? (
+                      <Link to={href} className={`${chip} transition-colors hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-black`}>
+                        {client}
+                      </Link>
+                    ) : (
+                      <span className={chip}>{client}</span>
+                    )}
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <Link to="/projects" className={`${pill} bg-neutral-900 text-white dark:bg-white dark:text-black`}>
+            <Link to={`/projects?employer=${engagement.employerKey}#archive`} className={`${pill} bg-neutral-900 text-white dark:bg-white dark:text-black`}>
               View projects
             </Link>
             {slug && (
@@ -142,6 +152,10 @@ export default function Projects() {
   const items = useProjects()
   const slugs = useRoleSlugs()
   const cases = items.filter((item) => item.kind === 'case-study').slice(0, 3)
+  const hrefFor = (client: string) => {
+    const target = projectSlugFor(items, client)
+    return target ? `/projects/${target}` : undefined
+  }
   const total = cases.length + engagements.length
 
   return (
@@ -156,7 +170,7 @@ export default function Projects() {
         {[
           ...cases.map((item, i) => <CaseStudyCard key={item.id} item={item} index={i} total={total} />),
           ...engagements.map((engagement, i) => (
-            <EngagementCard key={engagement.id} engagement={engagement} index={cases.length + i} total={total} slug={slugs.get(engagement.employerKey)} />
+            <EngagementCard key={engagement.id} engagement={engagement} index={cases.length + i} total={total} slug={slugs.get(engagement.employerKey)} hrefFor={hrefFor} />
           )),
         ]}
       </ShowcaseStack>
