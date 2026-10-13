@@ -13,7 +13,7 @@ async function viaFunction(payload: ContactPayload): Promise<'sent' | 'unavailab
       body: JSON.stringify(payload),
     })
     if (res.ok) return 'sent'
-    if (res.status === 503 || res.status === 404 || res.status === 405) return 'unavailable'
+    if (res.status >= 500 || res.status === 404 || res.status === 405) return 'unavailable'
     return 'failed'
   } catch {
     return 'unavailable'

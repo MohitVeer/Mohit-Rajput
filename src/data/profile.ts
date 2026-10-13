@@ -270,7 +270,7 @@ export const experience = [
     achievements: [],
     clients: [],
     documents: [
-      { kind: 'certificate' as const, label: 'Internship certificate', url: '/Certifications/Forelsket_Internship_Certificate.jpg' },
+      { kind: 'certificate' as const, label: 'Internship certificate', url: '/Certifications/Forelsket_Internship_Certificate.pdf' },
     ],
   },
 ]
@@ -356,7 +356,7 @@ export const certGroups = [
         name: 'Front-End Developer Internship Certificate',
         image: '',
         alt: 'Internship certificate from Forelsket Softwares for the front-end developer internship',
-        fileUrl: '/Certifications/Forelsket_Internship_Certificate.jpg',
+        fileUrl: '/Certifications/Forelsket_Internship_Certificate.pdf',
         preview: '/certificates/Forelsket_Internship_Certificate.webp',
         issuer: 'Forelsket Softwares Pvt. Ltd.',
         issued: 'June 15, 2021',
@@ -395,7 +395,7 @@ export const certGroups = [
         name: 'Legacy Responsive Web Design V8',
         image: '',
         alt: 'freeCodeCamp developer certification in Legacy Responsive Web Design V8',
-        fileUrl: '',
+        fileUrl: '/Certifications/freeCodeCamp_Responsive_Web_Design.pdf',
         preview: '/certificates/freeCodeCamp_Responsive_Web_Design.webp',
         issuer: 'freeCodeCamp',
         issued: 'August 23, 2021',

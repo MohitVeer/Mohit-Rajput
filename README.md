@@ -161,7 +161,7 @@ npm run preview
 npm run lint
 ```
 
-Requires **Node.js 20+**
+Requires **Node.js 22+** (the Netlify build and the functions run on Node 22; the Supabase client used by `/api/track` needs the native WebSocket that Node 20 lacks)
 
 ### GitHub feed
 
