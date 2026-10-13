@@ -1,13 +1,15 @@
 import { useCallback, useMemo, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight, Briefcase, Rocket } from 'lucide-react'
+import { ArrowRight, Briefcase, GraduationCap, Rocket } from 'lucide-react'
 import ClientOrbit, { type OrbitNode } from '../components/experience/ClientOrbit'
+import EducationPanel from '../components/experience/EducationPanel'
 import ExperienceHero from '../components/experience/ExperienceHero'
 import ExperienceLedger from '../components/experience/ExperienceLedger'
 import LogoMarquee from '../components/experience/LogoMarquee'
 import TabSlider, { type TabDefinition } from '../components/experience/TabSlider'
 import YearTimeline from '../components/experience/YearTimeline'
+import { education } from '../data/education'
 import { useExperience } from '../hooks/useExperience'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import { usePageMeta } from '../hooks/usePageMeta'
@@ -16,9 +18,12 @@ import { clientsForJob, jobSlug } from '../lib/experienceUtils'
 import type { ExperienceRow } from '../lib/contentApi'
 
 const TABS: TabDefinition[] = [
+  { id: 'education', label: 'Education', quote: 'The academic foundation behind the work: a regular BCA followed by an MCA through distance learning.', icon: GraduationCap },
   { id: 'journey', label: 'Journey', quote: 'A timeline of roles, responsibilities, and professional growth across various organizations.', icon: Briefcase },
   { id: 'experience', label: 'Experience', quote: 'Detailed breakdown of work experiences with project highlights and achievements.', icon: Rocket },
 ]
+
+const tabIndex = (id: string) => TABS.findIndex((tab) => tab.id === id)
 
 function FloatingShape({ className, gradient, delay = 0, still }: { className: string; gradient: string; delay?: number; still: boolean }) {
   return (
@@ -67,7 +72,7 @@ export default function ExperiencePage() {
   const calm = useReducedMotion()
   const roomy = useMediaQuery('(min-width: 768px)')
   const wide = useMediaQuery('(min-width: 1024px)')
-  const [active, setActive] = useState(0)
+  const [active, setActive] = useState(() => tabIndex('journey'))
   const [focusJobId, setFocusJobId] = useState<string | null>(null)
 
   const hrefFor = useCallback(
@@ -97,14 +102,14 @@ export default function ExperiencePage() {
 
   const openDetail = useCallback((job: ExperienceRow) => {
     setFocusJobId(jobSlug(job))
-    setActive(1)
+    setActive(tabIndex('experience'))
     window.scrollTo({ top: Math.max(0, (document.getElementById('experience-tabs')?.getBoundingClientRect().top ?? 0) + window.scrollY - 40), behavior: 'smooth' })
   }, [])
   const handled = useCallback(() => setFocusJobId(null), [])
 
   return (
     <div className="relative bg-background text-foreground">
-      <ExperienceHero jobs={jobs} />
+      <ExperienceHero jobs={jobs} studies={education} />
 
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <FloatingShape className="-right-40 -top-20 h-[min(500px,80vw)] w-[min(500px,80vw)]" gradient="radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)" still={Boolean(calm) || !wide} />
@@ -121,7 +126,20 @@ export default function ExperiencePage() {
 
           <div className="mx-auto max-w-7xl px-0 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait" initial={false}>
-              {active === 0 ? (
+              {TABS[active].id === 'education' ? (
+                <motion.div
+                  key="education"
+                  role="tabpanel"
+                  id="experience-panel-education"
+                  aria-labelledby="experience-tab-education"
+                  initial={{ opacity: 0, y: calm ? 0 : 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: calm ? 0 : -20 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <EducationPanel entries={education} />
+                </motion.div>
+              ) : TABS[active].id === 'journey' ? (
                 <motion.div
                   key="journey"
                   role="tabpanel"

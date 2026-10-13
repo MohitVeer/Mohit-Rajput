@@ -72,7 +72,7 @@ export default function TabSlider({ tabs, active, onChange }: TabSliderProps) {
       <div
         role="tablist"
         aria-label="Experience views"
-        className="-mx-4 flex flex-nowrap justify-start gap-2 overflow-x-auto px-4 py-4 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:justify-center sm:px-0 [&::-webkit-scrollbar]:hidden"
+        className="-mx-4 flex flex-nowrap justify-center gap-0 overflow-x-auto px-4 py-4 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:gap-2 sm:px-0 [&::-webkit-scrollbar]:hidden"
       >
         {tabs.map((tab, index) => {
           const selected = index === active
@@ -92,13 +92,13 @@ export default function TabSlider({ tabs, active, onChange }: TabSliderProps) {
                 onClick={() => onChange(index)}
                 onKeyDown={onKeyDown}
                 className={cn(
-                  'group m-1.5 inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-5 py-2.5 text-sm shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring focus-visible:ring-cyan-300 sm:px-6 sm:py-3 sm:text-base',
+                  'group m-1 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-3.5 py-2.5 text-sm shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring focus-visible:ring-cyan-300 sm:m-1.5 sm:gap-2.5 sm:px-6 sm:py-3 sm:text-base',
                   selected
                     ? 'bg-cyan-500 text-white shadow-cyan-500/25'
                     : 'border border-transparent bg-white text-cyan-900 backdrop-blur-sm hover:bg-cyan-50 dark:border-white/5 dark:bg-neutral-800/80 dark:text-cyan-100 dark:hover:bg-neutral-700/80',
                 )}
               >
-                <Icon className="h-5 w-5 transition-transform group-hover:scale-110" aria-hidden="true" />
+                <Icon className="h-4 w-4 transition-transform group-hover:scale-110 sm:h-5 sm:w-5" aria-hidden="true" />
                 <span className="font-medium">{tab.label}</span>
               </button>
             </MagneticEffect>
