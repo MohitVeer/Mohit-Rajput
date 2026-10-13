@@ -215,7 +215,7 @@ function LedgerCard({ item, index, open, onToggle, projectHref }: { item: Ledger
               )}
 
               <div className="flex justify-center pt-2">
-                <button type="button" onClick={onToggle} className="rounded-full bg-neutral-100 px-6 py-2 text-xs font-bold text-neutral-500 dark:text-neutral-400 transition-colors hover:text-neutral-900 dark:bg-neutral-800 dark:hover:text-white">
+                <button type="button" onClick={onToggle} className="rounded-full bg-neutral-100 px-6 py-2 text-xs font-bold text-neutral-600 dark:text-neutral-400 transition-colors hover:text-neutral-900 dark:bg-neutral-800 dark:hover:text-white">
                   Hide Detail
                 </button>
               </div>

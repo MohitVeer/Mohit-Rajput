@@ -37,7 +37,7 @@ function EducationCard({ entry }: { entry: EducationEntry }) {
             </h3>
           </div>
         </div>
-        <span className="w-fit shrink-0 rounded bg-neutral-100 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-500 dark:bg-neutral-900 dark:text-neutral-400">{entry.period}</span>
+        <span className="w-fit shrink-0 rounded bg-neutral-100 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400">{entry.period}</span>
       </div>
 
       <dl className="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">

@@ -148,7 +148,7 @@ function Entry({ job, projects, onOpenDetail }: { job: ExperienceRow; projects: 
           <p className="text-lg font-medium text-primary">{job.company}</p>
           <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">{job.location}</p>
         </div>
-        <span className="w-fit shrink-0 rounded bg-neutral-100 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-500 dark:bg-neutral-900 dark:text-neutral-400">{job.period}</span>
+        <span className="w-fit shrink-0 rounded bg-neutral-100 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400">{job.period}</span>
       </div>
 
       {lead && <p className="mb-6 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 md:text-justify md:text-base">{lead}</p>}

@@ -94,7 +94,7 @@ export default function TabSlider({ tabs, active, onChange }: TabSliderProps) {
                 className={cn(
                   'group m-1 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-3.5 py-2.5 text-sm shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring focus-visible:ring-cyan-300 sm:m-1.5 sm:gap-2.5 sm:px-6 sm:py-3 sm:text-base',
                   selected
-                    ? 'bg-cyan-500 text-white shadow-cyan-500/25'
+                    ? 'bg-cyan-700 text-white shadow-cyan-700/25'
                     : 'border border-transparent bg-white text-cyan-900 backdrop-blur-sm hover:bg-cyan-50 dark:border-white/5 dark:bg-neutral-800/80 dark:text-cyan-100 dark:hover:bg-neutral-700/80',
                 )}
               >
