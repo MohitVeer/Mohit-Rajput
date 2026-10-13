@@ -1,6 +1,6 @@
 # Mohit Rajput — Personal Portfolio
 
-A modern, responsive portfolio showcasing my expertise as a Salesforce UI Engineer and Front-End Developer. Built with React, TypeScript, Tailwind CSS, and Vite, the portfolio highlights enterprise Salesforce projects, certifications, technical articles, and interactive UI experiences.
+A modern, responsive portfolio showcasing my work as a front-end developer with Salesforce expertise. Built with React, TypeScript, Tailwind CSS, and Vite, the portfolio highlights enterprise Salesforce projects, certifications, technical articles, and interactive UI experiences.
 
 ## 🌐 Live Website
 
@@ -129,7 +129,7 @@ Designed using a mobile-first approach with Tailwind CSS breakpoints.
 - Trailhead Triple Star Ranger
 - Agentblazer Innovator 2026
 - Multiple Salesforce Superbadges
-- 5+ years of Salesforce UI & Front-End Development
+- 5+ years of front-end development with Salesforce expertise
 - Experience across LWC, OmniStudio, Experience Cloud, Marketing Cloud, and Agentforce
 
 ---

@@ -127,7 +127,7 @@ export default function Hero() {
               transition={{ duration: reduce ? 0 : 0.8, delay: reduce ? 0 : 0.2 }}
               className="block max-w-[200px] text-start text-[10px] font-medium uppercase leading-relaxed tracking-[0.2em] text-muted-foreground md:max-w-[220px] md:text-right md:text-xs"
             >
-              Hi, I&apos;m {profile.name}. I build fast, accessible experiences on Salesforce.
+              Hi, I&apos;m {profile.name}, a front-end developer with Salesforce expertise.
             </motion.span>
             <span className="relative block">
               <Float revealed={revealed} delay={0} axis="y" distance={-10} duration={2} className="-top-4 right-0 text-primary/60 hover:text-primary md:right-2">

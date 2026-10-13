@@ -1,6 +1,6 @@
-# Mohit Rajput — Salesforce UI Developer
+# Mohit Rajput — Front-End Developer with Salesforce Expertise
 
-> Portfolio of Mohit Rajput, a Salesforce front-end engineer with 5+ years of experience building Lightning Web Components (LWC), OmniStudio, Experience Cloud and Marketing Cloud solutions at Wipro and Mphasis Silverline. Nine Salesforce certifications, five Trailhead superbadges, Triple Star Ranger. Open to opportunities worldwide (remote, hybrid or onsite).
+> Portfolio of Mohit Rajput, a front-end developer with Salesforce expertise and 5+ years of experience building Lightning Web Components (LWC), OmniStudio, Experience Cloud and Marketing Cloud solutions at Wipro and Mphasis Silverline. Nine Salesforce certifications, five Trailhead superbadges, Triple Star Ranger. Open to opportunities worldwide (remote, hybrid or onsite).
 
 ## Pages
 

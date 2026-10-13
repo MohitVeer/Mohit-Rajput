@@ -140,10 +140,17 @@ function fitTitle(candidates: string[]): string {
   return candidates.find((candidate) => candidate.length <= 62) ?? candidates[candidates.length - 1]
 }
 
+const SALESFORCE_WORK = /salesforce|lwc|apex|omni|flexcard|experience cloud|marketing cloud|slds/i
+
 export function seoForProject(input: ProjectSeoInput): SeoPage {
   const path = `/projects/${input.slug}`
   const owner = input.employer ? ` at ${input.employer}` : ''
-  const title = fitTitle([`${input.title}${owner} — Project | ${SITE_NAME}`, `${input.title} — Project | ${SITE_NAME}`])
+  const noun = input.tags.some((tag) => SALESFORCE_WORK.test(tag)) ? 'Salesforce Project' : 'Project'
+  const title = fitTitle([
+    `${input.title} ${noun}${owner} — ${SITE_NAME}`,
+    `${input.title} ${noun} — ${SITE_NAME}`,
+    `${input.title} — ${SITE_NAME}`,
+  ])
   const lead = input.sector ? `${input.title} (${input.sector}) — ` : `${input.title} — `
   const description = describe(`${lead}${input.description}`)
   const work: JsonLd = {

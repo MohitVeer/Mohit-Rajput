@@ -1,3 +1,5 @@
+import { SITE_ROLE } from './site'
+
 export interface SiteRoute {
   path: string
   id: string
@@ -13,39 +15,39 @@ export const siteRoutes: SiteRoute[] = [
     path: '/',
     id: 'home',
     label: 'Home',
-    title: 'Mohit Rajput — Salesforce UI Developer | LWC & OmniStudio',
+    title: `Mohit Rajput — ${SITE_ROLE}`,
     description:
-      'Salesforce UI Developer with 5+ years building LWC, OmniStudio, Experience Cloud and Marketing Cloud solutions. Cut portal load times 50%. Available for hire.',
+      'Salesforce front-end developer with 5+ years of LWC, OmniStudio, Experience Cloud and Marketing Cloud delivery. 9x Salesforce certified. Open to hire.',
   },
   {
     path: '/projects',
     id: 'projects',
     label: 'Projects',
-    title: 'Projects — Mohit Rajput | Enterprise Salesforce Front-End',
+    title: 'Salesforce Projects by Mohit Rajput | LWC & Experience Cloud',
     description:
-      'Client projects by Mohit Rajput for global brands: Experience Cloud, LWC and OmniStudio across telecom, banking, healthcare and automotive.',
+      'Salesforce client projects by Mohit Rajput for global brands: Experience Cloud, LWC and OmniStudio across telecom, banking, healthcare and automotive.',
   },
   {
     path: '/experience',
     id: 'experience',
     label: 'Experience',
-    title: 'Experience — Mohit Rajput | Salesforce UI Developer',
+    title: 'Experience — Mohit Rajput | Salesforce Front-End Developer',
     description:
-      'Career timeline at Wipro, Mphasis Silverline, DJT and Escade Technologies: LWC, OmniStudio, Experience Cloud, Marketing Cloud and React.',
+      'Salesforce front-end career at Wipro, Mphasis Silverline, DJT and Escade Technologies: LWC, OmniStudio, Experience Cloud, Marketing Cloud and React.',
   },
   {
     path: '/skills',
     id: 'skills',
     label: 'Skills',
-    title: 'Skills & Tools — Mohit Rajput',
+    title: 'Skills — Mohit Rajput | Salesforce Front-End Developer',
     description:
-      'Technical toolkit: Lightning Web Components, Apex, OmniStudio, Experience Cloud, Marketing Cloud, React, TypeScript, design-to-code and accessibility.',
+      'Salesforce and front-end toolkit: Lightning Web Components, Apex, OmniStudio, Experience Cloud, Marketing Cloud, React, TypeScript and accessibility.',
   },
   {
     path: '/achievements',
     id: 'achievements',
     label: 'Achievements',
-    title: 'Certifications & Achievements — Mohit Rajput',
+    title: 'Salesforce Certifications — Mohit Rajput | 9x Certified',
     description:
       'Nine Salesforce certifications with the original certificates, five Trailhead superbadges and Triple Star Ranger status.',
   },
@@ -53,7 +55,7 @@ export const siteRoutes: SiteRoute[] = [
     path: '/blog',
     id: 'blog',
     label: 'Articles',
-    title: 'Articles — Mohit Rajput',
+    title: 'Salesforce & Front-End Articles — Mohit Rajput',
     description:
       'Articles on Experience Cloud performance, SLDS 2, Marketing Cloud email rendering and personalization by Mohit Rajput.',
   },
@@ -61,7 +63,7 @@ export const siteRoutes: SiteRoute[] = [
     path: '/contact',
     id: 'contact',
     label: 'Contact',
-    title: 'Contact & Hire — Mohit Rajput',
+    title: 'Hire a Salesforce Front-End Developer — Mohit Rajput',
     description:
       'Get in touch with Mohit Rajput for full-time or contract Salesforce front-end roles — remote, hybrid or onsite, worldwide.',
   },
@@ -69,8 +71,8 @@ export const siteRoutes: SiteRoute[] = [
     path: '/resume',
     id: 'resume',
     label: 'Resume',
-    title: 'Resume — Mohit Rajput',
-    description: 'View or download the current résumé of Mohit Rajput, Salesforce UI Developer.',
+    title: 'Resume — Mohit Rajput | Salesforce Front-End Developer',
+    description: 'View or download the current résumé of Mohit Rajput, a front-end developer with Salesforce expertise.',
   },
   {
     path: '/privacy',

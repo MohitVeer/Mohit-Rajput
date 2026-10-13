@@ -39,7 +39,7 @@ export default function SkillsClosing() {
             the Future
           </h2>
           <p className="mt-6 text-sm text-muted-foreground md:text-base">
-            Salesforce UI Developer · LWC &amp; OmniStudio | Turning requirements into production-ready experiences
+            Front-End Developer with Salesforce Expertise · LWC &amp; OmniStudio | Turning requirements into production-ready experiences
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Link

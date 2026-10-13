@@ -14,7 +14,7 @@ const LONGEST = WORDS.reduce((a, b) => (a.length > b.length ? a : b), '')
 
 const RIBBON_TECH = 'LWC • Apex • SOQL • OmniStudio • Experience Cloud • Agentforce • Marketing Cloud • React • TypeScript • SLDS'
 const RIBBON_ROLES =
-  'Salesforce Front-End Developer • LWC Developer • OmniStudio Developer • Experience Cloud Developer • UI Developer • Marketing Cloud Developer'
+  'Front-End Developer • Salesforce Developer • LWC Developer • OmniStudio Developer • Experience Cloud Developer • Marketing Cloud Developer'
 
 export default function Contact() {
   useSectionView('contact', 'Contact', 'contact_section_view')
@@ -82,8 +82,8 @@ export default function Contact() {
 
         <p className="mx-auto mb-10 mt-4 max-w-4xl text-xl text-muted-foreground">
           I&apos;m open to full-time and contract opportunities worldwide — remote, hybrid, or onsite, including visa-sponsored roles.
-          Need a Salesforce Front-End Engineer who builds scalable, accessible, high-performance experiences with LWC, Experience
-          Cloud, OmniStudio and Agentforce? Let&apos;s connect.
+          Need a front-end developer with Salesforce expertise who builds scalable, accessible, high-performance experiences with LWC,
+          Experience Cloud, OmniStudio and Agentforce? Let&apos;s connect.
         </p>
 
         <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">

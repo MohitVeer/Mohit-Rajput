@@ -99,10 +99,9 @@ function noscriptBlock(page: SeoPage): string {
     </noscript>`
 }
 
-function renderPage(base: string, page: SeoPage, siteUrl: string, preloads: string): string {
+function withPageMeta(base: string, page: SeoPage, siteUrl: string): string {
   const url = `${siteUrl}${page.path}`
-  let html = withHeadTags(base, preloads)
-  html = html.replace(/<title>[\s\S]*?<\/title>/, () => `<title>${escapeHtml(page.title)}</title>`)
+  let html = base.replace(/<title>[\s\S]*?<\/title>/, () => `<title>${escapeHtml(page.title)}</title>`)
   html = withMeta(html, 'name', 'description', page.description)
   html = replaceTag(html, /<link\s+rel="canonical"[\s\S]*?\/>/, `<link rel="canonical" href="${url}" />`)
   html = withMeta(html, 'property', 'og:title', page.title)
@@ -110,7 +109,11 @@ function renderPage(base: string, page: SeoPage, siteUrl: string, preloads: stri
   html = withMeta(html, 'property', 'og:url', url)
   html = withMeta(html, 'property', 'og:type', page.type)
   html = withMeta(html, 'name', 'twitter:title', page.title)
-  html = withMeta(html, 'name', 'twitter:description', page.description)
+  return withMeta(html, 'name', 'twitter:description', page.description)
+}
+
+function renderPage(base: string, page: SeoPage, siteUrl: string, preloads: string): string {
+  let html = withPageMeta(withHeadTags(base, preloads), page, siteUrl)
   if (page.jsonLd.length > 0) {
     const script = `<script type="application/ld+json" data-route-jsonld>${JSON.stringify({ '@context': 'https://schema.org', '@graph': page.jsonLd })}</script>`
     html = html.replace('</head>', () => `    ${script}\n  </head>`)
@@ -183,7 +186,9 @@ export function seoPrerender(): Plugin {
       const assets = await readdir(join(outDir, 'assets'))
       const font = assets.find((file) => /^inter-latin-wght-normal-.*\.woff2$/.test(file))
       const fontTag = font ? `<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/${font}" />` : ''
-      const shell = withHeadTags(base, [fontTag, preloadTags(routeChunks('/'))].filter(Boolean).join('\n    '))
+      const home = pages.find((page) => page.path === '/')
+      const homeBase = home ? withPageMeta(base, home, siteUrl) : base
+      const shell = withHeadTags(homeBase, [fontTag, preloadTags(routeChunks('/'))].filter(Boolean).join('\n    '))
       await writeFile(join(outDir, 'index.html'), shell)
 
       let written = 0
