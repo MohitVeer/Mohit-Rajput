@@ -92,7 +92,7 @@ export default function ResumePage() {
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-6 rounded-3xl border border-border bg-card/60 px-6 py-12 text-center"
+          className="mx-auto my-auto flex w-full max-w-md flex-col items-center justify-center gap-6 rounded-3xl border border-border bg-card/60 px-6 py-12 text-center"
         >
           <span aria-hidden="true" className="grid h-20 w-20 place-items-center rounded-3xl bg-muted text-foreground">
             <FileText className="h-9 w-9" />
