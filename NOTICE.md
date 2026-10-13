@@ -40,3 +40,7 @@ The Wipro name and logo are trademarks of Wipro Limited. They appear on the cont
 ## Company logos
 
 The employer logos in `public/logos/` and `src/assets/wipro/`, shown next to each role, are trademarks of their owners and are used only to identify the companies where the portfolio owner has worked. The Wipro artwork is described above. The Mphasis mark was cropped from the logo on mphasis.com, and the DJT Corporation & Investments, Escade Technologies and Forelsket Softwares logos are the images from those companies' public LinkedIn pages. No endorsement is implied.
+
+## Technology logos
+
+The logos in `public/tech` come from Simple Icons (https://simpleicons.org, CC0 1.0). They are trademarks of their respective owners and are used only to label the technologies named on the site.

@@ -32,7 +32,7 @@ function GroupForm({
       <Field label="Group title">
         <TextInput value={draft.title} onChange={(v) => setDraft((d) => ({ ...d, title: v }))} />
       </Field>
-      <Field label="Skills — one per line, in the order they should appear. Each matches an icon automatically by exact name; reorder by re-arranging these lines.">
+      <Field label="Skills — one per line, in the order they should appear. The logo is picked automatically: Salesforce terms get the Salesforce logo and well-known technologies get their own. Reorder by re-arranging these lines.">
         <ListTextArea value={draft.skills} onChange={(v) => setDraft((d) => ({ ...d, skills: v }))} rows={8} />
       </Field>
       <SaveDeleteRow
