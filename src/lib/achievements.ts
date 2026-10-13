@@ -4,10 +4,12 @@ import { profile } from '../data/profile'
 import type { TrailheadData } from './siteSettings'
 
 export type AchievementKind = 'certification' | 'superbadge' | 'trailhead' | 'award'
+export type SortOrder = 'newest' | 'oldest'
 
 export interface Achievement {
   id: string
   kind: AchievementKind
+  label: string
   title: string
   issuer: string
   group?: string
@@ -15,17 +17,11 @@ export interface Achievement {
   thumb?: string | null
   badge: string | null
   issued?: string
+  time?: number
   credentialId?: string
   fileUrl?: string
   url: string
   description?: string
-}
-
-export const KIND_LABEL: Record<AchievementKind, string> = {
-  certification: 'Certification',
-  superbadge: 'Superbadge',
-  trailhead: 'Trailhead',
-  award: 'Award',
 }
 
 export const KIND_PLURAL: Record<AchievementKind, string> = {
@@ -35,11 +31,28 @@ export const KIND_PLURAL: Record<AchievementKind, string> = {
   award: 'Awards',
 }
 
-function shortDate(value?: string): string | undefined {
+const MONTHS: Record<string, number> = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 }
+
+function parseWhen(value?: string): number | undefined {
   if (!value) return undefined
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return undefined
-  return new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(date)
+  const named = value.match(/([A-Za-z]{3})[a-z]*\.?\s+(?:(\d{1,2}),?\s+)?(\d{4})/)
+  if (named) {
+    const month = MONTHS[named[1].toLowerCase()]
+    if (month !== undefined) return Date.UTC(Number(named[3]), month, Number(named[2] ?? 1))
+  }
+  const parsed = Date.parse(value)
+  return Number.isNaN(parsed) ? undefined : parsed
+}
+
+const shortFormat = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })
+const longFormat = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+
+export function formatShortDate(time: number): string {
+  return shortFormat.format(time)
+}
+
+export function formatLongDate(time: number): string {
+  return longFormat.format(time)
 }
 
 export function splitAward(text: string): { title: string; description?: string } {
@@ -52,6 +65,12 @@ export function splitAward(text: string): { title: string; description?: string 
   return { title, description: text.trim() }
 }
 
+function certLabel(group: string): string {
+  if (/internship/i.test(group)) return 'Internship'
+  if (/course|training/i.test(group)) return 'Course'
+  return 'Certification'
+}
+
 export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[], jobs: ExperienceRow[], trailhead: TrailheadData): Achievement[] {
   const items: Achievement[] = []
 
@@ -59,16 +78,19 @@ export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[
     for (const cert of group.certs) {
       const meta = credentialFor(cert.fileUrl)
       const preview = cert.preview || null
+      const issued = cert.issued || meta?.issued
       items.push({
         id: `cert-${cert.name}`,
         kind: 'certification',
+        label: certLabel(group.title),
         title: cert.name.replace(/^Salesforce Certified /, '').replace(/^Salesforce /, ''),
         issuer: cert.issuer || 'Salesforce',
         group: group.title,
         image: preview ?? certificateImage(cert.fileUrl),
         thumb: preview ? preview.replace(/\.webp$/i, '-sm.webp') : certificateThumb(cert.fileUrl),
         badge: cert.image || null,
-        issued: cert.issued || meta?.issued,
+        issued,
+        time: parseWhen(issued),
         credentialId: cert.credentialId || meta?.credentialId,
         fileUrl: cert.fileUrl || undefined,
         url: cert.verifyUrl || (cert.issuer ? '' : VERIFY_URL),
@@ -81,6 +103,7 @@ export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[
     items.push({
       id: `badge-${badge.title}`,
       kind: 'superbadge',
+      label: 'Superbadge',
       title: badge.title.replace(/^Superbadge: /, ''),
       issuer: 'Salesforce Trailhead',
       image: null,
@@ -94,6 +117,7 @@ export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[
     {
       id: 'trail-rank',
       kind: 'trailhead',
+      label: 'Trailhead',
       title: trailhead.rank,
       issuer: 'Salesforce Trailhead',
       image: null,
@@ -104,6 +128,7 @@ export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[
     {
       id: 'trail-agentblazer',
       kind: 'trailhead',
+      label: 'Trailhead',
       title: trailhead.status,
       issuer: 'Salesforce Trailhead',
       image: null,
@@ -119,11 +144,13 @@ export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[
       items.push({
         id: `award-${job.company}-${title}`,
         kind: 'award',
+        label: 'Award',
         title,
         issuer: job.company,
         image: null,
         badge: null,
         issued: job.period,
+        time: parseWhen(job.period),
         url: '/experience',
         description,
       })
@@ -134,5 +161,37 @@ export function buildAchievements(groups: CertGroupRow[], badges: SuperbadgeRow[
 }
 
 export function achievementDate(item: Achievement): string | undefined {
-  return item.kind === 'award' ? undefined : item.issued ? shortDate(item.issued) : undefined
+  if (item.kind === 'award') return item.issued
+  return item.time === undefined ? undefined : formatShortDate(item.time)
+}
+
+export function sortAchievements(items: Achievement[], order: SortOrder): Achievement[] {
+  const dated = items.filter((item) => item.time !== undefined)
+  const undated = items.filter((item) => item.time === undefined)
+  dated.sort((a, b) => (order === 'newest' ? (b.time as number) - (a.time as number) : (a.time as number) - (b.time as number)))
+  return [...dated, ...undated]
+}
+
+export function countByKind(items: Achievement[]): Record<AchievementKind, number> {
+  const counts: Record<AchievementKind, number> = { certification: 0, superbadge: 0, trailhead: 0, award: 0 }
+  for (const item of items) counts[item.kind] += 1
+  return counts
+}
+
+function seededRandom(seed: number) {
+  let state = seed >>> 0
+  return () => {
+    state = (state + 0x6d2b79f5) >>> 0
+    let t = state
+    t = Math.imul(t ^ (t >>> 15), t | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+export function pickShowcase(items: Achievement[], count: number, seed: number): Achievement[] {
+  const random = seededRandom(seed)
+  const ranked = items.filter((item) => item.image).map((item) => ({ item, key: random() }))
+  ranked.sort((a, b) => a.key - b.key)
+  return ranked.slice(0, count).map((entry) => entry.item)
 }
