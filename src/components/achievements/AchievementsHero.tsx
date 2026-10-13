@@ -38,12 +38,12 @@ function computeLayout(vw: number, vh: number): HeroLayout {
     const x0 = (vw - gridWidth) / 2
     const y0 = vh * 0.2
     const scatter: [number, number][] = [
-      [vh * 0.05, vw * 0.04],
-      [vh * 0.1, vw * 0.52],
+      [vh * 0.12, vw * 0.04],
+      [vh * 0.16, vw * 0.52],
       [vh * 0.71, vw * 0.06],
       [vh * 0.75, vw * 0.5],
-      [vh * 0.3, -vw * 0.34],
-      [vh * 0.5, vw * 0.88],
+      [vh * 0.22, -vw * 0.34],
+      [vh * 0.64, vw * 0.88],
     ]
     return {
       from: scatter.map(([top, left]) => ({ top, left, width: column, height, radius: 8 })),
@@ -139,7 +139,7 @@ function HeroCopy({ onExplore, animated }: { onExplore: () => void; animated: bo
         {...rise(0.3)}
         type="button"
         onClick={onExplore}
-        className="pointer-events-auto flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+        className="pointer-events-auto flex items-center gap-2 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
       >
         <span>Scroll to Explore</span>
         <ChevronDown className="h-4 w-4 animate-bounce" aria-hidden="true" />

@@ -48,7 +48,7 @@ export default function ArchiveControls({ compact = false, query, onQuery, sort,
                 placeholder="Search archive..."
                 value={query}
                 onChange={(event) => onQuery(event.target.value)}
-                className="h-full w-full bg-transparent pl-9 pr-8 text-sm outline-none placeholder:text-muted-foreground/70"
+                className="h-full w-full bg-transparent pl-9 pr-8 text-sm outline-none placeholder:text-muted-foreground/70 [@media(pointer:coarse)]:text-base"
               />
               {query && (
                 <button type="button" aria-label="Clear search" onClick={() => onQuery('')} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
@@ -69,7 +69,7 @@ export default function ArchiveControls({ compact = false, query, onQuery, sort,
               value={query}
               onChange={(event) => onQuery(event.target.value)}
               className={cn(
-                'w-full rounded-xl py-2.5 pl-10 pr-8 text-sm outline-none transition-all placeholder:text-muted-foreground/70 focus:border-foreground/30 focus:shadow-md',
+                'w-full rounded-xl py-2.5 pl-10 pr-8 text-sm outline-none transition-all placeholder:text-muted-foreground/70 focus:border-foreground/30 focus:shadow-md [@media(pointer:coarse)]:text-base',
                 surface,
               )}
             />

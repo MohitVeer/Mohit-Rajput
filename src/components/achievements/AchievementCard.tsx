@@ -172,7 +172,7 @@ const AchievementCard = forwardRef<HTMLLIElement, AchievementCardProps>(function
           </motion.div>
 
           <div className="absolute left-4 top-4 z-20 flex gap-2">
-            <span className="rounded-lg border border-black/5 bg-white/90 px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-black shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-black/40 dark:text-white">
+            <span className="rounded-lg border border-black/5 bg-white/90 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-black shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-black/40 dark:text-white">
               {item.label}
             </span>
           </div>

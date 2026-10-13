@@ -101,7 +101,7 @@ export default function GithubShowcase() {
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
-          <Link to="/projects" className="text-xs font-bold uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground">
+          <Link to="/projects" className="inline-block py-2 text-xs font-bold uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground">
             See client projects →
           </Link>
         </div>

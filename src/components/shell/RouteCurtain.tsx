@@ -240,7 +240,7 @@ export default function RouteCurtain() {
   if (phase === 'idle') return null
 
   return (
-    <div role="status" aria-live="polite" data-route-curtain className="fixed inset-0 z-[190] overflow-hidden">
+    <div role="status" aria-live="polite" data-route-curtain className="fixed inset-0 z-[190] touch-none overflow-hidden overscroll-none">
       <span className="sr-only">Loading {label}</span>
       <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
         <motion.path d={arcPath} className="fill-foreground dark:fill-[#262626]" />

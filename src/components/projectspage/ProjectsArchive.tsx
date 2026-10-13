@@ -373,7 +373,7 @@ export default function ProjectsArchive({ items }: { items: ProjectItem[] }) {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search clients, sectors, stack…"
-            className="w-full rounded-xl border border-transparent bg-transparent py-2.5 pl-9 pr-8 text-sm text-foreground transition-colors placeholder:text-muted-foreground/60 hover:bg-foreground/5 focus:border-foreground/30 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+            className="w-full rounded-xl border border-transparent bg-transparent py-2.5 pl-9 pr-8 text-sm [@media(pointer:coarse)]:text-base text-foreground transition-colors placeholder:text-muted-foreground/60 hover:bg-foreground/5 focus:border-foreground/30 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
           />
           {query && (
             <button type="button" onClick={() => setQuery('')} aria-label="Clear search" className="absolute right-2 top-1/2 -translate-y-1/2 rounded-sm p-1 text-muted-foreground transition-colors hover:text-foreground">

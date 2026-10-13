@@ -90,6 +90,15 @@
     text-wrap: balance;
   }
 
+  a,
+  button,
+  [role='button'],
+  [role='tab'],
+  summary,
+  label {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   a:focus-visible,
   button:focus-visible,
   [tabindex]:focus-visible,

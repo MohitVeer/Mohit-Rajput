@@ -21,7 +21,7 @@ const DOCUMENT_KIND: Record<string, string> = {
 
 function TagList({ items, tone, hrefFor }: { items: string[]; tone: 'tech' | 'award' | 'client'; hrefFor?: (item: string) => string | undefined }) {
   if (items.length === 0) return null
-  const base = 'inline-flex max-w-full items-start gap-1.5 rounded-lg px-3 py-1 text-left text-[10px] font-bold uppercase leading-snug tracking-wider transition-all duration-300'
+  const base = 'inline-flex max-w-full items-start gap-1.5 rounded-lg px-3 py-1.5 text-left text-[10px] font-bold uppercase leading-snug tracking-wider transition-all duration-300'
   const styles = {
     tech: 'cursor-default border border-neutral-200 bg-neutral-50 text-neutral-600 shadow-sm hover:-translate-y-0.5 hover:bg-neutral-200 hover:text-neutral-900 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white',
     award: 'border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400',
@@ -74,10 +74,10 @@ function DocumentCard({ job, document }: { job: ExperienceRow; document: Experie
             <span className="shrink-0 rounded bg-primary/10 p-1 text-primary">
               <FileText className="h-2.5 w-2.5" aria-hidden="true" />
             </span>
-            <span className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{DOCUMENT_KIND[document.kind] ?? 'Document'}</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{DOCUMENT_KIND[document.kind] ?? 'Document'}</span>
           </div>
           <span className="mb-0.5 text-xs font-bold leading-tight text-neutral-900 dark:text-white">{document.label}</span>
-          <span className="text-[9px] leading-relaxed text-neutral-500 dark:text-neutral-400">Issued by {job.company}. Opens as a PDF.</span>
+          <span className="text-[10px] leading-relaxed text-neutral-500 dark:text-neutral-400">Issued by {job.company}. Opens as a PDF.</span>
         </div>
         <CompanyLogo company={job.company} size={48} className="shrink-0" />
       </div>
@@ -168,7 +168,7 @@ function Entry({ job, projects, onOpenDetail }: { job: ExperienceRow; projects: 
         <button
           type="button"
           onClick={() => onOpenDetail(job)}
-          className="-mt-4 mb-8 flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 transition-colors hover:text-primary"
+          className="-mt-6 mb-6 flex items-center gap-1.5 py-2 text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 transition-colors hover:text-primary"
         >
           +{hidden} more in Experience
           <ArrowUpRight className="h-3 w-3" aria-hidden="true" />

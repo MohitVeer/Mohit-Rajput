@@ -119,7 +119,7 @@ function FloatingCard({ card, slot, progress }: { card: HeroCard; slot: Slot; pr
         ) : (
           <CompanyLogo company={card.company ?? card.organisation} size={48} />
         )}
-        <span className="rounded-full border border-border px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{study ? 'Education' : 'Experience'}</span>
+        <span className="rounded-full border border-border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{study ? 'Education' : 'Experience'}</span>
       </div>
       <p className="mt-6 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{card.period}</p>
       <p className="mt-2 text-lg font-bold leading-tight tracking-tight text-foreground">{card.title}</p>

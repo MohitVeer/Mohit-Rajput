@@ -281,9 +281,9 @@ export default function AchievementArchive({ items }: { items: Achievement[] }) 
           ref={controlsRef}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="sticky top-20 z-30 -mx-6 mb-8 flex shrink-0 flex-col items-stretch justify-between gap-3 bg-background/85 px-6 py-3 backdrop-blur-md sm:flex-row sm:items-center lg:static lg:mx-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none"
+          className="sticky top-[76px] z-30 -mx-6 mb-6 flex shrink-0 flex-col items-stretch justify-between gap-3 bg-background/90 px-6 py-2 backdrop-blur-md sm:top-20 sm:mb-8 sm:flex-row sm:items-center sm:py-3 lg:static lg:mx-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none"
         >
-          <div className="flex flex-wrap gap-2">
+          <div className="hidden flex-wrap gap-2 sm:flex">
             {[
               { icon: Trophy, value: items.length, label: 'achievements in total' },
               { icon: Medal, value: counts.award, label: 'awards' },

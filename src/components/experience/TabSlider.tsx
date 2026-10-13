@@ -31,7 +31,7 @@ export default function TabSlider({ tabs, active, onChange }: TabSliderProps) {
   }
 
   return (
-    <div className="mx-auto mb-12 w-full max-w-5xl px-8 text-center sm:px-12">
+    <div className="mx-auto mb-12 w-full max-w-5xl px-2 text-center sm:px-12">
       <div className="relative h-28 sm:h-36">
         <div
           aria-hidden="true"
@@ -72,7 +72,7 @@ export default function TabSlider({ tabs, active, onChange }: TabSliderProps) {
       <div
         role="tablist"
         aria-label="Experience views"
-        className="-mx-4 flex flex-nowrap justify-center gap-0 overflow-x-auto px-4 py-4 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:gap-2 sm:px-0 [&::-webkit-scrollbar]:hidden"
+        className="flex flex-wrap justify-center gap-1.5 py-4 sm:gap-2"
       >
         {tabs.map((tab, index) => {
           const selected = index === active
@@ -92,7 +92,7 @@ export default function TabSlider({ tabs, active, onChange }: TabSliderProps) {
                 onClick={() => onChange(index)}
                 onKeyDown={onKeyDown}
                 className={cn(
-                  'group m-1 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-3.5 py-2.5 text-sm shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring focus-visible:ring-cyan-300 sm:m-1.5 sm:gap-2.5 sm:px-6 sm:py-3 sm:text-base',
+                  'group inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2.5 text-[13px] shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring focus-visible:ring-cyan-300 sm:m-1.5 sm:gap-2.5 sm:px-6 sm:py-3 sm:text-base',
                   selected
                     ? 'bg-cyan-700 text-white shadow-cyan-700/25'
                     : 'border border-transparent bg-white text-cyan-900 backdrop-blur-sm hover:bg-cyan-50 dark:border-white/5 dark:bg-neutral-800/80 dark:text-cyan-100 dark:hover:bg-neutral-700/80',
