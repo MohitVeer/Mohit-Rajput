@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion, useTransform, type MotionValue } from 'framer-motion'
+import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
 import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
 import { siteRoutes } from '../../lib/siteRoutes'
 import { preloadRoute } from '../../routes'
@@ -9,14 +9,11 @@ import { isPreloadingNow } from './preloadState'
 type Phase = 'idle' | 'covering' | 'holding' | 'revealing'
 
 const EASE: [number, number, number, number] = [0.7, 0, 0.3, 1]
-const WRITE_EASE: [number, number, number, number] = [0.35, 0, 0.35, 1]
-const COVER_SECONDS = 0.7
-const REVEAL_SECONDS = 0.7
-const BEAT_MS = 200
+const COVER_SECONDS = 0.8
+const REVEAL_SECONDS = 0.8
+const HOLD_MS = 800
 const READY_TIMEOUT_MS = 4000
 const HOLD_LIMIT_MS = 6500
-const FONT_QUERY = '4rem "Alex Brush"'
-const FEATHER = 16
 
 function cleanPath(pathname: string) {
   return pathname.replace(/\/+$/, '') || '/'
@@ -79,10 +76,6 @@ function whenReady(path: string): Promise<void> {
   })
 }
 
-function loadCursive() {
-  return document.fonts ? document.fonts.load(FONT_QUERY).then(() => undefined) : Promise.resolve()
-}
-
 function arcFor(progress: number) {
   if (progress <= 1) {
     const top = 110 - progress * 110
@@ -93,59 +86,6 @@ function arcFor(progress: number) {
   const bottom = 110 - t * 110
   const control = bottom - 30 * Math.sin(t * Math.PI)
   return `M 0 0 L 100 0 L 100 ${bottom} Q 50 ${control} 0 ${bottom} Z`
-}
-
-function CursiveWord({ word, clock, from, to }: { word: string; clock: MotionValue<number>; from: number; to: number }) {
-  const edge = useTransform(clock, [from, to], [-FEATHER, 100 + FEATHER / 2], { clamp: true })
-  const mask = useTransform(edge, (value) => `linear-gradient(100deg, #000 ${value}%, transparent ${value + FEATHER}%)`)
-  return (
-    <motion.span className="inline-block px-[0.22em] py-[0.2em]" style={{ WebkitMaskImage: mask, maskImage: mask }}>
-      {word}
-    </motion.span>
-  )
-}
-
-function Cursive({ text, onWritten }: { text: string; onWritten: () => void }) {
-  const clock = useMotionValue(0)
-  const words = text.split(/\s+/).filter(Boolean)
-  const letters = words.reduce((sum, word) => sum + word.length, 0) || 1
-  const duration = Math.min(1, 0.4 + letters * 0.05)
-  let cursor = 0
-  const windows = words.map((word) => {
-    const from = cursor / letters
-    cursor += word.length
-    return { word, from, to: cursor / letters }
-  })
-
-  useEffect(() => {
-    let started = false
-    let controls: ReturnType<typeof animate> | undefined
-    const begin = () => {
-      if (started) return
-      started = true
-      controls = animate(clock, 1, { duration, ease: WRITE_EASE, onComplete: onWritten })
-    }
-    const fallback = window.setTimeout(begin, 1200)
-    loadCursive().then(begin, begin)
-    return () => {
-      started = true
-      window.clearTimeout(fallback)
-      controls?.stop()
-    }
-  }, [clock, duration, onWritten])
-
-  return (
-    <motion.div exit={{ opacity: 0, y: -16, transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] } }} className="absolute inset-0 flex items-center justify-center px-4">
-      <h2
-        aria-hidden="true"
-        className="flex max-w-full select-none flex-wrap justify-center text-center font-signature text-[clamp(3.25rem,15vw,9rem)] leading-[1.15] text-white"
-      >
-        {windows.map((entry) => (
-          <CursiveWord key={entry.word + entry.from} word={entry.word} clock={clock} from={entry.from} to={entry.to} />
-        ))}
-      </h2>
-    </motion.div>
-  )
 }
 
 export default function RouteCurtain() {
@@ -160,7 +100,7 @@ export default function RouteCurtain() {
   const timers = useRef<number[]>([])
   const session = useRef(0)
   const ready = useRef(false)
-  const written = useRef(false)
+  const held = useRef(false)
   const progress = useMotionValue(0)
   const arcPath = useTransform(progress, arcFor)
 
@@ -183,19 +123,8 @@ export default function RouteCurtain() {
   }, [clearTimers, go])
 
   const settle = useCallback(() => {
-    if (phaseRef.current === 'holding' && ready.current && written.current) go('revealing')
+    if (phaseRef.current === 'holding' && ready.current && held.current) go('revealing')
   }, [go])
-
-  const markWritten = useCallback(() => {
-    const token = session.current
-    timers.current.push(
-      window.setTimeout(() => {
-        if (session.current !== token) return
-        written.current = true
-        settle()
-      }, BEAT_MS),
-    )
-  }, [settle])
 
   const arrive = useCallback(() => {
     const url = target.current
@@ -205,7 +134,7 @@ export default function RouteCurtain() {
     }
     const token = session.current
     ready.current = false
-    written.current = false
+    held.current = false
     navigateRef.current(`${url.pathname}${url.search}${url.hash}`)
     go('holding')
     void whenReady(url.pathname).then(() => {
@@ -216,8 +145,13 @@ export default function RouteCurtain() {
     timers.current.push(
       window.setTimeout(() => {
         if (session.current !== token) return
+        held.current = true
+        settle()
+      }, HOLD_MS),
+      window.setTimeout(() => {
+        if (session.current !== token) return
         ready.current = true
-        written.current = true
+        held.current = true
         settle()
       }, HOLD_LIMIT_MS),
     )
@@ -234,7 +168,6 @@ export default function RouteCurtain() {
         if (url.origin !== window.location.origin || warmed.has(url.pathname)) return
         warmed.add(url.pathname)
         preloadRoute(url.pathname)
-        void loadCursive()
       } catch {
         return
       }
@@ -249,7 +182,6 @@ export default function RouteCurtain() {
         return
       }
       preloadRoute(url.pathname)
-      void loadCursive()
       session.current += 1
       target.current = url
       setLabel(labelFor(url.pathname))
@@ -313,7 +245,23 @@ export default function RouteCurtain() {
       <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
         <motion.path d={arcPath} className="fill-foreground dark:fill-[#262626]" />
       </svg>
-      <AnimatePresence>{phase === 'holding' && <Cursive key={`${session.current}-${label}`} text={label} onWritten={markWritten} />}</AnimatePresence>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <AnimatePresence mode="wait">
+          {phase === 'holding' && (
+            <motion.span
+              key={`${session.current}-${label}`}
+              aria-hidden="true"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              className="select-none px-6 text-center text-5xl font-semibold tracking-tight text-white"
+            >
+              {label}
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   )
 }
