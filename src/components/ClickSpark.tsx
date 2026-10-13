@@ -12,6 +12,7 @@ const SPARK_SIZE = 10
 const SPARK_RADIUS = 15
 const SPARK_COUNT = 8
 const DURATION = 400
+const MAX_DRAG = 12
 
 const ease = (t: number) => t * (2 - t)
 
@@ -63,7 +64,17 @@ export default function ClickSpark() {
       frame = sparks.length > 0 ? window.requestAnimationFrame(draw) : 0
     }
 
-    const burst = (event: MouseEvent) => {
+    let downX = 0
+    let downY = 0
+
+    const press = (event: PointerEvent) => {
+      downX = event.clientX
+      downY = event.clientY
+    }
+
+    const burst = (event: PointerEvent) => {
+      if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return
+      if (Math.hypot(event.clientX - downX, event.clientY - downY) > MAX_DRAG) return
       const startTime = performance.now()
       for (let index = 0; index < SPARK_COUNT; index++) {
         sparks.push({ x: event.clientX, y: event.clientY, angle: (2 * Math.PI * index) / SPARK_COUNT, startTime })
@@ -73,10 +84,12 @@ export default function ClickSpark() {
 
     resize()
     window.addEventListener('resize', resize)
-    document.addEventListener('click', burst)
+    document.addEventListener('pointerdown', press, { passive: true })
+    document.addEventListener('pointerup', burst, { passive: true })
     return () => {
       window.removeEventListener('resize', resize)
-      document.removeEventListener('click', burst)
+      document.removeEventListener('pointerdown', press)
+      document.removeEventListener('pointerup', burst)
       if (frame) window.cancelAnimationFrame(frame)
     }
   }, [])
