@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigationType } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import BackToTop from './BackToTop'
 import Navbar from './Navbar'
-import ClickConstellation from '../ClickConstellation'
+import ClickSpark from '../ClickSpark'
 import Footer from '../Footer'
 import OverlayMenu from '../cinematic/OverlayMenu'
 import Preloader from '../Preloader'
@@ -190,7 +190,7 @@ export default function SiteLayout() {
 
       <Preloader />
       <RouteCurtain />
-      <ClickConstellation />
+      <ClickSpark />
       <Navbar ref={menuTriggerRef} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((v) => !v)} />
       <OverlayMenu open={menuOpen} onClose={() => setMenuOpen(false)} triggerRef={menuTriggerRef} />
 
