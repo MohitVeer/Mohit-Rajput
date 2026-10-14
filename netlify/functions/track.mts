@@ -114,6 +114,15 @@ return data.org ? data.org.replace(/^AS\d+\s+/, '') : null
   }
 }
 
+async function insertRow(table: string, row: Record<string, unknown>) {
+  let result = await supabase.from(table).insert(row)
+  if (result.error?.code === '23503') {
+    await new Promise((resolve) => setTimeout(resolve, 700))
+    result = await supabase.from(table).insert(row)
+  }
+  return result
+}
+
 export default async (req: Request, context: Context) => {
   if (req.method !== 'POST') {
     return new Response('Method not allowed', { status: 405 })
@@ -147,6 +156,12 @@ const geo = context.geo
           .select('id, total_sessions')
           .single()
         if (vErr || !visitor) throw vErr
+
+        const { data: known } = await supabase.from('sessions').select('id').eq('id', body.sessionId).maybeSingle()
+        if (known) {
+          await supabase.from('sessions').update({ last_activity_at: new Date().toISOString() }).eq('id', body.sessionId)
+          break
+        }
 
         const isReturning = (visitor.total_sessions ?? 0) > 0
 
@@ -190,7 +205,7 @@ const geo = context.geo
       }
 
       case 'page_view': {
-        const { error } = await supabase.from('page_views').insert({
+        const { error } = await insertRow('page_views', {
           session_id: body.sessionId,
           path: body.path,
         })
@@ -219,7 +234,7 @@ await supabase.rpc('increment_page_view_count', { p_session_id: body.sessionId, 
       }
 
       case 'event': {
-        const { error } = await supabase.from('events').insert({
+        const { error } = await insertRow('events', {
           session_id: body.sessionId,
           path: body.path,
           component: body.component,

@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react'
+import { isAutomatedBrowser } from '../../lib/automation'
 
 export const INTRO_SEEN_KEY = 'mr:intro-seen'
 
@@ -18,11 +19,9 @@ export function markIntroSeen() {
   }
 }
 
-const CRAWLER = /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|whatsapp|pinterest|quora|linkedinbot|twitterbot|duckduck|yandex|baidu|lighthouse|pagespeed|gtmetrix/i
-
 function shouldPreload() {
   if (typeof window === 'undefined') return false
-  if (CRAWLER.test(window.navigator.userAgent) || window.navigator.webdriver) return false
+  if (isAutomatedBrowser()) return false
   if (window.location.pathname.replace(/\/+$/, '') !== '') return false
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
   return !introAlreadySeen()

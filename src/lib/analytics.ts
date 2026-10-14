@@ -1,5 +1,7 @@
 
 
+import { isAutomatedBrowser } from './automation'
+
 const VISITOR_KEY = 'mr_visitor_uid'
 const SESSION_KEY = 'mr_session_id'
 const DNT_KEY = 'mr_dnt'
@@ -15,6 +17,7 @@ function uuid() {
 }
 
 export function isTrackingDisabled(): boolean {
+  if (isAutomatedBrowser()) return true
   try {
     return localStorage.getItem(DNT_KEY) === '1'
   } catch {
@@ -54,20 +57,37 @@ function getSessionId(): string {
   }
 }
 
+const SESSION_START_WAIT_MS = 4000
+let sessionStart: Promise<void> | null = null
+
+function post(payload: string, useBeacon: boolean): Promise<void> {
+  if (useBeacon && navigator.sendBeacon) {
+    navigator.sendBeacon(ENDPOINT, new Blob([payload], { type: 'application/json' }))
+    return Promise.resolve()
+  }
+  return fetch(ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: payload,
+    keepalive: true,
+  }).then(
+    () => undefined,
+    () => undefined,
+  )
+}
+
 function send(body: unknown, useBeacon = false) {
   if (isTrackingDisabled()) return
   const payload = JSON.stringify(body)
-  if (useBeacon && navigator.sendBeacon) {
-    navigator.sendBeacon(ENDPOINT, new Blob([payload], { type: 'application/json' }))
-  } else {
-    fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload,
-      keepalive: true,
-    }).catch(() => {
-    })
-  }
+  if (sessionStart && !useBeacon) void sessionStart.then(() => post(payload, false))
+  else void post(payload, useBeacon)
+}
+
+function startSession(body: unknown) {
+  if (isTrackingDisabled()) return
+  const request = post(JSON.stringify(body), false)
+  const patience = new Promise<void>((resolve) => window.setTimeout(resolve, SESSION_START_WAIT_MS))
+  sessionStart = Promise.race([request, patience])
 }
 
 function getUtmParams() {
@@ -103,7 +123,7 @@ export function initAnalytics() {
   currentPath = window.location.pathname
   pageEnteredAt = sessionStartedAt
 
-  send({
+  startSession({
     type: 'session_start',
     visitorUid: getVisitorUid(),
     sessionId: getSessionId(),
@@ -133,6 +153,7 @@ const onScroll = () => {
     }
   }
   window.addEventListener('scroll', onScroll, { passive: true })
+  document.addEventListener('click', onDocumentClick, true)
 
 const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(), path: currentPath })
   const startHeartbeat = () => {
@@ -224,6 +245,51 @@ export function trackPageView(path: string) {
 export function trackEvent(component: string, action: string, label?: string, meta?: Record<string, unknown>) {
   if (isTrackingDisabled()) return
   whenStarted(() => send({ type: 'event', sessionId: getSessionId(), path: currentPath, component, action, label, meta }))
+}
+
+const CLICK_LABEL_MAX = 80
+const OPENS_IN_NEW_TAB = /\s*\(opens in a new tab\)\s*$/i
+const DOWNLOAD_FILE = /\.(pdf|docx?|zip)$/i
+
+function describeControl(element: Element) {
+  const named = element.getAttribute('aria-label') || element.getAttribute('title') || ''
+  const visible = element instanceof HTMLElement ? element.innerText : (element.textContent ?? '')
+  const firstLine =
+    visible
+      .split('\n')
+      .map((line) => line.replace(OPENS_IN_NEW_TAB, '').replace(/\s+/g, ' ').trim())
+      .find(Boolean) ?? ''
+  const alt = element.querySelector('img[alt]')?.getAttribute('alt') ?? ''
+  return (named || firstLine || alt).trim().slice(0, CLICK_LABEL_MAX)
+}
+
+function describeLink(link: HTMLAnchorElement): { kind: string; destination: string } {
+  let url: URL
+  try {
+    url = new URL(link.href, window.location.href)
+  } catch {
+    return { kind: 'other', destination: link.getAttribute('href') ?? '' }
+  }
+  if (url.protocol === 'mailto:') return { kind: 'email', destination: `${url.protocol}${url.pathname}` }
+  if (url.protocol === 'tel:') return { kind: 'phone', destination: `${url.protocol}${url.pathname}` }
+  if (url.origin !== window.location.origin) return { kind: 'external', destination: `${url.origin}${url.pathname}` }
+  if (link.hasAttribute('download') || DOWNLOAD_FILE.test(url.pathname)) return { kind: 'download', destination: url.pathname }
+  return { kind: 'internal', destination: `${url.pathname}${url.hash}` }
+}
+
+function onDocumentClick(event: MouseEvent) {
+  const target = event.target
+  if (!(target instanceof Element)) return
+  const link = target.closest<HTMLAnchorElement>('a[href]')
+  const control = link ?? target.closest('button, [role="button"], [role="tab"], summary')
+  if (!control) return
+  const name = describeControl(control)
+  if (link) {
+    const { kind, destination } = describeLink(link)
+    trackEvent('Click', 'link_click', `${name || 'Link'} → ${destination}`.slice(0, 140), { kind, destination })
+    return
+  }
+  trackEvent('Click', 'button_click', name || 'Button', { role: control.getAttribute('role') ?? control.tagName.toLowerCase() })
 }
 
 export function trackResumeView() {
