@@ -1,4 +1,4 @@
-import { useId, useState } from 'react'
+import { useId, useLayoutEffect, useReducer, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Plus } from 'lucide-react'
@@ -17,17 +17,69 @@ interface Placed extends OrbitNode {
   y: number
 }
 
-function place(items: OrbitNode[], rx: number, ry: number, offset: number): Placed[] {
-  return items.map((item, index) => {
-    const angle = offset + (index / items.length) * Math.PI * 2
-    return { ...item, x: 50 + Math.cos(angle) * rx, y: 50 + Math.sin(angle) * ry }
-  })
+interface Box {
+  left: number
+  right: number
+  top: number
+  bottom: number
 }
 
-function layout(nodes: OrbitNode[]): Placed[] {
-  const outer = nodes.filter((_, index) => index % 2 === 0)
-  const inner = nodes.filter((_, index) => index % 2 === 1)
-  return [...place(outer, 44, 40, -0.4), ...place(inner, 22, 20, 0.5)]
+const MARKER = 32
+const GAP = 8
+const SPACING = 8
+const BOB = 6
+const FALLBACK = { width: 628, height: 432 }
+const MAX_WIDTH = 860
+const MIN_PLACED = 8
+
+let canvas: CanvasRenderingContext2D | null | undefined
+
+function labelWidth(label: string, family: string) {
+  if (canvas === undefined) canvas = typeof document === 'undefined' ? null : document.createElement('canvas').getContext('2d')
+  if (!canvas) return MARKER + GAP + Math.ceil(label.length * 7)
+  canvas.font = `700 12px ${family}`
+  return MARKER + GAP + Math.ceil(canvas.measureText(label).width) + 2
+}
+
+function arrange(nodes: OrbitNode[], width: number, height: number, family: string): { placed: Placed[]; overflow: OrbitNode[] } {
+  const rings = [
+    { rx: width * 0.44, ry: height * 0.4, start: -0.4 },
+    { rx: width * 0.22, ry: height * 0.2, start: 0.5 },
+  ]
+  const cx = width / 2
+  const cy = height / 2
+  const taken: Box[] = []
+  const placed: Placed[] = []
+  const overflow: OrbitNode[] = []
+  const cursor = [0, 0]
+
+  nodes.forEach((node, index) => {
+    const span = labelWidth(node.label, family)
+    const order = index % 2 === 0 ? [0, 1] : [1, 0]
+    for (const ringIndex of order) {
+      const ring = rings[ringIndex]
+      for (let step = cursor[ringIndex]; step < 360; step += 1) {
+        const angle = ring.start + (step / 360) * Math.PI * 2
+        const x = cx + Math.cos(angle) * ring.rx
+        const y = cy + Math.sin(angle) * ring.ry
+        const flipped = x > cx
+        const box: Box = { left: flipped ? x - span : x, right: flipped ? x : x + span, top: y - MARKER / 2 - BOB, bottom: y + MARKER / 2 + BOB }
+        const inside = box.left >= 0 && box.right <= width && box.top >= 0 && box.bottom <= height
+        const clear = taken.every(
+          (other) => box.right + SPACING <= other.left || box.left - SPACING >= other.right || box.bottom + SPACING <= other.top || box.top - SPACING >= other.bottom,
+        )
+        if (inside && clear) {
+          taken.push(box)
+          placed.push({ ...node, x: (x / width) * 100, y: (y / height) * 100 })
+          cursor[ringIndex] = step + 10
+          return
+        }
+      }
+    }
+    overflow.push(node)
+  })
+
+  return { placed, overflow }
 }
 
 function Detail({ node, rightSide }: { node: OrbitNode; rightSide: boolean }) {
@@ -62,70 +114,114 @@ function Detail({ node, rightSide }: { node: OrbitNode; rightSide: boolean }) {
 export default function ClientOrbit({ nodes, label }: { nodes: OrbitNode[]; label: string }) {
   const calm = useReducedMotion()
   const group = useId()
+  const wrapper = useRef<HTMLDivElement>(null)
+  const [size, setSize] = useState(FALLBACK)
+  const [family, setFamily] = useState('sans-serif')
+  const [, refresh] = useReducer((tick: number) => tick + 1, 0)
   const [active, setActive] = useState<string | null>(null)
-  const placed = layout(nodes)
+
+  useLayoutEffect(() => {
+    const node = wrapper.current
+    if (!node) return
+    const measure = () => {
+      const width = Math.min(node.getBoundingClientRect().width, MAX_WIDTH)
+      if (width > 0) setSize((current) => (Math.abs(current.width - width) < 1 ? current : { width, height: (width * 11) / 16 }))
+      setFamily(getComputedStyle(node).fontFamily)
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(node)
+    void document.fonts?.ready.then(refresh)
+    return () => observer.disconnect()
+  }, [])
+
+  const arranged = arrange(nodes, size.width, size.height, family)
+  const orbital = arranged.placed.length >= Math.min(nodes.length, MIN_PLACED)
+  const placed = orbital ? arranged.placed : []
+  const overflow = orbital ? arranged.overflow : nodes
+  const chip = 'inline-flex rounded-full border border-border px-4 py-2 text-xs font-bold text-foreground'
 
   return (
-    <div className="relative mx-auto aspect-[16/11] w-full max-w-[860px]" role="list" aria-label={label}>
-      <svg aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
-        <ellipse cx="50" cy="50" rx="44" ry="40" fill="none" stroke="currentColor" strokeOpacity="0.18" strokeWidth="0.25" strokeDasharray="1.2 1.6" className="text-foreground" />
-        <ellipse cx="50" cy="50" rx="22" ry="20" fill="none" stroke="currentColor" strokeOpacity="0.18" strokeWidth="0.25" strokeDasharray="1.2 1.6" className="text-foreground" />
-      </svg>
+    <div ref={wrapper} className="w-full">
+      {orbital && (
+        <div className="relative mx-auto aspect-[16/11] w-full max-w-[860px]" role="list" aria-label={label}>
+          <svg aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
+            <ellipse cx="50" cy="50" rx="44" ry="40" fill="none" stroke="currentColor" strokeOpacity="0.18" strokeWidth="0.25" strokeDasharray="1.2 1.6" className="text-foreground" />
+            <ellipse cx="50" cy="50" rx="22" ry="20" fill="none" stroke="currentColor" strokeOpacity="0.18" strokeWidth="0.25" strokeDasharray="1.2 1.6" className="text-foreground" />
+          </svg>
 
-      {placed.map((node, index) => {
-        const rightSide = node.x > 50
-        const key = `${group}-${node.label}`
-        const open = active === key
-        const body = (
-          <>
-            <span aria-hidden="true" className={cn('grid h-6 w-6 shrink-0 place-items-center rounded-full border border-border bg-muted text-foreground transition-all duration-300 sm:h-8 sm:w-8', open && 'scale-110 border-foreground/30 bg-foreground text-background shadow-lg')}>
-              <Plus className={cn('h-3 w-3 transition-transform duration-500 sm:h-4 sm:w-4', open && 'rotate-45')} />
-            </span>
-            <span className={cn('whitespace-nowrap text-[10px] font-bold text-foreground transition-opacity duration-300 sm:text-xs', open ? 'opacity-100' : 'opacity-70')}>{node.label}</span>
-          </>
-        )
-        const classes = cn('flex items-center gap-2', rightSide && 'flex-row-reverse')
+          {placed.map((node, index) => {
+            const rightSide = node.x > 50
+            const key = `${group}-${node.label}`
+            const open = active === key
+            const body = (
+              <>
+                <span aria-hidden="true" className={cn('grid h-6 w-6 shrink-0 place-items-center rounded-full border border-border bg-muted text-foreground transition-all duration-300 sm:h-8 sm:w-8', open && 'scale-110 border-foreground/30 bg-foreground text-background shadow-lg')}>
+                  <Plus className={cn('h-3 w-3 transition-transform duration-500 sm:h-4 sm:w-4', open && 'rotate-45')} />
+                </span>
+                <span className={cn('whitespace-nowrap text-[10px] font-bold text-foreground transition-opacity duration-300 sm:text-xs', open ? 'opacity-100' : 'opacity-70')}>{node.label}</span>
+              </>
+            )
+            const classes = cn('flex items-center gap-2', rightSide && 'flex-row-reverse')
 
-        return (
-          <motion.div
-            key={key}
-            role="listitem"
-            initial={calm ? false : { opacity: 0, scale: 0.6 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.07 }}
-            className={cn('absolute -translate-y-1/2', rightSide ? '-translate-x-full' : 'translate-x-0', open ? 'z-50' : 'z-20')}
-            style={{ left: `${node.x}%`, top: `${node.y}%` }}
-            onMouseEnter={() => setActive(key)}
-            onMouseLeave={() => setActive((current) => (current === key ? null : current))}
-            onFocus={() => setActive(key)}
-            onBlur={() => setActive((current) => (current === key ? null : current))}
-          >
-            <motion.div
-              animate={calm ? undefined : { y: [0, -5, 0] }}
-              transition={{ duration: 4 + (index % 4), repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 }}
-              className="relative"
-            >
+            return (
+              <motion.div
+                key={key}
+                role="listitem"
+                initial={calm ? false : { opacity: 0, scale: 0.6 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.07 }}
+                className={cn('absolute', open ? 'z-50' : 'z-20')}
+                style={{ left: `${node.x}%`, top: `${node.y}%`, x: rightSide ? '-100%' : '0%', y: '-50%' }}
+                onMouseEnter={() => setActive(key)}
+                onMouseLeave={() => setActive((current) => (current === key ? null : current))}
+                onFocus={() => setActive(key)}
+                onBlur={() => setActive((current) => (current === key ? null : current))}
+              >
+                <motion.div
+                  animate={calm ? undefined : { y: [0, -5, 0] }}
+                  transition={{ duration: 4 + (index % 4), repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 }}
+                  className="relative"
+                >
+                  {node.href ? (
+                    <Link to={node.href} className={classes}>
+                      {body}
+                    </Link>
+                  ) : (
+                    <button type="button" className={classes} aria-describedby={open ? `${key}-detail` : undefined}>
+                      {body}
+                    </button>
+                  )}
+                  <AnimatePresence>
+                    {open && (node.description || node.href || node.company) && (
+                      <span id={`${key}-detail`}>
+                        <Detail node={node} rightSide={rightSide} />
+                      </span>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              </motion.div>
+            )
+          })}
+        </div>
+      )}
+
+      {overflow.length > 0 && (
+        <ul className={cn('flex flex-wrap justify-center gap-2', orbital && 'mt-6')} aria-label={orbital ? `More: ${label}` : label}>
+          {overflow.map((node) => (
+            <li key={node.label}>
               {node.href ? (
-                <Link to={node.href} className={classes}>
-                  {body}
+                <Link to={node.href} className={`${chip} transition-colors hover:border-foreground/40 hover:bg-foreground/5`}>
+                  {node.label}
                 </Link>
               ) : (
-                <button type="button" className={classes} aria-describedby={open ? `${key}-detail` : undefined}>
-                  {body}
-                </button>
+                <span className={chip}>{node.label}</span>
               )}
-              <AnimatePresence>
-                {open && (node.description || node.href || node.company) && (
-                  <span id={`${key}-detail`}>
-                    <Detail node={node} rightSide={rightSide} />
-                  </span>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          </motion.div>
-        )
-      })}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
