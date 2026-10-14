@@ -65,7 +65,7 @@ export default function DeliveryCards({ title, items }: { title: string; items: 
 
   const header = (
     <div className="max-w-3xl">
-      <h2 id="delivery-heading" className="bg-gradient-to-b from-foreground to-muted-foreground bg-clip-text pb-2 text-5xl font-black tracking-tighter text-transparent md:text-7xl">
+      <h2 id="delivery-heading" className="bg-gradient-to-b from-foreground to-muted-foreground bg-clip-text pb-2 text-[clamp(2.25rem,12vw,3rem)] font-black tracking-tighter text-transparent md:text-7xl">
         {title}
       </h2>
       <div aria-hidden="true" className="mt-4 h-1 w-14 bg-foreground" />
