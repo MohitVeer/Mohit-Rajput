@@ -15,8 +15,8 @@ export default function FeatureList() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-xl"
         >
-          <div className="h-72 overflow-hidden">
-            <div className="h-full scale-[1.1]">
+          <div className="h-80 overflow-hidden">
+            <div className="h-full -translate-y-9 scale-[1.1]">
               <CubeLoader faces={feature.faces} />
             </div>
           </div>
