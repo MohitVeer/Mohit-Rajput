@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { setPageMeta } from '../lib/pageMeta'
 import type { Session } from '@supabase/supabase-js'
 import { supabase, supabaseConfigured } from '../lib/supabaseClient'
 import AdminLogin from './admin/AdminLogin'
-import AdminDashboard from './admin/AdminDashboard'
+
+const AdminDashboard = lazy(() => import('./admin/AdminDashboard'))
+
+const LOADING = <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>
 
 export default function Admin() {
   const [session, setSession] = useState<Session | null>(null)
@@ -36,13 +39,15 @@ export default function Admin() {
     )
   }
 
-  if (!checked) {
-    return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>
-  }
+  if (!checked) return LOADING
 
   if (!session) {
     return <AdminLogin onSignedIn={() => {}} />
   }
 
-  return <AdminDashboard onSignOut={() => setSession(null)} />
+  return (
+    <Suspense fallback={LOADING}>
+      <AdminDashboard onSignOut={() => setSession(null)} />
+    </Suspense>
+  )
 }

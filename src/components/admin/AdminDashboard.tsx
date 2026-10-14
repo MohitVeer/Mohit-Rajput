@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
 import {
   fetchConversionFunnel,
@@ -29,7 +29,6 @@ import {
 } from '../../lib/adminApi'
 import { useDateRange } from '../../hooks/useDateRange'
 import { usePageInventory } from '../../hooks/usePageInventory'
-import ContentManager from './content/ContentManager'
 import DateRangeBar from './analytics/DateRangeBar'
 import OverviewCards from './analytics/OverviewCards'
 import VisitorTrendChart from './analytics/VisitorTrendChart'
@@ -40,6 +39,8 @@ import EngagementFunnel from './analytics/EngagementFunnel'
 import LiveVisitors from './analytics/LiveVisitors'
 import PageCoverage from './analytics/PageCoverage'
 import ResetAnalytics from './analytics/ResetAnalytics'
+
+const ContentManager = lazy(() => import('./content/ContentManager'))
 
 interface DashboardData {
   overview: Overview
@@ -221,7 +222,9 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
 
         {view === 'content' && (
           <div className="mt-6">
-            <ContentManager />
+            <Suspense fallback={<p className="mt-10 text-center text-muted-foreground">Loading…</p>}>
+              <ContentManager />
+            </Suspense>
           </div>
         )}
 
