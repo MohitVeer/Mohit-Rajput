@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
-import { ArrowUpRight, Award, GraduationCap, MapPin } from 'lucide-react'
-import { education, type EducationEntry } from '../../data/education'
+import { ArrowUpRight, Award, MapPin } from 'lucide-react'
 import type { ExperienceRow } from '../../lib/contentApi'
 import { clientsForJob, jobSlug } from '../../lib/experienceUtils'
 import { splitAward } from '../../lib/achievements'
@@ -79,47 +78,6 @@ function JobCard({ job, projects, className }: { job: ExperienceRow; projects: P
   )
 }
 
-function StudyCard({ entry, className }: { entry: EducationEntry; className?: string }) {
-  return (
-    <div
-      className={cn(
-        'flex w-[320px] flex-col gap-3 rounded-2xl border border-neutral-200 bg-white/85 p-6 shadow-xl backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/85 md:w-[400px]',
-        className,
-      )}
-    >
-      <div className="flex items-start gap-3">
-        <span aria-hidden="true" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
-          <GraduationCap className="h-6 w-6" />
-        </span>
-        <div className="min-w-0">
-          <h3 className="text-lg font-bold leading-tight text-neutral-900 dark:text-white">
-            {entry.short} · {entry.degree}
-          </h3>
-          <p className="mt-1 text-sm font-medium text-neutral-700 dark:text-neutral-300">{entry.field}</p>
-          <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{entry.period}</p>
-        </div>
-      </div>
-
-      <dl className="space-y-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
-        <div className="flex gap-2">
-          <dt className="shrink-0 font-semibold text-neutral-800 dark:text-neutral-200">{entry.affiliation ? 'College' : 'University'}</dt>
-          <dd>{entry.institution}</dd>
-        </div>
-        {entry.affiliation && (
-          <div className="flex gap-2">
-            <dt className="shrink-0 font-semibold text-neutral-800 dark:text-neutral-200">Affiliated to</dt>
-            <dd>{entry.affiliation}</dd>
-          </div>
-        )}
-        <div className="flex gap-2">
-          <dt className="shrink-0 font-semibold text-neutral-800 dark:text-neutral-200">Mode</dt>
-          <dd>{entry.mode}</dd>
-        </div>
-      </dl>
-    </div>
-  )
-}
-
 function FitCard({ children, above }: { children: React.ReactNode; above: boolean }) {
   const ref = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
@@ -159,7 +117,7 @@ function Heading() {
         Professional Journey
       </h2>
       <p className="max-w-2xl text-base leading-relaxed text-neutral-600 dark:text-neutral-400 md:text-xl">
-        A timeline of roles, responsibilities and professional growth — from front-end engineering to enterprise Salesforce consulting — and the education behind it.
+        A timeline of roles, responsibilities and professional growth — from front-end engineering to enterprise Salesforce consulting.
       </p>
     </>
   )
@@ -173,11 +131,6 @@ function ScreenReaderList({ jobs }: { jobs: ExperienceRow[] }) {
           <Link to={`/experience#${jobSlug(job)}`}>
             {job.role} at {job.company}, {job.period}
           </Link>
-        </li>
-      ))}
-      {education.map((entry) => (
-        <li key={entry.id}>
-          {entry.degree}, {entry.institution}, {entry.mode}, {entry.period}
         </li>
       ))}
     </ul>
@@ -196,15 +149,6 @@ function StackedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: P
           </li>
         ))}
       </ol>
-      <h3 className="mt-12 text-sm font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">Education</h3>
-      <ol className="relative mt-5 space-y-5 border-l border-neutral-200 pl-5 dark:border-neutral-800 md:mt-6 md:space-y-8 md:pl-6">
-        {education.map((entry) => (
-          <li key={entry.id} className="relative">
-            <span aria-hidden="true" className="absolute -left-[26px] top-6 h-3 w-3 rounded-full border border-neutral-400 bg-background dark:border-neutral-600 md:-left-[31px]" />
-            <StudyCard entry={entry} className="w-full" />
-          </li>
-        ))}
-      </ol>
       <Link
         to="/experience"
         className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-neutral-200 px-6 py-3 text-xs font-bold uppercase tracking-widest transition-colors hover:bg-foreground hover:text-background dark:border-white/20 md:mt-10"
@@ -216,7 +160,7 @@ function StackedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: P
   )
 }
 
-type TrackEntry = { kind: 'job'; job: ExperienceRow } | { kind: 'study'; study: EducationEntry } | { kind: 'end' }
+type TrackEntry = { kind: 'job'; job: ExperienceRow } | { kind: 'end' }
 
 function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: ProjectItem[] }) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -229,7 +173,6 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] })
   const entries: TrackEntry[] = [
     ...jobs.map((job) => ({ kind: 'job' as const, job })),
-    ...education.map((study) => ({ kind: 'study' as const, study })),
     { kind: 'end' as const },
   ]
   const stops = entries.length - 1
@@ -302,7 +245,7 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
               const isActive = active === index
               return (
                 <div
-                  key={entry.kind === 'job' ? entry.job.id : entry.kind === 'study' ? entry.study.id : 'end'}
+                  key={entry.kind === 'job' ? entry.job.id : 'end'}
                   ref={(el) => {
                     itemRefs.current[index] = el
                   }}
@@ -327,9 +270,8 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
                     <>
                       <div className={cn('absolute left-8 z-20 w-[280px] transition-all duration-500 md:w-[350px]', above ? 'top-4' : 'bottom-4')}>
                         <div className={cn('transition-all duration-500', isActive && 'translate-x-2 opacity-0')}>
-                          {entry.kind === 'study' && <p className="mb-1 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">Education</p>}
-                          <h3 className="text-xl font-bold tracking-tight text-neutral-800 dark:text-neutral-300 md:text-2xl">{entry.kind === 'job' ? entry.job.role : `${entry.study.short} · ${entry.study.degree}`}</h3>
-                          <p className="mt-1 text-sm font-medium text-neutral-500 dark:text-neutral-400">{entry.kind === 'job' ? entry.job.company : entry.study.institution}</p>
+                          <h3 className="text-xl font-bold tracking-tight text-neutral-800 dark:text-neutral-300 md:text-2xl">{entry.job.role}</h3>
+                          <p className="mt-1 text-sm font-medium text-neutral-500 dark:text-neutral-400">{entry.job.company}</p>
                         </div>
                       </div>
 
@@ -341,7 +283,7 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
                         )}
                       >
                         <span className="inline-block rounded-md border border-neutral-200 bg-neutral-100 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-neutral-600 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 md:text-xs">
-                          {entry.kind === 'job' ? entry.job.period : entry.study.period}
+                          {entry.job.period}
                         </span>
                       </div>
 
@@ -355,7 +297,7 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
                       >
                         <div className={cn('transition-[visibility] duration-500', !isActive && 'invisible')}>
                           <FitCard above={above}>
-                            {entry.kind === 'job' ? <JobCard job={entry.job} projects={projects} /> : <StudyCard entry={entry.study} />}
+                            <JobCard job={entry.job} projects={projects} />
                           </FitCard>
                         </div>
                       </div>
