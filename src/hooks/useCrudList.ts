@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { clearContentCache } from '../lib/contentApi'
 
 export function useCrudList<T extends { id: string; sort_order: number }>(
   fetchFn: () => Promise<T[]>,
@@ -14,6 +15,7 @@ export function useCrudList<T extends { id: string; sort_order: number }>(
   const reload = useCallback(() => {
     setLoading(true)
     setError(null)
+    clearContentCache()
     fetchFn()
       .then((rows) => setItems(rows))
       .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load.'))
