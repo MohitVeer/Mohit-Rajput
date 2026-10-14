@@ -25,6 +25,8 @@ export default function PopularContent({
   certifications,
   articles,
   outboundLinks,
+  linkClicks,
+  buttonClicks,
   resumeViews,
   resumeDownloads,
   allEvents,
@@ -33,6 +35,8 @@ export default function PopularContent({
   certifications: LabeledEventRow[]
   articles: LabeledEventRow[]
   outboundLinks: LabeledEventRow[]
+  linkClicks: LabeledEventRow[]
+  buttonClicks: LabeledEventRow[]
   resumeViews: number
   resumeDownloads: number
   allEvents: EventTypeRow[]
@@ -109,6 +113,15 @@ export default function PopularContent({
       <ChartCard title="Most clicked outbound links">
         <LabeledList rows={outboundLinks} unit="clicks" />
       </ChartCard>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <ChartCard title="Most clicked links (every link on the site)">
+          <LabeledList rows={linkClicks} unit="clicks" />
+        </ChartCard>
+        <ChartCard title="Most clicked buttons">
+          <LabeledList rows={buttonClicks} unit="clicks" />
+        </ChartCard>
+      </div>
 
       <ChartCard title="All tracked interactions">
         <p className="mb-2 text-[11px] text-muted-foreground">
