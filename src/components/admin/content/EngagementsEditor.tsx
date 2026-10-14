@@ -3,7 +3,8 @@ import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchEngagements, type EngagementRow } from '../../../lib/contentApi'
 import { createEngagement, createEngagements, deleteEngagement, updateEngagement } from '../../../lib/contentAdminApi'
 import { builtInEngagementRows, employerSuggestions } from '../../../lib/contentModel'
-import { CheckboxField, cleanLines, ComboInput, EditorCard, Field, Hint, ImportBanner, ListTextArea, MoveButtons, SaveDeleteRow, SelectInput, TextInput } from './fields'
+import { cleanLines } from './cleanLines'
+import { CheckboxField, ComboInput, EditorCard, Field, Hint, ImportBanner, ListTextArea, MoveButtons, SaveDeleteRow, SelectInput, TextInput } from './fields'
 
 type Draft = {
   employer: string

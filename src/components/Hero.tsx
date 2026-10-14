@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowDownRight, ExternalLink, Mail, Zap } from 'lucide-react'
@@ -9,6 +9,7 @@ import { cn } from '../lib/cn'
 import { GitHubMark, LinkedInMark, SalesforceMark } from './icons/BrandMarks'
 import SpotlightBeams from './shell/SpotlightBeams'
 import { usePreloading } from './shell/preloadState'
+import { useNearScreen } from '../lib/loop'
 
 interface TooltipState {
   show: boolean
@@ -43,6 +44,8 @@ interface FloatProps {
 
 function Float({ revealed, delay, axis, distance, duration, className, children }: FloatProps) {
   const reduce = useReducedMotion()
+  const loopRef = useRef<HTMLDivElement>(null)
+  const near = useNearScreen(loopRef)
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -51,8 +54,9 @@ function Float({ revealed, delay, axis, distance, duration, className, children 
       className={cn('absolute z-20 hidden md:block', className)}
     >
       <motion.div
-        animate={revealed && !reduce ? { [axis]: [0, distance, 0] } : { [axis]: 0 }}
-        transition={{ duration, repeat: Infinity, ease: 'easeInOut' }}
+        ref={loopRef}
+        animate={revealed && !reduce && near ? { [axis]: [0, distance, 0] } : { [axis]: 0 }}
+        transition={near ? { duration, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
         className="transform-gpu"
       >
         {children}
@@ -67,6 +71,10 @@ export default function Hero() {
   const preloading = usePreloading()
   const reduce = useReducedMotion()
   const revealed = !preloading
+  const zapRef = useRef<HTMLAnchorElement>(null)
+  const markRef = useRef<HTMLAnchorElement>(null)
+  const zapNear = useNearScreen(zapRef)
+  const markNear = useNearScreen(markRef)
   const [tooltip, setTooltip] = useState<TooltipState>({ show: false, text: '', x: 0, y: 0, icon: null })
   const [drawerOpen, setDrawerOpen] = useState(false)
 
@@ -182,8 +190,9 @@ export default function Hero() {
                 <MotionLink
                   to="/projects"
                   aria-label="See my projects"
-                  animate={revealed && !reduce ? { scale: [1, 1.2, 1] } : { scale: 1 }}
-                  transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+                  ref={zapRef}
+                  animate={revealed && !reduce && zapNear ? { scale: [1, 1.2, 1] } : { scale: 1 }}
+                  transition={zapNear ? { duration: 1.2, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
                   {...tooltipHandlers('See my work', 'zap')}
                   className="group relative mx-[0.02em] block cursor-pointer lg:mx-[0.05em]"
                 >
@@ -200,8 +209,9 @@ export default function Hero() {
               <MotionLink
                 to="/contact"
                 aria-label="Get in touch"
-                animate={revealed && !reduce ? { rotate: [0, 8, 0], y: [0, -10, 0] } : { rotate: 0, y: 0 }}
-                transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
+                ref={markRef}
+                animate={revealed && !reduce && markNear ? { rotate: [0, 8, 0], y: [0, -10, 0] } : { rotate: 0, y: 0 }}
+                transition={markNear ? { duration: 3.6, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
                 {...tooltipHandlers('Let’s work together', 'mail')}
                 className="group relative mx-[0.05em] block cursor-pointer"
               >

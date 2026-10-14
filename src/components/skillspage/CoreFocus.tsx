@@ -2,8 +2,7 @@ import { useId, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { SkillGroupRow } from '../../lib/contentApi'
 import { cn } from '../../lib/cn'
-import { hasSalesforceContext } from '../../lib/techIcons'
-import { groupIcons } from '../icons/TechIcons'
+import { groupIcons, hasSalesforceContext } from '../../lib/techIcons'
 import SkillIcon from './SkillIcon'
 
 export default function CoreFocus({ groups }: { groups: SkillGroupRow[] }) {

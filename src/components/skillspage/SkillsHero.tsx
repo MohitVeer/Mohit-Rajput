@@ -1,7 +1,9 @@
+import { useRef } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import CubeLoader from '../ui/CubeLoader'
 import { FEATURES } from '../skills/features'
 import SkillIcon from './SkillIcon'
+import { useNearScreen } from '../../lib/loop'
 
 const FLOATERS = [
   { name: 'React.js', className: 'left-[8%] top-[22%]', size: 44 },
@@ -16,9 +18,11 @@ const FLOATERS = [
 
 export default function SkillsHero() {
   const reduce = useReducedMotion()
+  const sectionRef = useRef<HTMLElement>(null)
+  const near = useNearScreen(sectionRef)
 
   return (
-    <section aria-labelledby="skills-heading" className="relative flex min-h-screen min-h-svh flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-28">
+    <section ref={sectionRef} aria-labelledby="skills-heading" className="relative flex min-h-screen min-h-svh flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-28">
       {FLOATERS.map((floater, i) => (
         <motion.span
           key={floater.name}
@@ -29,8 +33,8 @@ export default function SkillsHero() {
           className={`absolute hidden md:block ${floater.className}`}
         >
           <motion.span
-            animate={reduce ? undefined : { y: [0, -16, 0], rotate: [0, 4, 0] }}
-            transition={{ duration: 5 + (i % 4), repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
+            animate={reduce ? undefined : near ? { y: [0, -16, 0], rotate: [0, 4, 0] } : { y: 0, rotate: 0 }}
+            transition={near ? { duration: 5 + (i % 4), repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 } : { duration: 0 }}
             className="grid place-items-center rounded-2xl border border-border bg-card/70 p-4 shadow-xl backdrop-blur"
           >
             <SkillIcon name={floater.name} size={floater.size} />

@@ -131,6 +131,7 @@ function renderTarget(item: MegaItem, onSelect: () => void, className: string, c
   return (
     <Link
       to={item.to}
+      data-curtain-label={item.title}
       onClick={() => {
         trackEvent('Navigation', 'nav_click', item.title)
         onSelect()

@@ -119,11 +119,23 @@ export interface SettingRow {
 
 type TableName = 'experience' | 'skill_groups' | 'cert_groups' | 'superbadges' | 'articles' | 'projects' | 'engagements' | 'faqs' | 'site_settings'
 
+const CACHE_MS = 5 * 60 * 1000
 const pending = new Map<string, Promise<unknown[]>>()
+const results = new Map<string, { at: number; rows: unknown[] }>()
+const fetcherKeys = new WeakMap<() => Promise<unknown[]>, string>()
+
+const cacheKey = (table: TableName, order: string | null) => `${table}:${order}`
+
+function fresh(key: string | undefined) {
+  const hit = key ? results.get(key) : undefined
+  return hit && Date.now() - hit.at < CACHE_MS ? hit.rows : undefined
+}
 
 function listContent<T>(table: TableName, order: string | null = 'sort_order.asc'): Promise<T[]> {
   if (!SUPABASE_URL || !ANON_KEY) return Promise.resolve([])
-  const key = `${table}:${order}`
+  const key = cacheKey(table, order)
+  const cached = fresh(key)
+  if (cached) return Promise.resolve(cached as T[])
   const running = pending.get(key)
   if (running) return running as Promise<T[]>
 
@@ -133,21 +145,37 @@ function listContent<T>(table: TableName, order: string | null = 'sort_order.asc
       headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
     })
     if (!res.ok) throw new Error(`Failed to fetch ${table}: ${res.status}`)
-    return (await res.json()) as T[]
+    const rows = (await res.json()) as T[]
+    results.set(key, { at: Date.now(), rows })
+    return rows
   })().finally(() => pending.delete(key))
 
   pending.set(key, request)
   return request
 }
 
-export const fetchExperience = () => listContent<ExperienceRow>('experience')
-export const fetchSkillGroups = () => listContent<SkillGroupRow>('skill_groups')
-export const fetchCertGroups = () => listContent<CertGroupRow>('cert_groups')
-export const fetchSuperbadges = () => listContent<SuperbadgeRow>('superbadges')
-export const fetchArticles = () => listContent<ArticleRow>('articles')
-export const fetchProjects = () => listContent<ProjectRow>('projects')
-export const fetchEngagements = () => listContent<EngagementRow>('engagements')
-export const fetchFaqs = () => listContent<FaqRow>('faqs')
+function contentFetcher<T>(table: TableName) {
+  const fetcher = () => listContent<T>(table)
+  fetcherKeys.set(fetcher, cacheKey(table, 'sort_order.asc'))
+  return fetcher
+}
+
+export function peekContent<T>(fetcher: () => Promise<T[]>): T[] | undefined {
+  return fresh(fetcherKeys.get(fetcher)) as T[] | undefined
+}
+
+export function clearContentCache(): void {
+  results.clear()
+}
+
+export const fetchExperience = contentFetcher<ExperienceRow>('experience')
+export const fetchSkillGroups = contentFetcher<SkillGroupRow>('skill_groups')
+export const fetchCertGroups = contentFetcher<CertGroupRow>('cert_groups')
+export const fetchSuperbadges = contentFetcher<SuperbadgeRow>('superbadges')
+export const fetchArticles = contentFetcher<ArticleRow>('articles')
+export const fetchProjects = contentFetcher<ProjectRow>('projects')
+export const fetchEngagements = contentFetcher<EngagementRow>('engagements')
+export const fetchFaqs = contentFetcher<FaqRow>('faqs')
 let settingsRequest: Promise<SettingRow[]> | null = null
 
 export function fetchSettings(): Promise<SettingRow[]> {
@@ -162,4 +190,5 @@ export function fetchSettings(): Promise<SettingRow[]> {
 
 export function resetSettingsCache(): void {
   settingsRequest = null
+  results.clear()
 }

@@ -12,6 +12,7 @@ import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 import SpotlightBeams from './shell/SpotlightBeams'
 import { useTheme } from '../theme/useTheme'
 import { siteRoutes } from '../lib/siteRoutes'
+import { useNearScreen } from '../lib/loop'
 
 const FOOTER_LINES = [`${profile.name}.`, 'All rights reserved.']
 
@@ -21,15 +22,18 @@ function Marquee() {
   const heroTags = useHeroTags()
   const marquee = ['Open to Opportunities', ...heroTags.slice(0, 5)]
   const items = [...marquee, ...marquee, ...marquee]
+  const ref = useRef<HTMLDivElement>(null)
+  const near = useNearScreen(ref)
   return (
     <div
+      ref={ref}
       aria-hidden="true"
       className="relative flex overflow-hidden border-y border-zinc-200 bg-zinc-50 py-4 backdrop-blur-sm dark:border-white/10 dark:bg-black"
     >
       <motion.div
         className="flex gap-12 whitespace-nowrap"
-        animate={{ x: [0, -1000] }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        animate={near ? { x: [0, -1000] } : { x: 0 }}
+        transition={near ? { duration: 30, repeat: Infinity, ease: 'linear' } : { duration: 0 }}
       >
         {items.map((text, i) => (
           <div key={i} className="flex items-center gap-4 font-mono text-sm uppercase tracking-widest text-muted-foreground/80">

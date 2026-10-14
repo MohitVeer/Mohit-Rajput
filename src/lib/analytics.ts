@@ -116,7 +116,7 @@ let heartbeatTimer: ReturnType<typeof setInterval> | undefined
 const HEARTBEAT_INTERVAL_MS = 20_000
 const SCROLL_MILESTONES = [25, 50, 75, 90, 100]
 
-export function initAnalytics() {
+function initAnalytics() {
   if (isTrackingDisabled()) return
 
   sessionStartedAt = Date.now()
@@ -298,10 +298,6 @@ export function trackResumeView() {
 
 export function trackResumeDownload() {
   trackEvent('Resume', 'resume_download')
-}
-
-export function trackProjectView(projectName: string) {
-  trackEvent('ProjectCard', 'project_view', projectName)
 }
 
 export function trackProjectClick(projectName: string, destination?: string) {

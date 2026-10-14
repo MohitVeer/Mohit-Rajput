@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { motion, useAnimationFrame, useMotionValue, useScroll, useSpring, useTransform, useVelocity } from 'framer-motion'
 import { cn } from '../../lib/cn'
 
@@ -31,6 +31,8 @@ export default function InfiniteRibbon({
   const smoothVelocity = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 })
   const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], { clamp: false })
   const [compact, setStatic] = useState(false)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const visible = useRef(true)
 
   useEffect(() => {
     const query = window.matchMedia('(max-width: 768px), (prefers-reduced-motion: reduce)')
@@ -40,10 +42,20 @@ export default function InfiniteRibbon({
     return () => query.removeEventListener('change', update)
   }, [])
 
+  useEffect(() => {
+    const node = rootRef.current
+    if (!node) return
+    const watcher = new IntersectionObserver(([entry]) => {
+      visible.current = entry.isIntersecting
+    })
+    watcher.observe(node)
+    return () => watcher.disconnect()
+  }, [])
+
   const x = useTransform(baseX, (v) => `${wrap(-50, 0, v)}%`)
 
   useAnimationFrame((_, delta) => {
-    if (compact) return
+    if (compact || !visible.current) return
     let move = baseVelocity * (delta / 1000)
     if (reverse) move = -move
     move += move * velocityFactor.get()
@@ -52,6 +64,7 @@ export default function InfiniteRibbon({
 
   return (
     <div
+      ref={rootRef}
       aria-hidden="true"
       className={cn('absolute left-1/2 top-1/2 z-10 w-[200vw] overflow-hidden whitespace-nowrap py-3 opacity-90', background, className)}
       style={{ transform: `translate(-50%, -50%) rotate(${rotation}deg)`, transformOrigin: 'center center' }}

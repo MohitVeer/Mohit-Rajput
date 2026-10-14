@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { easeInOut, motion, useMotionValueEvent, useTransform, type MotionValue } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import { profile } from '../../data/profile'
@@ -7,6 +7,7 @@ import BrandScroller from '../ui/BrandScroller'
 import InfiniteMarquee from '../ui/InfiniteMarquee'
 import MagneticEffect from '../ui/MagneticEffect'
 import { frontEndStack, salesforceStack } from './stackItems'
+import { useNearScreen } from '../../lib/loop'
 
 export const NARRATIVE =
   'I build scalable, user-focused digital experiences across the Salesforce ecosystem and modern front-end technologies. With 5+ years of experience, I work with Lightning Web Components, Experience Cloud, Agentforce, OmniStudio, Marketing Cloud and modern JavaScript frameworks to turn complex requirements into intuitive, production-ready solutions.'
@@ -67,7 +68,7 @@ function BlurInUpText({ text, animate }: { text: string; animate: boolean }) {
               key={charIndex}
               variants={{
                 hidden: { opacity: 0, y: 12, filter: 'blur(4px)' },
-                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { type: 'spring', bounce: 0, duration: 0.5 } },
+                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { type: 'spring', bounce: 0, duration: 0.5, filter: { duration: 0.5, ease: [0.3, 0.4, 0.2, 0.9] } } },
               }}
               className="inline-block"
             >
@@ -88,6 +89,8 @@ interface IdentitySequenceProps {
 export default function IdentitySequence({ scrollYProgress }: IdentitySequenceProps) {
   const { resolvedTheme } = useTheme()
   const [textAnimated, setTextAnimated] = useState(false)
+  const arrowRef = useRef<HTMLSpanElement>(null)
+  const arrowNear = useNearScreen(arrowRef)
 
   const localProgress = useTransform(scrollYProgress, [0.4, 0.85], [0, 1])
 
@@ -148,7 +151,7 @@ export default function IdentitySequence({ scrollYProgress }: IdentitySequencePr
 
         <div className="flex w-full max-w-[1200px] items-center justify-between px-12">
           <div className="flex items-center gap-3 text-sm font-medium tracking-tight text-zinc-500 dark:text-white/60">
-            <motion.span animate={{ y: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }} className="flex h-4 w-4 items-center justify-center" aria-hidden="true">
+            <motion.span ref={arrowRef} animate={arrowNear ? { y: [0, 5, 0] } : { y: 0 }} transition={arrowNear ? { duration: 1.5, repeat: Infinity } : { duration: 0 }} className="flex h-4 w-4 items-center justify-center" aria-hidden="true">
               ↓
             </motion.span>
             <span>Scroll to explore</span>

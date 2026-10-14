@@ -13,9 +13,9 @@ export const pageLoaders = {
   admin: () => import('./components/Admin'),
 }
 
-export type PageKey = keyof typeof pageLoaders
+type PageKey = keyof typeof pageLoaders
 
-export function pageKeyFor(pathname: string): PageKey | null {
+function pageKeyFor(pathname: string): PageKey | null {
   const path = pathname.replace(/\/+$/, '') || '/'
   if (path === '/') return 'home'
   if (path.startsWith('/projects/')) return 'projectDetail'

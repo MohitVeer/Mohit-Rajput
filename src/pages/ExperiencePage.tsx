@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Briefcase, GraduationCap, Rocket } from 'lucide-react'
@@ -16,6 +16,7 @@ import { usePageMeta } from '../hooks/usePageMeta'
 import { projectSlugFor, useProjects } from '../hooks/useProjects'
 import { clientsForJob, jobSlug } from '../lib/experienceUtils'
 import type { ExperienceRow } from '../lib/contentApi'
+import { useNearScreen } from '../lib/loop'
 
 const TABS: TabDefinition[] = [
   { id: 'education', label: 'Education', quote: 'The academic foundation behind the work: a regular BCA followed by an MCA through distance learning.', icon: GraduationCap },
@@ -26,13 +27,16 @@ const TABS: TabDefinition[] = [
 const tabIndex = (id: string) => TABS.findIndex((tab) => tab.id === id)
 
 function FloatingShape({ className, gradient, delay = 0, still }: { className: string; gradient: string; delay?: number; still: boolean }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const near = useNearScreen(ref)
   return (
     <motion.div
+      ref={ref}
       aria-hidden="true"
       className={`pointer-events-none absolute rounded-full opacity-20 blur-3xl ${className}`}
       style={{ background: gradient }}
-      animate={still ? undefined : { y: [0, -20, 0], scale: [1, 1.05, 1] }}
-      transition={{ duration: 8, repeat: Infinity, delay }}
+      animate={still ? undefined : near ? { y: [0, -20, 0], scale: [1, 1.05, 1] } : { y: 0, scale: 1 }}
+      transition={near ? { duration: 8, repeat: Infinity, delay } : { duration: 0 }}
     />
   )
 }

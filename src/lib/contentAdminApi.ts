@@ -1,6 +1,6 @@
 import { slugify } from './slug'
 import { supabase } from './supabaseClient'
-import { resetSettingsCache, type ArticleRow, type Cert, type CertGroupRow, type EngagementRow, type ExperienceRow, type FaqRow, type ProjectRow, type SkillGroupRow, type SuperbadgeRow } from './contentApi'
+import { clearContentCache, resetSettingsCache, type ArticleRow, type CertGroupRow, type EngagementRow, type ExperienceRow, type FaqRow, type ProjectRow, type SkillGroupRow, type SuperbadgeRow } from './contentApi'
 
 type TableName = 'experience' | 'skill_groups' | 'cert_groups' | 'superbadges' | 'articles' | 'projects' | 'engagements' | 'faqs'
 
@@ -8,6 +8,7 @@ async function createContent<T extends { id: string }>(table: TableName, row: Pa
   if (!supabase) throw new Error('Supabase not configured')
   const { data, error } = await supabase.from(table).insert(row as never).select().single()
   if (error) throw error
+  clearContentCache()
   return data as T
 }
 
@@ -15,6 +16,7 @@ async function updateContent<T>(table: TableName, id: string, row: Partial<T>): 
   if (!supabase) throw new Error('Supabase not configured')
   const { data, error } = await supabase.from(table).update(row as never).eq('id', id).select().single()
   if (error) throw error
+  clearContentCache()
   return data as T
 }
 
@@ -22,6 +24,7 @@ async function deleteContent(table: TableName, id: string): Promise<void> {
   if (!supabase) throw new Error('Supabase not configured')
   const { error } = await supabase.from(table).delete().eq('id', id)
   if (error) throw error
+  clearContentCache()
 }
 
 export const createExperience = (row: Omit<ExperienceRow, 'id'>) => createContent<ExperienceRow>('experience', row)
@@ -38,7 +41,6 @@ export const createCertGroup = (row: Omit<CertGroupRow, 'id'>) => createContent<
 export const updateCertGroup = (id: string, row: Partial<CertGroupRow>) =>
   updateContent<CertGroupRow>('cert_groups', id, row)
 export const deleteCertGroup = (id: string) => deleteContent('cert_groups', id)
-export type { Cert }
 
 export const createSuperbadge = (row: Omit<SuperbadgeRow, 'id'>) => createContent<SuperbadgeRow>('superbadges', row)
 export const updateSuperbadge = (id: string, row: Partial<SuperbadgeRow>) =>
@@ -79,6 +81,7 @@ async function createManyContent<T>(table: TableName, rows: object[]): Promise<T
   if (!supabase) throw new Error('Supabase not configured')
   const { data, error } = await supabase.from(table).insert(rows as never).select()
   if (error) throw error
+  clearContentCache()
   return (data ?? []) as T[]
 }
 

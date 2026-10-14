@@ -3,12 +3,13 @@ import { ArrowUpRight, Building2 } from 'lucide-react'
 import { useRoleSlugs } from '../hooks/useExperience'
 import { projectSlugFor, usePortfolio, type EngagementItem, type ProjectItem } from '../hooks/useProjects'
 import { trackProjectClick } from '../lib/analytics'
+import { TONES } from '../lib/projectTone'
 import Section from './shell/Section'
 import CompanyLogo from './ui/CompanyLogo'
 import ScrollRevealText from './ui/ScrollRevealText'
 import ShowcaseStack from './ui/ShowcaseStack'
 
-const TONES = ['#4c76ff', '#22c55e', '#f59e0b', '#a855f7']
+const CARD_TONES = TONES.slice(0, 4)
 
 const shell =
   'mx-auto flex w-[min(92vw,1200px)] flex-col overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-2xl dark:border-neutral-800 dark:bg-zinc-950'
@@ -20,7 +21,7 @@ const MOBILE_HIGHLIGHTS = 2
 const MOBILE_CLIENTS = 3
 
 function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagement: EngagementItem; index: number; total: number; slug?: string; hrefFor: (client: string) => string | undefined }) {
-  const tone = TONES[index % TONES.length]
+  const tone = CARD_TONES[index % CARD_TONES.length]
   return (
     <article aria-label={engagement.title} className={shell}>
       <div className="grid flex-1 md:grid-cols-[1fr_1.2fr]">

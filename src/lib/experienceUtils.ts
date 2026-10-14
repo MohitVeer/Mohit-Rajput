@@ -34,12 +34,12 @@ const TECH_VOCABULARY = [
   'Foundry',
 ]
 
-export function startYear(period: string): string {
+function startYear(period: string): string {
   const match = period.match(/\d{4}/)
   return match ? match[0] : ''
 }
 
-export function periodRange(period: string): { start: string; end: string } {
+function periodRange(period: string): { start: string; end: string } {
   const [start, end] = period.split(/\s*[—–-]\s*/)
   return { start: start?.trim() ?? period, end: end?.trim() ?? '' }
 }

@@ -48,17 +48,6 @@ export const stats = [
   { value: '4.5+/5', label: 'Client CSAT sustained' },
 ]
 
-export const aboutFacts = [
-  '5+ yrs Front-End & Salesforce Engineering',
-  'Accessibility & Responsive Design',
-  'LWC · React.js · Experience Cloud',
-  '9x Salesforce Certified · Triple Star Ranger',
-  'Agentforce · OmniStudio · Marketing Cloud',
-  'Apex · SOQL · Modern Front-End Engineering',
-  'WCAG 2.1/2.2 AA by default',
-  'CI/CD with Gearset & SFDX'
-]
-
 export const skillGroups = [
   {
     title: 'Salesforce',

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
@@ -6,6 +6,7 @@ import { useStats } from '../../hooks/useSiteSettings'
 import type { StatItem } from '../../lib/siteSettings'
 import { useCountUp } from '../../hooks/useCountUp'
 import { cn } from '../../lib/cn'
+import { useNearScreen } from '../../lib/loop'
 
 const HEADLINE = [
   { text: 'Front-end that performs.', color: '#6366f1', delay: 0 },
@@ -41,6 +42,8 @@ function Counter({ value }: { value: string }) {
 }
 
 export default function ImpactPanel({ compact = false }: { compact?: boolean }) {
+  const pingRef = useRef<HTMLSpanElement>(null)
+  const pingNear = useNearScreen(pingRef)
   const [hovered, setHovered] = useState<number | null>(null)
   const stats = useStats()
   const { primary: PRIMARY, secondary: SECONDARY } = figures(stats)
@@ -52,8 +55,9 @@ export default function ImpactPanel({ compact = false }: { compact?: boolean }) 
           <div className="flex items-center gap-2.5 rounded-full border border-neutral-200 bg-[#f1efec] px-5 py-1.5 text-xs font-semibold uppercase tracking-wider text-black shadow-sm dark:border-zinc-800 dark:bg-zinc-900 dark:text-white">
             <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
               <motion.span
-                animate={{ scale: [1, 2, 1], opacity: [0.6, 0, 0.6] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                ref={pingRef}
+                animate={pingNear ? { scale: [1, 2, 1], opacity: [0.6, 0, 0.6] } : { scale: 1, opacity: 0.6 }}
+                transition={pingNear ? { duration: 2, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
                 className="absolute inline-flex h-full w-full rounded-full bg-green-400/60"
               />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.8)]" />

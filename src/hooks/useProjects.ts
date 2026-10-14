@@ -16,11 +16,6 @@ export function usePortfolio(): { items: ProjectItem[]; engagements: EngagementI
   return { items: portfolio.projects, engagements: portfolio.engagements, settled: projects.settled && engagements.settled }
 }
 
-export function useProjectList(): { items: ProjectItem[]; settled: boolean } {
-  const { items, settled } = usePortfolio()
-  return { items, settled }
-}
-
 export function useProjects(): ProjectItem[] {
   return usePortfolio().items
 }

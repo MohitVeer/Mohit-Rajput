@@ -1,5 +1,5 @@
 import type { ScrollerItem } from '../ui/BrandScroller'
-import { skillIcons } from '../icons/TechIcons'
+import { skillIcons } from '../icons/skillIcons'
 
 const ICON_SIZE = { width: 40, height: 40 }
 

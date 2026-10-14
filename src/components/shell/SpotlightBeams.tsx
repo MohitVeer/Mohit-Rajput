@@ -1,4 +1,6 @@
+import { useRef } from 'react'
 import { motion } from 'framer-motion'
+import { useNearScreen } from '../../lib/loop'
 
 interface SpotlightBeamsProps {
   gradientFirst?: string
@@ -23,6 +25,8 @@ export default function SpotlightBeams({
   duration = 10,
   xOffset = 120,
 }: SpotlightBeamsProps) {
+  const leftRef = useRef<HTMLDivElement>(null)
+  const near = useNearScreen(leftRef)
   const beam = (side: 'left' | 'right') => {
     const sign = side === 'left' ? 1 : -1
     const rotate = side === 'left' ? -45 : 45
@@ -31,8 +35,9 @@ export default function SpotlightBeams({
     return (
       <motion.div
         key={side}
-        animate={{ x: [0, xOffset * sign, 0] }}
-        transition={{ duration, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
+        ref={side === 'left' ? leftRef : undefined}
+        animate={near ? { x: [0, xOffset * sign, 0] } : { x: 0 }}
+        transition={near ? { duration, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' } : { duration: 0 }}
         className={`pointer-events-none absolute top-0 ${pos} h-screen w-screen`}
       >
         <div

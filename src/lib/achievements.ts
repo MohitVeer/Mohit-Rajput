@@ -48,7 +48,7 @@ export function parseWhen(value?: string): number | undefined {
 const shortFormat = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })
 const longFormat = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
 
-export function formatShortDate(time: number): string {
+function formatShortDate(time: number): string {
   return shortFormat.format(time)
 }
 
