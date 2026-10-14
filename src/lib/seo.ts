@@ -66,16 +66,16 @@ const ROUTE_META: Record<string, Pick<SeoPage, 'changefreq' | 'priority'>> = {
   '/privacy': { changefreq: 'yearly', priority: 0.3 },
 }
 
-export function absolute(path: string): string {
+function absolute(path: string): string {
   return `${SITE_URL}${path}`
 }
 
-export function describe(text: string, limit = 155): string {
+function describe(text: string, limit = 155): string {
   const clean = text.replace(/\s+/g, ' ').trim()
   return clean.length > limit ? `${clean.slice(0, limit - 3).trimEnd()}…` : clean
 }
 
-export function breadcrumbs(trail: { name: string; path: string }[]): JsonLd {
+function breadcrumbs(trail: { name: string; path: string }[]): JsonLd {
   return {
     '@type': 'BreadcrumbList',
     itemListElement: trail.map((step, index) => ({

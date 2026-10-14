@@ -8,8 +8,6 @@ export interface SiteRoute {
   description: string
 }
 
-export const SITE_NAME = 'Mohit Rajput'
-
 export const siteRoutes: SiteRoute[] = [
   {
     path: '/',

@@ -2,7 +2,8 @@ import { useState, type ReactNode } from 'react'
 import { useCrudList } from '../../../hooks/useCrudList'
 import { fetchSkillGroups, type SkillGroupRow } from '../../../lib/contentApi'
 import { createSkillGroup, deleteSkillGroup, updateSkillGroup } from '../../../lib/contentAdminApi'
-import { cleanLines, EditorCard, Field, ListTextArea, MoveButtons, SaveDeleteRow, TextInput } from './fields'
+import { cleanLines } from './cleanLines'
+import { EditorCard, Field, ListTextArea, MoveButtons, SaveDeleteRow, TextInput } from './fields'
 
 type Draft = Omit<SkillGroupRow, 'id' | 'sort_order'>
 

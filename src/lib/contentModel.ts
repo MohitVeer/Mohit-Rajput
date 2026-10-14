@@ -52,7 +52,7 @@ export interface EngagementItem {
   stack: string[]
 }
 
-export interface Portfolio {
+interface Portfolio {
   projects: ProjectItem[]
   engagements: EngagementItem[]
 }
@@ -306,7 +306,7 @@ export function missingBuiltInExperience(rows: ExperienceRow[]): Omit<Experience
     }))
 }
 
-export interface CertPlan {
+interface CertPlan {
   add: Omit<CertGroupRow, 'id'>[]
   extend: { id: string; certs: Cert[] }[]
   names: string[]

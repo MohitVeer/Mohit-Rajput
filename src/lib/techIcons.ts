@@ -58,3 +58,8 @@ export function brandColor(hex: string): string | null {
   const luminance = 0.2126 * channel(16) + 0.7152 * channel(8) + 0.0722 * channel(0)
   return luminance < 0.06 || luminance > 0.85 ? null : `#${hex}`
 }
+
+export const groupIcons: Record<string, string> = {
+  Salesforce: '/Salesforce%20Product%20Icons/salesforce-platform-logo.png',
+  'Marketing Cloud': '/Salesforce%20Product%20Icons/marketing-cloud-logo.png',
+}

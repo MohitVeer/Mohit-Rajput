@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { ProjectItem } from '../../hooks/useProjects'
+import { TONES } from '../../lib/projectTone'
 import InfiniteMarquee from '../ui/InfiniteMarquee'
 
-const TONES = ['#4c76ff', '#22c55e', '#f59e0b', '#a855f7', '#ef4444', '#06b6d4']
 
 function Tile({ item, index }: { item: ProjectItem; index: number }) {
   const color = TONES[index % TONES.length]

@@ -218,14 +218,6 @@ export function SalesforceCloudIcon(props: IconProps) {
   )
 }
 
-export function TrailheadIcon(props: IconProps) {
-  return (
-    <svg {...base(props)}>
-      <path fill="#00A1E0" d="M12 2 4 21h4.2l1.3-3.2h4.9l1.3 3.2H20L12 2Zm0 5.6 1.9 4.7h-3.8L12 7.6Z" />
-    </svg>
-  )
-}
-
 export function LinkedInIcon(props: IconProps) {
   return (
     <svg {...base(props)}>
@@ -296,32 +288,4 @@ export function ScssIcon(props: IconProps) {
       <path fill="#fff" d="M15.2 8.4c-1.7-.7-3.6-.3-3.6.9 0 1.4 3.2 1.2 3.2 3.5 0 2.1-2.9 2.9-5.4 1.9l.3-1.6c1.6.7 3.5.5 3.5-.7 0-1.3-3.1-1.2-3.1-3.4 0-2 2.6-3 5-2.1l.1 1.5Z" />
     </svg>
   )
-}
-
-export const skillIcons: Record<string, (props: IconProps) => JSX.Element> = {
-  'HTML5': Html5Icon,
-  'CSS3 / SCSS': ScssIcon,
-  'JavaScript (ES6+)': JavaScriptIcon,
-  'TypeScript': TypeScriptIcon,
-  'React.js': ReactIcon,
-  'Vue.js': VueIcon,
-  'Next.js': NextJsIcon,
-  'Node.js': NodeJsIcon,
-  'Git': GitIcon,
-  'GitHub': GitHubIcon,
-  'Figma': FigmaIcon,
-  'Adobe XD': AdobeXdIcon,
-  'VS Code': VsCodeIcon,
-  'JIRA': JiraIcon,
-  'Postman': PostmanIcon,
-  'NPM': NpmIcon,
-  'SFDX CLI': SfdxCliIcon,
-  'Agentforce': AgentforceIcon,
-  'Litmus': LitmusIcon,
-  'Gearset': GearsetIcon,
-}
-
-export const groupIcons: Record<string, string> = {
-  Salesforce: '/Salesforce%20Product%20Icons/salesforce-platform-logo.png',
-  'Marketing Cloud': '/Salesforce%20Product%20Icons/marketing-cloud-logo.png',
 }

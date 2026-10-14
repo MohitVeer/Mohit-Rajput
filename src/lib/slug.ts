@@ -36,10 +36,3 @@ export function resolveSlugs(entries: SlugSource[], reserved: Iterable<string> =
 
   return result
 }
-
-export function uniqueSlugs(titles: string[], reserved: Iterable<string> = []): string[] {
-  return resolveSlugs(
-    titles.map((title) => ({ title })),
-    reserved,
-  )
-}

@@ -1,9 +1,9 @@
-export interface CredentialMeta {
+interface CredentialMeta {
   issued: string
   credentialId?: string
 }
 
-export const credentialMeta: Record<string, CredentialMeta> = {
+const credentialMeta: Record<string, CredentialMeta> = {
   AI_Associate: { issued: 'December 4, 2024', credentialId: '5381564' },
   Marketing_Cloud_Email_Specialist: { issued: 'April 29, 2023', credentialId: '7863709' },
   Marketing_Cloud_Engagement_Developer: { issued: 'September 25, 2023', credentialId: '7863712' },
@@ -17,7 +17,7 @@ export const credentialMeta: Record<string, CredentialMeta> = {
 
 export const VERIFY_URL = 'https://sforce.co/verifycerts'
 
-export function credentialKey(fileUrl?: string): string {
+function credentialKey(fileUrl?: string): string {
   if (!fileUrl) return ''
   const file = fileUrl.split('/').pop() ?? ''
   return file.replace(/\.pdf$/i, '')

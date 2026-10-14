@@ -23,8 +23,8 @@ import {
   TypeScriptIcon,
   VsCodeIcon,
   VueIcon,
-  skillIcons,
 } from '../icons/TechIcons'
+import { skillIcons } from '../icons/skillIcons'
 import { brandColor, brandFor, isSalesforceCompanion, isSalesforceTerm, techKeys, wordsOf } from '../../lib/techIcons'
 
 type Icon = typeof SalesforceCloudIcon

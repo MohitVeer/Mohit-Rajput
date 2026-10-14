@@ -4,7 +4,7 @@ import { fetchArticles, type ArticleRow } from '../lib/contentApi'
 import { buildArticles, builtInArticleRows } from '../lib/contentModel'
 import { useLiveContentState } from './useLiveContent'
 
-export function useArticleList(): { items: ArticleItem[]; settled: boolean } {
+function useArticleList(): { items: ArticleItem[]; settled: boolean } {
   const fallback = useMemo<ArticleRow[]>(builtInArticleRows, [])
   const { data, settled } = useLiveContentState(fetchArticles, fallback)
   const items = useMemo(() => buildArticles(data), [data])

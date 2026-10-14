@@ -1,6 +1,6 @@
 import type { Vec } from './lanyardPhysics'
 
-export interface StrapPalette {
+interface StrapPalette {
   base: string
   edge: string
   sheen: string
@@ -25,7 +25,7 @@ export const STRAP_PALETTES: Record<'dark' | 'light', StrapPalette> = {
   },
 }
 
-export const STRAP_WIDTH = 46
+const STRAP_WIDTH = 46
 const LOGO_HEIGHT = 25
 const PERIOD = 160
 
