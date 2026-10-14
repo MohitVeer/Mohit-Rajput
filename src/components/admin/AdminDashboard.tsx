@@ -24,9 +24,11 @@ import {
   type NamedCount,
   type Overview,
   type PopularPageRow,
+  type ResetResult,
   type TrafficSourceRow,
 } from '../../lib/adminApi'
 import { useDateRange } from '../../hooks/useDateRange'
+import { usePageInventory } from '../../hooks/usePageInventory'
 import ContentManager from './content/ContentManager'
 import DateRangeBar from './analytics/DateRangeBar'
 import OverviewCards from './analytics/OverviewCards'
@@ -36,6 +38,8 @@ import TrafficAndDevices from './analytics/TrafficAndDevices'
 import PopularContent from './analytics/PopularContent'
 import EngagementFunnel from './analytics/EngagementFunnel'
 import LiveVisitors from './analytics/LiveVisitors'
+import PageCoverage from './analytics/PageCoverage'
+import ResetAnalytics from './analytics/ResetAnalytics'
 
 interface DashboardData {
   overview: Overview
@@ -50,6 +54,8 @@ interface DashboardData {
   certifications: LabeledEventRow[]
   articles: LabeledEventRow[]
   outboundLinks: LabeledEventRow[]
+  linkClicks: LabeledEventRow[]
+  buttonClicks: LabeledEventRow[]
   resumeViews: LabeledEventRow[]
   resumeDownloads: LabeledEventRow[]
   allEvents: EventTypeRow[]
@@ -62,7 +68,17 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
   const [error, setError] = useState<string | null>(null)
   const [data, setData] = useState<DashboardData | null>(null)
   const [view, setView] = useState<'analytics' | 'content'>('analytics')
+  const [reloadKey, setReloadKey] = useState(0)
+  const [notice, setNotice] = useState<string | null>(null)
   const dateRange = useDateRange('30d')
+  const inventory = usePageInventory()
+
+  const handleReset = (result: ResetResult) => {
+    setNotice(
+      `Tracking data reset. Removed ${result.visitors} visitors, ${result.sessions} sessions, ${result.page_views} page views and ${result.events} recorded clicks and events. New visits are counted from now.`,
+    )
+    setReloadKey((key) => key + 1)
+  }
 
   useEffect(() => {
     if (!supabase) {
@@ -87,6 +103,8 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
       fetchTopLabeledEvents(dateRange.range, 'Certification', 'cert_view'),
       fetchTopLabeledEvents(dateRange.range, 'Article', 'article_click'),
       fetchTopLabeledEvents(dateRange.range, 'ExternalLink', 'click'),
+      fetchTopLabeledEvents(dateRange.range, 'Click', 'link_click', 15),
+      fetchTopLabeledEvents(dateRange.range, 'Click', 'button_click', 15),
       fetchTopLabeledEvents(dateRange.range, 'Resume', 'resume_view', 1),
       fetchTopLabeledEvents(dateRange.range, 'Resume', 'resume_download', 1),
       fetchEventTypeBreakdown(dateRange.range),
@@ -107,6 +125,8 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
           certifications,
           articles,
           outboundLinks,
+          linkClicks,
+          buttonClicks,
           resumeViews,
           resumeDownloads,
           allEvents,
@@ -127,6 +147,8 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
             certifications,
             articles,
             outboundLinks,
+            linkClicks,
+            buttonClicks,
             resumeViews,
             resumeDownloads,
             allEvents,
@@ -146,7 +168,7 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
       cancelled = true
     }
 
-}, [dateRange.preset, dateRange.customStart, dateRange.customEnd])
+}, [dateRange.preset, dateRange.customStart, dateRange.customEnd, reloadKey])
 
   return (
     <div className="min-h-screen bg-background px-6 py-10 text-foreground md:px-12">
@@ -156,13 +178,16 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
             <h1 className="font-display text-2xl font-semibold">Portfolio analytics</h1>
             <p className="text-sm text-muted-foreground">Visitor intelligence for {dateRange.range.label.toLowerCase()}</p>
           </div>
-          <button
-            type="button"
-            onClick={() => supabase?.auth.signOut().then(onSignOut)}
-            className="rounded-full border border-border px-4 py-2 text-xs font-semibold text-muted-foreground transition hover:border-accent hover:text-foreground"
-          >
-            Sign out
-          </button>
+          <div className="flex flex-wrap items-center gap-3">
+            {view === 'analytics' && <ResetAnalytics onReset={handleReset} />}
+            <button
+              type="button"
+              onClick={() => supabase?.auth.signOut().then(onSignOut)}
+              className="rounded-full border border-border px-4 py-2 text-xs font-semibold text-muted-foreground transition hover:border-accent hover:text-foreground"
+            >
+              Sign out
+            </button>
+          </div>
         </div>
 
         <div className="mt-6 flex gap-2" role="tablist" aria-label="Admin sections">
@@ -216,6 +241,12 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
               />
             </div>
 
+            {notice && (
+              <p role="status" className="mt-4 rounded-lg border border-accent/30 bg-accent/10 px-4 py-3 text-sm text-foreground">
+                {notice}
+              </p>
+            )}
+
             {error && (
               <p className="mt-4 rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-300">
                 {error}
@@ -238,11 +269,15 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
 
             <EngagementFunnel engagement={data.engagement} funnel={data.funnel} />
 
+            <PageCoverage inventory={inventory} pages={data.pages} />
+
             <PopularContent
               pages={data.pages}
               certifications={data.certifications}
               articles={data.articles}
               outboundLinks={data.outboundLinks}
+              linkClicks={data.linkClicks}
+              buttonClicks={data.buttonClicks}
               resumeViews={data.resumeViews[0]?.total ?? 0}
               resumeDownloads={data.resumeDownloads[0]?.total ?? 0}
               allEvents={data.allEvents}

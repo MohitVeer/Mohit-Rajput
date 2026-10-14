@@ -73,7 +73,7 @@ export default function DateRangeBar({
         title={isDefault ? 'Already showing the default range' : 'Reset to the default range'}
         className="rounded-full border border-border px-3.5 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-accent hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:text-muted-foreground"
       >
-        Reset
+        Reset range
       </button>
     </div>
   )

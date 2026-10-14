@@ -210,6 +210,20 @@ export async function fetchConversionFunnel(range: DateRange): Promise<Conversio
   return rows[0] || { visitors: 0, engaged_visitors: 0, contact_intent: 0, contact_submissions: 0 }
 }
 
+export interface ResetResult {
+  visitors: number
+  sessions: number
+  page_views: number
+  events: number
+}
+
+export async function resetAnalytics(): Promise<ResetResult> {
+  if (!supabase) throw new Error('Supabase is not configured.')
+  const { data, error } = await supabase.rpc('fn_reset_analytics', { p_confirm: 'RESET' })
+  if (error) throw error
+  return data as ResetResult
+}
+
 export const fetchLiveVisitors = (minutes = 5) => rpc<LiveVisitorRow>('fn_live_visitors', { minutes })
 
 export const fetchSessionTimeline = (sessionId: string) =>
