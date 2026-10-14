@@ -97,7 +97,7 @@ function Attachments({ job, documents }: { job: ExperienceRow; documents: Experi
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(16rem,100%),1fr))] gap-4">
         <AnimatePresence initial={false}>
           {visible.map((document) => (
             <DocumentCard key={`${document.kind}-${document.url}`} job={job} document={document} />
@@ -151,12 +151,12 @@ function Entry({ job, projects, onOpenDetail }: { job: ExperienceRow; projects: 
         <span className="w-fit shrink-0 rounded bg-neutral-100 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400">{job.period}</span>
       </div>
 
-      {lead && <p className="mb-6 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 md:text-justify md:text-base">{lead}</p>}
+      {lead && <p className="mb-6 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 md:text-base lg:text-justify">{lead}</p>}
 
       {shown.length > 0 && (
         <ul className="mb-8 space-y-3">
           {shown.map((bullet) => (
-            <li key={bullet} className="flex items-start gap-2.5 text-xs text-neutral-500 dark:text-neutral-400 md:text-justify md:text-sm">
+            <li key={bullet} className="flex items-start gap-2.5 text-xs text-neutral-500 dark:text-neutral-400 md:text-sm lg:text-justify">
               <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/40" />
               <span>{bullet}</span>
             </li>
