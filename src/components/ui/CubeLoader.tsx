@@ -1,6 +1,7 @@
+import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import type { LucideIcon } from 'lucide-react'
-import { LOOP_VIEWPORT } from '../../lib/loop'
+import { useNearScreen } from '../../lib/loop'
 
 export interface CubeFace {
   icon: LucideIcon
@@ -31,8 +32,11 @@ function Face({ icon: Icon, label, color, transform }: CubeFace & { transform: s
 }
 
 export default function CubeLoader({ faces }: { faces: CubeFace[] }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const near = useNearScreen(ref)
   return (
     <div
+      ref={ref}
       aria-hidden="true"
       className="relative flex h-full min-h-[400px] w-full items-center justify-center overflow-hidden bg-transparent"
       style={{ perspective: 1500 }}
@@ -42,14 +46,14 @@ export default function CubeLoader({ faces }: { faces: CubeFace[] }) {
           className="relative h-[110px] w-[110px]"
           style={{ transformStyle: 'preserve-3d' }}
           initial={{ scale: 1, rotateX: -20, rotateY: 0 }}
-          whileInView={{ scale: 1.3, rotateX: 160, rotateY: 180, transition: { duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' } }}
-          viewport={LOOP_VIEWPORT}
+          animate={near ? { scale: 1.3, rotateX: 160, rotateY: 180 } : { scale: 1, rotateX: -20, rotateY: 0 }}
+          transition={near ? { duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' } : { duration: 0 }}
         >
           <motion.div
             className="absolute inset-0"
             style={{ transformStyle: 'preserve-3d' }}
-            whileInView={{ rotateY: 360, rotateZ: 360, transition: { duration: 8, ease: 'linear', repeat: Infinity } }}
-            viewport={LOOP_VIEWPORT}
+            animate={near ? { rotateY: 360, rotateZ: 360 } : { rotateY: 0, rotateZ: 0 }}
+            transition={near ? { duration: 8, ease: 'linear', repeat: Infinity } : { duration: 0 }}
           >
             {faces.slice(0, 6).map((face, i) => (
               <Face key={face.label} {...face} transform={TRANSFORMS[i]} />
@@ -59,8 +63,8 @@ export default function CubeLoader({ faces }: { faces: CubeFace[] }) {
         <motion.div
           className="absolute -bottom-[80px] h-[30px] w-[120px] rounded-[100%] bg-black/40 blur-[8px] dark:bg-white/10"
           initial={{ scale: 1, opacity: 0.5 }}
-          whileInView={{ scale: 0.4, opacity: 0.1, transition: { duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' } }}
-          viewport={LOOP_VIEWPORT}
+          animate={near ? { scale: 0.4, opacity: 0.1 } : { scale: 1, opacity: 0.5 }}
+          transition={near ? { duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' } : { duration: 0 }}
         />
       </div>
     </div>

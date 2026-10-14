@@ -82,7 +82,7 @@ export default function Articles() {
                   initial={{ opacity: 0, x: direction * 50, scale: 0.9, filter: 'blur(10px)' }}
                   animate={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
                   exit={{ opacity: 0, x: direction * -50, scale: 0.9, filter: 'blur(10px)' }}
-                  transition={{ type: 'spring', stiffness: 260, damping: 26, filter: { duration: 0.35, ease: 'easeOut' } }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 26, filter: { duration: 0.4, ease: [0.4, 0.6, 0.2, 1] } }}
                   className="relative w-[180px] flex-shrink-0 md:w-[260px]"
                 >
                   <Link to={`/blog/${article.slug}`} state={{ from: 'blog' }} className="group/book relative z-10 block">

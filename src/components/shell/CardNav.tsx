@@ -7,7 +7,6 @@ import { trackEvent } from '../../lib/analytics'
 import { useSiteSettings } from '../../hooks/useSiteSettings'
 import { statValue } from '../../lib/siteSettings'
 import { GitHubMark } from '../icons/BrandMarks'
-import { LOOP_VIEWPORT } from '../../lib/loop'
 
 type IconType = ComponentType<{ className?: string }>
 
@@ -89,8 +88,8 @@ function GridSnake() {
         <motion.div
           key={i}
           className={cn('absolute left-0 top-0 h-6 w-6', i === 0 ? 'bg-black/20 dark:bg-white/20' : 'bg-black/10 dark:bg-white/10')}
-          whileInView={{ x: path.x, y: path.y, transition: { duration: 15, repeat: Infinity, ease: 'linear', delay: i * 0.15 } }}
-          viewport={LOOP_VIEWPORT}
+          animate={{ x: path.x, y: path.y }}
+          transition={{ duration: 15, repeat: Infinity, ease: 'linear', delay: i * 0.15 }}
         />
       ))}
     </div>

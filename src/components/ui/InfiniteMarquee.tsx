@@ -1,6 +1,7 @@
+import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '../../lib/cn'
-import { LOOP_VIEWPORT } from '../../lib/loop'
+import { useNearScreen } from '../../lib/loop'
 
 interface InfiniteMarqueeProps {
   items: React.ReactNode[]
@@ -21,11 +22,14 @@ export default function InfiniteMarquee({ items, speed = 20, direction = 'left',
     </div>
   )
 
+  const ref = useRef<HTMLDivElement>(null)
+  const near = useNearScreen(ref)
+
   return (
-    <div data-marquee className={cn('relative flex overflow-hidden py-4', className)}>
+    <div ref={ref} data-marquee className={cn('relative flex overflow-hidden py-4', className)}>
       <motion.div
-        whileInView={{ x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'], transition: { duration: speed, ease: 'linear', repeat: Infinity } }}
-        viewport={LOOP_VIEWPORT}
+        animate={near ? { x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'] } : { x: direction === 'left' ? '0%' : '-50%' }}
+        transition={near ? { duration: speed, ease: 'linear', repeat: Infinity } : { duration: 0 }}
         className="flex whitespace-nowrap"
       >
         {track('a')}
