@@ -40,8 +40,8 @@ function FloatingShape({ className, gradient, delay = 0, still }: { className: s
 function Highlight({ headingId, title, highlight, description, children }: { headingId: string; title: string; highlight: string; description: string; children: ReactNode }) {
   return (
     <section aria-labelledby={headingId} className="relative w-full overflow-visible py-4 lg:py-6">
-      <div className="mx-auto grid h-full w-full grid-cols-1 items-center gap-12 overflow-visible px-0 md:px-6 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:px-12">
-        <div className="relative z-20 space-y-8 lg:pr-12">
+      <div className="mx-auto grid h-full w-full grid-cols-1 items-center gap-12 overflow-visible px-0 md:px-6 xl:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:px-12">
+        <div className="relative z-20 space-y-8 xl:pr-12">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: 'easeOut' }} viewport={{ once: true }} className="space-y-6">
             <h2 id={headingId} className="text-[clamp(2.25rem,8vw,4rem)] font-bold leading-[1.1] tracking-tight text-black dark:text-white">
               {title}

@@ -33,7 +33,7 @@ export default function SkillsClosing() {
     <section aria-labelledby="closing-heading" className="relative overflow-hidden px-6 py-16 md:px-12 md:py-20 lg:px-24">
       <div className="mx-auto grid max-w-[1400px] items-center gap-16 rounded-[2.5rem] border border-border bg-card/40 p-8 md:p-16 lg:grid-cols-2">
         <div>
-          <h2 id="closing-heading" className="text-5xl font-medium leading-[1.05] tracking-tight md:text-7xl">
+          <h2 id="closing-heading" className="text-[clamp(2.25rem,12vw,3rem)] font-medium leading-[1.05] tracking-tight md:text-7xl">
             Engineering
             <br />
             the Future

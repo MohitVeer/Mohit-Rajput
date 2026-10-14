@@ -76,12 +76,12 @@ export default function CoreFocus({ groups }: { groups: SkillGroupRow[] }) {
               {current.skills.map((skill) => (
                 <li
                   key={skill}
-                  className="group flex items-center gap-3 rounded-2xl border border-border bg-card/50 px-4 py-4 transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:bg-card"
+                  className="group flex min-w-0 flex-col items-start gap-3 rounded-2xl border border-border bg-card/50 p-4 transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:bg-card sm:flex-row sm:items-center"
                 >
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-muted text-foreground transition-transform group-hover:scale-110">
                     <SkillIcon name={skill} size={22} context={hasSalesforceContext([current.title, ...current.skills]) ? 'salesforce' : undefined} />
                   </span>
-                  <span className="text-sm font-semibold leading-snug text-foreground">{skill}</span>
+                  <span className="min-w-0 text-sm font-semibold leading-snug text-foreground [overflow-wrap:anywhere]">{skill}</span>
                 </li>
               ))}
             </motion.ul>

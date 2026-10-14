@@ -57,9 +57,9 @@ export default function BlogHero({ articles }: { articles: ArticleItem[] }) {
             <MotionLink
               to={`/blog/${featured.slug}`}
               state={{ from: 'blog' }}
-              initial={reduce ? false : { opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              initial={reduce ? false : { y: 30 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="group relative block overflow-hidden rounded-[2rem] border border-border"
             >
               <span className="block overflow-hidden">
