@@ -184,7 +184,8 @@ export default function RouteCurtain() {
       preloadRoute(url.pathname)
       session.current += 1
       target.current = url
-      setLabel(labelFor(url.pathname))
+      const named = ((event.target as Element | null)?.closest?.('a[href]') as HTMLAnchorElement | null)?.dataset.curtainLabel
+      setLabel(named || labelFor(url.pathname))
       go('covering')
     }
     document.addEventListener('click', onClick, true)
