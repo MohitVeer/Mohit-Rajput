@@ -155,8 +155,8 @@ function HeroImage({ item, index, register }: { item: Achievement; index: number
       className="absolute h-[10px] w-[10px] overflow-hidden rounded-lg border border-border/20 bg-card opacity-0 shadow-2xl will-change-[transform,opacity]"
     >
       <motion.div
-        initial={{ scale: 0.8 }}
-        animate={{ scale: 1 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, delay: index * 0.03, ease: [0.215, 0.61, 0.355, 1] }}
         className="relative h-full w-full"
       >
