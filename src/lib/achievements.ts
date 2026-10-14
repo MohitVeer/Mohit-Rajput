@@ -1,6 +1,7 @@
 import type { CertGroupRow, ExperienceRow, SuperbadgeRow } from './contentApi'
 import { certificateImage, certificateThumb, credentialFor, VERIFY_URL } from '../data/credentials'
 import { profile } from '../data/profile'
+import { HERO_KEYS, heroThumb } from './heroShowcase'
 import type { TrailheadData } from './siteSettings'
 
 export type AchievementKind = 'certification' | 'superbadge' | 'trailhead' | 'award'
@@ -191,7 +192,17 @@ function seededRandom(seed: number) {
 
 export function pickShowcase(items: Achievement[], count: number, seed: number): Achievement[] {
   const random = seededRandom(seed)
-  const ranked = items.filter((item) => item.image).map((item) => ({ item, key: random() }))
-  ranked.sort((a, b) => a.key - b.key)
-  return ranked.slice(0, count).map((entry) => entry.item)
+  const withImage = items.filter((item) => item.image)
+  const pinned = HERO_KEYS.map((key) => withImage.find((item) => item.thumb === heroThumb(key))).filter((item): item is Achievement => item !== undefined)
+  const rest = withImage
+    .filter((item) => !pinned.includes(item))
+    .map((item) => ({ item, key: random() }))
+    .sort((a, b) => a.key - b.key)
+    .map((entry) => entry.item)
+  const picks = [...pinned, ...rest].slice(0, count)
+  for (let index = picks.length - 1; index > 0; index--) {
+    const swap = Math.floor(random() * (index + 1))
+    ;[picks[index], picks[swap]] = [picks[swap], picks[index]]
+  }
+  return picks
 }

@@ -28,6 +28,13 @@ interface SeoModule {
   pagesFor: (snapshot: ContentSnapshot) => SeoPage[]
 }
 
+interface HeroModule {
+  HERO_KEYS: readonly string[]
+  HERO_SIZES: string
+  heroThumb: (key: string) => string
+  heroImage: (key: string) => string
+}
+
 interface ManifestEntry {
   file: string
   imports?: string[]
@@ -68,6 +75,13 @@ function collectChunks(manifest: Manifest, key: string, seen = new Set<string>()
 
 function preloadTags(files: string[]): string {
   return files.map((file) => `<link rel="modulepreload" crossorigin href="/${file}" />`).join('\n    ')
+}
+
+function heroPreloadTags(hero: HeroModule): string {
+  return hero.HERO_KEYS.map(
+    (key) =>
+      `<link rel="preload" as="image" href="${hero.heroThumb(key)}" imagesrcset="${hero.heroThumb(key)} 640w, ${hero.heroImage(key)} 1280w" imagesizes="${hero.HERO_SIZES}" />`,
+  ).join('\n    ')
 }
 
 function withHeadTags(html: string, tags: string): string {
@@ -193,11 +207,13 @@ export function seoPrerender(): Plugin {
       })
       let pages: SeoPage[]
       let siteUrl: string
+      let heroTags = ''
       try {
         const seo = (await loader.ssrLoadModule('/src/lib/seo.ts')) as SeoModule
         const site = (await loader.ssrLoadModule('/src/lib/site.ts')) as { SITE_URL: string }
         pages = seo.pagesFor(await fetchSnapshot(env))
         siteUrl = site.SITE_URL
+        heroTags = heroPreloadTags((await loader.ssrLoadModule('/src/lib/heroShowcase.ts')) as HeroModule)
       } finally {
         await loader.close()
       }
@@ -228,7 +244,8 @@ export function seoPrerender(): Plugin {
         if (page.path === '/') continue
         const target = join(outDir, `${page.path.slice(1)}.html`)
         await mkdir(dirname(target), { recursive: true })
-        await writeFile(target, renderPage(withHeadTags(base, fontTag), page, siteUrl, preloadTags(routeChunks(page.path))))
+        const tags = [preloadTags(routeChunks(page.path)), page.path === '/achievements' ? heroTags : ''].filter(Boolean).join('\n    ')
+        await writeFile(target, renderPage(withHeadTags(base, fontTag), page, siteUrl, tags))
         written += 1
       }
       if (manifestFile && !process.env.SEO_KEEP_MANIFEST) await rm(manifestFile)

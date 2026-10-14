@@ -3,6 +3,7 @@ import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } f
 import { ChevronDown } from 'lucide-react'
 import { useViewportSize } from '../../hooks/useViewportSize'
 import { pickShowcase, type Achievement } from '../../lib/achievements'
+import { HERO_SIZES } from '../../lib/heroShowcase'
 import { getLenisInstance } from '../../lib/lenisInstance'
 
 interface Rect {
@@ -19,7 +20,6 @@ interface HeroLayout {
 }
 
 const SHOWCASE = 6
-const SHOWCASE_SIZES = '(min-width: 768px) 34vw, 45vw'
 const MORPH_END = 0.5
 const FADE_END = 0.1
 
@@ -102,7 +102,7 @@ function ShowcaseImage({ item, priority }: { item: Achievement; priority: boolea
       {...(priority ? HIGH_PRIORITY : undefined)}
       src={small}
       srcSet={responsive ? `${small} 640w, ${full} 1280w` : undefined}
-      sizes={responsive ? SHOWCASE_SIZES : undefined}
+      sizes={responsive ? HERO_SIZES : undefined}
       alt=""
       width={1280}
       height={720}
