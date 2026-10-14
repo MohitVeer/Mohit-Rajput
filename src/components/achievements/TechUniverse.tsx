@@ -37,7 +37,7 @@ export default function TechUniverse() {
           <h2 id="universe-heading" className="mb-3 text-2xl font-black sm:text-3xl lg:text-4xl">
             Technical Universe
           </h2>
-          <p className="mx-auto max-w-lg text-sm leading-relaxed text-muted-foreground/80">
+          <p className="mx-auto max-w-lg text-sm leading-relaxed text-muted-foreground">
             Interact with the core technologies and platforms that drive my Salesforce and front-end work.
           </p>
         </motion.div>

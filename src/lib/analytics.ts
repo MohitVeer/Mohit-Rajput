@@ -6,7 +6,12 @@ const DNT_KEY = 'mr_dnt'
 const ENDPOINT = '/api/track'
 
 function uuid() {
-  return crypto.randomUUID()
+  if (typeof crypto.randomUUID === 'function') return crypto.randomUUID()
+  const bytes = crypto.getRandomValues(new Uint8Array(16))
+  bytes[6] = (bytes[6] & 0x0f) | 0x40
+  bytes[8] = (bytes[8] & 0x3f) | 0x80
+  const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0'))
+  return `${hex.slice(0, 4).join('')}-${hex.slice(4, 6).join('')}-${hex.slice(6, 8).join('')}-${hex.slice(8, 10).join('')}-${hex.slice(10).join('')}`
 }
 
 export function isTrackingDisabled(): boolean {
@@ -72,6 +77,14 @@ function getUtmParams() {
     medium: params.get('utm_medium') || undefined,
     campaign: params.get('utm_campaign') || undefined,
   }
+}
+
+let started = false
+const queued: Array<() => void> = []
+
+function whenStarted(run: () => void) {
+  if (started) run()
+  else queued.push(run)
 }
 
 let sessionStartedAt = 0
@@ -168,10 +181,27 @@ const sendHeartbeat = () => send({ type: 'heartbeat', sessionId: getSessionId(),
     if (document.visibilityState === 'hidden') endSession()
   })
   window.addEventListener('pagehide', endSession)
+
+  started = true
+  queued.splice(0).forEach((run) => run())
+}
+
+let analyticsScheduled = false
+
+export function startAnalytics(delayMs = 2000) {
+  if (analyticsScheduled) return
+  analyticsScheduled = true
+  const begin = () => {
+    window.clearTimeout(timer)
+    window.removeEventListener('pagehide', begin)
+    initAnalytics()
+  }
+  const timer = window.setTimeout(begin, delayMs)
+  window.addEventListener('pagehide', begin)
 }
 
 export function trackPageView(path: string) {
-  if (isTrackingDisabled()) return
+  if (isTrackingDisabled() || !started) return
   if (!currentPath) {
     currentPath = path
     return
@@ -192,7 +222,8 @@ export function trackPageView(path: string) {
 }
 
 export function trackEvent(component: string, action: string, label?: string, meta?: Record<string, unknown>) {
-  send({ type: 'event', sessionId: getSessionId(), path: currentPath, component, action, label, meta })
+  if (isTrackingDisabled()) return
+  whenStarted(() => send({ type: 'event', sessionId: getSessionId(), path: currentPath, component, action, label, meta }))
 }
 
 export function trackResumeView() {

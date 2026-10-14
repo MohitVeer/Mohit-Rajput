@@ -88,7 +88,7 @@ export default function Hero() {
     <section
       id="top"
       aria-labelledby="top-heading"
-      className="relative flex min-h-screen w-full flex-col overflow-hidden bg-background text-foreground selection:bg-primary/20"
+      className="relative flex min-h-screen min-h-svh w-full flex-col overflow-hidden bg-background text-foreground selection:bg-primary/20"
     >
       <div
         aria-hidden="true"
@@ -128,7 +128,7 @@ export default function Hero() {
               initial={SIDE_LEFT_HIDDEN}
               animate={revealed ? SIDE_SHOWN : SIDE_LEFT_HIDDEN}
               transition={{ duration: reduce ? 0 : 0.8, delay: reduce ? 0 : 0.2 }}
-              className="block max-w-[200px] text-start text-[10px] font-medium uppercase leading-relaxed tracking-[0.2em] text-muted-foreground md:max-w-[220px] md:text-right md:text-xs"
+              className="mb-5 block max-w-[220px] px-4 text-start text-[10px] font-medium uppercase leading-relaxed tracking-[0.2em] text-muted-foreground md:mb-0 md:max-w-[220px] md:px-0 md:text-right md:text-xs"
             >
               Hi, I&apos;m {profile.name}, a front-end developer with Salesforce expertise.
             </motion.span>
@@ -213,7 +213,7 @@ export default function Hero() {
               initial={SIDE_RIGHT_HIDDEN}
               animate={revealed ? SIDE_SHOWN : SIDE_RIGHT_HIDDEN}
               transition={{ duration: reduce ? 0 : 0.8, delay: reduce ? 0 : 0.4 }}
-              className="block max-w-[250px] pt-4 text-[10px] font-medium uppercase leading-relaxed tracking-widest text-muted-foreground md:max-w-[200px] md:pt-8 md:text-xs"
+              className="block max-w-[250px] px-4 pt-4 text-[10px] font-medium uppercase leading-relaxed tracking-widest text-muted-foreground md:max-w-[200px] md:px-0 md:pt-8 md:text-xs"
             >
               Available to hire worldwide · Remote · Hybrid · Onsite
             </motion.span>
@@ -262,7 +262,7 @@ export default function Hero() {
         <div className="mx-auto mt-12 w-full max-w-[105rem] px-8 md:mt-24 md:px-20">
           <div className="flex items-center gap-6">
             <div className="hidden h-px flex-1 bg-foreground/10 md:block" aria-hidden="true" />
-            <p className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground md:text-xs">
+            <p className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground sm:tracking-[0.3em] md:text-xs">
               Remote · Worldwide — {year}
             </p>
             <Link to="/resume" aria-label="View resume" className="group flex items-center">

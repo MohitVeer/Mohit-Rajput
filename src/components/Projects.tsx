@@ -11,16 +11,19 @@ import ShowcaseStack from './ui/ShowcaseStack'
 const TONES = ['#4c76ff', '#22c55e', '#f59e0b', '#a855f7']
 
 const shell =
-  'mx-auto w-[min(92vw,1200px)] overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-2xl dark:border-neutral-800 dark:bg-zinc-950'
+  'mx-auto flex w-[min(92vw,1200px)] flex-col overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-2xl dark:border-neutral-800 dark:bg-zinc-950'
 
 const pill =
-  'inline-flex h-12 items-center rounded-full px-7 text-xs font-bold uppercase tracking-widest transition-transform hover:scale-105'
+  'inline-flex h-11 items-center rounded-full px-5 text-xs font-bold uppercase tracking-widest transition-transform hover:scale-105 md:h-12 md:px-7'
+
+const MOBILE_HIGHLIGHTS = 2
+const MOBILE_CLIENTS = 3
 
 function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagement: EngagementItem; index: number; total: number; slug?: string; hrefFor: (client: string) => string | undefined }) {
   const tone = TONES[index % TONES.length]
   return (
     <article aria-label={engagement.title} className={shell}>
-      <div className="grid md:grid-cols-[1fr_1.2fr]">
+      <div className="grid flex-1 md:grid-cols-[1fr_1.2fr]">
         <div
           className="relative flex flex-row items-center justify-between gap-3 overflow-hidden p-5 md:flex-col md:items-stretch md:justify-between md:p-12"
           style={{ background: `linear-gradient(140deg, ${tone}40, transparent 65%)` }}
@@ -40,15 +43,18 @@ function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagemen
           </span>
         </div>
 
-        <div className="flex flex-col gap-8 p-6 md:p-12">
+        <div className="flex flex-col justify-between gap-5 p-5 md:justify-start md:gap-8 md:p-12">
           <div>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">
               {engagement.employer} · {engagement.role}
             </p>
-            <h3 className="mt-3 text-2xl font-black leading-tight tracking-tight text-neutral-900 dark:text-white md:text-4xl">{engagement.title}</h3>
-            <ul className="mt-6 space-y-3">
-              {engagement.highlights.map((highlight) => (
-                <li key={highlight} className="flex gap-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 md:text-base">
+            <h3 className="mt-2 text-xl font-black leading-tight tracking-tight text-neutral-900 dark:text-white sm:text-2xl md:mt-3 md:text-4xl">{engagement.title}</h3>
+            <ul className="mt-4 space-y-2.5 md:mt-6 md:space-y-3">
+              {engagement.highlights.map((highlight, position) => (
+                <li
+                  key={highlight}
+                  className={`gap-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 md:flex md:text-base ${position < MOBILE_HIGHLIGHTS ? 'flex' : 'hidden'}`}
+                >
                   <span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-400 dark:bg-neutral-600" />
                   <span>{highlight}</span>
                 </li>
@@ -57,16 +63,16 @@ function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagemen
           </div>
 
           <div>
-            <p className="mb-3 flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">
+            <p className="mb-2 flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400 md:mb-3">
               <Building2 className="h-3.5 w-3.5" aria-hidden="true" />
               {engagement.clients.length > 1 ? 'Clients' : 'Client'}
             </p>
             <ul className="flex flex-wrap gap-2">
-              {engagement.clients.map((client) => {
+              {engagement.clients.map((client, position) => {
                 const href = hrefFor(client)
                 const chip = 'inline-flex rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-semibold text-neutral-800 dark:border-neutral-700 dark:text-neutral-200'
                 return (
-                  <li key={client}>
+                  <li key={client} className={position < MOBILE_CLIENTS ? undefined : 'hidden md:block'}>
                     {href ? (
                       <Link to={href} className={`${chip} transition-colors hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-black`}>
                         {client}
@@ -77,10 +83,17 @@ function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagemen
                   </li>
                 )
               })}
+              {engagement.clients.length > MOBILE_CLIENTS && (
+                <li className="md:hidden">
+                  <span className="inline-flex rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-semibold text-neutral-500 dark:border-neutral-700 dark:text-neutral-400">
+                    +{engagement.clients.length - MOBILE_CLIENTS} more
+                  </span>
+                </li>
+              )}
             </ul>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="mt-auto flex flex-wrap items-center gap-2.5 md:gap-3">
             <Link to={`/projects?employer=${engagement.employerKey}#archive`} className={`${pill} bg-neutral-900 text-white dark:bg-white dark:text-black`}>
               View projects
             </Link>
@@ -102,7 +115,7 @@ function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagemen
 function CaseStudyCard({ item, index, total }: { item: ProjectItem; index: number; total: number }) {
   return (
     <article aria-label={item.title} className={shell}>
-      <div className="grid md:grid-cols-[1fr_1.2fr]">
+      <div className="grid flex-1 md:grid-cols-[1fr_1.2fr]">
         <div className="relative flex min-h-[200px] flex-col justify-between gap-4 overflow-hidden bg-gradient-to-br from-sky-500/20 to-transparent p-6 md:p-12">
           <span className="font-mono text-xs font-bold tracking-widest text-neutral-500 dark:text-neutral-400">
             {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
@@ -127,7 +140,7 @@ function CaseStudyCard({ item, index, total }: { item: ProjectItem; index: numbe
               ))}
             </ul>
           )}
-          <div className="flex flex-wrap gap-3">
+          <div className="mt-auto flex flex-wrap gap-3">
             {item.url && (
               <a
                 href={item.url}

@@ -9,8 +9,8 @@ export default function Faq() {
   const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <section aria-labelledby="faq-heading" className="mx-auto w-full max-w-6xl px-4 py-20 md:px-8">
-      <div className="relative z-10 mb-16 flex flex-col items-center text-center">
+    <section aria-labelledby="faq-heading" className="mx-auto w-full max-w-6xl px-4 py-12 md:px-8 md:py-20">
+      <div className="relative z-10 mb-10 flex flex-col items-center text-center md:mb-16">
         <h2 id="faq-heading" className="mb-4 text-4xl font-black tracking-tighter md:text-6xl">
           Frequently Asked Questions
         </h2>
@@ -29,7 +29,7 @@ export default function Faq() {
                   aria-controls={`faq-panel-${i}`}
                   id={`faq-button-${i}`}
                   onClick={() => setOpen(expanded ? null : i)}
-                  className="group flex w-full items-center justify-between gap-6 py-8 text-left md:py-10"
+                  className="group flex w-full items-center justify-between gap-6 py-6 text-left md:py-10"
                 >
                   <span
                     className={cn(

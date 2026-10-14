@@ -172,7 +172,7 @@ const AchievementCard = forwardRef<HTMLLIElement, AchievementCardProps>(function
           </motion.div>
 
           <div className="absolute left-4 top-4 z-20 flex gap-2">
-            <span className="rounded-lg border border-black/5 bg-white/90 px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-black shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-black/40 dark:text-white">
+            <span className="rounded-lg border border-black/5 bg-white/90 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-black shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-black/40 dark:text-white">
               {item.label}
             </span>
           </div>
@@ -219,7 +219,7 @@ const AchievementCard = forwardRef<HTMLLIElement, AchievementCardProps>(function
           <div className={cn('mt-auto flex items-center justify-between border-border/20', listing ? 'border-0 pt-0' : 'border-t pt-4')}>
             <div className="flex items-center gap-2">
               <Eye className="h-4 w-4 text-muted-foreground/60" aria-hidden="true" />
-              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80">Expand Archive</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Expand Archive</span>
             </div>
             <motion.div aria-hidden="true" animate={{ x: hovered && !calm ? [0, 4, 0] : 0 }} transition={{ duration: 1.2, repeat: Infinity }}>
               <ChevronRight className="h-4 w-4 text-muted-foreground/70" />

@@ -26,7 +26,7 @@ export default function ArticleCard({ article, index }: { article: ArticleItem; 
         </span>
         <span className="flex flex-1 flex-col p-6">
           <span className="flex flex-wrap items-center gap-2">
-            <span className="rounded border border-border bg-muted px-2 py-0.5 font-mono text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground">{article.published_on}</span>
+            <span className="rounded border border-border bg-muted px-2 py-0.5 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">{article.published_on}</span>
             {article.read_time && <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{article.read_time}</span>}
             {topics.map((topic) => (
               <span key={topic} className="font-mono text-[10px] font-bold uppercase tracking-widest text-foreground/70">

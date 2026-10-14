@@ -63,7 +63,7 @@ const NavItem = memo(function NavItem({ label, count, active, collapsed, onSelec
                   'block overflow-hidden whitespace-nowrap text-2xl font-black tracking-tight sm:text-3xl lg:text-4xl',
                   active
                     ? 'text-foreground'
-                    : 'text-muted-foreground/80 group-hover:text-muted-foreground dark:text-muted-foreground/60 dark:group-hover:text-muted-foreground/80',
+                    : 'text-muted-foreground group-hover:text-foreground dark:text-muted-foreground/60 dark:group-hover:text-muted-foreground/80',
                 )}
               >
                 {label}
@@ -268,7 +268,7 @@ export default function AchievementArchive({ items }: { items: Achievement[] }) 
               data-count={pad(items.length)}
               className="select-none text-[9rem] font-black leading-none text-foreground/[0.18] transition-colors duration-500 before:content-[attr(data-count)] group-hover:text-foreground/[0.35] dark:text-foreground/20 dark:group-hover:text-foreground/40"
             />
-            <div className="-mt-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/80 transition-colors duration-500 group-hover:text-muted-foreground">
+            <div className="-mt-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-colors duration-500 group-hover:text-foreground">
               <Award className="h-3 w-3" aria-hidden="true" />
               Achievements
             </div>
@@ -281,9 +281,9 @@ export default function AchievementArchive({ items }: { items: Achievement[] }) 
           ref={controlsRef}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="sticky top-20 z-30 -mx-6 mb-8 flex shrink-0 flex-col items-stretch justify-between gap-3 bg-background/85 px-6 py-3 backdrop-blur-md sm:flex-row sm:items-center lg:static lg:mx-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none"
+          className="sticky top-[76px] z-30 -mx-6 mb-6 flex shrink-0 flex-col items-stretch justify-between gap-3 bg-background/90 px-6 py-2 backdrop-blur-md sm:top-20 sm:mb-8 sm:flex-row sm:items-center sm:py-3 lg:static lg:mx-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none"
         >
-          <div className="flex flex-wrap gap-2">
+          <div className="hidden flex-wrap gap-2 sm:flex">
             {[
               { icon: Trophy, value: items.length, label: 'achievements in total' },
               { icon: Medal, value: counts.award, label: 'awards' },

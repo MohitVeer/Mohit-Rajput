@@ -18,7 +18,7 @@ export default function SkillsHero() {
   const reduce = useReducedMotion()
 
   return (
-    <section aria-labelledby="skills-heading" className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-28">
+    <section aria-labelledby="skills-heading" className="relative flex min-h-screen min-h-svh flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-28">
       {FLOATERS.map((floater, i) => (
         <motion.span
           key={floater.name}
@@ -38,13 +38,13 @@ export default function SkillsHero() {
         </motion.span>
       ))}
 
-      <div aria-hidden="true" className="relative h-[38vh] w-full max-w-md">
-        <div className="absolute inset-0 scale-[1.9]">
+      <div aria-hidden="true" className="relative h-[300px] w-full max-w-md md:h-[38vh]">
+        <div className="absolute inset-x-0 top-1/2 h-[400px] -translate-y-1/2 scale-[0.9] sm:scale-[1.2] md:inset-0 md:top-0 md:h-auto md:translate-y-0 md:scale-[1.9]">
           <CubeLoader faces={FEATURES[0].faces} />
         </div>
       </div>
 
-      <h1 id="skills-heading" className="relative mt-4 text-center text-[clamp(2.6rem,9.5vw,8.5rem)] font-black leading-[0.95] tracking-tighter text-foreground">
+      <h1 id="skills-heading" className="relative mt-8 text-center text-[clamp(2.6rem,9.5vw,8.5rem)] md:mt-4 font-black leading-[0.95] tracking-tighter text-foreground">
         SKILLS &amp; TOOLS
       </h1>
       <p className="relative mt-6 text-center font-mono text-[10px] uppercase tracking-[0.5em] text-muted-foreground md:text-xs">

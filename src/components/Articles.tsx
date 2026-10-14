@@ -41,7 +41,7 @@ export default function Articles() {
           <h2 id="articles-heading" className="text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
             Articles &amp; Insights
           </h2>
-          <p className="mx-auto max-w-2xl text-lg font-medium text-muted-foreground/80 md:text-xl">
+          <p className="mx-auto max-w-2xl text-lg font-medium text-muted-foreground md:text-xl">
             Sharing what I learn in the Salesforce ecosystem — LWC, OmniStudio, and Marketing Cloud.
           </p>
         </motion.div>

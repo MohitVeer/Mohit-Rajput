@@ -42,7 +42,7 @@ function Card({ label, index, className }: { label: string; index: number; class
 }
 
 export default function DeliveryCards({ title, items }: { title: string; items: string[] }) {
-  const pinned = useMediaQuery('(min-width: 768px) and (prefers-reduced-motion: no-preference)')
+  const pinned = useMediaQuery('(min-width: 768px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)')
   const containerRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLUListElement>(null)
   const [travel, setTravel] = useState(0)
@@ -89,7 +89,7 @@ export default function DeliveryCards({ title, items }: { title: string; items: 
   }
 
   return (
-    <section aria-labelledby="delivery-heading" ref={containerRef} className="relative" style={{ height: `calc(100vh + ${travel * 1.1}px)` }}>
+    <section aria-labelledby="delivery-heading" ref={containerRef} className="relative" style={{ height: `calc(var(--vh) + ${travel * 1.1}px)` }}>
       <div className="sticky top-0 flex h-screen flex-col justify-center gap-12 overflow-hidden px-12 lg:px-24">
         {header}
         <motion.ul ref={trackRef} style={{ x }} className="flex w-max gap-6 will-change-transform">

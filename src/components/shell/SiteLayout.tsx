@@ -3,17 +3,18 @@ import { Outlet, useLocation, useNavigationType } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import BackToTop from './BackToTop'
 import Navbar from './Navbar'
-import ClickConstellation from '../ClickConstellation'
+import ClickSpark from '../ClickSpark'
 import Footer from '../Footer'
 import OverlayMenu from '../cinematic/OverlayMenu'
 import Preloader from '../Preloader'
+import RouteCurtain from './RouteCurtain'
 import { useSmoothScroll } from '../../hooks/useSmoothScroll'
 import { getLenisInstance } from '../../lib/lenisInstance'
-import { initAnalytics, trackPageView } from '../../lib/analytics'
+import { startAnalytics, trackPageView } from '../../lib/analytics'
 
 function PageFallback() {
   return (
-    <div role="status" aria-live="polite" className="grid min-h-[100svh] place-items-center">
+    <div role="status" aria-live="polite" data-page-fallback className="grid min-h-[100svh] place-items-center">
       <span className="sr-only">Loading page</span>
       <span aria-hidden="true" className="h-10 w-10 animate-spin rounded-full border-2 border-foreground/15 border-t-foreground" />
     </div>
@@ -171,7 +172,7 @@ export default function SiteLayout() {
   const menuTriggerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    initAnalytics()
+    startAnalytics()
   }, [])
 
   useEffect(() => {
@@ -188,7 +189,8 @@ export default function SiteLayout() {
       </a>
 
       <Preloader />
-      <ClickConstellation />
+      <RouteCurtain />
+      <ClickSpark />
       <Navbar ref={menuTriggerRef} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((v) => !v)} />
       <OverlayMenu open={menuOpen} onClose={() => setMenuOpen(false)} triggerRef={menuTriggerRef} />
 

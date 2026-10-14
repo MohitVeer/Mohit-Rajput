@@ -36,8 +36,8 @@ export default function ProjectsHero({ items }: { items: ProjectItem[] }) {
       <div className="relative z-10 px-6 md:px-12 lg:px-20">
         <motion.h1
           id="projects-heading"
-          initial={reduce ? false : { opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={reduce ? false : { y: 40 }}
+          animate={{ y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-5xl text-[clamp(2.4rem,7vw,6.5rem)] font-semibold leading-[1.02] tracking-tight text-foreground"
         >
@@ -46,9 +46,9 @@ export default function ProjectsHero({ items }: { items: ProjectItem[] }) {
           Digital Reality
         </motion.h1>
         <motion.p
-          initial={reduce ? false : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.25 }}
+          initial={reduce ? false : { y: 24 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base"
         >
           Enterprise Salesforce front-end work delivered for global brands — from{' '}

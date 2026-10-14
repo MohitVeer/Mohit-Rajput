@@ -7,7 +7,7 @@
 - [Home](https://mohitveer.netlify.app/): Introduction, impact numbers, skills overview, client projects, professional journey, certificates, Trailhead status, live GitHub activity, articles and contact.
 - [Projects](https://mohitveer.netlify.app/projects): Client projects delivered at Wipro and Mphasis Silverline (Ericsson, St. James's Place, American Honda, Republic Finance, Arvest Bank, Teladoc and more), plus live GitHub contribution heatmap and activity.
 - Each client has its own page, for example [Ericsson](https://mohitveer.netlify.app/projects/ericsson) and [American Honda](https://mohitveer.netlify.app/projects/american-honda), with the role, stack and delivery highlights.
-- [Experience](https://mohitveer.netlify.app/experience): Year-by-year career timeline at Wipro, Mphasis Silverline, DJT Corporation, Escade Technologies and Forelsket Softwares.
+- [Experience](https://mohitveer.netlify.app/experience): Year-by-year career timeline at Wipro, Mphasis Silverline, DJT Corporation, Escade Technologies and Forelsket Softwares, plus education: MCA (distance learning) from Arunachal University of Studies and BCA from Gagan College of Management and Technology, affiliated to Dr. Bhimrao Ambedkar University, Agra.
 - [Skills](https://mohitveer.netlify.app/skills): Salesforce, front-end, design-to-code, Marketing Cloud and DevOps toolkit.
 - [Achievements](https://mohitveer.netlify.app/achievements): Nine Salesforce certifications and five more certificates (Udemy, freeCodeCamp, Internshala Trainings, Forelsket Softwares internship) with the originals, five Trailhead superbadges, Trailhead rank and awards.
 - [Articles](https://mohitveer.netlify.app/blog): Articles on Experience Cloud performance, SLDS 2, Marketing Cloud and personalization.

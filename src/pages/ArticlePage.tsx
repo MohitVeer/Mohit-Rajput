@@ -96,7 +96,7 @@ export default function ArticlePage() {
     <div className="min-h-screen bg-background pb-24 pt-28 text-foreground sm:pt-32">
       <header className="mx-auto mb-12 w-full max-w-7xl px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <Link to="/blog" onClick={goBack} className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+          <Link to="/blog" onClick={goBack} className="mb-4 inline-flex items-center gap-2 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back
           </Link>
@@ -260,7 +260,7 @@ export default function ArticlePage() {
         )}
 
         <div className="mt-16 flex justify-center">
-          <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
+          <Link to="/contact" className="inline-flex items-center gap-2 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
             <Link2 className="h-4 w-4" aria-hidden="true" />
             Want to talk about this topic? Get in touch
           </Link>

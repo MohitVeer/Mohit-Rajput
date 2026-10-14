@@ -65,7 +65,7 @@ export default function ArticleArchive({ articles }: { articles: ArticleItem[] }
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search archive…"
-              className="w-56 rounded-xl border border-border bg-card py-2.5 pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground/40 focus:outline-none"
+              className="w-56 rounded-xl border border-border bg-card py-2.5 pl-9 pr-3 text-sm [@media(pointer:coarse)]:text-base text-foreground placeholder:text-muted-foreground focus:border-foreground/40 focus:outline-none"
             />
           </div>
           <div className="flex gap-1 rounded-lg bg-muted p-1" role="group" aria-label="View mode">

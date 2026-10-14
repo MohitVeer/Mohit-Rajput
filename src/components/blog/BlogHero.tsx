@@ -35,17 +35,17 @@ export default function BlogHero({ articles }: { articles: ArticleItem[] }) {
         <div className="text-center">
           <motion.h1
             id="blog-heading"
-            initial={reduce ? false : { opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={reduce ? false : { y: 40 }}
+            animate={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="bg-gradient-to-b from-foreground to-muted-foreground bg-clip-text pb-2 text-[clamp(2.6rem,9vw,8rem)] font-black leading-[0.95] tracking-tighter text-transparent"
           >
             ARTICLES &amp; NOTES
           </motion.h1>
           <motion.p
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
+            initial={reduce ? false : { y: 16 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="mx-auto mt-6 max-w-2xl text-sm text-muted-foreground md:text-base"
           >
             A dedicated space for documenting what I learn in the Salesforce ecosystem — LWC, SLDS, Marketing Cloud and personalization — written for developers who ship.

@@ -111,6 +111,5 @@ export default function SkillIcon({ name, size = 24, className, context }: Skill
     if (wordBrand) return <BrandMark slug={wordBrand.slug} hex={wordBrand.hex} size={size} className={className} />
   }
 
-  if (context === 'salesforce') return salesforce
   return <Braces width={size} height={size} className={className} strokeWidth={1.75} aria-hidden="true" />
 }

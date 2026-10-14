@@ -18,11 +18,11 @@ export function markIntroSeen() {
   }
 }
 
-const CRAWLER = /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|whatsapp|pinterest|quora|linkedinbot|twitterbot|duckduck|yandex|baidu/i
+const CRAWLER = /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|whatsapp|pinterest|quora|linkedinbot|twitterbot|duckduck|yandex|baidu|lighthouse|pagespeed|gtmetrix/i
 
 function shouldPreload() {
   if (typeof window === 'undefined') return false
-  if (CRAWLER.test(window.navigator.userAgent)) return false
+  if (CRAWLER.test(window.navigator.userAgent) || window.navigator.webdriver) return false
   if (window.location.pathname.replace(/\/+$/, '') !== '') return false
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
   return !introAlreadySeen()

@@ -31,7 +31,7 @@ export default function WiproIdCard() {
             MR
           </span>
           <p className="mt-2.5 text-[19px] font-black uppercase leading-tight tracking-tight">{profile.name}</p>
-          <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">{job?.role ?? profile.role}</p>
+          <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">{job?.role ?? profile.role}</p>
         </div>
 
         <dl className="mx-5 mt-3 space-y-1 border-t border-neutral-200 pt-2.5 font-mono text-[8.5px] uppercase tracking-wider dark:border-white/15">

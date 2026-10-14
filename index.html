@@ -10,6 +10,21 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="manifest" href="/site.webmanifest" />
     <script src="/theme-init.js"></script>
+    <style>
+      .boot {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+      }
+      .boot span {
+        font: 600 12px/1 system-ui, -apple-system, 'Segoe UI', sans-serif;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        opacity: 0.4;
+      }
+    </style>
 
 
     <title>Mohit Rajput — Front-End Developer with Salesforce Expertise</title>
@@ -85,6 +100,11 @@
             "url": "https://mohitveer.netlify.app/",
             "email": "mailto:rajput.mohit.veer@gmail.com",
             "worksFor": { "@type": "Organization", "name": "Wipro" },
+            "alumniOf": [
+              { "@type": "CollegeOrUniversity", "name": "Arunachal University of Studies" },
+              { "@type": "CollegeOrUniversity", "name": "Dr. Bhimrao Ambedkar University, Agra" },
+              { "@type": "CollegeOrUniversity", "name": "Gagan College of Management and Technology" }
+            ],
             "sameAs": [
               "https://www.linkedin.com/in/mohit-veer",
               "https://www.salesforce.com/trailblazer/mrajputsl",
@@ -132,7 +152,9 @@
       <input type="text" name="bot-field" />
     </form>
 
-    <div id="root"></div>
+    <div id="root">
+      <div class="boot" aria-hidden="true"><span>Mohit Rajput</span></div>
+    </div>
 
     <noscript>
       <main style="max-width: 40rem; margin: 0 auto; padding: 4rem 1.5rem; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #f3f3f1; background: #0b0b0c">

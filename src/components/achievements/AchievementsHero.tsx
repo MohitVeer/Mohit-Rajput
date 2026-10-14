@@ -38,12 +38,12 @@ function computeLayout(vw: number, vh: number): HeroLayout {
     const x0 = (vw - gridWidth) / 2
     const y0 = vh * 0.2
     const scatter: [number, number][] = [
-      [vh * 0.05, vw * 0.04],
-      [vh * 0.1, vw * 0.52],
+      [vh * 0.12, vw * 0.04],
+      [vh * 0.16, vw * 0.52],
       [vh * 0.71, vw * 0.06],
       [vh * 0.75, vw * 0.5],
-      [vh * 0.3, -vw * 0.34],
-      [vh * 0.5, vw * 0.88],
+      [vh * 0.22, -vw * 0.34],
+      [vh * 0.64, vw * 0.88],
     ]
     return {
       from: scatter.map(([top, left]) => ({ top, left, width: column, height, radius: 8 })),
@@ -91,12 +91,15 @@ function computeLayout(vw: number, vh: number): HeroLayout {
   return { from, to }
 }
 
-function ShowcaseImage({ item }: { item: Achievement }) {
+const HIGH_PRIORITY = { fetchpriority: 'high' } as Record<string, string>
+
+function ShowcaseImage({ item, priority }: { item: Achievement; priority: boolean }) {
   const small = item.thumb ?? item.image ?? ''
   const full = item.image ?? small
   const responsive = small !== full
   return (
     <img
+      {...(priority ? HIGH_PRIORITY : undefined)}
       src={small}
       srcSet={responsive ? `${small} 640w, ${full} 1280w` : undefined}
       sizes={responsive ? SHOWCASE_SIZES : undefined}
@@ -136,7 +139,7 @@ function HeroCopy({ onExplore, animated }: { onExplore: () => void; animated: bo
         {...rise(0.3)}
         type="button"
         onClick={onExplore}
-        className="pointer-events-auto flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+        className="pointer-events-auto flex items-center gap-2 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
       >
         <span>Scroll to Explore</span>
         <ChevronDown className="h-4 w-4 animate-bounce" aria-hidden="true" />
@@ -154,10 +157,10 @@ function HeroImage({ item, index, register }: { item: Achievement; index: number
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, delay: index * 0.1, ease: [0.215, 0.61, 0.355, 1] }}
+        transition={{ duration: 0.6, delay: index * 0.03, ease: [0.215, 0.61, 0.355, 1] }}
         className="relative h-full w-full"
       >
-        <ShowcaseImage item={item} />
+        <ShowcaseImage item={item} priority={index < 3} />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60" />
       </motion.div>
     </div>
@@ -262,7 +265,7 @@ function StaticHero({ picks, layout }: { picks: Achievement[]; layout: HeroLayou
               className="absolute overflow-hidden border border-border/20 bg-card shadow-2xl"
               style={{ top: rect.top, left: rect.left, width: rect.width, height: rect.height, borderRadius: rect.radius, opacity: 0.8, transform: `rotate(${tilt(index)}deg)` }}
             >
-              <ShowcaseImage item={item} />
+              <ShowcaseImage item={item} priority={index < 3} />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60" />
             </div>
           )

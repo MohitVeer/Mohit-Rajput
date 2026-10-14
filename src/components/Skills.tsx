@@ -6,7 +6,7 @@ import SkillsAdventure from './skills/SkillsAdventure'
 import Section from './shell/Section'
 
 export default function Skills() {
-  const wide = useMediaQuery('(min-width: 1024px) and (prefers-reduced-motion: no-preference)')
+  const wide = useMediaQuery('(min-width: 1024px) and (min-aspect-ratio: 5/4) and (prefers-reduced-motion: no-preference)')
 
   return (
     <Section id="skills" index="03" label="Skills" className="relative bg-background dark:bg-black">

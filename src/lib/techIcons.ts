@@ -1,10 +1,10 @@
 import { techIconIndex, type TechIconEntry } from '../data/techIconIndex'
 
 const SALESFORCE_STRONG =
-  /(^|[^a-z0-9])(salesforce|sfdc|force\.com|lightning|lwc|aura|apex|soql|sosl|visualforce|omni\s?studio|omni\s?scripts?|flex\s?cards?|data\s?raptors?|integration procedures?|experience cloud|community cloud|sales cloud|service cloud|marketing cloud|commerce cloud|health cloud|financial services cloud|nonprofit cloud|education cloud|manufacturing cloud|field service|cpq|revenue cloud|data cloud|slds|prompt builder|einstein|agentforce|ampscript|journey builder|email studio|mobile studio|cloud pages|data extensions?|interaction studio|account engagement|pardot|trailhead|sfdx|scratch orgs?|process builder|flows?|flow builder|mulesoft|tableau|slack|heroku|personalization)([^a-z0-9]|$)/i
+  /(^|[^a-z0-9])(salesforce|sfdc|force\.com|lightning[\s-]+(web|design|experience|app|component|record|data|message|base|navigation|knowledge|console|out)|lwc|aura|apex|soql|sosl|visualforce|omni\s?studio|omni\s?scripts?|flex\s?cards?|data\s?raptors?|integration procedures?|experience cloud|community cloud|sales cloud|service cloud|marketing cloud|commerce cloud|health cloud|financial services cloud|nonprofit cloud|education cloud|manufacturing cloud|field service|cpq|revenue cloud|data cloud|slds|prompt builder|einstein|agentforce|ampscript|journey builder|email studio|mobile studio|cloud pages|data extensions?|interaction studio|account engagement|pardot|trailhead|sfdx|scratch orgs?|process builder|flow builder|screen flows?|record[\s-]triggered flows?|autolaunched flows?)([^a-z0-9]|$)/i
 
 const SALESFORCE_COMPANION =
-  /^(triggers?|admin(istrator|istration)?|workflows?|automation|validation( rules?)?|formulas?|reports?|dashboards?|configuration|customi[sz]ation|declarative|batch( apex)?|queueable|schedulable|governor limits|sharing|security|integration|callouts?|rest api|soap api|bulk api|platform events?|change data capture|metadata|packaging|unlocked packages?|deployment|devops|ci\/cd|org|sandbox|permission sets?|profiles?|roles?)$/i
+  /^(triggers?|admin(istrator|istration)?|flows?|workflows?|automation|validation( rules?)?|formulas?|reports?|dashboards?|configuration|customi[sz]ation|declarative|batch( apex)?|queueable|schedulable|governor limits|sharing|security|integration|callouts?|rest api|soap api|bulk api|platform events?|change data capture|metadata|packaging|unlocked packages?|deployment|devops|ci\/cd|org|sandbox|permission sets?|profiles?|roles?)$/i
 
 export function techKeys(name: string): string[] {
   const strict = name
