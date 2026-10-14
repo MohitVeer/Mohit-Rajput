@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { LOOP_VIEWPORT } from '../../lib/loop'
 
 interface SpotlightBeamsProps {
   gradientFirst?: string
@@ -31,8 +32,8 @@ export default function SpotlightBeams({
     return (
       <motion.div
         key={side}
-        animate={{ x: [0, xOffset * sign, 0] }}
-        transition={{ duration, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
+        whileInView={{ x: [0, xOffset * sign, 0], transition: { duration, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' } }}
+        viewport={LOOP_VIEWPORT}
         className={`pointer-events-none absolute top-0 ${pos} h-screen w-screen`}
       >
         <div

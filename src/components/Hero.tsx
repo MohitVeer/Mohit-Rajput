@@ -9,6 +9,7 @@ import { cn } from '../lib/cn'
 import { GitHubMark, LinkedInMark, SalesforceMark } from './icons/BrandMarks'
 import SpotlightBeams from './shell/SpotlightBeams'
 import { usePreloading } from './shell/preloadState'
+import { LOOP_VIEWPORT } from '../lib/loop'
 
 interface TooltipState {
   show: boolean
@@ -51,8 +52,9 @@ function Float({ revealed, delay, axis, distance, duration, className, children 
       className={cn('absolute z-20 hidden md:block', className)}
     >
       <motion.div
-        animate={revealed && !reduce ? { [axis]: [0, distance, 0] } : { [axis]: 0 }}
-        transition={{ duration, repeat: Infinity, ease: 'easeInOut' }}
+        animate={{ [axis]: 0 }}
+        whileInView={revealed && !reduce ? { ...(axis === 'x' ? { x: [0, distance, 0] } : { y: [0, distance, 0] }), transition: { duration, repeat: Infinity, ease: 'easeInOut' } } : undefined}
+        viewport={LOOP_VIEWPORT}
         className="transform-gpu"
       >
         {children}
@@ -182,8 +184,9 @@ export default function Hero() {
                 <MotionLink
                   to="/projects"
                   aria-label="See my projects"
-                  animate={revealed && !reduce ? { scale: [1, 1.2, 1] } : { scale: 1 }}
-                  transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+                  animate={{ scale: 1 }}
+                  whileInView={revealed && !reduce ? { scale: [1, 1.2, 1], transition: { duration: 1.2, repeat: Infinity, ease: 'easeInOut' } } : undefined}
+                  viewport={LOOP_VIEWPORT}
                   {...tooltipHandlers('See my work', 'zap')}
                   className="group relative mx-[0.02em] block cursor-pointer lg:mx-[0.05em]"
                 >
@@ -200,8 +203,9 @@ export default function Hero() {
               <MotionLink
                 to="/contact"
                 aria-label="Get in touch"
-                animate={revealed && !reduce ? { rotate: [0, 8, 0], y: [0, -10, 0] } : { rotate: 0, y: 0 }}
-                transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
+                animate={{ rotate: 0, y: 0 }}
+                whileInView={revealed && !reduce ? { rotate: [0, 8, 0], y: [0, -10, 0], transition: { duration: 3.6, repeat: Infinity, ease: 'easeInOut' } } : undefined}
+                viewport={LOOP_VIEWPORT}
                 {...tooltipHandlers('Let’s work together', 'mail')}
                 className="group relative mx-[0.05em] block cursor-pointer"
               >

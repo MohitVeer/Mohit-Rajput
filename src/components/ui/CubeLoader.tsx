@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import type { LucideIcon } from 'lucide-react'
+import { LOOP_VIEWPORT } from '../../lib/loop'
 
 export interface CubeFace {
   icon: LucideIcon
@@ -41,14 +42,14 @@ export default function CubeLoader({ faces }: { faces: CubeFace[] }) {
           className="relative h-[110px] w-[110px]"
           style={{ transformStyle: 'preserve-3d' }}
           initial={{ scale: 1, rotateX: -20, rotateY: 0 }}
-          animate={{ scale: 1.3, rotateX: 160, rotateY: 180 }}
-          transition={{ duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
+          whileInView={{ scale: 1.3, rotateX: 160, rotateY: 180, transition: { duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' } }}
+          viewport={LOOP_VIEWPORT}
         >
           <motion.div
             className="absolute inset-0"
             style={{ transformStyle: 'preserve-3d' }}
-            animate={{ rotateY: 360, rotateZ: 360 }}
-            transition={{ duration: 8, ease: 'linear', repeat: Infinity }}
+            whileInView={{ rotateY: 360, rotateZ: 360, transition: { duration: 8, ease: 'linear', repeat: Infinity } }}
+            viewport={LOOP_VIEWPORT}
           >
             {faces.slice(0, 6).map((face, i) => (
               <Face key={face.label} {...face} transform={TRANSFORMS[i]} />
@@ -58,8 +59,8 @@ export default function CubeLoader({ faces }: { faces: CubeFace[] }) {
         <motion.div
           className="absolute -bottom-[80px] h-[30px] w-[120px] rounded-[100%] bg-black/40 blur-[8px] dark:bg-white/10"
           initial={{ scale: 1, opacity: 0.5 }}
-          animate={{ scale: 0.4, opacity: 0.1 }}
-          transition={{ duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
+          whileInView={{ scale: 0.4, opacity: 0.1, transition: { duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' } }}
+          viewport={LOOP_VIEWPORT}
         />
       </div>
     </div>

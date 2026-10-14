@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { cn } from '../../lib/cn'
+import { LOOP_VIEWPORT } from '../../lib/loop'
 
 interface InfiniteMarqueeProps {
   items: React.ReactNode[]
@@ -23,8 +24,8 @@ export default function InfiniteMarquee({ items, speed = 20, direction = 'left',
   return (
     <div data-marquee className={cn('relative flex overflow-hidden py-4', className)}>
       <motion.div
-        animate={{ x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'] }}
-        transition={{ duration: speed, ease: 'linear', repeat: Infinity }}
+        whileInView={{ x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'], transition: { duration: speed, ease: 'linear', repeat: Infinity } }}
+        viewport={LOOP_VIEWPORT}
         className="flex whitespace-nowrap"
       >
         {track('a')}

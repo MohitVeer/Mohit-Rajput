@@ -16,6 +16,7 @@ import { usePageMeta } from '../hooks/usePageMeta'
 import { projectSlugFor, useProjects } from '../hooks/useProjects'
 import { clientsForJob, jobSlug } from '../lib/experienceUtils'
 import type { ExperienceRow } from '../lib/contentApi'
+import { LOOP_VIEWPORT } from '../lib/loop'
 
 const TABS: TabDefinition[] = [
   { id: 'education', label: 'Education', quote: 'The academic foundation behind the work: a regular BCA followed by an MCA through distance learning.', icon: GraduationCap },
@@ -31,8 +32,8 @@ function FloatingShape({ className, gradient, delay = 0, still }: { className: s
       aria-hidden="true"
       className={`pointer-events-none absolute rounded-full opacity-20 blur-3xl ${className}`}
       style={{ background: gradient }}
-      animate={still ? undefined : { y: [0, -20, 0], scale: [1, 1.05, 1] }}
-      transition={{ duration: 8, repeat: Infinity, delay }}
+      whileInView={still ? undefined : { y: [0, -20, 0], scale: [1, 1.05, 1], transition: { duration: 8, repeat: Infinity, delay } }}
+      viewport={LOOP_VIEWPORT}
     />
   )
 }

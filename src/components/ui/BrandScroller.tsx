@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
+import { LOOP_VIEWPORT } from '../../lib/loop'
 
 export interface ScrollerItem {
   name: string
@@ -41,8 +42,8 @@ export default function BrandScroller({ items, reverse = false, duration = 30, l
       className="relative flex w-full overflow-hidden py-2 [mask-image:linear-gradient(to_right,rgba(0,0,0,0),rgba(0,0,0,1)_10%,rgba(0,0,0,1)_90%,rgba(0,0,0,0))]"
     >
       <motion.div
-        animate={{ x: reverse ? ['0%', '-50%'] : ['-50%', '0%'] }}
-        transition={{ duration, ease: 'linear', repeat: Infinity }}
+        whileInView={{ x: reverse ? ['0%', '-50%'] : ['-50%', '0%'], transition: { duration, ease: 'linear', repeat: Infinity } }}
+        viewport={LOOP_VIEWPORT}
         className="flex whitespace-nowrap"
       >
         {row('a')}

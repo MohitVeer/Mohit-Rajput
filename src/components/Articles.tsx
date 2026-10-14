@@ -4,11 +4,10 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useArticles } from '../hooks/useArticles'
 import { useBreakpointValue } from '../hooks/useBreakpointValue'
+import { COVERS, LIGHT_COVERS } from '../lib/articleUtils'
 import Book from './ui/Book'
 import Section from './shell/Section'
 
-const COVERS = ['#9D2127', '#7DC1C1', '#FED954', '#454ADE', '#439775', '#FF0F67']
-const LIGHT_COVERS = new Set(['#7DC1C1', '#FED954'])
 
 const COUNT_BREAKPOINTS = { sm: 1, md: 2, lg: 3 }
 const BOOK_WIDTH = { sm: 180, md: 220, lg: 260 }
@@ -83,7 +82,7 @@ export default function Articles() {
                   initial={{ opacity: 0, x: direction * 50, scale: 0.9, filter: 'blur(10px)' }}
                   animate={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
                   exit={{ opacity: 0, x: direction * -50, scale: 0.9, filter: 'blur(10px)' }}
-                  transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 26, filter: { duration: 0.35, ease: 'easeOut' } }}
                   className="relative w-[180px] flex-shrink-0 md:w-[260px]"
                 >
                   <Link to={`/blog/${article.slug}`} state={{ from: 'blog' }} className="group/book relative z-10 block">

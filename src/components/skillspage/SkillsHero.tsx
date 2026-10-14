@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import CubeLoader from '../ui/CubeLoader'
 import { FEATURES } from '../skills/features'
 import SkillIcon from './SkillIcon'
+import { LOOP_VIEWPORT } from '../../lib/loop'
 
 const FLOATERS = [
   { name: 'React.js', className: 'left-[8%] top-[22%]', size: 44 },
@@ -29,8 +30,8 @@ export default function SkillsHero() {
           className={`absolute hidden md:block ${floater.className}`}
         >
           <motion.span
-            animate={reduce ? undefined : { y: [0, -16, 0], rotate: [0, 4, 0] }}
-            transition={{ duration: 5 + (i % 4), repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
+            whileInView={reduce ? undefined : { y: [0, -16, 0], rotate: [0, 4, 0], transition: { duration: 5 + (i % 4), repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 } }}
+            viewport={LOOP_VIEWPORT}
             className="grid place-items-center rounded-2xl border border-border bg-card/70 p-4 shadow-xl backdrop-blur"
           >
             <SkillIcon name={floater.name} size={floater.size} />

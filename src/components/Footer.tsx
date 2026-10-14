@@ -12,6 +12,7 @@ import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 import SpotlightBeams from './shell/SpotlightBeams'
 import { useTheme } from '../theme/useTheme'
 import { siteRoutes } from '../lib/siteRoutes'
+import { LOOP_VIEWPORT } from '../lib/loop'
 
 const FOOTER_LINES = [`${profile.name}.`, 'All rights reserved.']
 
@@ -28,8 +29,8 @@ function Marquee() {
     >
       <motion.div
         className="flex gap-12 whitespace-nowrap"
-        animate={{ x: [0, -1000] }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        whileInView={{ x: [0, -1000], transition: { duration: 30, repeat: Infinity, ease: 'linear' } }}
+        viewport={LOOP_VIEWPORT}
       >
         {items.map((text, i) => (
           <div key={i} className="flex items-center gap-4 font-mono text-sm uppercase tracking-widest text-muted-foreground/80">

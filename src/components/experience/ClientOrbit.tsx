@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Plus } from 'lucide-react'
 import { cn } from '../../lib/cn'
 import CompanyLogo from '../ui/CompanyLogo'
+import { LOOP_VIEWPORT } from '../../lib/loop'
 
 export interface OrbitNode {
   label: string
@@ -180,8 +181,8 @@ export default function ClientOrbit({ nodes, label }: { nodes: OrbitNode[]; labe
                 onBlur={() => setActive((current) => (current === key ? null : current))}
               >
                 <motion.div
-                  animate={calm ? undefined : { y: [0, -5, 0] }}
-                  transition={{ duration: 4 + (index % 4), repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 }}
+                  whileInView={calm ? undefined : { y: [0, -5, 0], transition: { duration: 4 + (index % 4), repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 } }}
+                  viewport={LOOP_VIEWPORT}
                   className="relative"
                 >
                   {node.href ? (

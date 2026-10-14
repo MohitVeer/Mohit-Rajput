@@ -7,6 +7,7 @@ import FitToParent from '../ui/FitToParent'
 import HoverScrambleText from '../ui/HoverScrambleText'
 import MagneticTag from './MagneticTag'
 import { FEATURES, type Feature } from './features'
+import { LOOP_VIEWPORT } from '../../lib/loop'
 
 const BRIDGE = 'See how I turn requirements into \nproduction-ready Salesforce experiences'
 const TOTAL = FEATURES.length + 1
@@ -132,7 +133,7 @@ function BridgeSlide({ progress, active }: { progress: MotionValue<number>; acti
         </p>
         <div className="flex flex-col items-center gap-6 pt-10 opacity-30">
           <span className="font-mono text-[11px] font-bold uppercase tracking-[0.5em] text-foreground">Scroll to explore</span>
-          <motion.span animate={{ y: [0, 8, 0] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}>
+          <motion.span whileInView={{ y: [0, 8, 0], transition: { duration: 2.5, repeat: Infinity, ease: 'easeInOut' } }} viewport={LOOP_VIEWPORT}>
             <ChevronDown className="h-6 w-6 text-foreground" aria-hidden="true" />
           </motion.span>
         </div>
