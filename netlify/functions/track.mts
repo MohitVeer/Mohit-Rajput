@@ -94,26 +94,6 @@ function categorizeTrafficSource(referrer: string, utmSource?: string): string {
   return `Referral: ${host}`
 }
 
-async function lookupIspOrg(ip: string | undefined): Promise<string | null> {
-  const token = process.env.IPINFO_TOKEN
-  if (!token || !ip || ip === '127.0.0.1' || ip === '::1') return null
-
-  try {
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 1500)
-    const res = await fetch(`https://ipinfo.io/${ip}/json?token=${token}`, {
-      signal: controller.signal,
-    })
-    clearTimeout(timeout)
-    if (!res.ok) return null
-    const data = (await res.json()) as { org?: string }
-
-return data.org ? data.org.replace(/^AS\d+\s+/, '') : null
-  } catch {
-    return null
-  }
-}
-
 async function insertRow(table: string, row: Record<string, unknown>) {
   let result = await supabase.from(table).insert(row)
   if (result.error?.code === '23503') {
@@ -142,7 +122,7 @@ export default async (req: Request, context: Context) => {
   const ua = req.headers.get('user-agent') || ''
   const { device_type, os, browser, browser_version } = parseUA(ua)
 
-const geo = context.geo
+  const geo = context.geo
 
   try {
     switch (body.type) {
@@ -170,8 +150,6 @@ const geo = context.geo
           .update({ total_sessions: (visitor.total_sessions ?? 0) + 1 })
           .eq('id', visitor.id)
 
-        const ispOrg = await lookupIspOrg(context.ip)
-
         const { error: sErr } = await supabase.from('sessions').insert({
           id: body.sessionId,
           visitor_id: visitor.id,
@@ -197,7 +175,6 @@ const geo = context.geo
           language: body.language,
           screen_width: body.screen?.width ?? null,
           screen_height: body.screen?.height ?? null,
-          isp_org: ispOrg,
           is_returning: isReturning,
         })
         if (sErr) throw sErr
@@ -211,7 +188,7 @@ const geo = context.geo
         })
         if (error) throw error
 
-await supabase.rpc('increment_page_view_count', { p_session_id: body.sessionId, p_path: body.path })
+        await supabase.rpc('increment_page_view_count', { p_session_id: body.sessionId, p_path: body.path })
         break
       }
 
@@ -247,8 +224,7 @@ await supabase.rpc('increment_page_view_count', { p_session_id: body.sessionId, 
       }
 
       case 'heartbeat': {
-
-await supabase
+        await supabase
           .from('sessions')
           .update({ last_activity_at: new Date().toISOString(), current_path: body.path })
           .eq('id', body.sessionId)
@@ -275,7 +251,6 @@ await supabase
     return new Response(null, { status: 204 })
   } catch (err) {
     console.error('track function error', err)
-    
     return new Response(null, { status: 204 })
   }
 }

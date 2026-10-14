@@ -22,20 +22,22 @@ export default function PrivacyNotice() {
       <h1 className="mt-6 font-display text-3xl font-semibold sm:text-4xl">Privacy &amp; analytics</h1>
 
       <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-        This site collects lightweight, aggregate usage analytics so I can understand how the
-        portfolio is used — for example, which sections get read, whether the resume was viewed or
-        downloaded, and roughly which country and device visitors are on. It's built and hosted by
-        me; no third-party analytics or advertising service is involved.
+        This site uses its own first-party analytics to understand how the portfolio is used — for
+        example, which pages get read, which links and buttons are clicked, whether the résumé was
+        viewed or downloaded, and roughly which country and device a visit comes from. Each visit is
+        stored as a pseudonymous session, so the admin dashboard can show an individual visit's pages
+        and clicks as well as totals. It's built and hosted by me; no third-party analytics or
+        advertising service is involved.
       </p>
 
       <h2 className="mt-10 font-display text-xl font-semibold">What's collected</h2>
       <ul className="mt-4 list-disc space-y-2 pl-5 text-base text-muted-foreground">
-        <li>Pages viewed, time on page, and scroll depth (aggregate, not per-visitor detail)</li>
-        <li>Interactions like resume views/downloads, certification and article clicks</li>
+        <li>Pages viewed, time on page, and scroll depth, linked to a pseudonymous session</li>
+        <li>Links and buttons clicked, including résumé views/downloads, certification and article clicks</li>
         <li>Approximate country/region/city, derived from your network's location — not your device's precise location</li>
         <li>Browser, operating system, and device type (desktop/mobile/tablet)</li>
         <li>Referring site and any UTM campaign parameters</li>
-        <li>A random, first-party id stored in your browser, used only to distinguish new vs. returning visits</li>
+        <li>A random, first-party id stored in your browser, used to link visits from the same browser and tell new from returning visits</li>
       </ul>
 
       <h2 className="mt-10 font-display text-xl font-semibold">What's not collected</h2>
@@ -44,6 +46,7 @@ export default function PrivacyNotice() {
         <li>No precise GPS coordinates</li>
         <li>No attempt to identify your employer, ISP, or organization</li>
         <li>No cross-site tracking, fingerprinting, or ad targeting</li>
+        <li>Search engine crawlers and automated browsers are not recorded</li>
       </ul>
 
       <h2 className="mt-10 font-display text-xl font-semibold">Contact form</h2>
