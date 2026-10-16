@@ -3,7 +3,7 @@ import { profile } from '../../data/profile'
 
 export default function AboutLeadIn() {
   return (
-    <div className="mx-auto flex w-full max-w-[1650px] items-center justify-center px-6 py-6">
+    <div className="mx-auto flex w-full max-w-[103.125rem] items-center justify-center px-6 py-6">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -35,14 +35,14 @@ export default function AboutLeadIn() {
 
         <div className="relative z-10">
           <div className="mb-6 flex items-start justify-between md:mb-10">
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-600 dark:text-red-500 md:text-xs">Core focus</span>
-            <span className="hidden font-mono text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-600 md:block">{profile.role}</span>
+            <span className="text-[0.625rem] font-bold uppercase tracking-[0.3em] text-red-600 dark:text-red-500 md:text-xs">Core focus</span>
+            <span className="hidden font-mono text-[0.625rem] uppercase tracking-widest text-zinc-500 dark:text-zinc-600 md:block">{profile.role}</span>
           </div>
 
           <div className="relative mb-8 cursor-default md:mb-14">
             <h2
               id="about-heading"
-              className="text-[clamp(26px,8vw,40px)] font-bold leading-[1.1] tracking-tight sm:leading-[0.92] text-zinc-900 transition-all duration-700 dark:text-white sm:text-[48px] md:text-[clamp(40px,min(7.5vw,10vh),64px)] lg:text-[clamp(44px,min(5.4vw,10vh),88px)]"
+              className="text-[clamp(1.625rem,8vw,2.5rem)] font-bold leading-[1.1] tracking-tight sm:leading-[0.92] text-zinc-900 transition-all duration-700 dark:text-white sm:text-[3rem] md:text-[clamp(2.5rem,min(7.5vw,10vh),4rem)] lg:text-[clamp(2.75rem,min(5.4vw,10vh),5.5rem)]"
             >
               <span aria-hidden="true" className="mr-2 text-zinc-300 transition-colors duration-700 group-hover:text-zinc-400 dark:text-zinc-700 dark:group-hover:text-zinc-500">
                 “
@@ -70,7 +70,7 @@ export default function AboutLeadIn() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-8 text-[13px] sm:flex-row md:col-span-7">
+            <div className="flex flex-col gap-8 text-[0.8125rem] sm:flex-row md:col-span-7">
               <div className="flex-1 space-y-3">
                 <span className="block border-b border-zinc-100 pb-3 font-bold uppercase tracking-widest text-zinc-800 dark:border-zinc-900 dark:text-zinc-200">
                   Scope &amp; Platform

@@ -124,6 +124,8 @@ Optimized for:
 
 Designed using a mobile-first approach with Tailwind CSS breakpoints.
 
+Above a 1600 × 900 window the whole layout grows in proportion, so 24–27 inch and ultra-wide screens show the same composition as a laptop. The scale comes from the root font size in `src/index.css`; sizes are written in `rem`, and JavaScript that mirrors a CSS size multiplies by `rootScale()` from `src/lib/scale.ts`.
+
 ---
 
 ## ⚡ Performance

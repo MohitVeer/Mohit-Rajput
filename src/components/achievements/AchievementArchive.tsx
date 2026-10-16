@@ -80,13 +80,13 @@ const NavItem = memo(function NavItem({ label, count, active, collapsed, onSelec
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 5, scale: 0.95 }}
               transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-              className="pointer-events-none absolute left-[70%] z-[100] ml-4 whitespace-nowrap rounded-lg bg-foreground px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-background shadow-2xl"
+              className="pointer-events-none absolute left-[70%] z-[100] ml-4 whitespace-nowrap rounded-lg bg-foreground px-4 py-2 text-[0.625rem] font-black uppercase tracking-[0.2em] text-background shadow-2xl"
             >
               <div className="flex items-center gap-2">
                 {label}
-                <span className="text-[8px] opacity-60">{pad(count)}</span>
+                <span className="text-[0.5rem] opacity-60">{pad(count)}</span>
               </div>
-              <div className="absolute left-[-4px] top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 bg-foreground" />
+              <div className="absolute left-[-0.25rem] top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 bg-foreground" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -205,7 +205,7 @@ export default function AchievementArchive({ items }: { items: Achievement[] }) 
             <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
               <div className="mb-2 flex items-center gap-3">
                 <div aria-hidden="true" className="h-2 w-2 rounded-full bg-foreground" />
-                <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">The Archive</h2>
+                <h2 className="text-[0.625rem] font-bold uppercase tracking-[0.3em] text-muted-foreground">The Archive</h2>
               </div>
               <div aria-hidden="true" className="h-1.5 w-20 bg-foreground" />
             </motion.div>
@@ -268,7 +268,7 @@ export default function AchievementArchive({ items }: { items: Achievement[] }) 
               data-count={pad(items.length)}
               className="select-none text-[9rem] font-black leading-none text-foreground/[0.18] transition-colors duration-500 before:content-[attr(data-count)] group-hover:text-foreground/[0.35] dark:text-foreground/20 dark:group-hover:text-foreground/40"
             />
-            <div className="-mt-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-colors duration-500 group-hover:text-foreground">
+            <div className="-mt-4 flex items-center gap-2 text-[0.625rem] font-bold uppercase tracking-widest text-muted-foreground transition-colors duration-500 group-hover:text-foreground">
               <Award className="h-3 w-3" aria-hidden="true" />
               Achievements
             </div>
@@ -281,7 +281,7 @@ export default function AchievementArchive({ items }: { items: Achievement[] }) 
           ref={controlsRef}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="sticky top-[76px] z-30 -mx-6 mb-6 flex shrink-0 flex-col items-stretch justify-between gap-3 bg-background/90 px-6 py-2 backdrop-blur-md sm:top-20 sm:mb-8 sm:flex-row sm:items-center sm:py-3 lg:static lg:mx-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none"
+          className="sticky top-[4.75rem] z-30 -mx-6 mb-6 flex shrink-0 flex-col items-stretch justify-between gap-3 bg-background/90 px-6 py-2 backdrop-blur-md sm:top-20 sm:mb-8 sm:flex-row sm:items-center sm:py-3 lg:static lg:mx-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none"
         >
           <div className="hidden flex-wrap gap-2 sm:flex">
             {[
@@ -339,7 +339,7 @@ export default function AchievementArchive({ items }: { items: Achievement[] }) 
                 setQuery('')
                 setFilter('all')
               }}
-              className="rounded-xl bg-foreground px-6 py-2.5 text-[10px] font-black uppercase tracking-widest text-background transition-all hover:scale-105 active:scale-95"
+              className="rounded-xl bg-foreground px-6 py-2.5 text-[0.625rem] font-black uppercase tracking-widest text-background transition-all hover:scale-105 active:scale-95"
             >
               $ reset --query
             </button>

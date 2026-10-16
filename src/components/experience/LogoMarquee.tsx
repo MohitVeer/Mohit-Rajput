@@ -85,7 +85,7 @@ function Track({ speed, children }: { speed: number; children: ReactNode }) {
 
 function Tile({ logo }: { logo: Logo }) {
   return (
-    <div className="group relative flex h-[clamp(80px,15vw,120px)] w-[clamp(140px,30vw,200px)] shrink-0 cursor-default items-center justify-center rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 transition-transform duration-300 hover:scale-105 md:h-[160px] md:w-[280px] md:p-8">
+    <div className="group relative flex h-[clamp(5rem,15vw,7.5rem)] w-[clamp(8.75rem,30vw,12.5rem)] shrink-0 cursor-default items-center justify-center rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 transition-transform duration-300 hover:scale-105 md:h-[10rem] md:w-[17.5rem] md:p-8">
       <img
         src={logo.src}
         alt=""

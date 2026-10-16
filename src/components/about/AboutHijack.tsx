@@ -54,7 +54,7 @@ function PinnedAbout() {
                   maskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)',
                   WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)',
                 }}
-                className="pointer-events-none absolute left-0 right-0 top-0 z-[100] h-48 rounded-t-[50px] border-x-2 border-t-2 border-neutral-200 dark:border-zinc-800 md:rounded-t-[80px]"
+                className="pointer-events-none absolute left-0 right-0 top-0 z-[100] h-48 rounded-t-[3.125rem] border-x-2 border-t-2 border-neutral-200 dark:border-zinc-800 md:rounded-t-[5rem]"
               />
             )}
           </AnimatePresence>

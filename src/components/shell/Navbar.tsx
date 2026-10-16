@@ -66,7 +66,7 @@ const Navbar = forwardRef<HTMLButtonElement, NavbarProps>(function Navbar({ menu
       transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
       className="fixed inset-x-0 top-0 z-40"
     >
-      <div className="mx-auto max-w-[1600px] px-4 py-3 md:px-12 md:py-6 lg:px-24">
+      <div className="mx-auto max-w-[100rem] px-4 py-3 md:px-12 md:py-6 lg:px-24">
         <motion.div
           layout
           className={cn(
@@ -74,7 +74,7 @@ const Navbar = forwardRef<HTMLButtonElement, NavbarProps>(function Navbar({ menu
             scrolled ? 'glass-strong px-4 py-2 md:px-6 md:py-3' : 'py-2',
           )}
         >
-          <Link to="/" className="group relative flex min-h-11 min-w-[120px] items-center">
+          <Link to="/" className="group relative flex min-h-11 min-w-[7.5rem] items-center">
             <span className="sr-only">Mohit Rajput — home</span>
             <Clock />
           </Link>

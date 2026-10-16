@@ -24,7 +24,7 @@ function FloatingField({ id, name, label, type = 'text', autoComplete, multiline
   return (
     <div className="group relative z-0 mb-10 w-full">
       {multiline ? (
-        <textarea id={id} name={name} required rows={1} placeholder=" " className={cn(FIELD, 'max-h-[200px] min-h-[50px] resize-y')} />
+        <textarea id={id} name={name} required rows={1} placeholder=" " className={cn(FIELD, 'max-h-[12.5rem] min-h-[3.125rem] resize-y')} />
       ) : (
         <input id={id} name={name} type={type} required autoComplete={autoComplete} placeholder=" " className={FIELD} />
       )}

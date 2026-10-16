@@ -18,7 +18,7 @@ export default function ArticleCover({ title, index, large = false, className }:
       {large ? (
         <span aria-hidden="true" className="h-4" />
       ) : (
-        <span className="relative font-mono text-[10px] font-bold uppercase tracking-[0.3em] opacity-70">{String(index + 1).padStart(2, '0')}</span>
+        <span className="relative font-mono text-[0.625rem] font-bold uppercase tracking-[0.3em] opacity-70">{String(index + 1).padStart(2, '0')}</span>
       )}
       <span className={cn('relative font-black leading-[1.08] tracking-tight', large ? 'text-3xl md:text-5xl' : 'text-xl')}>{title}</span>
       {large ? <span aria-hidden="true" className="h-5" /> : <LinkedInMark className="relative h-5 w-5 opacity-70" />}

@@ -21,15 +21,15 @@ function Counter({ value, label }: { value: string; label: string }) {
       <dd ref={ref as React.RefObject<HTMLElement>} className="whitespace-nowrap text-4xl font-black tabular-nums tracking-tighter text-foreground md:text-6xl">
         {display}
       </dd>
-      <dt className="mt-2 text-[11px] font-bold uppercase tracking-[0.25em] text-muted-foreground">{label}</dt>
+      <dt className="mt-2 text-[0.6875rem] font-bold uppercase tracking-[0.25em] text-muted-foreground">{label}</dt>
     </div>
   )
 }
 
 function Card({ children, label }: { children: React.ReactNode; label: string }) {
   return (
-    <div className="mx-auto flex w-[min(92vw,1200px)] flex-col overflow-hidden rounded-[2rem] border border-neutral-200 bg-white p-8 shadow-2xl dark:border-neutral-800 dark:bg-zinc-950 md:p-14">
-      <p className="mb-8 font-mono text-[11px] font-bold uppercase tracking-[0.4em] text-muted-foreground">{label}</p>
+    <div className="mx-auto flex w-[min(92vw,75rem)] flex-col overflow-hidden rounded-[2rem] border border-neutral-200 bg-white p-8 shadow-2xl dark:border-neutral-800 dark:bg-zinc-950 md:p-14">
+      <p className="mb-8 font-mono text-[0.6875rem] font-bold uppercase tracking-[0.4em] text-muted-foreground">{label}</p>
       <div className="flex flex-1 flex-col justify-center">{children}</div>
     </div>
   )

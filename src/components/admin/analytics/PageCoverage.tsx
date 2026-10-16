@@ -35,7 +35,7 @@ export default function PageCoverage({ inventory, pages }: { inventory: string[]
       title="Every page on the site"
       action={<ExportMenu onCsv={() => exportAsCsv('page-coverage.csv', rows)} onJson={() => exportAsJson('page-coverage.json', rows)} />}
     >
-      <p className="mb-3 text-[11px] text-muted-foreground">
+      <p className="mb-3 text-[0.6875rem] text-muted-foreground">
         {visited} of {total} pages in the sitemap were visited in this period. Pages nobody opened show 0, and any other path that was tracked is listed as not in the sitemap.
       </p>
       <div className="overflow-x-auto">

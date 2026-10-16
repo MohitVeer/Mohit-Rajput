@@ -136,7 +136,7 @@ export default function Hero() {
               initial={SIDE_LEFT_HIDDEN}
               animate={revealed ? SIDE_SHOWN : SIDE_LEFT_HIDDEN}
               transition={{ duration: reduce ? 0 : 0.8, delay: reduce ? 0 : 0.2 }}
-              className="mb-5 block max-w-[220px] px-4 text-start text-[10px] font-medium uppercase leading-relaxed tracking-[0.2em] text-muted-foreground md:mb-0 md:max-w-[220px] md:px-0 md:text-right md:text-xs"
+              className="mb-5 block max-w-[13.75rem] px-4 text-start text-[0.625rem] font-medium uppercase leading-relaxed tracking-[0.2em] text-muted-foreground md:mb-0 md:max-w-[13.75rem] md:px-0 md:text-right md:text-xs"
             >
               Hi, I&apos;m {profile.name}, a front-end developer with Salesforce expertise.
             </motion.span>
@@ -223,7 +223,7 @@ export default function Hero() {
               initial={SIDE_RIGHT_HIDDEN}
               animate={revealed ? SIDE_SHOWN : SIDE_RIGHT_HIDDEN}
               transition={{ duration: reduce ? 0 : 0.8, delay: reduce ? 0 : 0.4 }}
-              className="block max-w-[250px] px-4 pt-4 text-[10px] font-medium uppercase leading-relaxed tracking-widest text-muted-foreground md:max-w-[200px] md:px-0 md:pt-8 md:text-xs"
+              className="block max-w-[15.625rem] px-4 pt-4 text-[0.625rem] font-medium uppercase leading-relaxed tracking-widest text-muted-foreground md:max-w-[12.5rem] md:px-0 md:pt-8 md:text-xs"
             >
               Available to hire worldwide · Remote · Hybrid · Onsite
             </motion.span>
@@ -272,12 +272,12 @@ export default function Hero() {
         <div className="mx-auto mt-12 w-full max-w-[105rem] px-8 md:mt-24 md:px-20">
           <div className="flex items-center gap-6">
             <div className="hidden h-px flex-1 bg-foreground/10 md:block" aria-hidden="true" />
-            <p className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground sm:tracking-[0.3em] md:text-xs">
+            <p className="whitespace-nowrap text-[0.625rem] font-bold uppercase tracking-[0.2em] text-muted-foreground sm:tracking-[0.3em] md:text-xs">
               Remote · Worldwide — {year}
             </p>
             <Link to="/resume" aria-label="View resume" className="group flex items-center">
               <span className="relative flex h-12 w-12 items-center overflow-hidden rounded-full bg-zinc-100 shadow-xl transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:w-44 group-focus-visible:w-44 dark:bg-white">
-                <span className="whitespace-nowrap pl-6 pr-12 text-[10px] font-black uppercase tracking-widest text-zinc-900 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:delay-150 group-focus-visible:opacity-100 dark:text-black">
+                <span className="whitespace-nowrap pl-6 pr-12 text-[0.625rem] font-black uppercase tracking-widest text-zinc-900 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:delay-150 group-focus-visible:opacity-100 dark:text-black">
                   View Resume
                 </span>
                 <span className="absolute right-0 flex size-12 items-center justify-center text-zinc-900 transition-transform duration-500 group-hover:rotate-45 dark:text-black">
@@ -303,7 +303,7 @@ export default function Hero() {
           aria-controls="profile-drawer"
           onFocus={() => setDrawerOpen(true)}
           onClick={() => setDrawerOpen((v) => !v)}
-          className="relative z-50 cursor-pointer rounded-r-3xl border-y border-r border-zinc-200 bg-white px-4 py-10 text-[10px] font-black uppercase tracking-[0.5em] text-black shadow-2xl transition-transform duration-300 hover:translate-x-2.5"
+          className="relative z-50 cursor-pointer rounded-r-3xl border-y border-r border-zinc-200 bg-white px-4 py-10 text-[0.625rem] font-black uppercase tracking-[0.5em] text-black shadow-2xl transition-transform duration-300 hover:translate-x-2.5"
         >
           <span className="[writing-mode:vertical-rl]">AVAILABLE FOR OPPORTUNITY</span>
         </button>
@@ -318,10 +318,10 @@ export default function Hero() {
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
               className="pointer-events-auto w-max pl-4"
             >
-              <div className="flex w-[560px] origin-left scale-[0.8] items-stretch overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:border-white/5 dark:bg-[#161616] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              <div className="flex w-[35rem] origin-left scale-[0.8] items-stretch overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:border-white/5 dark:bg-[#161616] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <div className="flex w-44 shrink-0 flex-col items-center justify-center gap-3 bg-zinc-100 p-6 dark:bg-zinc-900">
                   <img src={trailhead.rankImage} alt="" width={112} height={112} decoding="async" className="h-28 w-28 object-contain" />
-                  <p className="text-center text-[10px] font-bold uppercase tracking-widest text-zinc-500">{trailhead.rank}</p>
+                  <p className="text-center text-[0.625rem] font-bold uppercase tracking-widest text-zinc-500">{trailhead.rank}</p>
                 </div>
                 <div className="flex flex-1 flex-col justify-center p-8">
                   <h2 className="mb-1 text-2xl font-bold tracking-tight text-black dark:text-white">{profile.name}</h2>

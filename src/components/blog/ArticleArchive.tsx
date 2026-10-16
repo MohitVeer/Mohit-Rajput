@@ -46,10 +46,10 @@ export default function ArticleArchive({ articles }: { articles: ArticleItem[] }
   const tabs = ['all', ...topics]
 
   return (
-    <section id="all" aria-labelledby="all-articles-heading" className="relative mx-auto max-w-[1400px] scroll-mt-24 px-6 pb-16 md:px-12 md:pb-24">
+    <section id="all" aria-labelledby="all-articles-heading" className="relative mx-auto max-w-[87.5rem] scroll-mt-24 px-6 pb-16 md:px-12 md:pb-24">
       <div className="flex flex-col gap-6 border-b border-border pb-6 md:flex-row md:items-end md:justify-between">
         <div>
-          <h2 id="all-articles-heading" className="font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-foreground">
+          <h2 id="all-articles-heading" className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.3em] text-foreground">
             All publications <span className="ml-2 rounded bg-muted px-2 py-0.5 text-muted-foreground">{articles.length}</span>
           </h2>
         </div>
@@ -94,7 +94,7 @@ export default function ArticleArchive({ articles }: { articles: ArticleItem[] }
               aria-pressed={topic === tab}
               onClick={() => setTopic(tab)}
               className={cn(
-                'rounded-lg border px-3.5 py-2 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors',
+                'rounded-lg border px-3.5 py-2 font-mono text-[0.625rem] font-bold uppercase tracking-widest transition-colors',
                 topic === tab ? 'border-foreground bg-foreground text-background' : 'border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground',
               )}
             >
@@ -131,7 +131,7 @@ export default function ArticleArchive({ articles }: { articles: ArticleItem[] }
                   <span className="block text-lg font-bold tracking-tight text-foreground">{article.title}</span>
                   <span className="mt-1 block text-sm text-muted-foreground">{article.summary}</span>
                 </span>
-                <span className="flex shrink-0 items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground group-hover:text-foreground">
+                <span className="flex shrink-0 items-center gap-2 font-mono text-[0.625rem] uppercase tracking-widest text-muted-foreground group-hover:text-foreground">
                   <span className="hidden sm:inline">
                     {article.published_on}
                     {article.read_time ? ` · ${article.read_time}` : ''}

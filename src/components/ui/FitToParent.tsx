@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+import { rootScale } from '../../lib/scale'
 
 interface FitToParentProps {
   children: ReactNode
@@ -48,7 +49,7 @@ export function FitToViewport({ children, margin = 24, minScale = 0.6 }: FitToVi
     const node = ref.current
     if (!node) return
     const measure = () => {
-      const available = window.innerHeight - margin
+      const available = window.innerHeight - margin * rootScale()
       const needed = node.offsetHeight
       setScale(needed > available ? Math.max(minScale, available / needed) : 1)
     }

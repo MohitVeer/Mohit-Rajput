@@ -30,7 +30,7 @@ export default function Articles() {
 
   return (
     <Section id="articles" index="08" label="Articles" className="relative bg-background px-6 py-16 md:px-12 md:py-24">
-      <div className="mx-auto max-w-[1600px]">
+      <div className="mx-auto max-w-[100rem]">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -70,7 +70,7 @@ export default function Articles() {
           </div>
         </div>
 
-        <div className="relative mx-auto flex min-h-[480px] items-start justify-center gap-8 px-2 pb-12 pt-14 md:gap-24" aria-live="polite">
+        <div className="relative mx-auto flex min-h-[30rem] items-start justify-center gap-8 px-2 pb-12 pt-14 md:gap-24" aria-live="polite">
           <AnimatePresence mode="popLayout" initial={false}>
             {visible.map(({ article, slot }, position) => {
               const color = COVERS[slot % COVERS.length]
@@ -83,7 +83,7 @@ export default function Articles() {
                   animate={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
                   exit={{ opacity: 0, x: direction * -50, scale: 0.9, filter: 'blur(10px)' }}
                   transition={{ type: 'spring', stiffness: 260, damping: 26, filter: { duration: 0.4, ease: [0.4, 0.6, 0.2, 1] } }}
-                  className="relative w-[180px] flex-shrink-0 md:w-[260px]"
+                  className="relative w-[11.25rem] flex-shrink-0 md:w-[16.25rem]"
                 >
                   <Link to={`/blog/${article.slug}`} state={{ from: 'blog' }} className="group/book relative z-10 block">
                     <span
@@ -94,11 +94,11 @@ export default function Articles() {
                     <Book title={article.title} color={color} textColor={textColor} variant={position % 2 === 0 ? 'stripe' : 'simple'} width={BOOK_WIDTH} />
                     <span className="mt-8 block space-y-3 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover/book:translate-y-0 md:group-hover/book:opacity-100 md:group-focus-visible/book:translate-y-0 md:group-focus-visible/book:opacity-100">
                       <span className="flex items-center gap-2">
-                        <span className="rounded border border-border/50 bg-muted/20 px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.2em] text-foreground/60">
+                        <span className="rounded border border-border/50 bg-muted/20 px-2 py-0.5 text-[0.625rem] font-black uppercase tracking-[0.2em] text-foreground/60">
                           {article.published_on}
                         </span>
                         {article.read_time && (
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{article.read_time}</span>
+                          <span className="text-[0.625rem] font-bold uppercase tracking-widest text-muted-foreground">{article.read_time}</span>
                         )}
                       </span>
                       <span className="block text-sm font-medium leading-relaxed text-muted-foreground">{article.summary}</span>

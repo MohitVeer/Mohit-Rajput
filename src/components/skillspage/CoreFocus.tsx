@@ -27,12 +27,12 @@ export default function CoreFocus({ groups }: { groups: SkillGroupRow[] }) {
 
   return (
     <section aria-labelledby="focus-heading" className="relative px-6 py-16 md:px-12 md:py-20 lg:px-24">
-      <div className="mx-auto max-w-[1400px]">
+      <div className="mx-auto max-w-[87.5rem]">
         <div className="text-center">
           <h2 id="focus-heading" className="text-4xl font-black tracking-tight md:text-6xl">
             Core Focus
           </h2>
-          <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.4em] text-muted-foreground">Capabilities &amp; architectures</p>
+          <p className="mt-3 font-mono text-[0.625rem] uppercase tracking-[0.4em] text-muted-foreground">Capabilities &amp; architectures</p>
         </div>
 
         <div role="tablist" aria-label="Skill categories" className="mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-1 rounded-2xl border border-border bg-card/50 p-1.5 backdrop-blur md:flex md:flex-nowrap">
@@ -57,7 +57,7 @@ export default function CoreFocus({ groups }: { groups: SkillGroupRow[] }) {
             >
               {groupIcons[group.title] && <img src={groupIcons[group.title]} alt="" width={16} height={16} className="h-4 w-4 rounded-sm bg-white object-contain p-px" />}
               <span>{group.title}</span>
-              <span className={cn('font-mono text-[10px]', active === i ? 'text-background/60' : 'text-muted-foreground')}>{group.skills.length}</span>
+              <span className={cn('font-mono text-[0.625rem]', active === i ? 'text-background/60' : 'text-muted-foreground')}>{group.skills.length}</span>
             </button>
           ))}
         </div>

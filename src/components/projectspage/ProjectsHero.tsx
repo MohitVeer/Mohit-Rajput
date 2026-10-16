@@ -16,8 +16,8 @@ function Tile({ item, index }: { item: ProjectItem; index: number }) {
       className="mx-3 flex h-44 w-64 flex-col justify-between gap-3 whitespace-normal rounded-2xl border border-border p-5 shadow-xl backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.03] md:h-52 md:w-72"
       style={{ background: `linear-gradient(135deg, ${color}2e, transparent 70%)` }}
     >
-      <span className="flex items-start gap-2 font-mono text-[10px] uppercase leading-snug tracking-widest text-muted-foreground">
-        <span className="mt-[3px] h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: color }} />
+      <span className="flex items-start gap-2 font-mono text-[0.625rem] uppercase leading-snug tracking-widest text-muted-foreground">
+        <span className="mt-[0.1875rem] h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: color }} />
         <span className="min-w-0 break-words">{item.sector ?? 'Project'}</span>
       </span>
       <span className="min-w-0 break-words text-xl font-bold leading-tight text-foreground [text-wrap:balance] md:text-2xl">{item.title}</span>

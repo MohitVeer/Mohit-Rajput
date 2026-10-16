@@ -15,7 +15,7 @@ export default function Certifications() {
 
   return (
     <Section id="certs" index="05" label="Certifications" className="relative w-full overflow-hidden bg-background pb-16 md:pb-24">
-      <div className="container relative z-10 mx-auto mb-12 max-w-[1750px] px-4 pt-16 md:mb-16 md:px-12 md:pt-24 lg:px-24">
+      <div className="container relative z-10 mx-auto mb-12 max-w-[109.375rem] px-4 pt-16 md:mb-16 md:px-12 md:pt-24 lg:px-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -44,8 +44,8 @@ export default function Certifications() {
 
       {certificates.length > 0 && <CertGallery images={certificates} />}
 
-      <div aria-hidden="true" className="pointer-events-none absolute left-1/4 top-[20%] -z-10 h-[500px] w-[500px] rounded-full bg-primary/5 blur-[120px]" />
-      <div aria-hidden="true" className="pointer-events-none absolute bottom-[10%] right-1/4 -z-10 h-[400px] w-[400px] rounded-full bg-primary/5 blur-[100px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute left-1/4 top-[20%] -z-10 h-[31.25rem] w-[31.25rem] rounded-full bg-primary/5 blur-[120px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-[10%] right-1/4 -z-10 h-[25rem] w-[25rem] rounded-full bg-primary/5 blur-[100px]" />
     </Section>
   )
 }

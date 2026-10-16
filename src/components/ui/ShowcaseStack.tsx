@@ -1,11 +1,13 @@
 import { Children, useCallback, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'framer-motion'
+import { rootScale } from '../../lib/scale'
 
 interface StackMetrics {
   fits: boolean
   tallest: number
   topOffset: number
   step: number
+  gap: number
 }
 
 interface StackCardProps {
@@ -25,13 +27,13 @@ const BOTTOM_GAP = 24
 const HEIGHT_NOISE = 150
 
 function StackCard({ children, index, total, progress, metrics, register }: StackCardProps) {
-  const { fits, tallest, topOffset, step } = metrics
+  const { fits, tallest, topOffset, step, gap } = metrics
   const targetScale = 1 - (total - index - 1) * 0.04
   const scale = useTransform(progress, [index / total, 1], [1, targetScale])
   const isLast = index === total - 1
   const top = fits
     ? topOffset + index * step
-    : `calc(100svh - ${tallest}px - ${BOTTOM_GAP + (total - 1 - index) * step}px)`
+    : `calc(100svh - ${tallest}px - ${gap + (total - 1 - index) * step}px)`
 
   return (
     <div className="sticky" style={{ top, zIndex: index + 1, marginBottom: isLast ? 0 : 'clamp(2rem, 9vh, 5rem)' }}>
@@ -46,7 +48,7 @@ export default function ShowcaseStack({ children }: { children: ReactNode }) {
   const container = useRef<HTMLDivElement>(null)
   const nodes = useRef<(HTMLDivElement | null)[]>([])
   const reduce = useReducedMotion()
-  const [metrics, setMetrics] = useState<StackMetrics>({ fits: true, tallest: 0, topOffset: WIDE_TOP_OFFSET, step: WIDE_STEP })
+  const [metrics, setMetrics] = useState<StackMetrics>({ fits: true, tallest: 0, topOffset: WIDE_TOP_OFFSET, step: WIDE_STEP, gap: BOTTOM_GAP })
   const cards = Children.toArray(children)
   const count = cards.length
   const { scrollYProgress } = useScroll({ target: container, offset: ['start start', 'end end'] })
@@ -67,13 +69,15 @@ export default function ShowcaseStack({ children }: { children: ReactNode }) {
       const tallest = Math.max(...list.map((node) => node.offsetHeight))
       for (const node of list) node.style.minHeight = `${tallest}px`
       const narrow = window.innerWidth < 768
-      const topOffset = narrow ? NARROW_TOP_OFFSET : WIDE_TOP_OFFSET
-      const step = narrow ? NARROW_STEP : WIDE_STEP
-      const fits = tallest + topOffset + (count - 1) * step + BOTTOM_GAP <= window.innerHeight
+      const scale = rootScale()
+      const topOffset = (narrow ? NARROW_TOP_OFFSET : WIDE_TOP_OFFSET) * scale
+      const step = (narrow ? NARROW_STEP : WIDE_STEP) * scale
+      const gap = BOTTOM_GAP * scale
+      const fits = tallest + topOffset + (count - 1) * step + gap <= window.innerHeight
       setMetrics((previous) =>
-        previous.fits === fits && previous.tallest === tallest && previous.topOffset === topOffset && previous.step === step
+        previous.fits === fits && previous.tallest === tallest && previous.topOffset === topOffset && previous.step === step && previous.gap === gap
           ? previous
-          : { fits, tallest, topOffset, step },
+          : { fits, tallest, topOffset, step, gap },
       )
     }
 

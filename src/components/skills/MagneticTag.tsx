@@ -32,7 +32,7 @@ export default function MagneticTag({ text, index }: { text: string; index: numb
     <li className="pointer-events-auto relative -m-2 cursor-default p-2" onMouseMove={onMove} onMouseLeave={onLeave}>
       <motion.span
         style={{ x: springX, y: springY }}
-        className="group/badge relative block overflow-hidden rounded-xl border border-foreground/10 bg-foreground/[0.02] px-6 py-3 text-[10px] font-extrabold uppercase tracking-widest text-black backdrop-blur-xl transition-colors duration-300 hover:border-transparent dark:text-white md:px-8 md:py-4 md:text-[11px]"
+        className="group/badge relative block overflow-hidden rounded-xl border border-foreground/10 bg-foreground/[0.02] px-6 py-3 text-[0.625rem] font-extrabold uppercase tracking-widest text-black backdrop-blur-xl transition-colors duration-300 hover:border-transparent dark:text-white md:px-8 md:py-4 md:text-[0.6875rem]"
       >
         <span aria-hidden="true" className={cn('absolute inset-0 z-0 translate-y-[101%] transition-transform duration-300 ease-out group-hover/badge:translate-y-0', color.main)} />
         <span className={cn('relative z-10 transition-colors duration-300', color.hover)}>{text}</span>

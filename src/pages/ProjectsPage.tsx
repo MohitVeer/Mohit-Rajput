@@ -19,7 +19,7 @@ export default function ProjectsPage() {
       <ProjectImpact items={items} />
       <ProjectsArchive items={items} />
 
-      <section id="open-source" aria-labelledby="open-source-heading" className="relative mx-auto max-w-[1500px] scroll-mt-24 px-6 pb-16 md:px-12 md:pb-24">
+      <section id="open-source" aria-labelledby="open-source-heading" className="relative mx-auto max-w-[93.75rem] scroll-mt-24 px-6 pb-16 md:px-12 md:pb-24">
         <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.35em] text-[#15803d] dark:text-[#22c55e]">
           <GitHubMark className="h-6 w-6" />
           GitHub ecosystem

@@ -36,7 +36,7 @@ const CARD =
 
 function SocialCard({ link, decorative = false, fluid = false }: { link: SocialLink; decorative?: boolean; fluid?: boolean }) {
   const Icon = link.icon
-  const className = cn(CARD, fluid ? 'min-h-[140px] w-full' : 'h-[140px] w-[280px] shrink-0')
+  const className = cn(CARD, fluid ? 'min-h-[8.75rem] w-full' : 'h-[8.75rem] w-[17.5rem] shrink-0')
   const body = (
     <>
       <div aria-hidden="true" className="absolute -right-6 -top-6 p-6 opacity-[0.03] transition-all duration-700 group-hover:scale-125 group-hover:opacity-10">
@@ -52,7 +52,7 @@ function SocialCard({ link, decorative = false, fluid = false }: { link: SocialL
         </div>
       </div>
       <div className="relative z-10 mt-auto flex items-center justify-between border-t border-border pt-4">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground transition-colors group-hover:text-foreground/70">Connect</span>
+        <span className="text-[0.625rem] font-bold uppercase tracking-wider text-muted-foreground transition-colors group-hover:text-foreground/70">Connect</span>
         <ExternalLink className="h-3 w-3 -translate-x-2 text-muted-foreground opacity-50 transition-all group-hover:translate-x-0 group-hover:text-primary group-hover:opacity-100" aria-hidden="true" />
       </div>
     </>

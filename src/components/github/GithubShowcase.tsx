@@ -16,7 +16,7 @@ function Metric({ value, label }: { value: number | null; label: string }) {
   const { ref, display } = useCountUp<HTMLElement>(text)
   return (
     <div className="flex flex-col-reverse">
-      <dt className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{label}</dt>
+      <dt className="mt-1 text-[0.625rem] font-bold uppercase tracking-[0.2em] text-muted-foreground">{label}</dt>
       <dd ref={ref as React.RefObject<HTMLElement>} className="text-3xl font-black tabular-nums tracking-tight text-[#15803d] dark:text-[#22c55e] md:text-4xl">
         {display}
       </dd>
@@ -37,7 +37,7 @@ export default function GithubShowcase() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-10%' }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="relative mx-auto max-w-[1600px] overflow-hidden rounded-[2.5rem] border border-border bg-card/70 p-8 shadow-card md:p-14"
+        className="relative mx-auto max-w-[100rem] overflow-hidden rounded-[2.5rem] border border-border bg-card/70 p-8 shadow-card md:p-14"
       >
         <div
           aria-hidden="true"
@@ -108,7 +108,7 @@ export default function GithubShowcase() {
       </motion.div>
 
       <FullscreenDialog open={open} onClose={() => setOpen(false)} label="GitHub activity">
-        <div className="mx-auto max-w-[1500px] px-4 pb-16 pt-24 md:px-10">
+        <div className="mx-auto max-w-[93.75rem] px-4 pb-16 pt-24 md:px-10">
           <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.35em] text-[#15803d] dark:text-[#22c55e]">
             <GitHubMark className="h-6 w-6" />
             GitHub ecosystem

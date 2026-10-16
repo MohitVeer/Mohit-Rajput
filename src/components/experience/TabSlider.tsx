@@ -35,7 +35,7 @@ export default function TabSlider({ tabs, active, onChange }: TabSliderProps) {
       <div className="relative h-28 sm:h-36">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-0 h-[400px] w-[400px] -translate-x-1/2 before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-gradient-to-b before:from-cyan-500/25 before:via-cyan-500/5 before:via-25% before:to-cyan-500/0 before:to-75% sm:h-[560px] sm:w-[560px]"
+          className="pointer-events-none absolute left-1/2 top-0 h-[25rem] w-[25rem] -translate-x-1/2 before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-gradient-to-b before:from-cyan-500/25 before:via-cyan-500/5 before:via-25% before:to-cyan-500/0 before:to-75% sm:h-[35rem] sm:w-[35rem]"
         >
           <div className="h-24 [mask-image:linear-gradient(0deg,transparent,white_20%,white)] sm:h-32">
             <AnimatePresence initial={false}>
@@ -54,7 +54,7 @@ export default function TabSlider({ tabs, active, onChange }: TabSliderProps) {
         </div>
       </div>
 
-      <div className="mb-6 min-h-[100px] sm:mb-9">
+      <div className="mb-6 min-h-[6.25rem] sm:mb-9">
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
             key={tabs[active].id}
@@ -92,7 +92,7 @@ export default function TabSlider({ tabs, active, onChange }: TabSliderProps) {
                 onClick={() => onChange(index)}
                 onKeyDown={onKeyDown}
                 className={cn(
-                  'group inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2.5 text-[13px] shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring focus-visible:ring-cyan-300 sm:m-1.5 sm:gap-2.5 sm:px-6 sm:py-3 sm:text-base',
+                  'group inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2.5 text-[0.8125rem] shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring focus-visible:ring-cyan-300 sm:m-1.5 sm:gap-2.5 sm:px-6 sm:py-3 sm:text-base',
                   selected
                     ? 'bg-cyan-700 text-white shadow-cyan-700/25'
                     : 'border border-transparent bg-white text-cyan-900 backdrop-blur-sm hover:bg-cyan-50 dark:border-white/5 dark:bg-neutral-800/80 dark:text-cyan-100 dark:hover:bg-neutral-700/80',

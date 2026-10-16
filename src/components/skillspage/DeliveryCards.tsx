@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ComponentType } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { CalendarCheck, ClipboardList, Handshake, History, ListChecks, Presentation, RefreshCw, Sparkles, Users, Workflow } from 'lucide-react'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { rootScale } from '../../lib/scale'
 
 type Icon = ComponentType<{ className?: string }>
 
@@ -25,15 +26,15 @@ function Card({ label, index, className }: { label: string; index: number; class
   const Icon = iconFor(label)
   return (
     <li
-      className={`group relative flex h-[46vh] min-h-[300px] w-[280px] shrink-0 flex-col justify-between rounded-sm border border-border bg-card/40 p-6 transition-colors hover:border-foreground/40 hover:bg-card md:w-[340px] ${className ?? ''}`}
+      className={`group relative flex h-[46vh] min-h-[18.75rem] w-[17.5rem] shrink-0 flex-col justify-between rounded-sm border border-border bg-card/40 p-6 transition-colors hover:border-foreground/40 hover:bg-card md:w-[21.25rem] ${className ?? ''}`}
     >
-      <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{label}</span>
+      <span className="font-mono text-[0.625rem] uppercase tracking-[0.3em] text-muted-foreground">{label}</span>
       <div>
         <div className="mb-6 flex items-center gap-3">
           <span className="grid h-9 w-9 place-items-center rounded-lg border border-border text-foreground">
             <Icon className="h-4 w-4" />
           </span>
-          <span className="font-mono text-[10px] text-muted-foreground">#{String(index + 1).padStart(2, '0')}</span>
+          <span className="font-mono text-[0.625rem] text-muted-foreground">#{String(index + 1).padStart(2, '0')}</span>
         </div>
         <h3 className="text-2xl font-black uppercase leading-tight tracking-tight text-foreground md:text-3xl">{label}</h3>
       </div>
@@ -52,7 +53,7 @@ export default function DeliveryCards({ title, items }: { title: string; items: 
   useEffect(() => {
     const track = trackRef.current
     if (!track || !pinned) return
-    const measure = () => setTravel(Math.max(0, track.scrollWidth - window.innerWidth + 96))
+    const measure = () => setTravel(Math.max(0, track.scrollWidth - window.innerWidth + 96 * rootScale()))
     measure()
     const observer = new ResizeObserver(measure)
     observer.observe(track)

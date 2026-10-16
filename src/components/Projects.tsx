@@ -12,7 +12,7 @@ import ShowcaseStack from './ui/ShowcaseStack'
 const CARD_TONES = TONES.slice(0, 4)
 
 const shell =
-  'mx-auto flex w-[min(92vw,1200px)] flex-col overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-2xl dark:border-neutral-800 dark:bg-zinc-950'
+  'mx-auto flex w-[min(92vw,75rem)] flex-col overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-2xl dark:border-neutral-800 dark:bg-zinc-950'
 
 const pill =
   'inline-flex h-11 items-center rounded-full px-5 text-xs font-bold uppercase tracking-widest transition-transform hover:scale-105 md:h-12 md:px-7'
@@ -38,7 +38,7 @@ function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagemen
           <span aria-hidden="true" className="relative hidden text-[clamp(2.2rem,4.6vw,4rem)] font-black leading-[0.95] tracking-tighter text-neutral-900 dark:text-white md:block">
             {engagement.employer}
           </span>
-          <span className="relative inline-flex w-fit items-center gap-2 rounded-full border border-neutral-300 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-700 dark:border-neutral-700 dark:text-neutral-300">
+          <span className="relative inline-flex w-fit items-center gap-2 rounded-full border border-neutral-300 px-3 py-1.5 font-mono text-[0.625rem] font-bold uppercase tracking-widest text-neutral-700 dark:border-neutral-700 dark:text-neutral-300">
             {engagement.current && <span aria-hidden="true" className="h-2 w-2 rounded-full bg-emerald-500" />}
             {engagement.period}
           </span>
@@ -46,7 +46,7 @@ function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagemen
 
         <div className="flex flex-col justify-between gap-5 p-5 md:justify-start md:gap-8 md:p-12">
           <div>
-            <p className="font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">
+            <p className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">
               {engagement.employer} · {engagement.role}
             </p>
             <h3 className="mt-2 text-xl font-black leading-tight tracking-tight text-neutral-900 dark:text-white sm:text-2xl md:mt-3 md:text-4xl">{engagement.title}</h3>
@@ -64,7 +64,7 @@ function EngagementCard({ engagement, index, total, slug, hrefFor }: { engagemen
           </div>
 
           <div>
-            <p className="mb-2 flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400 md:mb-3">
+            <p className="mb-2 flex items-center gap-2 font-mono text-[0.625rem] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400 md:mb-3">
               <Building2 className="h-3.5 w-3.5" aria-hidden="true" />
               {engagement.clients.length > 1 ? 'Clients' : 'Client'}
             </p>
@@ -117,7 +117,7 @@ function CaseStudyCard({ item, index, total }: { item: ProjectItem; index: numbe
   return (
     <article aria-label={item.title} className={shell}>
       <div className="grid flex-1 md:grid-cols-[1fr_1.2fr]">
-        <div className="relative flex min-h-[200px] flex-col justify-between gap-4 overflow-hidden bg-gradient-to-br from-sky-500/20 to-transparent p-6 md:p-12">
+        <div className="relative flex min-h-[12.5rem] flex-col justify-between gap-4 overflow-hidden bg-gradient-to-br from-sky-500/20 to-transparent p-6 md:p-12">
           <span className="font-mono text-xs font-bold tracking-widest text-neutral-500 dark:text-neutral-400">
             {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
           </span>

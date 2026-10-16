@@ -6,6 +6,7 @@ import type { ExperienceRow } from '../../lib/contentApi'
 import { clientsForJob, jobSlug } from '../../lib/experienceUtils'
 import { splitAward } from '../../lib/achievements'
 import { cn } from '../../lib/cn'
+import { rootScale } from '../../lib/scale'
 import { useExperience } from '../../hooks/useExperience'
 import { useProjects, type ProjectItem } from '../../hooks/useProjects'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
@@ -21,7 +22,7 @@ function JobCard({ job, projects, className }: { job: ExperienceRow; projects: P
   return (
     <div
       className={cn(
-        'flex w-[320px] flex-col gap-3 rounded-2xl border border-neutral-200 bg-white/85 p-6 shadow-xl backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/85 md:w-[400px]',
+        'flex w-[20rem] flex-col gap-3 rounded-2xl border border-neutral-200 bg-white/85 p-6 shadow-xl backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/85 md:w-[25rem]',
         className,
       )}
     >
@@ -30,7 +31,7 @@ function JobCard({ job, projects, className }: { job: ExperienceRow; projects: P
         <div className="min-w-0">
           <h3 className="text-lg font-bold leading-tight text-neutral-900 dark:text-white">{job.company}</h3>
           <p className="mt-1 text-sm font-medium text-neutral-700 dark:text-neutral-300">{job.role}</p>
-          <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
+          <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.6875rem] uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
             <span>{job.period}</span>
             <span className="inline-flex items-center gap-1">
               <MapPin className="h-3 w-3" aria-hidden="true" />
@@ -47,19 +48,19 @@ function JobCard({ job, projects, className }: { job: ExperienceRow; projects: P
           {awards.map((award) => (
             <li
               key={award}
-              className="inline-flex max-w-full items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[11px] font-medium text-amber-700 dark:text-amber-400"
+              className="inline-flex max-w-full items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[0.6875rem] font-medium text-amber-700 dark:text-amber-400"
             >
               <Award className="h-3 w-3 shrink-0" aria-hidden="true" />
               <span>{splitAward(award).title}</span>
             </li>
           ))}
           {clients.map((client) => (
-            <li key={client} className="rounded-full border border-neutral-200 px-2.5 py-1 text-[11px] font-medium text-neutral-700 dark:border-neutral-800 dark:text-neutral-300">
+            <li key={client} className="rounded-full border border-neutral-200 px-2.5 py-1 text-[0.6875rem] font-medium text-neutral-700 dark:border-neutral-800 dark:text-neutral-300">
               {client}
             </li>
           ))}
           {moreClients > 0 && (
-            <li className="rounded-full border border-neutral-200 px-2.5 py-1 text-[11px] font-medium text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
+            <li className="rounded-full border border-neutral-200 px-2.5 py-1 text-[0.6875rem] font-medium text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
               +{moreClients} more
             </li>
           )}
@@ -86,7 +87,7 @@ function FitCard({ children, above }: { children: React.ReactNode; above: boolea
     const node = ref.current
     if (!node) return
     const measure = () => {
-      const available = window.innerHeight / 2 - 36
+      const available = window.innerHeight / 2 - 36 * rootScale()
       const height = node.offsetHeight
       setScale(height > available ? Math.max(0.5, available / height) : 1)
     }
@@ -139,12 +140,12 @@ function ScreenReaderList({ jobs }: { jobs: ExperienceRow[] }) {
 
 function StackedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: ProjectItem[] }) {
   return (
-    <div className="mx-auto max-w-[1600px] px-5 py-12 md:px-12 md:py-20 lg:px-24">
+    <div className="mx-auto max-w-[100rem] px-5 py-12 md:px-12 md:py-20 lg:px-24">
       <Heading />
       <ol className="relative mt-10 space-y-5 border-l border-neutral-200 pl-5 dark:border-neutral-800 md:mt-12 md:space-y-8 md:pl-6">
         {jobs.map((job) => (
           <li key={job.id} className="relative">
-            <span aria-hidden="true" className="absolute -left-[26px] top-6 h-3 w-3 rounded-full border border-neutral-400 bg-background dark:border-neutral-600 md:-left-[31px]" />
+            <span aria-hidden="true" className="absolute -left-[1.625rem] top-6 h-3 w-3 rounded-full border border-neutral-400 bg-background dark:border-neutral-600 md:-left-[1.9375rem]" />
             <JobCard job={job} projects={projects} className="w-full" />
           </li>
         ))}
@@ -194,7 +195,7 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
     }
   }, [entries.length])
 
-  const travel = Math.max(0, dims.track - dims.view + 200)
+  const travel = Math.max(0, dims.track - dims.view + 200 * rootScale())
   const x = useTransform(scrollYProgress, [0, 1], [0, -travel])
   const lastLeft = lefts[lefts.length - 1]
   const lineEnd = useTransform(scrollYProgress, (progress) => {
@@ -227,12 +228,12 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
           <motion.div
             aria-hidden="true"
             style={{ width: lineEnd }}
-            className="absolute left-0 top-1/2 h-[2px] -translate-y-1/2 bg-[linear-gradient(to_right,transparent,var(--tw-gradient-stops))] from-neutral-200 via-neutral-200 to-neutral-200 [mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_100%)] dark:from-neutral-700 dark:via-neutral-700 dark:to-neutral-700"
+            className="absolute left-0 top-1/2 h-[0.125rem] -translate-y-1/2 bg-[linear-gradient(to_right,transparent,var(--tw-gradient-stops))] from-neutral-200 via-neutral-200 to-neutral-200 [mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_100%)] dark:from-neutral-700 dark:via-neutral-700 dark:to-neutral-700"
           />
           <motion.div
             aria-hidden="true"
             style={{ width: progressWidth, opacity: lineOpacity }}
-            className="absolute left-0 top-1/2 z-10 h-[2px] -translate-y-1/2 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-blue-500"
+            className="absolute left-0 top-1/2 z-10 h-[0.125rem] -translate-y-1/2 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-blue-500"
           />
 
           <motion.div
@@ -249,7 +250,7 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
                   ref={(el) => {
                     itemRefs.current[index] = el
                   }}
-                  className="relative h-0 w-[320px] shrink-0 md:w-[420px]"
+                  className="relative h-0 w-[20rem] shrink-0 md:w-[26.25rem]"
                 >
                   <div
                     aria-hidden="true"
@@ -268,7 +269,7 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
 
                   {entry.kind !== 'end' ? (
                     <>
-                      <div className={cn('absolute left-8 z-20 w-[280px] transition-all duration-500 md:w-[350px]', above ? 'top-4' : 'bottom-4')}>
+                      <div className={cn('absolute left-8 z-20 w-[17.5rem] transition-all duration-500 md:w-[21.875rem]', above ? 'top-4' : 'bottom-4')}>
                         <div className={cn('transition-all duration-500', isActive && 'translate-x-2 opacity-0')}>
                           <h3 className="text-xl font-bold tracking-tight text-neutral-800 dark:text-neutral-300 md:text-2xl">{entry.job.role}</h3>
                           <p className="mt-1 text-sm font-medium text-neutral-500 dark:text-neutral-400">{entry.job.company}</p>
@@ -282,7 +283,7 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
                           isActive ? 'opacity-100' : 'opacity-0',
                         )}
                       >
-                        <span className="inline-block rounded-md border border-neutral-200 bg-neutral-100 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-neutral-600 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 md:text-xs">
+                        <span className="inline-block rounded-md border border-neutral-200 bg-neutral-100 px-3 py-1.5 font-mono text-[0.625rem] uppercase tracking-widest text-neutral-600 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 md:text-xs">
                           {entry.job.period}
                         </span>
                       </div>
@@ -306,7 +307,7 @@ function PinnedJourney({ jobs, projects }: { jobs: ExperienceRow[]; projects: Pr
                     <Link
                       to="/experience"
                       className={cn(
-                        'group absolute left-10 top-1/2 z-30 flex h-[140px] w-[250px] -translate-y-1/2 items-center gap-4 transition-transform duration-500',
+                        'group absolute left-10 top-1/2 z-30 flex h-[8.75rem] w-[15.625rem] -translate-y-1/2 items-center gap-4 transition-transform duration-500',
                         isActive && 'translate-x-2 scale-105',
                       )}
                     >

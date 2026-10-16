@@ -164,7 +164,7 @@ function MegaBoxBig({ item, active, onSelect }: BoxProps) {
       <GridSnake />
       <MegaIcon item={item} className={cn('relative z-10 h-6 w-6 transition-transform duration-500 group-hover:-rotate-3 group-hover:scale-110', iconTone(active))} />
       <div className="relative z-10 mt-auto">
-        <h4 className={cn('mb-1.5 flex items-center text-[15px] font-bold transition-colors duration-300', titleTone(active))}>
+        <h4 className={cn('mb-1.5 flex items-center text-[0.9375rem] font-bold transition-colors duration-300', titleTone(active))}>
           {item.title}
           {active && <ActiveDot />}
         </h4>
@@ -192,7 +192,7 @@ function MegaBoxSmall({ item, active, onSelect }: BoxProps) {
           {item.title}
           {active && <ActiveDot />}
         </h4>
-        <p className={cn('text-[11px] font-medium leading-relaxed transition-colors duration-300', descTone)}>{item.desc}</p>
+        <p className={cn('text-[0.6875rem] font-medium leading-relaxed transition-colors duration-300', descTone)}>{item.desc}</p>
       </div>
       <div className="rounded-xl p-1.5 transition-colors duration-300 group-hover:bg-black/5 dark:group-hover:bg-white/10">
         <MegaIcon
@@ -221,7 +221,7 @@ function SidebarLink({ item, active, onSelect }: BoxProps) {
           {item.title}
           {active && <ActiveDot />}
         </h4>
-        <p className={cn('text-[11px] font-medium transition-colors duration-300', descTone)}>{item.desc}</p>
+        <p className={cn('text-[0.6875rem] font-medium transition-colors duration-300', descTone)}>{item.desc}</p>
       </div>
       <MegaIcon
         item={item}
@@ -326,7 +326,7 @@ export default function CardNav({ activeId }: CardNavProps) {
             transition={{ duration: 0.22, ease: 'easeOut' }}
             className="pointer-events-auto absolute left-1/2 top-full z-[100] pt-4"
           >
-            <div className="relative flex w-[850px] max-w-[calc(100vw-3rem)] overflow-hidden rounded-[1.5rem] border border-black/10 bg-white/95 shadow-2xl shadow-black/5 backdrop-blur-2xl dark:border-white/10 dark:bg-[#0a0a0a]/95 dark:shadow-black/80">
+            <div className="relative flex w-[53.125rem] max-w-[calc(100vw-3rem)] overflow-hidden rounded-[1.5rem] border border-black/10 bg-white/95 shadow-2xl shadow-black/5 backdrop-blur-2xl dark:border-white/10 dark:bg-[#0a0a0a]/95 dark:shadow-black/80">
               <div className="flex flex-1 flex-col gap-4 p-5">
                 <div className="grid grid-cols-2 gap-4">
                   {BIG.map((item) => (
@@ -339,7 +339,7 @@ export default function CardNav({ activeId }: CardNavProps) {
                   ))}
                 </div>
               </div>
-              <div className="flex w-[280px] flex-col justify-center gap-4 border-l border-black/5 p-4 dark:border-white/5">
+              <div className="flex w-[17.5rem] flex-col justify-center gap-4 border-l border-black/5 p-4 dark:border-white/5">
                 {SIDE.map((item) => (
                   <SidebarLink key={item.id} item={item} active={activeId === item.id} onSelect={close} />
                 ))}

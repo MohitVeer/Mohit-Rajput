@@ -28,7 +28,7 @@ export default function Contact() {
 
   return (
     <Section id="contact" index="10" label="Contact" className="relative overflow-hidden bg-background py-12 lg:py-16">
-      <div className="pointer-events-none relative mb-10 flex h-[300px] w-full items-center justify-center">
+      <div className="pointer-events-none relative mb-10 flex h-[18.75rem] w-full items-center justify-center">
         <InfiniteRibbon
           rotation={6}
           baseVelocity={1}
@@ -55,7 +55,7 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-15%' }}
         transition={{ duration: 1 }}
-        className="relative z-10 mx-auto mt-16 max-w-[1600px] px-6 text-center md:px-12 lg:px-24"
+        className="relative z-10 mx-auto mt-16 max-w-[100rem] px-6 text-center md:px-12 lg:px-24"
       >
         <h2 id="contact-heading" className="mb-0 text-4xl font-black leading-tight md:text-5xl lg:text-6xl">
           Let&apos;s Build Something

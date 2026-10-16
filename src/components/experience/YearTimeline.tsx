@@ -21,7 +21,7 @@ const DOCUMENT_KIND: Record<string, string> = {
 
 function TagList({ items, tone, hrefFor }: { items: string[]; tone: 'tech' | 'award' | 'client'; hrefFor?: (item: string) => string | undefined }) {
   if (items.length === 0) return null
-  const base = 'inline-flex max-w-full items-start gap-1.5 rounded-lg px-3 py-1.5 text-left text-[10px] font-bold uppercase leading-snug tracking-wider transition-all duration-300'
+  const base = 'inline-flex max-w-full items-start gap-1.5 rounded-lg px-3 py-1.5 text-left text-[0.625rem] font-bold uppercase leading-snug tracking-wider transition-all duration-300'
   const styles = {
     tech: 'cursor-default border border-neutral-200 bg-neutral-50 text-neutral-600 shadow-sm hover:-translate-y-0.5 hover:bg-neutral-200 hover:text-neutral-900 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white',
     award: 'border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400',
@@ -74,10 +74,10 @@ function DocumentCard({ job, document }: { job: ExperienceRow; document: Experie
             <span className="shrink-0 rounded bg-primary/10 p-1 text-primary">
               <FileText className="h-2.5 w-2.5" aria-hidden="true" />
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{DOCUMENT_KIND[document.kind] ?? 'Document'}</span>
+            <span className="text-[0.625rem] font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{DOCUMENT_KIND[document.kind] ?? 'Document'}</span>
           </div>
           <span className="mb-0.5 text-xs font-bold leading-tight text-neutral-900 dark:text-white">{document.label}</span>
-          <span className="text-[10px] leading-relaxed text-neutral-500 dark:text-neutral-400">Issued by {job.company}. Opens as a PDF.</span>
+          <span className="text-[0.625rem] leading-relaxed text-neutral-500 dark:text-neutral-400">Issued by {job.company}. Opens as a PDF.</span>
         </div>
         <CompanyLogo company={job.company} size={48} className="shrink-0" />
       </div>
@@ -134,7 +134,7 @@ function Entry({ job, projects, onOpenDetail }: { job: ExperienceRow; projects: 
 
   return (
     <article id={jobSlug(job)} aria-labelledby={titleId} className="group/timeline relative scroll-mt-32 border-l-2 border-neutral-200 pl-8 dark:border-neutral-800">
-      <span aria-hidden="true" className="absolute -left-[9px] top-0 h-4 w-4 rounded-full border-2 border-white bg-neutral-200 dark:border-black dark:bg-neutral-800" />
+      <span aria-hidden="true" className="absolute -left-[0.5625rem] top-0 h-4 w-4 rounded-full border-2 border-white bg-neutral-200 dark:border-black dark:bg-neutral-800" />
 
       <div aria-hidden="true" className="pointer-events-none absolute right-full top-0 mr-6 hidden h-16 w-40 -translate-x-4 items-center justify-end opacity-0 transition-all duration-300 group-hover/timeline:translate-x-0 group-hover/timeline:opacity-100 md:flex">
         <CompanyLogo company={job.company} size={64} />
@@ -148,7 +148,7 @@ function Entry({ job, projects, onOpenDetail }: { job: ExperienceRow; projects: 
           <p className="text-lg font-medium text-primary">{job.company}</p>
           <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">{job.location}</p>
         </div>
-        <span className="w-fit shrink-0 rounded bg-neutral-100 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400">{job.period}</span>
+        <span className="w-fit shrink-0 rounded bg-neutral-100 px-2 py-1 font-mono text-[0.625rem] font-bold uppercase tracking-widest text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400">{job.period}</span>
       </div>
 
       {lead && <p className="mb-6 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 md:text-base lg:text-justify">{lead}</p>}
@@ -179,13 +179,13 @@ function Entry({ job, projects, onOpenDetail }: { job: ExperienceRow; projects: 
         {tech.length > 0 && <TagList items={tech} tone="tech" />}
         {job.achievements.length > 0 && (
           <div>
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">Recognition</p>
+            <p className="mb-2 text-[0.625rem] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">Recognition</p>
             <TagList items={job.achievements} tone="award" />
           </div>
         )}
         {clients.length > 0 && (
           <div>
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">Clients and products</p>
+            <p className="mb-2 text-[0.625rem] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">Clients and products</p>
             <TagList items={clients} tone="client" hrefFor={hrefFor} />
           </div>
         )}
@@ -263,9 +263,9 @@ export default function YearTimeline({ jobs, onOpenDetail }: { jobs: ExperienceR
         <div
           aria-hidden="true"
           style={{ height: `${height}px` }}
-          className="absolute left-4 top-0 w-[2px] overflow-hidden bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-neutral-200 to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_80%,transparent_100%)] dark:via-neutral-700 md:left-8"
+          className="absolute left-4 top-0 w-[0.125rem] overflow-hidden bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-neutral-200 to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_80%,transparent_100%)] dark:via-neutral-700 md:left-8"
         >
-          <motion.div style={{ height: fillHeight, opacity: fillOpacity }} className="absolute inset-x-0 top-0 w-[2px] rounded-full bg-gradient-to-t from-purple-500 from-[0%] via-blue-500 via-[10%] to-transparent" />
+          <motion.div style={{ height: fillHeight, opacity: fillOpacity }} className="absolute inset-x-0 top-0 w-[0.125rem] rounded-full bg-gradient-to-t from-purple-500 from-[0%] via-blue-500 via-[10%] to-transparent" />
         </div>
       </div>
     </div>

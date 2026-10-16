@@ -49,14 +49,14 @@ export default function ProjectCover({ item, size = 'card', className }: Project
         {item.title.charAt(0)}
       </span>
       <div className={cn('relative z-10 flex h-full flex-col justify-between gap-3 p-5', size === 'compact' ? 'md:p-5' : 'gap-4 md:p-8')}>
-        <span className="flex items-start gap-2 font-mono text-[10px] font-bold uppercase leading-snug tracking-[0.25em] text-white/70">
-          <span className="mt-[3px] h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: tone }} />
+        <span className="flex items-start gap-2 font-mono text-[0.625rem] font-bold uppercase leading-snug tracking-[0.25em] text-white/70">
+          <span className="mt-[0.1875rem] h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: tone }} />
           <span className="min-w-0 break-words">{item.sector ?? (item.kind === 'case-study' ? 'Case study' : 'Project')}</span>
         </span>
         <span className="block min-w-0">
           <span className={cn('block break-words font-black leading-[1.02] tracking-tight [text-wrap:balance]', TITLE_SIZE[size])}>{item.title}</span>
           {size !== 'compact' && (item.employer || item.role) && (
-            <span className="mt-3 block font-mono text-[10px] font-bold uppercase leading-relaxed tracking-[0.2em] text-white/60">
+            <span className="mt-3 block font-mono text-[0.625rem] font-bold uppercase leading-relaxed tracking-[0.2em] text-white/60">
               {[item.employer, item.role].filter(Boolean).join(' · ')}
             </span>
           )}

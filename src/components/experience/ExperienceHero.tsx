@@ -5,7 +5,7 @@ import { useMediaQuery } from '../../hooks/useMediaQuery'
 import type { ExperienceRow } from '../../lib/contentApi'
 import CompanyLogo from '../ui/CompanyLogo'
 
-const WIDE_RUN = 1400
+const WIDE_RUN = 87.5
 
 const AURORA = [
   'radial-gradient(60% 55% at 22% 30%, hsl(var(--accent) / 0.45), transparent 70%)',
@@ -85,13 +85,13 @@ function Stage({ scrollY, run, still }: { scrollY: MotionValue<number>; run: num
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
           style={still ? { maskImage: MASK, WebkitMaskImage: MASK } : { opacity: textOpacity, scale: textScale, y: textY, maskImage: MASK, WebkitMaskImage: MASK }}
-          className="relative flex w-[92vw] max-w-[1600px] flex-col items-center justify-center rounded-[clamp(2rem,6vw,4rem)] bg-white/50 px-[clamp(16px,5vw,128px)] py-[clamp(60px,15vh,240px)] backdrop-blur-3xl dark:bg-black/40 md:backdrop-blur-[80px]"
+          className="relative flex w-[92vw] max-w-[100rem] flex-col items-center justify-center rounded-[clamp(2rem,6vw,4rem)] bg-white/50 px-[clamp(1rem,5vw,8rem)] py-[clamp(3.75rem,15vh,15rem)] backdrop-blur-3xl dark:bg-black/40 md:backdrop-blur-[80px]"
         >
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[clamp(2rem,6vw,4rem)] bg-primary/[0.02]" />
-          <h1 id="experience-heading" className="mb-[clamp(24px,4vh,48px)] text-center text-[clamp(2.6rem,12.5vw,5.5rem)] font-black uppercase leading-[0.8] tracking-[-0.06em] text-foreground md:-ml-2 md:text-[clamp(3.5rem,15vw,15rem)]">
+          <h1 id="experience-heading" className="mb-[clamp(1.5rem,4vh,3rem)] text-center text-[clamp(2.6rem,12.5vw,5.5rem)] font-black uppercase leading-[0.8] tracking-[-0.06em] text-foreground md:-ml-2 md:text-[clamp(3.5rem,15vw,15rem)]">
             Experience
           </h1>
-          <p className="w-full max-w-4xl text-center text-[clamp(10px,1.2vw,14px)] font-bold uppercase leading-relaxed tracking-[0.2em] text-foreground/60 md:leading-[2.2] md:tracking-[0.4em]">
+          <p className="w-full max-w-4xl text-center text-[clamp(0.625rem,1.2vw,0.875rem)] font-bold uppercase leading-relaxed tracking-[0.2em] text-foreground/60 md:leading-[2.2] md:tracking-[0.4em]">
             Merging front-end precision with enterprise Salesforce delivery.
             <br className="hidden md:block" /> A curated timeline of my professional journey — from foundational code to scalable platforms.
           </p>
@@ -119,9 +119,9 @@ function FloatingCard({ card, slot, progress }: { card: HeroCard; slot: Slot; pr
         ) : (
           <CompanyLogo company={card.company ?? card.organisation} size={48} />
         )}
-        <span className="rounded-full border border-border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{study ? 'Education' : 'Experience'}</span>
+        <span className="rounded-full border border-border px-2.5 py-1 font-mono text-[0.625rem] font-bold uppercase tracking-[0.2em] text-muted-foreground">{study ? 'Education' : 'Experience'}</span>
       </div>
-      <p className="mt-6 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{card.period}</p>
+      <p className="mt-6 font-mono text-[0.625rem] font-bold uppercase tracking-widest text-muted-foreground">{card.period}</p>
       <p className="mt-2 text-lg font-bold leading-tight tracking-tight text-foreground">{card.title}</p>
       <p className="mt-1 text-sm font-medium text-muted-foreground">{card.organisation}</p>
       {card.note && <p className="mt-3 text-xs font-semibold text-primary">{card.note}</p>}
@@ -150,7 +150,7 @@ export default function ExperienceHero({ jobs, studies }: { jobs: ExperienceRow[
   const cards = buildCards(jobs, studies)
 
   return (
-    <section aria-labelledby="experience-heading" className="experience-hero relative z-0 w-full bg-background" style={{ '--run': `${run}px` } as React.CSSProperties}>
+    <section aria-labelledby="experience-heading" className="experience-hero relative z-0 w-full bg-background" style={{ '--run': `${run}rem` } as React.CSSProperties}>
       <div className="sticky top-0 z-0 h-screen h-svh w-full overflow-hidden">
         <Stage scrollY={smooth} run={run} still={!floating} />
         {floating && <Floaters cards={cards} scrollY={smooth} run={run} />}

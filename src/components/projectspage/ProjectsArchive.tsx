@@ -54,7 +54,7 @@ function StatusPill({ status }: { status: ProjectStatus }) {
   return (
     <span
       className={cn(
-        'inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider sm:text-xs',
+        'inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.625rem] font-bold uppercase tracking-wider sm:text-xs',
         ongoing
           ? 'border-emerald-500/30 bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
           : 'border-blue-500/30 bg-blue-500/15 text-blue-700 dark:text-blue-400',
@@ -81,7 +81,7 @@ function FloatingPreview({ item, x, y }: { item: ProjectItem; x: MotionValue<num
       className="pointer-events-none fixed z-50 hidden lg:block"
       style={{ left: x, top: y, x: '-50%', y: '-50%' }}
     >
-      <ProjectCover item={item} size="preview" className="h-[300px] w-[500px] shadow-2xl" />
+      <ProjectCover item={item} size="preview" className="h-[18.75rem] w-[31.25rem] shadow-2xl" />
     </motion.div>,
     document.body,
   )
@@ -157,9 +157,9 @@ function ProjectRow({ item, index, fx }: { item: ProjectItem; index: number; fx:
               </motion.span>
               <StatusPill status={item.status} />
             </span>
-            <span className="mt-2 block font-mono text-[10px] font-bold uppercase leading-relaxed tracking-[0.2em] text-muted-foreground">{metaLine(item)}</span>
+            <span className="mt-2 block font-mono text-[0.625rem] font-bold uppercase leading-relaxed tracking-[0.2em] text-muted-foreground">{metaLine(item)}</span>
             <span className="mt-2 block max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">{item.description}</span>
-            <span className={cn('mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-widest text-muted-foreground', fx && '[@media(hover:hover)_and_(pointer:fine)]:hidden')}>
+            <span className={cn('mt-3 block font-mono text-[0.625rem] uppercase leading-relaxed tracking-widest text-muted-foreground', fx && '[@media(hover:hover)_and_(pointer:fine)]:hidden')}>
               {stackText}
             </span>
           </span>
@@ -275,11 +275,11 @@ function ProjectCard({ item, index, fx }: { item: ProjectItem; index: number; fx
               <span className="text-2xl font-bold tracking-tight text-foreground transition-colors group-hover:text-primary sm:text-3xl">{item.title}</span>
               <StatusPill status={item.status} />
             </span>
-            <span className="mb-2 block font-mono text-[10px] font-bold uppercase leading-relaxed tracking-[0.2em] text-muted-foreground">{metaLine(item)}</span>
+            <span className="mb-2 block font-mono text-[0.625rem] font-bold uppercase leading-relaxed tracking-[0.2em] text-muted-foreground">{metaLine(item)}</span>
             <span className="mb-6 block leading-relaxed text-muted-foreground md:text-lg">{item.description}</span>
             <span className="mt-auto flex flex-wrap items-center gap-2 sm:gap-2.5">
               {item.tags.slice(0, 4).map((tag) => (
-                <span key={tag} className="flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-[11px] font-medium text-muted-foreground transition-all duration-300 sm:px-4 sm:py-2 sm:text-xs" style={lit(tag)}>
+                <span key={tag} className="flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-[0.6875rem] font-medium text-muted-foreground transition-all duration-300 sm:px-4 sm:py-2 sm:text-xs" style={lit(tag)}>
                   <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: hovered ? toneFor(tag) : tone }} />
                   {tag}
                 </span>
@@ -355,12 +355,12 @@ export default function ProjectsArchive({ items }: { items: ProjectItem[] }) {
   const allShown = count >= visible.length
 
   return (
-    <section id="archive" aria-labelledby="archive-heading" className="relative mx-auto max-w-[1500px] scroll-mt-24 px-4 pb-16 sm:px-6 md:px-8 md:pb-24">
+    <section id="archive" aria-labelledby="archive-heading" className="relative mx-auto max-w-[93.75rem] scroll-mt-24 px-4 pb-16 sm:px-6 md:px-8 md:pb-24">
       <div className="flex flex-col gap-4 px-2 md:flex-row md:items-center md:justify-between">
         <h2 id="archive-heading" className="flex items-center gap-3 font-mono text-sm uppercase tracking-[0.2em] text-muted-foreground">
           <span aria-hidden="true" className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
           Projects Archive
-          <span className="rounded-md border border-border bg-foreground/5 px-2 py-0.5 text-[10px] text-muted-foreground">{String(visible.length).padStart(2, '0')}</span>
+          <span className="rounded-md border border-border bg-foreground/5 px-2 py-0.5 text-[0.625rem] text-muted-foreground">{String(visible.length).padStart(2, '0')}</span>
         </h2>
         <div className="group relative w-full md:w-80">
           <label htmlFor="project-search" className="sr-only">
@@ -411,7 +411,7 @@ export default function ProjectsArchive({ items }: { items: ProjectItem[] }) {
                 aria-pressed={status === filter.key}
                 onClick={() => setStatus(filter.key)}
                 className={cn(
-                  'rounded-lg px-3 py-1.5 text-[11px] font-medium transition-all duration-300 sm:text-xs',
+                  'rounded-lg px-3 py-1.5 text-[0.6875rem] font-medium transition-all duration-300 sm:text-xs',
                   status === filter.key ? 'bg-foreground text-background shadow-sm' : 'text-muted-foreground hover:bg-foreground/10 hover:text-foreground',
                 )}
               >
