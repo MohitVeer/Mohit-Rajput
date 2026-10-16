@@ -21,7 +21,7 @@ export default function ArchiveControls({ compact = false, query, onQuery, sort,
 
   return (
     <div className={cn('flex items-center gap-2', compact ? 'w-full flex-col' : 'w-full sm:w-auto')}>
-      <div className={cn('group/search relative', compact ? 'h-10 w-10' : 'flex-1 sm:min-w-[200px]')}>
+      <div className={cn('group/search relative', compact ? 'h-10 w-10' : 'flex-1 sm:min-w-[12.5rem]')}>
         {compact ? (
           <>
             <div
@@ -35,7 +35,7 @@ export default function ArchiveControls({ compact = false, query, onQuery, sort,
             </div>
             <div
               className={cn(
-                'absolute left-0 top-0 z-50 h-10 w-10 overflow-hidden rounded-xl shadow-lg transition-all duration-300 ease-out focus-within:border-foreground/30 group-focus-within/search:w-[250px] group-hover/search:w-[250px]',
+                'absolute left-0 top-0 z-50 h-10 w-10 overflow-hidden rounded-xl shadow-lg transition-all duration-300 ease-out focus-within:border-foreground/30 group-focus-within/search:w-[15.625rem] group-hover/search:w-[15.625rem]',
                 surface,
               )}
             >

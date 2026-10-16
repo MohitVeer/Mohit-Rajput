@@ -172,18 +172,18 @@ const AchievementCard = forwardRef<HTMLLIElement, AchievementCardProps>(function
           </motion.div>
 
           <div className="absolute left-4 top-4 z-20 flex gap-2">
-            <span className="rounded-lg border border-black/5 bg-white/90 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-black shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-black/40 dark:text-white">
+            <span className="rounded-lg border border-black/5 bg-white/90 px-2.5 py-1 text-[0.625rem] font-black uppercase tracking-wider text-black shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-black/40 dark:text-white">
               {item.label}
             </span>
           </div>
 
           <div className="absolute inset-x-4 bottom-4 z-20 flex flex-wrap items-end justify-between gap-x-2 gap-y-2">
-            <div className="max-w-full break-all font-mono text-[10px] uppercase leading-tight tracking-widest text-white/70 drop-shadow-sm">{caption}</div>
+            <div className="max-w-full break-all font-mono text-[0.625rem] uppercase leading-tight tracking-widest text-white/70 drop-shadow-sm">{caption}</div>
             {date && (
               <div className="ml-auto rounded-lg border border-white/10 bg-white/10 px-2.5 py-1 backdrop-blur-md">
                 <div className="flex items-center gap-1.5">
                   <Calendar className="h-3 w-3 text-white/70" aria-hidden="true" />
-                  <span className="whitespace-nowrap text-[10px] font-bold uppercase text-white/90 drop-shadow-sm">{date}</span>
+                  <span className="whitespace-nowrap text-[0.625rem] font-bold uppercase text-white/90 drop-shadow-sm">{date}</span>
                 </div>
               </div>
             )}
@@ -212,14 +212,14 @@ const AchievementCard = forwardRef<HTMLLIElement, AchievementCardProps>(function
             </h3>
             <div className="flex items-center gap-2">
               <Building2 className="h-3.5 w-3.5 text-muted-foreground/70" aria-hidden="true" />
-              <span className="text-[11px] font-medium text-muted-foreground">{item.issuer}</span>
+              <span className="text-[0.6875rem] font-medium text-muted-foreground">{item.issuer}</span>
             </div>
           </div>
 
           <div className={cn('mt-auto flex items-center justify-between border-border/20', listing ? 'border-0 pt-0' : 'border-t pt-4')}>
             <div className="flex items-center gap-2">
               <Eye className="h-4 w-4 text-muted-foreground/60" aria-hidden="true" />
-              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Expand Archive</span>
+              <span className="text-[0.625rem] font-bold uppercase tracking-wider text-muted-foreground">Expand Archive</span>
             </div>
             <motion.div aria-hidden="true" animate={{ x: hovered && !calm ? [0, 4, 0] : 0 }} transition={{ duration: 1.2, repeat: Infinity }}>
               <ChevronRight className="h-4 w-4 text-muted-foreground/70" />

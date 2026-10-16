@@ -51,7 +51,7 @@ function Marquee() {
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-[1.5vw]">
-      <h3 className="text-[clamp(10px,0.8vw,14px)] font-bold uppercase tracking-widest text-zinc-500">{title}</h3>
+      <h3 className="text-[clamp(0.625rem,0.8vw,0.875rem)] font-bold uppercase tracking-widest text-zinc-500">{title}</h3>
       <div className="flex flex-col gap-[0.8vw]">{children}</div>
     </div>
   )
@@ -66,7 +66,7 @@ interface FooterLinkProps {
 
 function FooterLink({ href, children, external, onClick }: FooterLinkProps) {
   const className =
-    'block w-fit whitespace-nowrap py-1 text-[clamp(14px,1.2vw,22px)] font-medium text-zinc-900 transition-colors hover:text-zinc-500 dark:text-white dark:hover:text-zinc-400'
+    'block w-fit whitespace-nowrap py-1 text-[clamp(0.875rem,1.2vw,1.375rem)] font-medium text-zinc-900 transition-colors hover:text-zinc-500 dark:text-white dark:hover:text-zinc-400'
   return (
     <motion.div whileHover={{ x: 5 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
       {href.startsWith('/') ? (
@@ -202,7 +202,7 @@ export default function Footer() {
   return (
     <>
       <footer className={cn('relative z-20 bg-background', expanded && 'pointer-events-none opacity-0')}>
-        <div className="mx-auto max-w-[1600px] px-6 pb-24 pt-6 md:px-12 md:py-8 lg:px-24">
+        <div className="mx-auto max-w-[100rem] px-6 pb-24 pt-6 md:px-12 md:py-8 lg:px-24">
           <div className="rounded-3xl border border-border bg-card/60 px-6 py-4 shadow-card backdrop-blur-2xl md:px-8 md:py-6">
             <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
               <p className="relative z-10 flex min-w-0 items-center gap-1.5 pl-2 text-xs font-bold uppercase tracking-widest md:gap-2 md:pl-4 md:text-sm">
@@ -298,7 +298,7 @@ export default function Footer() {
               </div>
 
               <div className="relative flex flex-1 flex-col justify-between px-[8vw] pb-0 pt-[4vh]">
-                <div className="relative mx-auto flex w-full max-w-[1600px] flex-1 flex-col justify-center">
+                <div className="relative mx-auto flex w-full max-w-[100rem] flex-1 flex-col justify-center">
                   <div className="absolute right-[-2vw] top-0 z-[10001]">
                     <motion.button
                       type="button"
@@ -309,7 +309,7 @@ export default function Footer() {
                       transition={{ delay: 0.3 }}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="relative flex items-center justify-center p-[clamp(12px,1.2vw,20px)]"
+                      className="relative flex items-center justify-center p-[clamp(0.75rem,1.2vw,1.25rem)]"
                     >
                       <span className="absolute inset-0 rounded-full bg-black shadow-2xl dark:bg-white" />
                       <motion.span
@@ -317,7 +317,7 @@ export default function Footer() {
                         whileHover={{ rotate: 90 }}
                         transition={{ type: 'spring', stiffness: 260, damping: 20 }}
                       >
-                        <X className="h-[clamp(24px,2vw,32px)] w-[clamp(24px,2vw,32px)] text-white dark:text-black" strokeWidth={2.5} aria-hidden="true" />
+                        <X className="h-[clamp(1.5rem,2vw,2rem)] w-[clamp(1.5rem,2vw,2rem)] text-white dark:text-black" strokeWidth={2.5} aria-hidden="true" />
                       </motion.span>
                     </motion.button>
                   </div>
@@ -349,12 +349,12 @@ export default function Footer() {
                     </FooterColumn>
 
                     <FooterColumn title="LOCAL TIME">
-                      <p className="text-[clamp(14px,1.2vw,22px)] font-medium tracking-tight text-zinc-900 dark:text-white">{localTime}</p>
-                      <p className="text-[clamp(14px,1.2vw,22px)] font-medium tracking-tight text-zinc-900 dark:text-white">India</p>
+                      <p className="text-[clamp(0.875rem,1.2vw,1.375rem)] font-medium tracking-tight text-zinc-900 dark:text-white">{localTime}</p>
+                      <p className="text-[clamp(0.875rem,1.2vw,1.375rem)] font-medium tracking-tight text-zinc-900 dark:text-white">India</p>
                     </FooterColumn>
 
                     <FooterColumn title="VERSION">
-                      <p className="text-[clamp(14px,1.2vw,22px)] font-medium tracking-tight text-zinc-900 dark:text-white">
+                      <p className="text-[clamp(0.875rem,1.2vw,1.375rem)] font-medium tracking-tight text-zinc-900 dark:text-white">
                         {year} © Edition
                       </p>
                       <FooterLink href="/privacy" onClick={close}>Privacy</FooterLink>

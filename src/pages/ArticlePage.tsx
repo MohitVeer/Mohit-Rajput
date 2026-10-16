@@ -100,7 +100,7 @@ export default function ArticlePage() {
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back
           </Link>
-          <div className="mb-6 flex flex-wrap items-center gap-3 font-mono text-[11px] font-bold uppercase tracking-widest text-muted-foreground">
+          <div className="mb-6 flex flex-wrap items-center gap-3 font-mono text-[0.6875rem] font-bold uppercase tracking-widest text-muted-foreground">
             <span className="rounded-md border border-border bg-foreground/5 px-2 py-1">{item.published_on}</span>
             {item.read_time && <span>{item.read_time}</span>}
           </div>
@@ -247,7 +247,7 @@ export default function ArticlePage() {
                     </span>
                     <span className="mt-5 block text-xl font-bold tracking-tight transition-colors group-hover:text-primary md:text-2xl">{entry.title}</span>
                     <span className="mt-2 block leading-relaxed text-muted-foreground">{entry.summary}</span>
-                    <span className={cn('mt-4 inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-foreground')}>
+                    <span className={cn('mt-4 inline-flex items-center gap-2 font-mono text-[0.625rem] font-bold uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-foreground')}>
                       {entry.published_on}
                       {entry.read_time ? ` · ${entry.read_time}` : ''}
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />

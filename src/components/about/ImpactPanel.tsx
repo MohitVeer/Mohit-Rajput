@@ -112,7 +112,7 @@ export default function ImpactPanel({ compact = false }: { compact?: boolean }) 
                   <span aria-hidden="true" className="absolute -left-4 hidden h-12 w-0.5 border border-dashed border-neutral-200 dark:border-zinc-700 sm:block" />
                 )}
                 <span className="flex flex-col items-center text-center transition-all duration-300 group-hover:opacity-40">
-                  <span className="mb-2 text-[10px] font-medium uppercase tracking-wider text-neutral-500 dark:text-zinc-400 sm:text-xs">{stat.label}</span>
+                  <span className="mb-2 text-[0.625rem] font-medium uppercase tracking-wider text-neutral-500 dark:text-zinc-400 sm:text-xs">{stat.label}</span>
                   <span className="flex items-baseline text-2xl font-black tracking-tighter text-neutral-900 dark:text-white sm:text-3xl">
                     <Counter value={stat.value} />
                   </span>
@@ -124,7 +124,7 @@ export default function ImpactPanel({ compact = false }: { compact?: boolean }) 
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
-                      className="pointer-events-none absolute inset-[-20px] z-20 flex items-center justify-center"
+                      className="pointer-events-none absolute inset-[-1.25rem] z-20 flex items-center justify-center"
                     >
                       <span
                         aria-hidden="true"

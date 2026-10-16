@@ -44,7 +44,7 @@ function FloatingShape({ className, gradient, delay = 0, still }: { className: s
 function Highlight({ headingId, title, highlight, description, children }: { headingId: string; title: string; highlight: string; description: string; children: ReactNode }) {
   return (
     <section aria-labelledby={headingId} className="relative w-full overflow-visible py-4 lg:py-6">
-      <div className="mx-auto grid h-full w-full grid-cols-1 items-center gap-12 overflow-visible px-0 md:px-6 xl:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:px-12">
+      <div className="mx-auto grid h-full w-full grid-cols-1 items-center gap-12 overflow-visible px-0 md:px-6 xl:grid-cols-[minmax(0,23.75rem)_minmax(0,1fr)] lg:px-12">
         <div className="relative z-20 space-y-8 xl:pr-12">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: 'easeOut' }} viewport={{ once: true }} className="space-y-6">
             <h2 id={headingId} className="text-[clamp(2.25rem,8vw,4rem)] font-bold leading-[1.1] tracking-tight text-black dark:text-white">
@@ -116,8 +116,8 @@ export default function ExperiencePage() {
       <ExperienceHero jobs={jobs} studies={education} />
 
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <FloatingShape className="-right-40 -top-20 h-[min(500px,80vw)] w-[min(500px,80vw)]" gradient="radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)" still={Boolean(calm) || !wide} />
-        <FloatingShape className="-left-20 bottom-40 h-[min(400px,70vw)] w-[min(400px,70vw)]" gradient="radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%)" delay={3} still={Boolean(calm) || !wide} />
+        <FloatingShape className="-right-40 -top-20 h-[min(31.25rem,80vw)] w-[min(31.25rem,80vw)]" gradient="radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)" still={Boolean(calm) || !wide} />
+        <FloatingShape className="-left-20 bottom-40 h-[min(25rem,70vw)] w-[min(25rem,70vw)]" gradient="radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%)" delay={3} still={Boolean(calm) || !wide} />
       </div>
 
       <div className="relative z-10 -mt-10 mb-20 w-full overflow-hidden pt-20 md:-mt-20">
@@ -155,7 +155,7 @@ export default function ExperiencePage() {
                   transition={{ duration: 0.4 }}
                 >
                   <YearTimeline jobs={jobs} onOpenDetail={openDetail} />
-                  <div className="pb-[clamp(40px,10vh,120px)]" />
+                  <div className="pb-[clamp(2.5rem,10vh,7.5rem)]" />
                   <Highlight
                     headingId="journey-highlight"
                     title="Crafting Experiences"
@@ -178,7 +178,7 @@ export default function ExperiencePage() {
                   className="space-y-12"
                 >
                   <ExperienceLedger jobs={jobs} focusJobId={focusJobId} onFocusHandled={handled} />
-                  <div className="pb-[clamp(40px,10vh,120px)]" />
+                  <div className="pb-[clamp(2.5rem,10vh,7.5rem)]" />
                   <Highlight
                     headingId="experience-highlight"
                     title="Turning Ideas"

@@ -3,6 +3,7 @@ import { useReducedMotion } from 'framer-motion'
 import wiproMark from '../../assets/wipro/wipro-secondary-white.svg'
 import { useTheme } from '../../theme/useTheme'
 import WiproIdCard from './WiproIdCard'
+import { rootScale } from '../../lib/scale'
 import { CARD_WIDTH, Lanyard, REST_JOINT_Y, STAGE_HEIGHT, STAGE_WIDTH, type Vec } from './lanyardPhysics'
 import { drawStrap, makeTile, STRAP_PALETTES } from './lanyardRender'
 
@@ -25,7 +26,7 @@ export default function WiproLanyard() {
   useEffect(() => {
     const node = outer.current
     if (!node) return
-    const measure = () => setScale(Math.min(1, node.clientWidth / STAGE_WIDTH))
+    const measure = () => setScale(Math.min(rootScale(), node.clientWidth / STAGE_WIDTH))
     measure()
     const observer = new ResizeObserver(measure)
     observer.observe(node)
@@ -39,7 +40,7 @@ export default function WiproLanyard() {
     const ctx = surface?.getContext('2d')
     if (!surface || !cardNode || !stageNode || !ctx) return
 
-    const density = Math.min(window.devicePixelRatio || 1, 2.5)
+    const density = Math.min((window.devicePixelRatio || 1) * Math.max(1, rootScale()), 4)
     surface.width = Math.round(STAGE_WIDTH * density)
     surface.height = Math.round(STAGE_HEIGHT * density)
 
@@ -168,7 +169,7 @@ export default function WiproLanyard() {
   }, [resolvedTheme])
 
   return (
-    <div ref={outer} aria-hidden="true" className="relative mx-auto w-full max-w-[380px]" style={{ height: STAGE_HEIGHT * scale }}>
+    <div ref={outer} aria-hidden="true" className="relative mx-auto w-full max-w-[23.75rem]" style={{ height: STAGE_HEIGHT * scale }}>
       <div className="pointer-events-none absolute left-1/2 top-0 z-10 h-2 w-48 -translate-x-1/2 rounded-full bg-gradient-to-r from-transparent via-foreground/20 to-transparent blur-[2px]" />
       <div className="pointer-events-none absolute left-1/2 top-0 z-10 h-[3px] w-24 -translate-x-1/2 rounded-full bg-gradient-to-r from-transparent via-foreground/40 to-transparent" />
       <div ref={stage} className="absolute left-0 top-0 origin-top-left" style={{ width: STAGE_WIDTH, height: STAGE_HEIGHT, transform: `scale(${scale})` }}>

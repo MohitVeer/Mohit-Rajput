@@ -5,7 +5,7 @@ import type { EducationEntry } from '../../data/education'
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">{label}</dt>
+      <dt className="text-[0.625rem] font-bold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">{label}</dt>
       <dd className="mt-1 text-sm font-semibold text-neutral-900 dark:text-white md:text-base">{value}</dd>
     </div>
   )
@@ -23,7 +23,7 @@ function EducationCard({ entry }: { entry: EducationEntry }) {
       aria-labelledby={titleId}
       className="relative rounded-3xl border border-neutral-200 bg-white/70 p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/70 md:p-8"
     >
-      <span aria-hidden="true" className="absolute -left-[41px] top-9 h-4 w-4 rounded-full border-2 border-white bg-neutral-300 dark:border-black dark:bg-neutral-700 md:-left-[49px]" />
+      <span aria-hidden="true" className="absolute -left-[2.5625rem] top-9 h-4 w-4 rounded-full border-2 border-white bg-neutral-300 dark:border-black dark:bg-neutral-700 md:-left-[3.0625rem]" />
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex min-w-0 items-center gap-4">
@@ -37,7 +37,7 @@ function EducationCard({ entry }: { entry: EducationEntry }) {
             </h3>
           </div>
         </div>
-        <span className="w-fit shrink-0 rounded bg-neutral-100 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400">{entry.period}</span>
+        <span className="w-fit shrink-0 rounded bg-neutral-100 px-2 py-1 font-mono text-[0.625rem] font-bold uppercase tracking-widest text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400">{entry.period}</span>
       </div>
 
       <dl className="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">

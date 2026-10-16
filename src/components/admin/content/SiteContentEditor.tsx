@@ -63,7 +63,7 @@ function Block({
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="font-display text-base font-semibold">{title}</h3>
         <span
-          className={`rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest ${
+          className={`rounded-full border px-2.5 py-1 text-[0.625rem] font-bold uppercase tracking-widest ${
             customised ? 'border-emerald-500/40 text-emerald-400' : 'border-border text-muted-foreground'
           }`}
         >

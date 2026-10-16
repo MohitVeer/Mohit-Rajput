@@ -32,7 +32,7 @@ export default function ContentManager() {
         Edits here go live on the site immediately — no code change or deploy needed.
       </p>
 
-      <div className="mt-6 md:grid md:grid-cols-[200px_1fr] md:items-start md:gap-8">
+      <div className="mt-6 md:grid md:grid-cols-[12.5rem_1fr] md:items-start md:gap-8">
         <div
           role="tablist"
           aria-label="Content sections"

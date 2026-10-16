@@ -2,6 +2,7 @@ import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useViewportSize } from '../../hooks/useViewportSize'
+import { rootScale } from '../../lib/scale'
 import { pickShowcase, type Achievement } from '../../lib/achievements'
 import { HERO_SIZES } from '../../lib/heroShowcase'
 import { getLenisInstance } from '../../lib/lenisInstance'
@@ -57,7 +58,8 @@ function computeLayout(vw: number, vh: number): HeroLayout {
     }
   }
 
-  const box = (top: number, left: number, width: number, height: number, radius: number): Rect => ({ top, left, width, height, radius })
+  const scale = rootScale()
+  const box = (top: number, left: number, width: number, height: number, radius: number): Rect => ({ top, left, width, height, radius: radius * scale })
   const from = [
     box(vh * 0.15, vw * 0.05, vw * 0.22, vh * 0.22, 12),
     box(vh * 0.12, vw * 0.38, vw * 0.2, vh * 0.2, 12),
@@ -67,8 +69,8 @@ function computeLayout(vw: number, vh: number): HeroLayout {
     box(vh * 0.65, vw * 0.75, vw * 0.18, vh * 0.25, 12),
   ]
 
-  const gap = 16
-  const gridWidth = Math.min(vw * 0.85, 1400)
+  const gap = 16 * scale
+  const gridWidth = Math.min(vw * 0.85, 1400 * scale)
   const gridHeight = vh * 0.7
   const x0 = (vw - gridWidth) / 2
   const y0 = (vh - gridHeight) / 2 + vh * 0.05
@@ -152,7 +154,7 @@ function HeroImage({ item, index, register }: { item: Achievement; index: number
   return (
     <div
       ref={(node) => register(index, node)}
-      className="absolute h-[10px] w-[10px] overflow-hidden rounded-lg border border-border/20 bg-card opacity-0 shadow-2xl will-change-[transform,opacity]"
+      className="absolute h-[0.625rem] w-[0.625rem] overflow-hidden rounded-lg border border-border/20 bg-card opacity-0 shadow-2xl will-change-[transform,opacity]"
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -251,7 +253,7 @@ function StaticHero({ picks, layout }: { picks: Achievement[]; layout: HeroLayou
   }, [])
 
   return (
-    <section aria-labelledby="achievements-heading" className="relative h-screen min-h-[640px] w-full overflow-hidden">
+    <section aria-labelledby="achievements-heading" className="relative h-screen min-h-[40rem] w-full overflow-hidden">
       <div className="absolute inset-0 z-50 flex flex-col items-center justify-center px-4 pb-32 pt-10 text-center">
         <HeroCopy onExplore={explore} animated={false} />
       </div>

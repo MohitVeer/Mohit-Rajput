@@ -26,17 +26,17 @@ export default function ArticleCard({ article, index }: { article: ArticleItem; 
         </span>
         <span className="flex flex-1 flex-col p-6">
           <span className="flex flex-wrap items-center gap-2">
-            <span className="rounded border border-border bg-muted px-2 py-0.5 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">{article.published_on}</span>
-            {article.read_time && <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{article.read_time}</span>}
+            <span className="rounded border border-border bg-muted px-2 py-0.5 font-mono text-[0.625rem] font-black uppercase tracking-[0.2em] text-muted-foreground">{article.published_on}</span>
+            {article.read_time && <span className="font-mono text-[0.625rem] font-bold uppercase tracking-widest text-muted-foreground">{article.read_time}</span>}
             {topics.map((topic) => (
-              <span key={topic} className="font-mono text-[10px] font-bold uppercase tracking-widest text-foreground/70">
+              <span key={topic} className="font-mono text-[0.625rem] font-bold uppercase tracking-widest text-foreground/70">
                 #{topic.replace(/\s+/g, '')}
               </span>
             ))}
           </span>
           <span className="mt-4 text-lg font-bold leading-snug tracking-tight text-foreground">{article.title}</span>
           <span className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{article.summary}</span>
-          <span className="mt-5 flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground transition-colors group-hover:text-foreground">
+          <span className="mt-5 flex items-center gap-2 font-mono text-[0.625rem] font-bold uppercase tracking-[0.25em] text-muted-foreground transition-colors group-hover:text-foreground">
             Explore story
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </span>

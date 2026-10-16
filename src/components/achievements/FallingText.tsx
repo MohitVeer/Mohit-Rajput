@@ -161,7 +161,7 @@ export default function FallingText({ words }: FallingTextProps) {
           <li key={word}>{word}</li>
         ))}
       </ul>
-      <div ref={containerRef} aria-hidden="true" className="relative z-[1] h-[400px] w-full text-center">
+      <div ref={containerRef} aria-hidden="true" className="relative z-[1] h-[25rem] w-full text-center">
         <div ref={textRef} className="inline-block text-2xl font-black leading-[1.4] text-foreground">
           {words.map((word) => (
             <Fragment key={word}>

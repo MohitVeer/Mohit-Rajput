@@ -21,7 +21,7 @@ export default function FeatureList() {
             </div>
           </div>
           <div className="mt-6 flex items-center gap-4">
-            <span className="font-mono text-[11px] font-black uppercase tracking-[0.5em] text-primary opacity-60">Feature — 0{i + 1}</span>
+            <span className="font-mono text-[0.6875rem] font-black uppercase tracking-[0.5em] text-primary opacity-60">Feature — 0{i + 1}</span>
             <span aria-hidden="true" className="h-px w-12 bg-primary/20" />
           </div>
           <h3 className="mt-4 text-3xl font-bold uppercase leading-tight tracking-tighter text-foreground">{feature.heading}</h3>

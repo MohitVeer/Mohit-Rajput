@@ -76,7 +76,7 @@ data-lenis-prevent
           transition={{ duration: 0.25 }}
         >
           <div className="flex items-center justify-between px-5 py-5 sm:px-8 md:px-16 lg:px-24">
-            <span className="font-mono text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground" aria-hidden="true">
+            <span className="font-mono text-[0.625rem] font-black uppercase tracking-[0.3em] text-muted-foreground" aria-hidden="true">
               Menu
             </span>
             <button

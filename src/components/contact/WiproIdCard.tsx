@@ -18,38 +18,38 @@ export default function WiproIdCard() {
         className="absolute inset-x-0 overflow-hidden rounded-[18px] border border-neutral-200 bg-white text-neutral-900 shadow-2xl shadow-black/30 dark:border-white/15 dark:bg-[#0d0d10] dark:text-white"
         style={{ top: CLIP_LENGTH, height: CARD_HEIGHT }}
       >
-        <span className="absolute left-1/2 top-3 h-2.5 w-14 -translate-x-1/2 rounded-full bg-neutral-300 shadow-inner dark:bg-white/20" />
+        <span className="absolute left-1/2 top-[12px] h-[10px] w-[56px] -translate-x-1/2 rounded-full bg-neutral-300 shadow-inner dark:bg-white/20" />
 
-        <div className="flex h-[84px] items-end justify-center px-5 pb-2.5 pt-8">
+        <div className="flex h-[84px] items-end justify-center px-[20px] pb-[10px] pt-[32px]">
           <img src={wiproColor} alt="" width={378} height={298} draggable={false} className="h-[48px] w-auto dark:hidden" />
           <img src={wiproWhite} alt="" width={378} height={298} draggable={false} className="hidden h-[48px] w-auto dark:block" />
         </div>
         <div className="h-[3px] w-full" style={{ background: BRAND_STRIPE }} />
 
-        <div className="flex flex-col items-center px-5 pt-3 text-center">
-          <span className="grid h-[62px] w-[62px] place-items-center rounded-full bg-neutral-900 text-xl font-black tracking-tighter text-white ring-4 ring-neutral-200 dark:bg-white dark:text-neutral-900 dark:ring-white/15">
+        <div className="flex flex-col items-center px-[20px] pt-[12px] text-center">
+          <span className="grid h-[62px] w-[62px] place-items-center rounded-full bg-neutral-900 text-[20px] leading-[28px] font-black tracking-tighter text-white ring-4 ring-neutral-200 dark:bg-white dark:text-neutral-900 dark:ring-white/15">
             MR
           </span>
-          <p className="mt-2.5 text-[19px] font-black uppercase leading-tight tracking-tight">{profile.name}</p>
-          <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">{job?.role ?? profile.role}</p>
+          <p className="mt-[10px] text-[19px] font-black uppercase leading-tight tracking-tight">{profile.name}</p>
+          <p className="mt-[4px] text-[10px] font-bold uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">{job?.role ?? profile.role}</p>
         </div>
 
-        <dl className="mx-5 mt-3 space-y-1 border-t border-neutral-200 pt-2.5 font-mono text-[8.5px] uppercase tracking-wider dark:border-white/15">
+        <dl className="mx-[20px] mt-[12px] space-y-[4px] border-t border-neutral-200 pt-[10px] font-mono text-[8.5px] uppercase tracking-wider dark:border-white/15">
           {job && (
-            <div className="flex justify-between gap-3">
+            <div className="flex justify-between gap-[12px]">
               <dt className="text-neutral-500 dark:text-neutral-400">Since</dt>
               <dd className="font-bold">{since(job.period)}</dd>
             </div>
           )}
           {job && (
-            <div className="flex justify-between gap-3">
+            <div className="flex justify-between gap-[12px]">
               <dt className="text-neutral-500 dark:text-neutral-400">Base</dt>
               <dd className="text-right font-bold">{job.location}</dd>
             </div>
           )}
         </dl>
 
-        <div className="absolute inset-x-5 bottom-4 flex h-6 items-end gap-[2px]">
+        <div className="absolute inset-x-[20px] bottom-[16px] flex h-[24px] items-end gap-[2px]">
           {Array.from({ length: 44 }, (_, i) => (
             <span key={i} className="flex-1 bg-neutral-900 dark:bg-white" style={{ height: `${38 + ((i * 37) % 62)}%` }} />
           ))}

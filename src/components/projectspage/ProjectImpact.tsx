@@ -10,7 +10,7 @@ function Figure({ value, label }: { value: string; label: string }) {
       <span ref={ref} className="block text-4xl font-black tabular-nums tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
         {display}
       </span>
-      <span className="mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-[0.3em] text-muted-foreground">{label}</span>
+      <span className="mt-3 block font-mono text-[0.625rem] uppercase leading-relaxed tracking-[0.3em] text-muted-foreground">{label}</span>
     </div>
   )
 }
@@ -28,7 +28,7 @@ export default function ProjectImpact({ items }: { items: ProjectItem[] }) {
 
   return (
     <section aria-labelledby="impact-heading" className="relative w-full px-6 py-16 text-center md:px-12 md:py-24 lg:px-20">
-      <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
+      <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 font-mono text-[0.625rem] font-bold uppercase tracking-[0.25em] text-muted-foreground">
         <Sparkles className="h-3 w-3" aria-hidden="true" />
         Project impact
       </span>

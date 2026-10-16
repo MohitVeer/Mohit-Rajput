@@ -24,16 +24,17 @@ export default function Book({ title, variant = 'stripe', width = 196, color, te
   const responsive = useBreakpointValue<number>(typeof width === 'number' ? { sm: width, md: width, lg: width } : width)
   const cover = color ?? (variant === 'simple' ? 'var(--ds-background-200)' : 'var(--ds-amber-600)')
   const art = illustration ?? DefaultIllustration
+  const wide = `${responsive / 16}rem`
 
   return (
-    <div className={cn('inline-block w-fit', className)} style={{ perspective: 900 }}>
+    <div className={cn('inline-block w-fit', className)} style={{ perspective: '56.25rem' }}>
       <div
         className="book-rotate relative aspect-[49/60] w-fit"
-        style={{ transformStyle: 'preserve-3d', minWidth: responsive, containerType: 'inline-size' }}
+        style={{ transformStyle: 'preserve-3d', minWidth: wide, containerType: 'inline-size' }}
       >
         <div
           className="shadow-book relative flex h-full flex-col overflow-hidden rounded-l-md rounded-r bg-[var(--ds-background-200)] after:absolute after:h-full after:w-full after:rounded-l-md after:rounded-r after:border after:border-[var(--ds-gray-alpha-400)] after:shadow-[var(--ds-shadow-book-border)]"
-          style={{ width: responsive }}
+          style={{ width: wide }}
         >
           <div className={cn('relative w-full overflow-hidden', variant === 'stripe' && 'flex-1')} style={{ background: cover }}>
             {variant === 'stripe' && <div className="absolute flex h-full w-full items-center justify-center opacity-40">{art}</div>}
@@ -70,13 +71,13 @@ export default function Book({ title, variant = 'stripe', width = 196, color, te
           className="absolute top-[3px] h-[calc(100%-6px)] w-[calc(29cqw-2px)]"
           style={{
             background: 'linear-gradient(90deg, #eaeaea, transparent 70%), linear-gradient(#fff, #fafafa)',
-            transform: `translateX(calc(${responsive} * 1px - 29cqw / 2 - 3px)) rotateY(90deg) translateX(calc(29cqw / 2))`,
+            transform: `translateX(calc(${wide} - 29cqw / 2 - 3px)) rotateY(90deg) translateX(calc(29cqw / 2))`,
           }}
         />
         <div
           aria-hidden="true"
           className="absolute left-0 top-0 h-full rounded-l-md rounded-r bg-neutral-200"
-          style={{ width: responsive, transform: 'translateZ(calc(-1 * 29cqw))' }}
+          style={{ width: wide, transform: 'translateZ(calc(-1 * 29cqw))' }}
         />
       </div>
     </div>

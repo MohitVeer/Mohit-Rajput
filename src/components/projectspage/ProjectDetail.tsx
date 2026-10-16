@@ -160,7 +160,7 @@ export default function ProjectDetail({ item, items }: { item: ProjectItem; item
         <dl className={cn('grid grid-cols-2 gap-x-4 gap-y-8 border-y border-border py-8', meta.length >= 4 ? 'md:grid-cols-4' : meta.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2')}>
           {meta.map(({ icon: Icon, label, value }) => (
             <div key={label} className="flex min-w-0 flex-col gap-2">
-              <dt className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+              <dt className="flex items-center gap-2 text-[0.625rem] font-bold uppercase tracking-widest text-muted-foreground">
                 <Icon className="h-3 w-3" aria-hidden="true" />
                 {label}
               </dt>
@@ -198,8 +198,8 @@ export default function ProjectDetail({ item, items }: { item: ProjectItem; item
                 <ol className="relative ml-3 space-y-10 border-l border-border pb-2 pl-8">
                   {item.highlights.map((highlight, i) => (
                     <li key={highlight} className="group relative">
-                      <span aria-hidden="true" className="absolute -left-[41px] top-1 h-4 w-4 rounded-full border-2 border-border bg-background transition-colors group-hover:border-amber-500" />
-                      <p className="mb-1 font-mono text-[10px] font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-500">Highlight {String(i + 1).padStart(2, '0')}</p>
+                      <span aria-hidden="true" className="absolute -left-[2.5625rem] top-1 h-4 w-4 rounded-full border-2 border-border bg-background transition-colors group-hover:border-amber-500" />
+                      <p className="mb-1 font-mono text-[0.625rem] font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-500">Highlight {String(i + 1).padStart(2, '0')}</p>
                       <p className="text-base leading-relaxed text-foreground/90 transition-colors group-hover:text-foreground">{highlight}</p>
                     </li>
                   ))}
@@ -264,13 +264,13 @@ export default function ProjectDetail({ item, items }: { item: ProjectItem; item
                   {reading.map((article) => (
                     <li key={article.id}>
                       <Link to={`/blog/${article.slug}`} className="group flex h-full flex-col rounded-2xl border border-border bg-foreground/[0.03] p-6 transition-all hover:-translate-y-1 hover:border-foreground/30 hover:shadow-xl">
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                        <span className="font-mono text-[0.625rem] font-bold uppercase tracking-widest text-muted-foreground">
                           {article.published_on}
                           {article.read_time ? ` · ${article.read_time}` : ''}
                         </span>
                         <span className="mt-3 text-lg font-bold leading-snug text-foreground">{article.title}</span>
                         <span className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{article.summary}</span>
-                        <span className="mt-4 inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-foreground">
+                        <span className="mt-4 inline-flex items-center gap-2 font-mono text-[0.625rem] font-bold uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-foreground">
                           Read article
                           <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                         </span>

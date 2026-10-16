@@ -74,12 +74,14 @@ interface SkillIconProps {
   context?: 'salesforce'
 }
 
+const rem = (px: number) => `${px / 16}rem`
+
 function BrandMark({ slug, hex, size, className }: { slug: string; hex: string; size: number; className?: string }) {
   const url = `url(/tech/${slug}.svg)`
   const style: CSSProperties = {
     display: 'inline-block',
-    width: size,
-    height: size,
+    width: rem(size),
+    height: rem(size),
     backgroundColor: brandColor(hex) ?? 'currentColor',
     WebkitMaskImage: url,
     maskImage: url,
@@ -94,10 +96,11 @@ function BrandMark({ slug, hex, size, className }: { slug: string; hex: string; 
 }
 
 export default function SkillIcon({ name, size = 24, className, context }: SkillIconProps) {
+  const box = { width: rem(size), height: rem(size) }
   const Custom = customIconFor(name)
-  if (Custom) return <Custom width={size} height={size} className={className} />
+  if (Custom) return <Custom width={size} height={size} style={box} className={className} />
 
-  const salesforce = <SalesforceCloudIcon width={size} height={size} className={className} />
+  const salesforce = <SalesforceCloudIcon width={size} height={size} style={box} className={className} />
   if (isSalesforceTerm(name)) return salesforce
   if (context === 'salesforce' && isSalesforceCompanion(name)) return salesforce
 
@@ -106,10 +109,10 @@ export default function SkillIcon({ name, size = 24, className, context }: Skill
 
   for (const word of wordsOf(name)) {
     const WordIcon = customIconFor(word)
-    if (WordIcon) return <WordIcon width={size} height={size} className={className} />
+    if (WordIcon) return <WordIcon width={size} height={size} style={box} className={className} />
     const wordBrand = brandFor(word)
     if (wordBrand) return <BrandMark slug={wordBrand.slug} hex={wordBrand.hex} size={size} className={className} />
   }
 
-  return <Braces width={size} height={size} className={className} strokeWidth={1.75} aria-hidden="true" />
+  return <Braces width={size} height={size} style={box} className={className} strokeWidth={1.75} aria-hidden="true" />
 }

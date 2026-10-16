@@ -124,7 +124,7 @@ export default function PopularContent({
       </div>
 
       <ChartCard title="All tracked interactions">
-        <p className="mb-2 text-[11px] text-muted-foreground">
+        <p className="mb-2 text-[0.6875rem] text-muted-foreground">
           Every event type tracked via trackEvent() — new event types appear here automatically.
         </p>
         <div className="overflow-x-auto">

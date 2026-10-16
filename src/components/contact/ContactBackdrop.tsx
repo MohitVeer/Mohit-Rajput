@@ -31,7 +31,7 @@ export function Meteors({ count, className }: { count: number; className?: strin
           className="absolute size-1.5 animate-meteor rounded-full bg-primary shadow-[0_0_20px_4px_hsl(var(--primary)/0.4)] will-change-transform"
           style={{ '--angle': '-215deg', top: '-5%', left: meteor.left, animationDelay: meteor.delay, animationDuration: meteor.duration } as CSSProperties}
         >
-          <span className="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[100px] -translate-y-1/2 bg-gradient-to-r from-primary to-transparent" />
+          <span className="pointer-events-none absolute top-1/2 -z-10 h-[0.125rem] w-[6.25rem] -translate-y-1/2 bg-gradient-to-r from-primary to-transparent" />
         </span>
       ))}
     </div>

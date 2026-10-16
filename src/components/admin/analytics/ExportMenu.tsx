@@ -4,14 +4,14 @@ export default function ExportMenu({ onCsv, onJson }: { onCsv: () => void; onJso
       <button
         type="button"
         onClick={onCsv}
-        className="rounded-full border border-border px-2.5 py-1 text-[11px] font-semibold text-muted-foreground transition hover:border-accent hover:text-foreground"
+        className="rounded-full border border-border px-2.5 py-1 text-[0.6875rem] font-semibold text-muted-foreground transition hover:border-accent hover:text-foreground"
       >
         CSV
       </button>
       <button
         type="button"
         onClick={onJson}
-        className="rounded-full border border-border px-2.5 py-1 text-[11px] font-semibold text-muted-foreground transition hover:border-accent hover:text-foreground"
+        className="rounded-full border border-border px-2.5 py-1 text-[0.6875rem] font-semibold text-muted-foreground transition hover:border-accent hover:text-foreground"
       >
         JSON
       </button>

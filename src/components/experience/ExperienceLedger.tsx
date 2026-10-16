@@ -201,7 +201,7 @@ function LedgerCard({ item, index, open, onToggle, projectHref }: { item: Ledger
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => trackEvent('Document', 'document_open', `${item.subtitle} — ${document.label}`)}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-neutral-700 transition-colors hover:border-foreground/40 hover:bg-foreground/5 dark:border-neutral-700 dark:text-neutral-300"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 px-3 py-1.5 text-[0.625rem] font-bold uppercase tracking-wider text-neutral-700 transition-colors hover:border-foreground/40 hover:bg-foreground/5 dark:border-neutral-700 dark:text-neutral-300"
                       >
                         <FileText className="h-3 w-3" aria-hidden="true" />
                         {document.label}
@@ -280,7 +280,7 @@ export default function ExperienceLedger({ jobs, focusJobId, onFocusHandled }: E
     <div className="space-y-12">
       <AnimatePresence mode="wait" initial={false}>
         {!active ? (
-          <motion.div key="select" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, x: -20 }} className="grid grid-cols-1 items-center gap-12 lg:min-h-[600px] lg:grid-cols-12">
+          <motion.div key="select" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, x: -20 }} className="grid grid-cols-1 items-center gap-12 lg:min-h-[37.5rem] lg:grid-cols-12">
             <div className="space-y-8 lg:col-span-5">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
                 <h2 className="mb-6 text-5xl font-black leading-[0.9] tracking-tighter text-neutral-900 dark:text-white md:text-7xl">

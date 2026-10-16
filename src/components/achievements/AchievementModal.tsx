@@ -131,19 +131,19 @@ export default function AchievementModal({ items, index, onClose, onNavigate }: 
             <button type="button" onClick={onClose} aria-label="Close" title="Close" className="group grid h-6 w-6 place-items-center rounded-full">
               <span className="block h-3.5 w-3.5 rounded-full bg-[#FF5F56] shadow-sm transition-all group-hover:brightness-75" />
             </button>
-            <span aria-hidden="true" className="mx-[5px] h-3.5 w-3.5 rounded-full bg-[#FFBD2E] opacity-50 shadow-sm" />
+            <span aria-hidden="true" className="mx-[0.3125rem] h-3.5 w-3.5 rounded-full bg-[#FFBD2E] opacity-50 shadow-sm" />
             <span aria-hidden="true" className="h-3.5 w-3.5 rounded-full bg-[#27C93F] opacity-50 shadow-sm" />
           </div>
 
           <div aria-hidden="true" className="hidden items-center gap-2 rounded-lg border border-border/20 bg-background/40 px-4 py-1.5 shadow-inner sm:flex">
             <MousePointer2 className="h-3 w-3 text-primary" />
-            <span className="font-mono text-[10px] font-bold tracking-tight text-foreground/60">
+            <span className="font-mono text-[0.625rem] font-bold tracking-tight text-foreground/60">
               ~/achievements/<span className="text-foreground">cert_{pathName(item.title)}</span>
             </span>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 rounded-md border border-border/30 bg-background/50 px-3 py-1.5 font-mono text-[10px] font-black tracking-widest" aria-live="polite">
+            <div className="flex items-center gap-1.5 rounded-md border border-border/30 bg-background/50 px-3 py-1.5 font-mono text-[0.625rem] font-black tracking-widest" aria-live="polite">
               <span className="text-foreground">{pad(index + 1)}</span>
               <span className="text-muted-foreground/50">/</span>
               <span className="text-muted-foreground">{pad(count)}</span>
@@ -197,7 +197,7 @@ export default function AchievementModal({ items, index, onClose, onNavigate }: 
                 </div>
               )}
               <div aria-hidden="true" className="absolute bottom-6 left-6 rounded-md border border-white/10 bg-black/50 px-3 py-1.5 opacity-0 backdrop-blur-md transition-opacity group-hover:opacity-100">
-                <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Type: {item.label}</span>
+                <span className="font-mono text-[0.625rem] uppercase tracking-widest text-white/80">Type: {item.label}</span>
               </div>
             </motion.div>
           </div>
@@ -226,7 +226,7 @@ export default function AchievementModal({ items, index, onClose, onNavigate }: 
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => trackExternalLink(item.url, `verify:${item.title}`)}
-                      className="group relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-xl bg-foreground px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-background shadow-lg transition-all hover:-translate-y-0.5 active:scale-95"
+                      className="group relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-xl bg-foreground px-4 py-2 text-[0.625rem] font-black uppercase tracking-[0.2em] text-background shadow-lg transition-all hover:-translate-y-0.5 active:scale-95"
                     >
                       <span aria-hidden="true" className="absolute inset-0 bg-primary opacity-0 transition-opacity group-hover:opacity-10" />
                       <span>{verifyLabel}</span>
@@ -240,7 +240,7 @@ export default function AchievementModal({ items, index, onClose, onNavigate }: 
                       href={item.fileUrl}
                       {...(isPdf(item.fileUrl) ? { download: true } : { target: '_blank', rel: 'noopener noreferrer' })}
                       onClick={() => trackEvent('Certification', 'cert_download', item.title)}
-                      className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-border/50 px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-foreground transition-all hover:-translate-y-0.5 hover:bg-foreground/10 active:scale-95"
+                      className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-border/50 px-4 py-2 text-[0.625rem] font-black uppercase tracking-[0.2em] text-foreground transition-all hover:-translate-y-0.5 hover:bg-foreground/10 active:scale-95"
                     >
                       {isPdf(item.fileUrl) ? <Download className="h-3.5 w-3.5" aria-hidden="true" /> : <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />}
                       <span>{isPdf(item.fileUrl) ? 'Download PDF' : 'Open original'}</span>
@@ -254,8 +254,8 @@ export default function AchievementModal({ items, index, onClose, onNavigate }: 
               <dl className="grid grid-cols-1 gap-2.5 font-mono">
                 {rows.map((row) => (
                   <div key={row.command} className="group flex flex-col gap-1 rounded-xl border border-border/50 bg-foreground/[0.03] p-4 transition-all hover:bg-foreground/[0.05]">
-                    <dt className="text-[8px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">$ {row.command}</dt>
-                    <dd className={row.accent ? 'break-all text-[10px] font-bold text-primary' : 'text-[10px] font-bold uppercase tracking-wider text-foreground/90'}>{row.value}</dd>
+                    <dt className="text-[0.5rem] font-black uppercase tracking-[0.2em] text-muted-foreground/70">$ {row.command}</dt>
+                    <dd className={row.accent ? 'break-all text-[0.625rem] font-bold text-primary' : 'text-[0.625rem] font-bold uppercase tracking-wider text-foreground/90'}>{row.value}</dd>
                   </div>
                 ))}
               </dl>

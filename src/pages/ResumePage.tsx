@@ -50,7 +50,7 @@ export default function ResumePage() {
       <motion.div
         initial={reduce ? false : { y: -16 }}
         animate={{ y: 0 }}
-        className="mx-auto mb-4 flex w-full max-w-[1400px] flex-col items-center justify-between gap-4 md:flex-row"
+        className="mx-auto mb-4 flex w-full max-w-[87.5rem] flex-col items-center justify-between gap-4 md:flex-row"
       >
         <Link to="/" className="group flex items-center gap-2 py-2 text-muted-foreground transition-colors hover:text-foreground">
           <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
@@ -68,7 +68,7 @@ export default function ResumePage() {
             initial={reduce ? false : { opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.15 }}
-            className="relative mx-auto min-h-[70vh] w-full max-w-[1400px] flex-1 overflow-hidden rounded-2xl border border-border bg-muted/30"
+            className="relative mx-auto min-h-[70vh] w-full max-w-[87.5rem] flex-1 overflow-hidden rounded-2xl border border-border bg-muted/30"
           >
             {!previewShown && (
               <p role="status" className="absolute inset-0 grid place-items-center text-sm text-muted-foreground">
@@ -83,7 +83,7 @@ export default function ResumePage() {
               className={`absolute inset-0 h-full w-full ${previewShown ? 'visible' : 'invisible'}`}
             />
           </motion.div>
-          <p className="mx-auto mt-3 w-full max-w-[1400px] text-center text-xs text-muted-foreground">
+          <p className="mx-auto mt-3 w-full max-w-[87.5rem] text-center text-xs text-muted-foreground">
             Preview not loading? Use the buttons above to download or open the PDF.
           </p>
         </>

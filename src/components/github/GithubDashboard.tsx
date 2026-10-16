@@ -53,7 +53,7 @@ function Stat({ value, label }: { value: string; label: string }) {
   const { ref, display } = useCountUp<HTMLElement>(value)
   return (
     <div className="flex flex-col-reverse">
-      <dt className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{label}</dt>
+      <dt className="mt-1 text-[0.625rem] font-bold uppercase tracking-[0.2em] text-muted-foreground">{label}</dt>
       <dd ref={ref as React.RefObject<HTMLElement>} className="text-3xl font-black tabular-nums tracking-tight text-foreground md:text-4xl">
         {display}
       </dd>
@@ -73,7 +73,7 @@ function ActivityRow({ item }: { item: GithubActivity }) {
         onClick={() => trackExternalLink(item.url, `activity:${item.type}`)}
         className="group block rounded-xl border border-border bg-background/60 p-4 transition-colors hover:border-foreground/30"
       >
-        <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#15803d] dark:text-[#22c55e]">
+        <span className="flex items-center gap-2 text-[0.6875rem] font-bold uppercase tracking-widest text-[#15803d] dark:text-[#22c55e]">
           <Icon className="h-3.5 w-3.5" aria-hidden="true" />
           <span className="min-w-0 break-words">
             {activityVerb(item)} · {repoShort}
@@ -81,7 +81,7 @@ function ActivityRow({ item }: { item: GithubActivity }) {
           <span className="ml-auto shrink-0 font-medium normal-case tracking-normal text-muted-foreground">{timeAgo(item.date)}</span>
         </span>
         <span className="mt-2 block text-sm font-medium leading-snug text-foreground">{item.title}</span>
-        {item.type === 'push' && item.detail && <span className="mt-1 block font-mono text-[11px] text-muted-foreground">{item.detail}</span>}
+        {item.type === 'push' && item.detail && <span className="mt-1 block font-mono text-[0.6875rem] text-muted-foreground">{item.detail}</span>}
         <span className="sr-only"> (opens in a new tab)</span>
       </a>
     </li>
@@ -128,7 +128,7 @@ export default function GithubDashboard() {
   return (
     <div className="grid gap-6 lg:grid-cols-3">
       <Card label="Contribution heatmap" className="lg:col-span-2">
-        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">Yearly contributions</p>
+        <p className="text-[0.625rem] font-bold uppercase tracking-[0.25em] text-muted-foreground">Yearly contributions</p>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-4">
           <Pill>Activity Heatmap</Pill>
           {contributions && (
@@ -153,14 +153,14 @@ export default function GithubDashboard() {
       </Card>
 
       <Card label="Languages and totals">
-        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">Across public repositories</p>
+        <p className="text-[0.625rem] font-bold uppercase tracking-[0.25em] text-muted-foreground">Across public repositories</p>
         <div className="mt-3">
           <Pill>Top Languages</Pill>
         </div>
         <ul className="mt-8 space-y-4">
           {languages.map((language, i) => (
             <li key={language.name}>
-              <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-foreground">
+              <div className="flex items-center justify-between text-[0.6875rem] font-bold uppercase tracking-wider text-foreground">
                 <span className="inline-flex items-center gap-2">
                   <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: languageColor(language.name) }} />
                   {language.name}
@@ -188,7 +188,7 @@ export default function GithubDashboard() {
       </Card>
 
       <Card label="Recent activity" className="lg:col-span-3">
-        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">Live from GitHub</p>
+        <p className="text-[0.625rem] font-bold uppercase tracking-[0.25em] text-muted-foreground">Live from GitHub</p>
         <div className="mt-3">
           <Pill>Recent Activity</Pill>
         </div>

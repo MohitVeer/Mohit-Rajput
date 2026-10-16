@@ -47,7 +47,7 @@ export default function Preloader() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -40, transition: { duration: 0.6, ease: [0.33, 1, 0.68, 1] } }}
-            className="relative flex w-full max-w-[400px] flex-col items-center justify-center text-foreground"
+            className="relative flex w-full max-w-[25rem] flex-col items-center justify-center text-foreground"
           >
             <HelloStroke speed={0.6} onComplete={finish} className="h-16 text-foreground sm:h-20 md:h-24" />
           </motion.div>
@@ -55,7 +55,7 @@ export default function Preloader() {
           <button
             type="button"
             onClick={finish}
-            className="absolute bottom-10 rounded-full px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-muted-foreground transition-colors hover:text-foreground"
+            className="absolute bottom-10 rounded-full px-4 py-3 text-[0.625rem] font-semibold uppercase tracking-[0.3em] text-muted-foreground transition-colors hover:text-foreground"
           >
             Skip intro
           </button>

@@ -26,11 +26,11 @@ export default function IdentityStatic() {
         <PlatformGrid />
       </div>
 
-      <div className="mx-auto grid max-w-[1700px] gap-6 px-6 pb-12 md:grid-cols-12 md:gap-12 md:px-12">
+      <div className="mx-auto grid max-w-[106.25rem] gap-6 px-6 pb-12 md:grid-cols-12 md:gap-12 md:px-12">
         <p className="text-2xl font-bold leading-snug tracking-tight text-black dark:text-white md:col-span-7 md:text-3xl">
           Architecting scalable Salesforce experiences where design meets platform.
         </p>
-        <p className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 md:col-span-5 md:text-[15px]">{NARRATIVE}</p>
+        <p className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 md:col-span-5 md:text-[0.9375rem]">{NARRATIVE}</p>
       </div>
 
       <div className="space-y-4 pb-12">

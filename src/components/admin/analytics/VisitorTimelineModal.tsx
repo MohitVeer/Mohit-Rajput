@@ -129,7 +129,7 @@ useEffect(() => {
 function TimelineEntry({ time, label, sub, last }: { time: string; label: string; sub?: string; last?: boolean }) {
   return (
     <li className="relative flex gap-4 pb-6 last:pb-0">
-      {!last && <span className="absolute left-[5px] top-3 h-full w-px bg-border" aria-hidden="true" />}
+      {!last && <span className="absolute left-[0.3125rem] top-3 h-full w-px bg-border" aria-hidden="true" />}
       <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full border-2 border-accent bg-background" aria-hidden="true" />
       <div className="min-w-0">
         <p className="font-mono text-xs text-muted-foreground">{time}</p>

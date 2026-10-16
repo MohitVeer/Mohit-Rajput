@@ -31,7 +31,7 @@ function Ring({ names, className, duration, reverse }: { names: string[]; classN
 export default function SkillsClosing() {
   return (
     <section aria-labelledby="closing-heading" className="relative overflow-hidden px-6 py-16 md:px-12 md:py-20 lg:px-24">
-      <div className="mx-auto grid max-w-[1400px] items-center gap-16 rounded-[2.5rem] border border-border bg-card/40 p-8 md:p-16 lg:grid-cols-2">
+      <div className="mx-auto grid max-w-[87.5rem] items-center gap-16 rounded-[2.5rem] border border-border bg-card/40 p-8 md:p-16 lg:grid-cols-2">
         <div>
           <h2 id="closing-heading" className="text-[clamp(2.25rem,12vw,3rem)] font-medium leading-[1.05] tracking-tight md:text-7xl">
             Engineering
@@ -58,7 +58,7 @@ export default function SkillsClosing() {
           </div>
         </div>
 
-        <div className="relative mx-auto aspect-square w-full max-w-[460px]">
+        <div className="relative mx-auto aspect-square w-full max-w-[28.75rem]">
           <Ring names={OUTER} className="inset-0" duration={60} />
           <Ring names={INNER} className="inset-[24%]" duration={40} reverse />
           <div aria-hidden="true" className="absolute inset-[42%] grid place-items-center rounded-full bg-muted">

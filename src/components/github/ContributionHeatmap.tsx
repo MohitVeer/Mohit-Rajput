@@ -93,11 +93,11 @@ export default function ContributionHeatmap({ days, weeksToShow, className, anim
     <div className={cn('relative [container-type:inline-size]', className)}>
       <div
         ref={wrapRef}
-        className="relative overflow-x-auto pb-2 [--cell:clamp(11px,calc((100cqw-3px*var(--cols))/var(--cols)),22px)] [scrollbar-width:thin]"
+        className="relative overflow-x-auto pb-2 [--cell:clamp(0.6875rem,calc((100cqw-0.1875rem*var(--cols))/var(--cols)),1.375rem)] [scrollbar-width:thin]"
         style={{ '--cols': Math.max(columns.length, 1) } as React.CSSProperties}
       >
         <div role="img" aria-label={`${total} contributions in the last year`} className="relative w-max pt-6" onMouseLeave={() => setTooltip(null)}>
-          <div aria-hidden="true" className="absolute left-0 top-0 h-5 w-full text-[11px] font-medium text-muted-foreground">
+          <div aria-hidden="true" className="absolute left-0 top-0 h-5 w-full text-[0.6875rem] font-medium text-muted-foreground">
             {monthLabels.map((label) => (
               <span key={`${label.index}-${label.text}`} className="absolute" style={{ left: `calc(${label.index} * (var(--cell) + 3px))` }}>
                 {label.text}
@@ -105,7 +105,7 @@ export default function ContributionHeatmap({ days, weeksToShow, className, anim
             ))}
           </div>
 
-          <div aria-hidden="true" className="flex gap-[3px]">
+          <div aria-hidden="true" className="flex gap-[0.1875rem]">
             {columns.map((col, colIndex) => (
               <motion.div
                 key={colIndex}
@@ -113,7 +113,7 @@ export default function ContributionHeatmap({ days, weeksToShow, className, anim
                 whileInView={animate ? { opacity: 1, scale: 1 } : undefined}
                 viewport={{ once: true, margin: '0px 0px -10% 0px' }}
                 transition={{ duration: 0.35, delay: Math.min(colIndex * 0.012, 0.7), ease: 'easeOut' }}
-                className="flex flex-col gap-[3px]"
+                className="flex flex-col gap-[0.1875rem]"
               >
                 {col.map((day, rowIndex) =>
                   day ? (
@@ -121,7 +121,7 @@ export default function ContributionHeatmap({ days, weeksToShow, className, anim
                       key={day.d}
                       onPointerEnter={(event) => show(event, day)}
                       onPointerDown={(event) => show(event, day)}
-                      className={cn('block rounded-[3px] transition-transform duration-150 hover:scale-125', LEVELS[day.l])}
+                      className={cn('block rounded-[0.1875rem] transition-transform duration-150 hover:scale-125', LEVELS[day.l])}
                       style={{ width: 'var(--cell)', height: 'var(--cell)' }}
                     />
                   ) : (
@@ -135,7 +135,7 @@ export default function ContributionHeatmap({ days, weeksToShow, className, anim
           {tooltip && (
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-md bg-foreground px-2.5 py-1.5 text-[11px] font-semibold text-background shadow-xl"
+              className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-md bg-foreground px-2.5 py-1.5 text-[0.6875rem] font-semibold text-background shadow-xl"
               style={{ left: tooltip.left, top: tooltip.top }}
             >
               {tooltip.text}
@@ -144,10 +144,10 @@ export default function ContributionHeatmap({ days, weeksToShow, className, anim
         </div>
       </div>
 
-      <div className="mt-3 flex items-center justify-end gap-2 text-[11px] font-medium text-muted-foreground" aria-hidden="true">
+      <div className="mt-3 flex items-center justify-end gap-2 text-[0.6875rem] font-medium text-muted-foreground" aria-hidden="true">
         <span>Less</span>
         {LEVELS.map((level) => (
-          <span key={level} className={cn('h-[11px] w-[11px] rounded-[3px]', level)} />
+          <span key={level} className={cn('h-[0.6875rem] w-[0.6875rem] rounded-[0.1875rem]', level)} />
         ))}
         <span>More</span>
       </div>

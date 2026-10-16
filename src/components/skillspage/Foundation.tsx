@@ -41,7 +41,7 @@ export default function Foundation() {
       </div>
 
       <div className="mx-auto mt-14 max-w-3xl text-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.5em] text-muted-foreground">Core technologies</p>
+        <p className="font-mono text-[0.625rem] uppercase tracking-[0.5em] text-muted-foreground">Core technologies</p>
         <h2 id="foundation-heading" className="mt-4 text-4xl font-medium tracking-tight md:text-6xl">
           The Engineering Foundation
         </h2>

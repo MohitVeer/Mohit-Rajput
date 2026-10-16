@@ -20,7 +20,7 @@ export default function CompanyLogo({ company, size = 44, className }: { company
         src ? 'bg-white' : 'bg-muted text-foreground',
         className,
       )}
-      style={{ width: size, height: size }}
+      style={{ width: `${size / 16}rem`, height: `${size / 16}rem` }}
     >
       {src ? (
         <img src={src} alt="" width={size} height={size} loading="lazy" decoding="async" draggable={false} className="h-full w-full object-contain p-1" />

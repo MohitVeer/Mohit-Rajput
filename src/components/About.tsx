@@ -23,7 +23,7 @@ export default function About() {
     >
       {pinned ? (
         <div className="pointer-events-none sticky top-0 z-0 flex h-screen w-full items-center justify-center overflow-hidden">
-          <motion.div style={{ scale, opacity, y }} className="relative mx-auto w-full max-w-[1700px] px-4 md:px-6">
+          <motion.div style={{ scale, opacity, y }} className="relative mx-auto w-full max-w-[106.25rem] px-4 md:px-6">
             <FitToViewport>
               <AboutLeadIn />
             </FitToViewport>

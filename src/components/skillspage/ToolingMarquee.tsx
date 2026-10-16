@@ -10,7 +10,7 @@ export default function ToolingMarquee() {
   return (
     <section aria-labelledby="tooling-heading" className="relative overflow-hidden py-16 md:py-20">
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.5em] text-muted-foreground">Workflow &amp; infrastructure</p>
+        <p className="font-mono text-[0.625rem] uppercase tracking-[0.5em] text-muted-foreground">Workflow &amp; infrastructure</p>
         <h2 id="tooling-heading" className="mt-4 text-4xl font-black tracking-tight md:text-6xl">
           Professional Tooling
         </h2>

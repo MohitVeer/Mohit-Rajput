@@ -37,7 +37,7 @@ function Editorial({ feature, index }: { feature: Feature; index: number }) {
     <div className="relative z-10 flex w-full max-w-2xl flex-col items-start space-y-12 text-left">
       <div className="space-y-6">
         <div className="flex items-center gap-6">
-          <span className="font-mono text-[11px] font-black uppercase tracking-[0.5em] text-primary opacity-60">Feature — 0{index + 1}</span>
+          <span className="font-mono text-[0.6875rem] font-black uppercase tracking-[0.5em] text-primary opacity-60">Feature — 0{index + 1}</span>
           <span aria-hidden="true" className="h-px w-12 bg-primary/20" />
         </div>
         <h3 className="pointer-events-auto origin-left cursor-default text-4xl font-bold uppercase leading-tight tracking-tighter text-foreground transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-6 hover:text-foreground/50 md:text-5xl lg:text-6xl">
@@ -108,7 +108,7 @@ function FeatureSlide({ feature, index, progress }: { feature: Feature; index: n
 
   return (
     <motion.div style={{ zIndex }} className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 md:p-8 lg:p-12">
-      <div className="pointer-events-auto relative flex h-full w-full max-w-[1600px]">
+      <div className="pointer-events-auto relative flex h-full w-full max-w-[100rem]">
         {visualOnLeft ? visual('left') : text('left')}
         {visualOnLeft ? text('right') : visual('right')}
       </div>
@@ -129,12 +129,12 @@ function BridgeSlide({ progress, active }: { progress: MotionValue<number>; acti
       style={{ opacity, zIndex: 30 }}
       className={cn('absolute inset-0 flex flex-col items-center justify-center bg-background p-12 text-center dark:bg-black', active ? 'pointer-events-auto' : 'pointer-events-none')}
     >
-      <motion.div style={{ y }} className="w-full max-w-[1200px] space-y-16 px-[5%]">
+      <motion.div style={{ y }} className="w-full max-w-[75rem] space-y-16 px-[5%]">
         <p className="font-sans text-4xl font-medium leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-7xl">
           <HoverScrambleText text={BRIDGE} />
         </p>
         <div className="flex flex-col items-center gap-6 pt-10 opacity-30">
-          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.5em] text-foreground">Scroll to explore</span>
+          <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.5em] text-foreground">Scroll to explore</span>
           <motion.span ref={chevronRef} animate={chevronNear ? { y: [0, 8, 0] } : { y: 0 }} transition={chevronNear ? { duration: 2.5, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}>
             <ChevronDown className="h-6 w-6 text-foreground" aria-hidden="true" />
           </motion.span>

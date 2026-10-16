@@ -135,7 +135,7 @@ export default function GeoTables({ countries, cities }: { countries: CountryRow
                 <button
                   type="button"
                   onClick={() => setSelectedCountry(null)}
-                  className="rounded-full border border-border px-2.5 py-1 text-[11px] text-muted-foreground hover:border-accent hover:text-foreground"
+                  className="rounded-full border border-border px-2.5 py-1 text-[0.6875rem] text-muted-foreground hover:border-accent hover:text-foreground"
                 >
                   Clear ×
                 </button>
@@ -147,7 +147,7 @@ export default function GeoTables({ countries, cities }: { countries: CountryRow
             </div>
           }
         >
-          <p className="mb-2 text-[11px] text-muted-foreground">
+          <p className="mb-2 text-[0.6875rem] text-muted-foreground">
             City-level location is approximate (derived from IP), not exact.
           </p>
           <div className="overflow-x-auto">

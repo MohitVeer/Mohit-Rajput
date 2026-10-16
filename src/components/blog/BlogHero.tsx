@@ -18,7 +18,7 @@ function Stat({ icon: Icon, value, label }: { icon: typeof FileText; value: stri
         <span ref={ref} className="block text-3xl font-black tabular-nums tracking-tight text-foreground">
           {display}
         </span>
-        <span className="block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">{label}</span>
+        <span className="block font-mono text-[0.625rem] uppercase tracking-[0.25em] text-muted-foreground">{label}</span>
       </div>
     </div>
   )
@@ -31,7 +31,7 @@ export default function BlogHero({ articles }: { articles: ArticleItem[] }) {
 
   return (
     <section aria-labelledby="blog-heading" className="relative px-6 pb-12 pt-28 md:px-12 md:pb-16 md:pt-36">
-      <div className="mx-auto max-w-[1400px]">
+      <div className="mx-auto max-w-[87.5rem]">
         <div className="text-center">
           <motion.h1
             id="blog-heading"
@@ -67,12 +67,12 @@ export default function BlogHero({ articles }: { articles: ArticleItem[] }) {
                   <ArticleCover title={featured.title} index={0} large className="min-h-[19rem] md:min-h-[26rem]" />
                 </span>
               </span>
-              <span className="absolute left-5 top-5 rounded-full bg-black/75 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur md:left-6 md:top-6">
+              <span className="absolute left-5 top-5 rounded-full bg-black/75 px-3 py-1 font-mono text-[0.625rem] font-bold uppercase tracking-[0.2em] text-white backdrop-blur md:left-6 md:top-6">
                 Featured publication
               </span>
               <span className="flex flex-col items-start justify-between gap-4 bg-neutral-950 p-6 text-white md:absolute md:inset-x-0 md:bottom-0 md:flex-row md:items-end md:bg-transparent md:bg-gradient-to-t md:from-black/70 md:to-transparent md:p-8">
                 <span className="max-w-xl text-sm leading-relaxed text-white/85 md:text-base">{featured.summary}</span>
-                <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-5 py-2.5 font-mono text-[10px] font-black uppercase tracking-widest text-black">
+                <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-5 py-2.5 font-mono text-[0.625rem] font-black uppercase tracking-widest text-black">
                   Explore story
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>
@@ -86,7 +86,7 @@ export default function BlogHero({ articles }: { articles: ArticleItem[] }) {
               className="flex flex-col justify-between gap-4 rounded-[2rem] border border-border bg-card/60 p-6 md:p-8"
             >
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Publication stats</p>
+                <p className="font-mono text-[0.625rem] uppercase tracking-[0.3em] text-muted-foreground">Publication stats</p>
                 <p className="mt-3 text-xl font-bold tracking-tight text-foreground">Writing as I learn, shipping as I write.</p>
               </div>
               <div className="space-y-3">

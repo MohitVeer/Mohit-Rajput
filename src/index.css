@@ -65,6 +65,8 @@
     overflow-x: hidden;
     overflow-x: clip;
     width: 100%;
+    /* 1:1 up to a 1600x900 window, then the whole rem-based layout grows with whichever of width or height is the limit */
+    font-size: max(100%, min(1vw, 1.7778vh));
   }
 
   body {

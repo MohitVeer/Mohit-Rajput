@@ -21,10 +21,10 @@ const PLATFORMS = [
 
 export function PlatformGrid() {
   return (
-    <div className="mx-auto w-full max-w-[1500px]">
+    <div className="mx-auto w-full max-w-[93.75rem]">
       <div className="mb-8 flex items-center gap-4">
         <span aria-hidden="true" className="h-px w-10 bg-black/30 dark:bg-white/30" />
-        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-600 dark:text-zinc-400">Platforms I build on</p>
+        <p className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.3em] text-zinc-600 dark:text-zinc-400">Platforms I build on</p>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6">
         {PLATFORMS.map((platform, i) => (
@@ -149,7 +149,7 @@ export default function IdentitySequence({ scrollYProgress }: IdentitySequencePr
           </MagneticEffect>
         </div>
 
-        <div className="flex w-full max-w-[1200px] items-center justify-between px-12">
+        <div className="flex w-full max-w-[75rem] items-center justify-between px-12">
           <div className="flex items-center gap-3 text-sm font-medium tracking-tight text-zinc-500 dark:text-white/60">
             <motion.span ref={arrowRef} animate={arrowNear ? { y: [0, 5, 0] } : { y: 0 }} transition={arrowNear ? { duration: 1.5, repeat: Infinity } : { duration: 0 }} className="flex h-4 w-4 items-center justify-center" aria-hidden="true">
               ↓
@@ -177,7 +177,7 @@ export default function IdentitySequence({ scrollYProgress }: IdentitySequencePr
 
           <motion.div
             style={{ opacity: textOpacity }}
-            className="mx-auto w-full max-w-[1700px] flex-shrink-0 px-8 pb-8 pt-24 md:px-16 md:pb-12 md:pt-32 lg:px-24"
+            className="mx-auto w-full max-w-[106.25rem] flex-shrink-0 px-8 pb-8 pt-24 md:px-16 md:pb-12 md:pt-32 lg:px-24"
           >
             <div className="grid grid-cols-1 items-start gap-12 md:grid-cols-12 md:gap-16">
               <div className="md:col-span-7">
@@ -186,14 +186,14 @@ export default function IdentitySequence({ scrollYProgress }: IdentitySequencePr
                 </p>
               </div>
               <div className="pt-1 md:col-span-5">
-                <p className="text-[13px] font-normal leading-relaxed text-zinc-500 dark:text-zinc-400 md:text-[15px]">
+                <p className="text-[0.8125rem] font-normal leading-relaxed text-zinc-500 dark:text-zinc-400 md:text-[0.9375rem]">
                   <BlurInUpText text={NARRATIVE} animate={textAnimated} />
                 </p>
               </div>
             </div>
           </motion.div>
 
-          <motion.div style={{ opacity: textOpacity }} className="mx-auto flex w-full max-w-[1700px] flex-shrink-0 flex-col gap-8 py-20">
+          <motion.div style={{ opacity: textOpacity }} className="mx-auto flex w-full max-w-[106.25rem] flex-shrink-0 flex-col gap-8 py-20">
             <div className="mb-6 px-8 md:px-16 lg:px-24">
               <p className="text-lg font-bold uppercase tracking-[0.15em] text-zinc-500 dark:text-zinc-400 md:text-xl">Tech stack &amp; ecosystem</p>
             </div>
