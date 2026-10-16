@@ -18,7 +18,7 @@
 
 ## Profiles and documents
 
-- [Resume (PDF)](https://mohitveer.netlify.app/Mohit_Rajput_Frontend_Engineer.pdf): Current resume.
+- [Resume (PDF)](https://mohitveer.netlify.app/Mohit_Rajput_Resume.pdf): Current resume.
 - [LinkedIn](https://www.linkedin.com/in/mohit-veer): Professional profile and technical articles.
 - [Trailblazer profile](https://www.salesforce.com/trailblazer/mrajputsl): Verified Salesforce certifications, superbadges and Trailhead rank.
 - [GitHub](https://github.com/MohitVeer): Source code.
