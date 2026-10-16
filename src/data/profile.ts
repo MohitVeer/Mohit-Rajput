@@ -9,7 +9,7 @@ export const profile = {
   trailblazerUrl: 'https://www.salesforce.com/trailblazer/mrajputsl',
   githubHandle: 'mohit-veer',
   githubUrl: 'https://github.com/MohitVeer',
-  resumeUrl: '/Mohit_Rajput_Frontend_Engineer.pdf',
+  resumeUrl: '/Mohit_Rajput_Resume.pdf',
 }
 
 export const heroTags = [
